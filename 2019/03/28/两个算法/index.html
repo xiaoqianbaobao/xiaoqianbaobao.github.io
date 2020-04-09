@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>两个算法 | Shengqian&#39;s Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="课堂作业，二进制退避算法，停止等待协议算法">
+<meta property="og:type" content="article">
+<meta property="og:title" content="两个算法">
+<meta property="og:url" content="http://yoursite.com/2019/03/28/%E4%B8%A4%E4%B8%AA%E7%AE%97%E6%B3%95/index.html">
+<meta property="og:site_name" content="Shengqian&#39;s Blog">
+<meta property="og:description" content="课堂作业，二进制退避算法，停止等待协议算法">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://yoursite.com/2019/03/28/%E4%B8%A4%E4%B8%AA%E7%AE%97%E6%B3%95/%E4%B8%A4%E4%B8%AA%E7%AE%97%E6%B3%95/1.png">
+<meta property="og:image" content="http://yoursite.com/2019/03/28/%E4%B8%A4%E4%B8%AA%E7%AE%97%E6%B3%95/%E4%B8%A4%E4%B8%AA%E7%AE%97%E6%B3%95/2.png">
+<meta property="og:image" content="http://yoursite.com/2019/03/28/%E4%B8%A4%E4%B8%AA%E7%AE%97%E6%B3%95/%E4%B8%A4%E4%B8%AA%E7%AE%97%E6%B3%95/3.png">
+<meta property="article:published_time" content="2019-03-28T15:40:26.000Z">
+<meta property="article:modified_time" content="2019-04-05T01:19:45.606Z">
+<meta property="article:author" content="Larnonudo chan">
+<meta property="article:tag" content="学习小结">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/2019/03/28/%E4%B8%A4%E4%B8%AA%E7%AE%97%E6%B3%95/%E4%B8%A4%E4%B8%AA%E7%AE%97%E6%B3%95/1.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Shengqian&#39;s Blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Shengqian&#39;s Blog</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">每一个不曾起舞的日子都是对生命的辜负</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-两个算法" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/03/28/%E4%B8%A4%E4%B8%AA%E7%AE%97%E6%B3%95/" class="article-date">
+  <time datetime="2019-03-28T15:40:26.000Z" itemprop="datePublished">2019-03-28</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      两个算法
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1>java(指数退避算法)</h1>
+ * 截断二进制指数退避算法：
+ * （1）协议规定了基本退避时间为争用期2t,具体的争用期时间是51.2us。对于10Mb/s以太网
+ * ，在争用期内可发送512bit，即64字节。也可以说争用期是512比特时间。1bit时间就是发送1bit所需的时间。所以这种时间单位与数据率密切相关。
+ * （2）从离散的整数集合[0，1，...（2的k次方-1）]中随机取出一个数，记为r。重传应推后的时间就是r倍的争用期。上面的参数k = Min[重传次数，10]
+ * （3）当重传达16次仍不能成功时（这表明同时打算发送数据的站太多，以致连续发生冲突），则丢弃该帧，并向上层报告。
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.fromjava;</span><br><span class="line"><span class="keyword">import</span> java.util.Random;</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TheTruncatedBinaryExponentialBackoffAlgorithm</span> </span>&#123;</span><br><span class="line"> </span><br><span class="line">	<span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">double</span> contentionPeriod = <span class="number">51.20</span>;</span><br><span class="line"> </span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">		</span><br><span class="line">		System.out.println(<span class="string">"***截断二进制退避指数算法演示***"</span>);</span><br><span class="line">		<span class="keyword">int</span> k = <span class="number">0</span>; <span class="comment">// 用以表示重传的次数</span></span><br><span class="line">		<span class="keyword">int</span> p = <span class="number">56</span>; <span class="comment">// 用于自己设置发生碰撞的概率</span></span><br><span class="line">		<span class="keyword">if</span>(args.length&gt;<span class="number">0</span>)</span><br><span class="line">		&#123;</span><br><span class="line">			p= Integer.parseInt(args[<span class="number">0</span>]);</span><br><span class="line">		&#125;</span><br><span class="line">		System.out.println(<span class="string">"每次传送发生碰撞的概率为p%,请输入p的值"</span> + <span class="string">"(范围为0到100之间的整数）："</span>+p);</span><br><span class="line">		System.out.println();</span><br><span class="line">		<span class="keyword">while</span> (<span class="keyword">true</span>) &#123;</span><br><span class="line">			<span class="keyword">if</span>(getRand(<span class="number">1</span>,<span class="number">100</span>)&lt;=p) <span class="comment">//如果发生碰撞，其概率为p%</span></span><br><span class="line">			&#123;</span><br><span class="line">				k++;</span><br><span class="line">				<span class="keyword">if</span> (k &lt;= <span class="number">16</span>) <span class="comment">// 最大重传送次数为16</span></span><br><span class="line">				&#123;</span><br><span class="line">					System.out.println(<span class="string">"***发生碰撞!"</span> + <span class="string">"准备进行第"</span> + k + <span class="string">"次重传！***"</span>);</span><br><span class="line">				    resend(k);</span><br><span class="line">					<span class="keyword">continue</span>;</span><br><span class="line">				&#125;</span><br><span class="line">				<span class="keyword">if</span> (k &gt; <span class="number">16</span>) &#123;</span><br><span class="line">					System.out.println(<span class="string">"重传16次仍未成功，丢弃本帧，向高层报告！"</span>);</span><br><span class="line">					<span class="keyword">break</span>;</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">if</span>(getRand(<span class="number">1</span>,<span class="number">100</span>)&gt;p) <span class="comment">//如果没有发生碰撞，其概率为1-p%</span></span><br><span class="line">			&#123;</span><br><span class="line">				System.out.println(<span class="string">"本次未发生碰撞，传送成功！！共重传"</span> + k + <span class="string">"次。"</span>);</span><br><span class="line">				<span class="keyword">break</span>;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"> </span><br><span class="line">	<span class="function"><span class="keyword">static</span> <span class="keyword">int</span> <span class="title">getRand</span><span class="params">(<span class="keyword">int</span> min, <span class="keyword">int</span> max)</span> <span class="comment">// 得到min到max之间的一个随机数</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="keyword">int</span> r ;</span><br><span class="line">		Random random = <span class="keyword">new</span> Random();</span><br><span class="line">		r=random.nextInt(max-min+<span class="number">1</span>)+min;	</span><br><span class="line">		<span class="keyword">return</span> r ;</span><br><span class="line">	&#125;</span><br><span class="line"> </span><br><span class="line">	<span class="function"><span class="keyword">static</span> <span class="keyword">int</span> <span class="title">twoPowerK</span><span class="params">(<span class="keyword">int</span> k)</span> <span class="comment">// 二的k次幂</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="keyword">int</span> a = <span class="number">2</span>;</span><br><span class="line">		<span class="keyword">int</span> f = <span class="number">1</span>;</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i = k ; i&gt;<span class="number">0</span> ;i --)</span><br><span class="line">		&#123; f *= a; &#125;</span><br><span class="line">		<span class="keyword">return</span> f;</span><br><span class="line">	&#125;</span><br><span class="line"> </span><br><span class="line">	<span class="function"><span class="keyword">static</span> <span class="keyword">int</span> <span class="title">resend</span><span class="params">(<span class="keyword">int</span> i)</span> </span>&#123; </span><br><span class="line">		<span class="comment">// 第i次重传操作，计算重传退避时间，等待后重传(具休实现未定义，仅用于演示，显示退避时间)</span></span><br><span class="line">		<span class="keyword">int</span> r = <span class="number">0</span> , max = <span class="number">0</span>;</span><br><span class="line">		<span class="keyword">double</span> backTime;</span><br><span class="line">		System.out.println(<span class="string">"开始退避操作！"</span>);</span><br><span class="line">		<span class="keyword">if</span> (i &lt;= <span class="number">10</span>)</span><br><span class="line">			max = twoPowerK(i) - <span class="number">1</span>;</span><br><span class="line">		<span class="keyword">if</span> (i &gt; <span class="number">10</span>) </span><br><span class="line">		&#123;</span><br><span class="line">			System.out.println(<span class="string">"重传次数超过10，从10截止。"</span>);</span><br><span class="line">			max = twoPowerK(<span class="number">10</span>) - <span class="number">1</span>;</span><br><span class="line">		&#125;</span><br><span class="line">	    System.out.println(<span class="string">"随机数范围:"</span>+<span class="string">"0到"</span>+max);</span><br><span class="line">		r=getRand(<span class="number">0</span>,max);</span><br><span class="line">		System.out.println(<span class="string">"得到的随机数r为:"</span>+r);</span><br><span class="line">		backTime = r * contentionPeriod;</span><br><span class="line">		System.out.println(<span class="string">"退避时间为:"</span>+<span class="string">"51.2*"</span>+r+<span class="string">"="</span>+backTime+<span class="string">"微秒"</span>);</span><br><span class="line">		<span class="keyword">try</span> &#123;</span><br><span class="line">			Thread.sleep((<span class="keyword">long</span>)(backTime/<span class="number">1000</span>)); <span class="comment">//暂停200毫秒</span></span><br><span class="line">		&#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">			e.printStackTrace();</span><br><span class="line">		&#125; </span><br><span class="line">		System.out.println(<span class="string">"退避完成，开始重传！"</span>);</span><br><span class="line">		System.out.println();</span><br><span class="line">		<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1>停止等待协议</h1>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">// Send data <span class="keyword">and</span> wait <span class="keyword">for</span> an ACK. Return bytes sent.</span><br><span class="line">// If error occurs, <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">int send_packet(int sock, struct Packet *packet, int size)&#123;</span><br><span class="line">	struct tftpx_packet rcv_packet;</span><br><span class="line">	int time_wait_ack = <span class="number">0</span>;</span><br><span class="line">	int rxmt = <span class="number">0</span>;</span><br><span class="line">	int r_size = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">for</span>(rxmt = <span class="number">0</span>; rxmt &lt; PKT_MAX_RXMT; rxmt ++)&#123;</span><br><span class="line">		<span class="keyword">if</span>(send(sock, packet, size, <span class="number">0</span>) != size)&#123;</span><br><span class="line">			<span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">for</span>(time_wait_ack = <span class="number">0</span>; time_wait_ack &lt; PKT_RCV_TIMEOUT; time_wait_ack += <span class="number">5000</span>)&#123;</span><br><span class="line">			r_size = recv(sock, &amp;rcv_packet, sizeof(rcv_packet), MSG_DONTWAIT);</span><br><span class="line">			if(r_size &gt; 4 &amp;&amp; rcv_packet.cmd == htons(CMD_ACK) &amp;&amp; rcv_packet.seq== packet-&gt;seq)&#123;</span><br><span class="line">				// Valid ACK</span><br><span class="line">				goto send_done;</span><br><span class="line">			&#125;</span><br><span class="line">			usleep(<span class="number">5000</span>);</span><br><span class="line">		&#125;</span><br><span class="line">		// Retransmission</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span>(rxmt == PKT_MAX_RXMT)&#123;</span><br><span class="line">		// send timeout</span><br><span class="line">		printf(<span class="string">"Sent packet exceeded PKT_MAX_RXMT.\n"</span>);</span><br><span class="line">		<span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">	&#125;</span><br><span class="line">send_done:</span><br><span class="line">	<span class="keyword">return</span> size;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1>运行结果截图</h1>
+<h2>二进制指数退避算法</h2>
+<img src="两个算法/1.png">
+<img src="两个算法/2.png">
+<img src="两个算法/3.png">
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/03/28/%E4%B8%A4%E4%B8%AA%E7%AE%97%E6%B3%95/" data-id="ck8sepakx003ckstgahzb10f2" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%AD%A6%E4%B9%A0%E5%B0%8F%E7%BB%93/" rel="tag">学习小结</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2019/08/30/%E4%BA%BA%E7%B1%BB%E7%AE%80%E5%8F%B2-%E6%9C%AA%E6%9D%A5%E7%AE%80%E5%8F%B2/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          人类简史&amp;&amp;未来简史
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2019/03/28/job4-%E6%BA%90%E8%B7%AF%E7%94%B1%E7%BD%91%E6%A1%A5%E5%92%8C%E9%80%8F%E6%98%8E%E7%BD%91%E6%A1%A5%E7%9A%84%E5%BC%82%E5%90%8C%E7%82%B9/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">job4-源路由网桥和透明网桥的异同点</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/python/">python</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%B9%A0/">前端学习</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%88%91%E7%9A%84%E7%BD%91%E7%AB%99%E5%88%B6%E4%BD%9C%E4%B9%8B%E6%97%85/">我的网站制作之旅</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%96%87%E5%AD%A6/">文学</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%9C%8D%E5%8A%A1%E5%99%A8%E8%84%9A%E6%9C%AC%E8%AF%AD%E8%A8%80/">服务器脚本语言</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%B8%B8%E6%88%8F/">游戏</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/">编程语言</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BE%8E%E6%96%87%E6%AC%A3%E8%B5%8F/">美文欣赏</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%A1%E5%88%92/">计划</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">计算机操作系统</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">计算机网络</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django/" rel="tag">Django</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/" rel="tag">Java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Javascript/" rel="tag">Javascript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/" rel="tag">Python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/google%E6%90%9C%E7%B4%A2%E7%A1%AE%E8%AE%A4%E6%96%87%E4%BB%B6/" rel="tag">google搜索确认文件</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/html/" rel="tag">html</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/" rel="tag">java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/javascript/" rel="tag">javascript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/plan/" rel="tag">plan</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/" rel="tag">python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/test/" rel="tag">test</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E3%80%90%E6%B8%B8%E6%88%8F%E4%BB%8B%E7%BB%8D%E3%80%91/" rel="tag">【游戏介绍】</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AD%A6%E4%B9%A0Python/" rel="tag">学习Python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AD%A6%E4%B9%A0%E5%B0%8F%E7%BB%93/" rel="tag">学习小结</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" rel="tag">学习笔记</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%84%9F%E6%83%B3%E7%BE%8E%E6%96%87/" rel="tag">感想美文</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%99%E7%A8%8B/" rel="tag">教程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%96%87%E5%AD%A6/" rel="tag">文学</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%96%87%E5%AD%A6%E8%B5%8F%E6%9E%90%E8%AF%BB%E5%90%8E%E6%84%9F/" rel="tag">文学赏析读后感</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8%E8%84%9A%E6%9C%ACphp%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/" rel="tag">服务器脚本php环境配置</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" rel="tag">正则表达式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%88%AC%E8%99%AB/" rel="tag">爬虫</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%94%9F%E4%BA%A7%E5%AE%9E%E4%B9%A0/" rel="tag">生产实习</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%94%B5%E5%BD%B1/" rel="tag">电影</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BD%91%E7%BB%9C/" rel="tag">网络</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BD%91%E9%A1%B5%E5%88%B6%E4%BD%9C/" rel="tag">网页制作</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BD%91%E9%A1%B5%E9%83%A8%E7%BD%B2/" rel="tag">网页部署</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BE%8E%E6%96%87/" rel="tag">美文</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AF%8D%E9%A2%91%E5%88%86%E6%9E%90%E7%94%9F%E6%88%90%E8%AF%8D%E4%BA%91/" rel="tag">词频分析生成词云</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AF%97%E8%AF%8D/" rel="tag">诗词</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AF%BB%E4%B9%A6/" rel="tag">读书</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" rel="tag">读书笔记</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%97%B2%E8%B0%88/" rel="tag">闲谈</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%A1%B9%E7%9B%AE/" rel="tag">项目</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Django/" style="font-size: 10px;">Django</a> <a href="/tags/Java/" style="font-size: 17.5px;">Java</a> <a href="/tags/Javascript/" style="font-size: 10px;">Javascript</a> <a href="/tags/Python/" style="font-size: 15px;">Python</a> <a href="/tags/google%E6%90%9C%E7%B4%A2%E7%A1%AE%E8%AE%A4%E6%96%87%E4%BB%B6/" style="font-size: 10px;">google搜索确认文件</a> <a href="/tags/html/" style="font-size: 17.5px;">html</a> <a href="/tags/java/" style="font-size: 20px;">java</a> <a href="/tags/javascript/" style="font-size: 12.5px;">javascript</a> <a href="/tags/plan/" style="font-size: 10px;">plan</a> <a href="/tags/python/" style="font-size: 15px;">python</a> <a href="/tags/test/" style="font-size: 10px;">test</a> <a href="/tags/%E3%80%90%E6%B8%B8%E6%88%8F%E4%BB%8B%E7%BB%8D%E3%80%91/" style="font-size: 10px;">【游戏介绍】</a> <a href="/tags/%E5%AD%A6%E4%B9%A0Python/" style="font-size: 10px;">学习Python</a> <a href="/tags/%E5%AD%A6%E4%B9%A0%E5%B0%8F%E7%BB%93/" style="font-size: 17.5px;">学习小结</a> <a href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" style="font-size: 10px;">学习笔记</a> <a href="/tags/%E6%84%9F%E6%83%B3%E7%BE%8E%E6%96%87/" style="font-size: 10px;">感想美文</a> <a href="/tags/%E6%95%99%E7%A8%8B/" style="font-size: 10px;">教程</a> <a href="/tags/%E6%96%87%E5%AD%A6/" style="font-size: 12.5px;">文学</a> <a href="/tags/%E6%96%87%E5%AD%A6%E8%B5%8F%E6%9E%90%E8%AF%BB%E5%90%8E%E6%84%9F/" style="font-size: 15px;">文学赏析读后感</a> <a href="/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8%E8%84%9A%E6%9C%ACphp%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/" style="font-size: 10px;">服务器脚本php环境配置</a> <a href="/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" style="font-size: 10px;">正则表达式</a> <a href="/tags/%E7%88%AC%E8%99%AB/" style="font-size: 10px;">爬虫</a> <a href="/tags/%E7%94%9F%E4%BA%A7%E5%AE%9E%E4%B9%A0/" style="font-size: 10px;">生产实习</a> <a href="/tags/%E7%94%B5%E5%BD%B1/" style="font-size: 10px;">电影</a> <a href="/tags/%E7%AE%97%E6%B3%95/" style="font-size: 12.5px;">算法</a> <a href="/tags/%E7%BD%91%E7%BB%9C/" style="font-size: 17.5px;">网络</a> <a href="/tags/%E7%BD%91%E9%A1%B5%E5%88%B6%E4%BD%9C/" style="font-size: 12.5px;">网页制作</a> <a href="/tags/%E7%BD%91%E9%A1%B5%E9%83%A8%E7%BD%B2/" style="font-size: 10px;">网页部署</a> <a href="/tags/%E7%BE%8E%E6%96%87/" style="font-size: 10px;">美文</a> <a href="/tags/%E8%AF%8D%E9%A2%91%E5%88%86%E6%9E%90%E7%94%9F%E6%88%90%E8%AF%8D%E4%BA%91/" style="font-size: 10px;">词频分析生成词云</a> <a href="/tags/%E8%AF%97%E8%AF%8D/" style="font-size: 10px;">诗词</a> <a href="/tags/%E8%AF%BB%E4%B9%A6/" style="font-size: 12.5px;">读书</a> <a href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" style="font-size: 12.5px;">读书笔记</a> <a href="/tags/%E9%97%B2%E8%B0%88/" style="font-size: 10px;">闲谈</a> <a href="/tags/%E9%A1%B9%E7%9B%AE/" style="font-size: 10px;">项目</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">四月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">三月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">二月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">一月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">十月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">八月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">三月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">一月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">十二月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">十一月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">八月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">七月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">六月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">五月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">四月 2018</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2020/04/09/test-my-site/">test_my_site</a>
+          </li>
+        
+          <li>
+            <a href="/2020/04/09/hello-world/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/2020/04/08/java%E6%B1%82%E8%B4%A8%E6%95%B0%E7%9A%84%E6%96%B9%E6%B3%95/">java求质数的方法</a>
+          </li>
+        
+          <li>
+            <a href="/2020/03/11/file%E5%AF%B9%E8%B1%A1/">file对象</a>
+          </li>
+        
+          <li>
+            <a href="/2020/03/10/java-%E4%BD%BF%E7%94%A8list/">java-使用list</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2020 Larnonudo chan<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>

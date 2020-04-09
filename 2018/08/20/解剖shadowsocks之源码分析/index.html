@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>解剖shadowsocks之源码分析 | Shengqian&#39;s Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="shadowscoks源码分析">
+<meta property="og:type" content="article">
+<meta property="og:title" content="解剖shadowsocks之源码分析">
+<meta property="og:url" content="http://yoursite.com/2018/08/20/%E8%A7%A3%E5%89%96shadowsocks%E4%B9%8B%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/index.html">
+<meta property="og:site_name" content="Shengqian&#39;s Blog">
+<meta property="og:description" content="shadowscoks源码分析">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2018-08-20T09:57:13.000Z">
+<meta property="article:modified_time" content="2018-08-20T10:22:46.127Z">
+<meta property="article:author" content="Larnonudo chan">
+<meta property="article:tag" content="网络">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Shengqian&#39;s Blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Shengqian&#39;s Blog</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">每一个不曾起舞的日子都是对生命的辜负</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-解剖shadowsocks之源码分析" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/08/20/%E8%A7%A3%E5%89%96shadowsocks%E4%B9%8B%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/" class="article-date">
+  <time datetime="2018-08-20T09:57:13.000Z" itemprop="datePublished">2018-08-20</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      解剖shadowsocks之源码分析
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>前面，我已经在科学上网上对shadowsocks有了一定的理解，并大概清楚是如何通过代理实现fq的，但对于shadowsocks是怎样用python代码实现的，我还是不清楚，因此查阅了不少网上的文档以及github上面的源码，对shadowsocks实行了一次解剖，揭秘shadowsocks的秘密。<br>通过我的各种查阅发现，现在的shadowsocks已经有python，c#,以及安卓等的不同版本，基于我只学过python，所以选择了github上python版本的进行分析<br><a href="https://github.com/shadowsocks/shadowsocks/releases/tag/2.9.1" target="_blank" rel="noopener">github官方页面shadowsocks源码下载</a>，发现，shadowsocks工程<h1>文件分布如下:</h1></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line">├── CHANGES</span><br><span class="line">├── CONTRIBUTING.md</span><br><span class="line">├── debian</span><br><span class="line">│   ├── changelog</span><br><span class="line">│   ├── compat</span><br><span class="line">│   ├── config.json</span><br><span class="line">│   ├── control</span><br><span class="line">│   ├── copyright</span><br><span class="line">│   ├── docs</span><br><span class="line">│   ├── init.d</span><br><span class="line">│   ├── install</span><br><span class="line">│   ├── rules</span><br><span class="line">│   ├── shadowsocks.default</span><br><span class="line">│   ├── shadowsocks.manpages</span><br><span class="line">│   ├── source</span><br><span class="line">│   │   └── format</span><br><span class="line">│   ├── sslocal.1</span><br><span class="line">│   └── ssserver.1</span><br><span class="line">├── Dockerfile</span><br><span class="line">├── LICENSE</span><br><span class="line">├── MANIFEST.in</span><br><span class="line">├── README.md</span><br><span class="line">├── README.rst</span><br><span class="line">├── setup.py</span><br><span class="line">├── shadowsocks</span><br><span class="line">│   ├── asyncdns.py</span><br><span class="line">│   ├── common.py</span><br><span class="line">│   ├── crypto</span><br><span class="line">│   │   ├── __init__.py</span><br><span class="line">│   │   ├── openssl.py</span><br><span class="line">│   │   ├── rc4_md5.py</span><br><span class="line">│   │   ├── sodium.py</span><br><span class="line">│   │   ├── table.py</span><br><span class="line">│   │   └── util.py</span><br><span class="line">│   ├── daemon.py</span><br><span class="line">│   ├── encrypt.py</span><br><span class="line">│   ├── eventloop.py</span><br><span class="line">│   ├── __init__.py</span><br><span class="line">│   ├── local.py</span><br><span class="line">│   ├── lru_cache.py</span><br><span class="line">│   ├── manager.py</span><br><span class="line">│   ├── server.py</span><br><span class="line">│   ├── shell.py</span><br><span class="line">│   ├── tcprelay.py</span><br><span class="line">│   └── udprelay.py</span><br><span class="line">├── tests</span><br><span class="line">└── utils</span><br><span class="line">    ├── autoban.py</span><br><span class="line">    ├── fail2ban</span><br><span class="line">    │   └── shadowsocks.conf</span><br><span class="line">    └── README.md</span><br></pre></td></tr></table></figure>
+<h1>核心代码</h1>
+其工程核心代码均位于 shadowsocks 目录下。其它文件和目录则提供了打包、测试等功能。
+
+<p>像 shadowsocks 这种代码量不足一万行的小型工程，通读源码仅需几个小时，阅览顺序也没有特别的讲究。但是，当遇到代码量十万行甚至百万行的大型工程时，阅读全部代码是一件不可能完成的任务，用正确的顺序浏览就变得尤为重要。一般来说，打开一个陌生的工程，最好先定位其 main 函数。抓住了程序的入口，就抓住了逻辑的根节点，此后再分别运用广度优先搜索、深度优先搜索、回溯搜索等多种手段，逐步描绘出工程的大体轮廓。</p>
+<p>shadowsocks 在 local.py 和 server.py 两处分别定义了 main 函数。因为这两个 main 函数属于不同的模块，这是完全合法的。在 shell.print_help 中，它们被分别赋予了 sslocal 和 ssserver 这两个名字，我们也可以称之为客户端和服务端。对比查看 local.py 和 server.py，服务端为了支持多组端口和多进程，写了不少额外的代码。如果把这两部分剥离掉，剩下的主干结构与客户端差异甚微：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"># shadowsocks&#x2F;local.py</span><br><span class="line"></span><br><span class="line">    daemon.daemon_exec(config)</span><br><span class="line">    ...</span><br><span class="line">    dns_resolver &#x3D; asyncdns.DNSResolver()</span><br><span class="line">    tcp_server &#x3D; tcprelay.TCPRelay(config, dns_resolver, ...)</span><br><span class="line">    udp_server &#x3D; udprelay.UDPRelay(config, dns_resolver, ...)</span><br><span class="line">    loop &#x3D; eventloop.EventLoop()</span><br><span class="line">    dns_resolver.add_to_loop(loop)</span><br><span class="line">    tcp_server.add_to_loop(loop)</span><br><span class="line">    udp_server.add_to_loop(loop)</span><br><span class="line">    ...</span><br><span class="line">    loop.run()</span><br></pre></td></tr></table></figure>
+
+<p>在 main 函数中，shadowsocks 解析配置文件或命令行参数后，首先注册了系统守护进程，以便于在后台运行。之后，它创建了 DNS 解析器、TCP 中继器、UDP 中继器三个组件，并用事件循环将这三者统一起来。事件循环开始后，这些组件会在外部事件的触发下实现预定的行为，直至程序遭遇内部错误或因捕获外部信号而退出。</p>
+<p>客户端与服务端的区别在于传给 TCPRelay 和 UDPRelay 的第三个参数 is_local 的值不同。也就是说，它们的行为差异要进入上述两个类中才能看出来。从代码体量出发，先分析 UDPRelay 显然是个更明智的选择。在构造函数里，我们看到了这样的代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"># shadowsocks&#x2F;udprelay.py</span><br><span class="line"></span><br><span class="line">class UDPRelay(object):</span><br><span class="line">    def __init__(self, config, dns_resolver, is_local, stat_callback&#x3D;None):</span><br><span class="line">        self._config &#x3D; config</span><br><span class="line">        if is_local:</span><br><span class="line">            self._listen_addr &#x3D; config[&#39;local_address&#39;]</span><br><span class="line">            self._listen_port &#x3D; config[&#39;local_port&#39;]</span><br><span class="line">            self._remote_addr &#x3D; config[&#39;server&#39;]</span><br><span class="line">            self._remote_port &#x3D; config[&#39;server_port&#39;]</span><br><span class="line">        else:</span><br><span class="line">            self._listen_addr &#x3D; config[&#39;server&#39;]</span><br><span class="line">            self._listen_port &#x3D; config[&#39;server_port&#39;]</span><br><span class="line">            self._remote_addr &#x3D; None</span><br><span class="line">            self._remote_port &#x3D; None</span><br></pre></td></tr></table></figure>
+
+<p>不难看出，shadowsocks 的整体结构可以用下图表示出来</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">user request &lt;----&gt; sslocal</span><br><span class="line">                       |</span><br><span class="line">                       |</span><br><span class="line">                       |</span><br><span class="line">destination  &lt;----&gt; ssserver</span><br></pre></td></tr></table></figure>
+
+<p>客户端 sslocal 监听 local_address:local_port 端口。当用户请求事件触发时，客户端试图从该端口读取数据，加密后发送至 server:server_port。服务端 ssserver 收到客户端的请求后，解密数据内容，解析目标 IP 地址，把用户的请求转发至目标服务器。当 ssserver 收到目标服务器的回应后，再把这些信息加密并送回客户端，由客户端最终响应用户的请求。</p>
+<p>值得注意的是，虽然客户端和服务端都有 DNS 解析器，但他们承担的责任有很大的差异。客户端的 DNS 用于解析服务端的 IP 地址，如果在配置文件中使用 IP 代替域名，则客户端的解析器是一个可以移除的组件。服务端的 DNS 将用户请求中的域名翻译成目标服务器的 IP 地址，是必要的组件。考虑到服务端的部署地点，通常不会受到 DNS 污染的影响，因此可以安全地使用系统默认的 DNS 服务器。</p>
+</h1>项目结构</h1>
+
+<p>1、asyndns.py 用于处理dns请求</p>
+<p>2、common.py</p>
+<p>3、daemon.py，提供daemon运行机制</p>
+<p>4、encrypt，处理shadowsocks协议的加密解密</p>
+<p>5、eventloop，事件循环，使用select、poll、epoll、kequeue实现IO复用，作者讲三种底层实现包装成一个类Eventloop</p>
+<p>6、local，在本地运行的程序</p>
+<p>7、lru_cache.py，作者实现的一个基于LRU的缓存</p>
+<p>8、server.py，在远程运行的程序</p>
+<p>9、tcprelay，实现tcp的转达，用在远程端中使远程和dest连接</p>
+<p>10、udprelay，实现udp的转达，用于local端处理local和客户端的socks5协议通信，用于local端和远程端shadowsocks协议的通信；用于远程端与local端shadowsocks协议的通信，用于远程端和dest端的通信</p>
+<p>11、utils.py<br>代码质量相当的高，感觉都能达到重用的级别。而且由于作者设计的思想是，一个配置文件，同一段程序，在本地和远程通用，所以其中的代码，常常能够达到一个函数，在本地和服务器有不同的功能这样的效果。</p>
+<h1>核心：eventloop.py，udprelay.py，tcprelay.py，asyndns.py</h1>
+
+<p>eventloop使用select、epoll、kqueue等IO复用实现异步处理。优先级为epoll&gt;kqueue&gt;select。Eventloop将三种复用机制的add，remove，poll，add_handler，remve_handler接口统一起来，程序员只需要使用这些函数即可，不需要处理底层细节。</p>
+<p>后三个文件分别实现用来处理udp的请求，tcp的请求，dns的查询请求，并且将三种请求的处理包装成handler。对于tcp，udp的handler，它们bind到特定的端口，并且将socket交给eventloop，并且将自己的处理函数加到eventloop的handlers；对于dns的handler，它接受来自udp handler和tcp handler的dns查询请求，并且向远程dns服务器发出udp请求；</p>
+<p>当eventloop监测到socket的数据，程序就将所有监测到的socket和事件交给所有handler去处理，每个handler通过socket和事件判断自己是否要处理该事件，并进行相对的处理：</p>
+<p><b>当local收到udprelay handler绑定的端口的事件，说明客户端发来请求，local对SOCKS5协议的内容进行处理之后经过加密转发给远程；</b></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">+----+------+------+----------+----------+----------+</span><br><span class="line">|RSV | FRAG | ATYP | DST.ADDR | DST.PORT |   DATA   |</span><br><span class="line">+----+------+------+----------+----------+----------+</span><br><span class="line">| 2  |  1   |  1   | Variable |    2     | Variable |</span><br><span class="line">+----+------+------+----------+----------+----------+</span><br></pre></td></tr></table></figure>
+
+<p>trim-&gt;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">+------+----------+----------+----------+</span><br><span class="line">| ATYP | DST.ADDR | DST.PORT |   DATA   |</span><br><span class="line">+------+----------+----------+----------+</span><br><span class="line">|  1   | Variable |    2     | Variable |</span><br><span class="line">+------+----------+----------+----------+</span><br></pre></td></tr></table></figure>
+
+<p>-&gt;encrypt</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">+-------+--------------+</span><br><span class="line">|   IV  |    PAYLOAD   |</span><br><span class="line">+-------+--------------+</span><br><span class="line">| Fixed |   Variable   |</span><br><span class="line">+-------+--------------+</span><br></pre></td></tr></table></figure>
+
+<p><b>当local新建的socket收到连接请求时，说明远程向local发送结果，此时对信息进行解密，并且对shadowsocks协议进行适当加工，发回给客户端</b></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">+-------+--------------+</span><br><span class="line">|   IV  |    PAYLOAD   |</span><br><span class="line">+-------+--------------+</span><br><span class="line">| Fixed |   Variable   |</span><br><span class="line">+-------+--------------+</span><br></pre></td></tr></table></figure>
+
+<p>-&gt;decrypt</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">+------+----------+----------+----------+</span><br><span class="line">| ATYP | DST.ADDR | DST.PORT |   DATA   |</span><br><span class="line">+------+----------+----------+----------+</span><br><span class="line">|  1   | Variable |    2     | Variable |</span><br><span class="line">+------+----------+----------+----------+</span><br></pre></td></tr></table></figure>
+
+<p>-&gt;add</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">+----+------+------+----------+----------+----------+</span><br><span class="line">|RSV | FRAG | ATYP | DST.ADDR | DST.PORT |   DATA   |</span><br><span class="line">+----+------+------+----------+----------+----------+</span><br><span class="line">| 2  |  1   |  1   | Variable |    2     | Variable |</span><br><span class="line">+----+------+------+----------+----------+----------+</span><br></pre></td></tr></table></figure>
+
+<p><b>当远程端收到udp handler绑定的端口的事件，说明local端发来请求，远程端对信息进行解密并根据dest服务器/端口的协议类型对其发出tcp连接或者udp连接；</b></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">+-------+--------------+</span><br><span class="line">|   IV  |    PAYLOAD   |</span><br><span class="line">+-------+--------------+</span><br><span class="line">| Fixed |   Variable   |</span><br><span class="line">+-------+--------------+</span><br></pre></td></tr></table></figure>
+
+<p>-&gt;decrypt</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">+------+----------+----------+----------+</span><br><span class="line">| ATYP | DST.ADDR | DST.PORT |   DATA   |</span><br><span class="line">+------+----------+----------+----------+</span><br><span class="line">|  1   | Variable |    2     | Variable |</span><br><span class="line">+------+----------+----------+----------+</span><br></pre></td></tr></table></figure>
+
+<p>-&gt;trim</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">+----------+</span><br><span class="line">|   DATA   |</span><br><span class="line">+----------+</span><br><span class="line">| Variable |</span><br><span class="line">+----------+</span><br></pre></td></tr></table></figure>
+
+<p>-&gt;getaddrinfo-&gt;tcp/udp -&gt;send to dest server via tcp/udp</p>
+<p><b>当远程新建的socket收到连接请求时，说明dest服务器向远程端发出响应，远程端对其进行加密，并且转发给local端</b></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">+----------+</span><br><span class="line">|   DATA   |</span><br><span class="line">+----------+</span><br><span class="line">| Variable |</span><br><span class="line">+----------+</span><br></pre></td></tr></table></figure>
+
+<p>-&gt;add</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">+------+----------+----------+----------+</span><br><span class="line">| ATYP | DST.ADDR | DST.PORT |   DATA   |</span><br><span class="line">+------+----------+----------+----------+</span><br><span class="line">|  1   | Variable |    2     | Variable |</span><br><span class="line">+------+----------+----------+----------+</span><br></pre></td></tr></table></figure>
+
+<p>-&gt;encrypt</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">+-------+--------------+</span><br><span class="line">|   IV  |    PAYLOAD   |</span><br><span class="line">+-------+--------------+</span><br><span class="line">| Fixed |   Variable   |</span><br><span class="line">+-------+--------------+</span><br></pre></td></tr></table></figure>
+
+<p>-&gt;send to local</p>
+<p>在handler函数里面的基本逻辑就是：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">if sock &#x3D;&#x3D; self._server_socket:</span><br><span class="line">self._handle_server()</span><br><span class="line">elif sock and (fd in self._sockets):</span><br><span class="line">self._handle_client(sock)</span><br></pre></td></tr></table></figure>
+<p>协议解析和构建用的struct.pack()和struct.unpack()</p>
+<p>===============================================================</p>
+<p>asyndns.py实现的是一个DNS服务器，封装得相当的好<br>1.1、读取/etc/hosts和/etc/resolv.conf文件，如果没有设置，就设置dns服务器为8.8.8.8和8.8.4.4 1.2、收到tcp handler和udp handler的dns请求之后，建立socket并且向远程服务器发送请求，并把（hostname：callback）加入_hostname_to_cb 1.3、收到响应之后触发callback _hostname_to_cbhostname</p>
+<p>作者全程用二进制构建dns报文，非常值得学习</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"># 请求</span><br><span class="line">#                                 1  1  1  1  1  1</span><br><span class="line">#   0  1  2  3  4  5  6  7  8  9  0  1  2  3  4  5</span><br><span class="line"># +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+</span><br><span class="line"># |                      ID                       |</span><br><span class="line"># +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+</span><br><span class="line"># |QR|   Opcode  |AA|TC|RD|RA|   Z    |   RCODE   |</span><br><span class="line"># +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+</span><br><span class="line"># |                    QDCOUNT                    |</span><br><span class="line"># +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+</span><br><span class="line"># |                    ANCOUNT                    |</span><br><span class="line"># +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+</span><br><span class="line"># |                    NSCOUNT                    |</span><br><span class="line"># +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+</span><br><span class="line"># |                    ARCOUNT                    |</span><br><span class="line"># +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+</span><br></pre></td></tr></table></figure>
+
+<p>响应</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">                               1  1  1  1  1  1</span><br><span class="line">  0  1  2  3  4  5  6  7  8  9  0  1  2  3  4  5</span><br><span class="line">+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+</span><br><span class="line">|                                               |</span><br><span class="line">&#x2F;                                               &#x2F;</span><br><span class="line">&#x2F;                      NAME                     &#x2F;</span><br><span class="line">|                                               |</span><br><span class="line">+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+</span><br><span class="line">|                      TYPE                     |</span><br><span class="line">+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+</span><br><span class="line">|                     CLASS                     |</span><br><span class="line">+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+</span><br><span class="line">|                      TTL                      |</span><br><span class="line">|                                               |</span><br><span class="line">+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+</span><br><span class="line">|                   RDLENGTH                    |</span><br><span class="line">+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--|</span><br><span class="line">&#x2F;                     RDATA                     &#x2F;</span><br><span class="line">&#x2F;                                               &#x2F;</span><br><span class="line">+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+</span><br></pre></td></tr></table></figure>
+
+<p>lru_cache.py实现的是一个缓存</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">self._store &#x3D; </span><br><span class="line">self._time_to_keys &#x3D; collections.defaultdict(list)</span><br><span class="line">self._keys_to_last_time &#x3D; </span><br><span class="line">self._last_visits &#x3D; collections.deque()</span><br></pre></td></tr></table></figure>
+<ol>
+<li>先找访问时间_last_visits中超出timeout的所有键</li>
+<li>然后去找_time_to_keys，找出所有可能过期的键</li>
+<li>因为最早访问时间访问过的键之后可能又访问了，所以要_keys_to_last_time</li>
+<li>找出那些没被访问过的，然后删除</li>
+</ol>
+
+<p><b>文章参考自<a href="https://github.com/CCCube/shadowsocks_analysis" target="_blank" rel="noopener">github</a></b></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/08/20/%E8%A7%A3%E5%89%96shadowsocks%E4%B9%8B%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/" data-id="ck8sepamg005ikstg1em0ao1r" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%BD%91%E7%BB%9C/" rel="tag">网络</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/08/20/UDP-and-TCP-%E5%A5%97%E6%8E%A5%E5%AD%97%E7%BC%96%E7%A8%8B/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          UDP and TCP 套接字编程
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/08/10/Win10-IIS%E9%85%8D%E7%BD%AEPHP%E8%BF%90%E8%A1%8C%E7%8E%AF%E5%A2%83/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Win10 IIS配置PHP运行环境</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/python/">python</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%B9%A0/">前端学习</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%88%91%E7%9A%84%E7%BD%91%E7%AB%99%E5%88%B6%E4%BD%9C%E4%B9%8B%E6%97%85/">我的网站制作之旅</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%96%87%E5%AD%A6/">文学</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%9C%8D%E5%8A%A1%E5%99%A8%E8%84%9A%E6%9C%AC%E8%AF%AD%E8%A8%80/">服务器脚本语言</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%B8%B8%E6%88%8F/">游戏</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/">编程语言</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BE%8E%E6%96%87%E6%AC%A3%E8%B5%8F/">美文欣赏</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%A1%E5%88%92/">计划</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">计算机操作系统</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">计算机网络</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django/" rel="tag">Django</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/" rel="tag">Java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Javascript/" rel="tag">Javascript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/" rel="tag">Python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/google%E6%90%9C%E7%B4%A2%E7%A1%AE%E8%AE%A4%E6%96%87%E4%BB%B6/" rel="tag">google搜索确认文件</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/html/" rel="tag">html</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/" rel="tag">java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/javascript/" rel="tag">javascript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/plan/" rel="tag">plan</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/" rel="tag">python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/test/" rel="tag">test</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E3%80%90%E6%B8%B8%E6%88%8F%E4%BB%8B%E7%BB%8D%E3%80%91/" rel="tag">【游戏介绍】</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AD%A6%E4%B9%A0Python/" rel="tag">学习Python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AD%A6%E4%B9%A0%E5%B0%8F%E7%BB%93/" rel="tag">学习小结</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" rel="tag">学习笔记</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%84%9F%E6%83%B3%E7%BE%8E%E6%96%87/" rel="tag">感想美文</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%99%E7%A8%8B/" rel="tag">教程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%96%87%E5%AD%A6/" rel="tag">文学</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%96%87%E5%AD%A6%E8%B5%8F%E6%9E%90%E8%AF%BB%E5%90%8E%E6%84%9F/" rel="tag">文学赏析读后感</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8%E8%84%9A%E6%9C%ACphp%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/" rel="tag">服务器脚本php环境配置</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" rel="tag">正则表达式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%88%AC%E8%99%AB/" rel="tag">爬虫</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%94%9F%E4%BA%A7%E5%AE%9E%E4%B9%A0/" rel="tag">生产实习</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%94%B5%E5%BD%B1/" rel="tag">电影</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BD%91%E7%BB%9C/" rel="tag">网络</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BD%91%E9%A1%B5%E5%88%B6%E4%BD%9C/" rel="tag">网页制作</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BD%91%E9%A1%B5%E9%83%A8%E7%BD%B2/" rel="tag">网页部署</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BE%8E%E6%96%87/" rel="tag">美文</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AF%8D%E9%A2%91%E5%88%86%E6%9E%90%E7%94%9F%E6%88%90%E8%AF%8D%E4%BA%91/" rel="tag">词频分析生成词云</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AF%97%E8%AF%8D/" rel="tag">诗词</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AF%BB%E4%B9%A6/" rel="tag">读书</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" rel="tag">读书笔记</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%97%B2%E8%B0%88/" rel="tag">闲谈</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%A1%B9%E7%9B%AE/" rel="tag">项目</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Django/" style="font-size: 10px;">Django</a> <a href="/tags/Java/" style="font-size: 17.5px;">Java</a> <a href="/tags/Javascript/" style="font-size: 10px;">Javascript</a> <a href="/tags/Python/" style="font-size: 15px;">Python</a> <a href="/tags/google%E6%90%9C%E7%B4%A2%E7%A1%AE%E8%AE%A4%E6%96%87%E4%BB%B6/" style="font-size: 10px;">google搜索确认文件</a> <a href="/tags/html/" style="font-size: 17.5px;">html</a> <a href="/tags/java/" style="font-size: 20px;">java</a> <a href="/tags/javascript/" style="font-size: 12.5px;">javascript</a> <a href="/tags/plan/" style="font-size: 10px;">plan</a> <a href="/tags/python/" style="font-size: 15px;">python</a> <a href="/tags/test/" style="font-size: 10px;">test</a> <a href="/tags/%E3%80%90%E6%B8%B8%E6%88%8F%E4%BB%8B%E7%BB%8D%E3%80%91/" style="font-size: 10px;">【游戏介绍】</a> <a href="/tags/%E5%AD%A6%E4%B9%A0Python/" style="font-size: 10px;">学习Python</a> <a href="/tags/%E5%AD%A6%E4%B9%A0%E5%B0%8F%E7%BB%93/" style="font-size: 17.5px;">学习小结</a> <a href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" style="font-size: 10px;">学习笔记</a> <a href="/tags/%E6%84%9F%E6%83%B3%E7%BE%8E%E6%96%87/" style="font-size: 10px;">感想美文</a> <a href="/tags/%E6%95%99%E7%A8%8B/" style="font-size: 10px;">教程</a> <a href="/tags/%E6%96%87%E5%AD%A6/" style="font-size: 12.5px;">文学</a> <a href="/tags/%E6%96%87%E5%AD%A6%E8%B5%8F%E6%9E%90%E8%AF%BB%E5%90%8E%E6%84%9F/" style="font-size: 15px;">文学赏析读后感</a> <a href="/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8%E8%84%9A%E6%9C%ACphp%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/" style="font-size: 10px;">服务器脚本php环境配置</a> <a href="/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" style="font-size: 10px;">正则表达式</a> <a href="/tags/%E7%88%AC%E8%99%AB/" style="font-size: 10px;">爬虫</a> <a href="/tags/%E7%94%9F%E4%BA%A7%E5%AE%9E%E4%B9%A0/" style="font-size: 10px;">生产实习</a> <a href="/tags/%E7%94%B5%E5%BD%B1/" style="font-size: 10px;">电影</a> <a href="/tags/%E7%AE%97%E6%B3%95/" style="font-size: 12.5px;">算法</a> <a href="/tags/%E7%BD%91%E7%BB%9C/" style="font-size: 17.5px;">网络</a> <a href="/tags/%E7%BD%91%E9%A1%B5%E5%88%B6%E4%BD%9C/" style="font-size: 12.5px;">网页制作</a> <a href="/tags/%E7%BD%91%E9%A1%B5%E9%83%A8%E7%BD%B2/" style="font-size: 10px;">网页部署</a> <a href="/tags/%E7%BE%8E%E6%96%87/" style="font-size: 10px;">美文</a> <a href="/tags/%E8%AF%8D%E9%A2%91%E5%88%86%E6%9E%90%E7%94%9F%E6%88%90%E8%AF%8D%E4%BA%91/" style="font-size: 10px;">词频分析生成词云</a> <a href="/tags/%E8%AF%97%E8%AF%8D/" style="font-size: 10px;">诗词</a> <a href="/tags/%E8%AF%BB%E4%B9%A6/" style="font-size: 12.5px;">读书</a> <a href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" style="font-size: 12.5px;">读书笔记</a> <a href="/tags/%E9%97%B2%E8%B0%88/" style="font-size: 10px;">闲谈</a> <a href="/tags/%E9%A1%B9%E7%9B%AE/" style="font-size: 10px;">项目</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">四月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">三月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">二月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">一月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">十月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">八月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">三月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">一月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">十二月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">十一月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">八月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">七月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">六月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">五月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">四月 2018</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2020/04/09/test-my-site/">test_my_site</a>
+          </li>
+        
+          <li>
+            <a href="/2020/04/09/hello-world/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/2020/04/08/java%E6%B1%82%E8%B4%A8%E6%95%B0%E7%9A%84%E6%96%B9%E6%B3%95/">java求质数的方法</a>
+          </li>
+        
+          <li>
+            <a href="/2020/03/11/file%E5%AF%B9%E8%B1%A1/">file对象</a>
+          </li>
+        
+          <li>
+            <a href="/2020/03/10/java-%E4%BD%BF%E7%94%A8list/">java-使用list</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2020 Larnonudo chan<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>

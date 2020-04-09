@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>python 对失物招领群进行词频分析 | Shengqian&#39;s Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="python对失物招领群消息进行词频分析并生成词云">
+<meta property="og:type" content="article">
+<meta property="og:title" content="python 对失物招领群进行词频分析">
+<meta property="og:url" content="http://yoursite.com/2018/11/13/python-%E5%AF%B9%E5%A4%B1%E7%89%A9%E6%8B%9B%E9%A2%86%E7%BE%A4%E8%BF%9B%E8%A1%8C%E8%AF%8D%E9%A2%91%E5%88%86%E6%9E%90/index.html">
+<meta property="og:site_name" content="Shengqian&#39;s Blog">
+<meta property="og:description" content="python对失物招领群消息进行词频分析并生成词云">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://yoursite.com/2018/11/13/python-%E5%AF%B9%E5%A4%B1%E7%89%A9%E6%8B%9B%E9%A2%86%E7%BE%A4%E8%BF%9B%E8%A1%8C%E8%AF%8D%E9%A2%91%E5%88%86%E6%9E%90/python-%E5%AF%B9%E5%A4%B1%E7%89%A9%E6%8B%9B%E9%A2%86%E7%BE%A4%E8%BF%9B%E8%A1%8C%E8%AF%8D%E9%A2%91%E5%88%86%E6%9E%90/1.png">
+<meta property="og:image" content="http://yoursite.com/2018/11/13/python-%E5%AF%B9%E5%A4%B1%E7%89%A9%E6%8B%9B%E9%A2%86%E7%BE%A4%E8%BF%9B%E8%A1%8C%E8%AF%8D%E9%A2%91%E5%88%86%E6%9E%90/python-%E5%AF%B9%E5%A4%B1%E7%89%A9%E6%8B%9B%E9%A2%86%E7%BE%A4%E8%BF%9B%E8%A1%8C%E8%AF%8D%E9%A2%91%E5%88%86%E6%9E%90/2.png">
+<meta property="og:image" content="http://yoursite.com/2018/11/13/python-%E5%AF%B9%E5%A4%B1%E7%89%A9%E6%8B%9B%E9%A2%86%E7%BE%A4%E8%BF%9B%E8%A1%8C%E8%AF%8D%E9%A2%91%E5%88%86%E6%9E%90/python-%E5%AF%B9%E5%A4%B1%E7%89%A9%E6%8B%9B%E9%A2%86%E7%BE%A4%E8%BF%9B%E8%A1%8C%E8%AF%8D%E9%A2%91%E5%88%86%E6%9E%90/%E5%AE%89%E5%B7%A5%E7%A8%8B%E5%A4%B1%E7%89%A9%E6%8B%9B%E9%A2%86%E7%BE%A41%E8%AF%8D%E9%A2%91%E5%88%86%E6%9E%90.png">
+<meta property="og:image" content="http://yoursite.com/2018/11/13/python-%E5%AF%B9%E5%A4%B1%E7%89%A9%E6%8B%9B%E9%A2%86%E7%BE%A4%E8%BF%9B%E8%A1%8C%E8%AF%8D%E9%A2%91%E5%88%86%E6%9E%90/python-%E5%AF%B9%E5%A4%B1%E7%89%A9%E6%8B%9B%E9%A2%86%E7%BE%A4%E8%BF%9B%E8%A1%8C%E8%AF%8D%E9%A2%91%E5%88%86%E6%9E%90/%E7%AC%AC%E4%B8%89%E5%B1%8A%E5%8D%83%E5%AF%BB%E5%A4%B1%E7%89%A9%E6%8B%9B%E9%A2%86%E7%BE%A4%E8%AF%8D%E4%BA%91%E5%88%86%E6%9E%90.png">
+<meta property="og:image" content="http://yoursite.com/2018/11/13/python-%E5%AF%B9%E5%A4%B1%E7%89%A9%E6%8B%9B%E9%A2%86%E7%BE%A4%E8%BF%9B%E8%A1%8C%E8%AF%8D%E9%A2%91%E5%88%86%E6%9E%90/python-%E5%AF%B9%E5%A4%B1%E7%89%A9%E6%8B%9B%E9%A2%86%E7%BE%A4%E8%BF%9B%E8%A1%8C%E8%AF%8D%E9%A2%91%E5%88%86%E6%9E%90/%E5%A4%B1%E7%89%A9%E6%8B%9B%E9%A2%86%E4%BA%A4%E6%B5%81%E7%BE%A4%E8%AF%8D%E9%A2%91%E5%88%86%E6%9E%90.png">
+<meta property="og:image" content="http://yoursite.com/2018/11/13/python-%E5%AF%B9%E5%A4%B1%E7%89%A9%E6%8B%9B%E9%A2%86%E7%BE%A4%E8%BF%9B%E8%A1%8C%E8%AF%8D%E9%A2%91%E5%88%86%E6%9E%90/python-%E5%AF%B9%E5%A4%B1%E7%89%A9%E6%8B%9B%E9%A2%86%E7%BE%A4%E8%BF%9B%E8%A1%8C%E8%AF%8D%E9%A2%91%E5%88%86%E6%9E%90/%E6%A0%A1%E5%9B%AD%E6%B7%98%E6%B7%98%E6%97%A7%E8%AF%8D%E9%A2%91%E5%88%86%E6%9E%90.png">
+<meta property="og:image" content="http://yoursite.com/2018/11/13/python-%E5%AF%B9%E5%A4%B1%E7%89%A9%E6%8B%9B%E9%A2%86%E7%BE%A4%E8%BF%9B%E8%A1%8C%E8%AF%8D%E9%A2%91%E5%88%86%E6%9E%90/python-%E5%AF%B9%E5%A4%B1%E7%89%A9%E6%8B%9B%E9%A2%86%E7%BE%A4%E8%BF%9B%E8%A1%8C%E8%AF%8D%E9%A2%91%E5%88%86%E6%9E%90/%E5%BC%82%E6%AD%A5%E8%AF%BB%E8%80%85%E7%BE%A4%E8%AF%8D%E9%A2%91%E5%88%86%E6%9E%90.png">
+<meta property="og:image" content="http://yoursite.com/2018/11/13/python-%E5%AF%B9%E5%A4%B1%E7%89%A9%E6%8B%9B%E9%A2%86%E7%BE%A4%E8%BF%9B%E8%A1%8C%E8%AF%8D%E9%A2%91%E5%88%86%E6%9E%90/python-%E5%AF%B9%E5%A4%B1%E7%89%A9%E6%8B%9B%E9%A2%86%E7%BE%A4%E8%BF%9B%E8%A1%8C%E8%AF%8D%E9%A2%91%E5%88%86%E6%9E%90/%E5%A4%B1%E7%89%A9%E6%8B%9B%E9%A2%86%E7%BE%A41%E8%AF%8D%E9%A2%91%E7%BB%9F%E8%AE%A1.png">
+<meta property="article:published_time" content="2018-11-13T03:48:53.000Z">
+<meta property="article:modified_time" content="2018-11-14T23:28:38.234Z">
+<meta property="article:author" content="Larnonudo chan">
+<meta property="article:tag" content="词频分析生成词云">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/2018/11/13/python-%E5%AF%B9%E5%A4%B1%E7%89%A9%E6%8B%9B%E9%A2%86%E7%BE%A4%E8%BF%9B%E8%A1%8C%E8%AF%8D%E9%A2%91%E5%88%86%E6%9E%90/python-%E5%AF%B9%E5%A4%B1%E7%89%A9%E6%8B%9B%E9%A2%86%E7%BE%A4%E8%BF%9B%E8%A1%8C%E8%AF%8D%E9%A2%91%E5%88%86%E6%9E%90/1.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Shengqian&#39;s Blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Shengqian&#39;s Blog</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">每一个不曾起舞的日子都是对生命的辜负</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-python-对失物招领群进行词频分析" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/11/13/python-%E5%AF%B9%E5%A4%B1%E7%89%A9%E6%8B%9B%E9%A2%86%E7%BE%A4%E8%BF%9B%E8%A1%8C%E8%AF%8D%E9%A2%91%E5%88%86%E6%9E%90/" class="article-date">
+  <time datetime="2018-11-13T03:48:53.000Z" itemprop="datePublished">2018-11-13</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      python 对失物招领群进行词频分析
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>上午两节课睡过了，就没去了，吃了个早饭，还有一堆事情没有做，就开始先把昨晚没弄完的python词频分析的代码给写完了。做一个记录吧，防止以后用得着</p>
+<h1>工具</h1>
+工具：python3.7 Vscode wordcloud jieba 等
+
+<h1>获取数据源</h1>
+点击Tim左上角头像
+<img src="python-对失物招领群进行词频分析/1.png">
+<img src="python-对失物招领群进行词频分析/2.png">
+选择安工程失物招领群1，导出消息记录
+要用txt导出到任意盘，接下来就是要对导出的文件进行数据分析
+
+<h1>下载对应库</h1>
+到官方网站下载对应包
+<a href="https://www.lfd.uci.edu/~gohlke/pythonlibs/#wordcloud" target="_blank" rel="noopener">传送门</a>
+<b>重要提醒：通过cmd中输入 Python -V 来查看python版本并下载相应的安装包，同时注意python是32位的还是64位的，我这里是32位的</b>
+下载完成后，进入刚刚下载该文件的路径，使用pip3 install wordcloud-1.3.3-cp-37-cp-37-win_amd32-whl命令开始安装，
+这样 wordcloud就安装完成了。
+接下来还要安装jieba matplotlib scipy
+均使用 pip3 install xxx 即可
+
+<h1>代码</h1>
+<ol>
+<li>首先过滤掉txt文件中无用的信息，比如时间，以及聊天的名片，避免词云中都是无效信息，并用jieba进行分词</li>
+</ol>
+
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">import jieba</span><br><span class="line"> </span><br><span class="line">newtext &#x3D; []</span><br><span class="line"># 打开E盘下的聊天记录文件qq.txt</span><br><span class="line">for word in open(&#39;E:\\qq.txt&#39;, &#39;r&#39;, encoding&#x3D;&#39;utf-8&#39;):</span><br><span class="line">    tmp &#x3D; word[0:4]</span><br><span class="line">    if (tmp &#x3D;&#x3D; &quot;2017&quot; or tmp &#x3D;&#x3D; &quot;&#x3D;&#x3D;&#x3D;&#x3D;&quot;or tmp &#x3D;&#x3D; &quot;2018&quot;):  # 过滤掉聊天记录的时间和qq名称</span><br><span class="line">        continue</span><br><span class="line">    tmp &#x3D; word[0:2]</span><br><span class="line">    if (tmp[0] &#x3D;&#x3D; &#39;[&#39; or tmp[0] &#x3D;&#x3D; &#39;&#x2F;&#39;or tmp[0] &#x3D;&#x3D; &#39;@&#39;):  # 过滤掉图片和表情，例如[图片]，&#x2F;滑稽</span><br><span class="line">        continue</span><br><span class="line">    newtext.append(word)</span><br><span class="line"># 将过滤掉图片和表情和时间信息和qq名称剩下的文字重新写入E盘下的q1.txt文件中去</span><br><span class="line">with open(&#39;E:\\q1.txt&#39;, &#39;w&#39;, encoding&#x3D;&#39;utf-8&#39;) as f:</span><br><span class="line">    for i in newtext:</span><br><span class="line">        f.write(i)</span><br><span class="line"> # 打开新生成的聊天记录文件</span><br><span class="line">text &#x3D; open(&#39;E:\\q1.txt&#39;, &#39;r&#39;, encoding&#x3D;&#39;utf-8&#39;).read()</span><br><span class="line">word_jieba &#x3D; jieba.cut(text, cut_all&#x3D;True)</span><br><span class="line">word_split &#x3D; &quot; &quot;.join(word_jieba)</span><br></pre></td></tr></table></figure>
+<p>通过这步在E盘中得到了一个q1.txt文件，打开会发现变的整洁干净了许多.</p>
+<p>2.再新建一个.py文件，用到wordcloud库来绘制词云图</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">from wordcloud import WordCloud,STOPWORDS,ImageColorGenerator</span><br><span class="line">import matplotlib.pyplot as plt</span><br><span class="line">from scipy.misc import imread</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">text &#x3D; open(&#39;E:\\q1.txt&#39;, &#39;r&#39;, encoding&#x3D;&#39;utf-8&#39;).read()  # 打开过滤好的txt文件</span><br><span class="line">print(text)</span><br><span class="line">bg_pic &#x3D; imread(&#39;E:\\sjt.jpg&#39;)     # 导入词云背景</span><br><span class="line">wordcloud &#x3D; WordCloud(mask&#x3D;bg_pic, background_color&#x3D;&#39;white&#39;, scale&#x3D;1.5, font_path&#x3D;&#39;C:&#x2F;Windows&#x2F;Fonts&#x2F;simhei.ttf&#39;, width&#x3D;1000,height&#x3D;600,stopwords&#x3D;&#123;&#39;表情&#39;,&#39;糊脸&#39;,&#39;拍桌&#39;,&#39;拍头&#39;&#125;,min_font_size&#x3D;10,max_font_size&#x3D;36,font_step&#x3D;4,</span><br><span class="line">).generate(text)    # 定义词云的各种变量，可以控制词云的形式，这里的控制变量可以去网上查找，stopwords&#x3D;&#123;&#39;表情&#39;,&#39;糊脸&#39;,&#39;拍桌&#39;,&#39;拍头&#39;&#39;是为了过滤掉里面的部分表情信息</span><br><span class="line">image_colors &#x3D; ImageColorGenerator(bg_pic)</span><br><span class="line">plt.imshow(wordcloud)</span><br><span class="line">plt.axis(&#39;off&#39;)</span><br><span class="line">plt.show()</span><br><span class="line">wordcloud.to_file(&#39;E:\\text.jpg&#39;)   # 输出词云</span><br></pre></td></tr></table></figure>
+
+<p>做出的结果图</p>
+<img src="python-对失物招领群进行词频分析/安工程失物招领群1词频分析.png">
+<img src="python-对失物招领群进行词频分析/第三届千寻失物招领群词云分析.png">
+<img src="python-对失物招领群进行词频分析/失物招领交流群词频分析.png">
+<img src="python-对失物招领群进行词频分析/校园淘淘旧词频分析.png">
+<img src="python-对失物招领群进行词频分析/异步读者群词频分析.png">
+
+<p>挺好玩的，就多测试了几个群，就这样</p>
+<h1>对词频出现次数进行统计，并生成统计表</h1>
+
+<p>直接上代码:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">import jieba</span><br><span class="line"> </span><br><span class="line">fr&#x3D;open(&#39;q1.txt&#39;,&#39;r&#39;,encoding&#x3D;&#39;utf-8&#39;)   &#x2F;&#x2F;打开上面经过分词后的txt文件</span><br><span class="line"> </span><br><span class="line">s&#x3D;&quot;&quot;</span><br><span class="line">data&#x3D;&#123;&#125;</span><br><span class="line">for line in fr:</span><br><span class="line">    line&#x3D;line.strip()</span><br><span class="line">    if len(line)&#x3D;&#x3D;0:</span><br><span class="line">        continue</span><br><span class="line">    if line[0]&#x3D;&#x3D;&#39;2&#39;:</span><br><span class="line">        continue</span><br><span class="line">    for x in range(0,len(line)):</span><br><span class="line">        if line[x] in [&#39; &#39;,&#39;\t&#39;,&#39;\n&#39;,&#39;。&#39;,&#39;，&#39;,&#39;[&#39;, &#39;]&#39;, &#39;（&#39;, &#39;）&#39;, &#39;:&#39;, &#39;-&#39;,</span><br><span class="line">&#39;？&#39;, &#39;！&#39;, &#39;《&#39;, &#39;》&#39;, &#39;、&#39;, &#39;；&#39;, &#39;“&#39;, &#39;”&#39;, &#39;……&#39;,&#39;0&#39;,&#39;1&#39;,&#39;2&#39;,&#39;3&#39;,&#39;4&#39;,&#39;5&#39;,&#39;6&#39;,&#39;7&#39;,&#39;8&#39;,&#39;9&#39;,&#39;&#x3D;&#39;,&#39;~&#39;,&#39;…&#39;]: &#x2F;&#x2F;去除一些不希望被统计的东西</span><br><span class="line">            continue</span><br><span class="line">        s+&#x3D;str(line[x])</span><br><span class="line">print(s)</span><br><span class="line"> </span><br><span class="line">seg_list &#x3D; jieba.cut(s, cut_all&#x3D;False, HMM&#x3D;True)</span><br><span class="line">for word in seg_list:</span><br><span class="line">    if len(word)&gt;&#x3D;2:</span><br><span class="line">        if not data.__contains__(word):</span><br><span class="line">            data[word]&#x3D;0</span><br><span class="line">        data[word]+&#x3D;1</span><br><span class="line">    </span><br><span class="line">data&#x3D;sorted(data.items(),key&#x3D;lambda d:d[1],reverse&#x3D;True)</span><br><span class="line"> </span><br><span class="line">fw&#x3D;open(&#39;安工程失物招领群1词频统计.csv&#39;,&#39;w&#39;,encoding&#x3D;&#39;utf-8&#39;)     &#x2F;&#x2F;生成词频统计表</span><br><span class="line">fw.write(str(len(data))+&#39;\n&#39;)</span><br><span class="line">for item in data:</span><br><span class="line">    fw.write(item[0]+&#39;,&#39;+str(item[1])+&#39;\n&#39;)</span><br><span class="line">fr.close()</span><br><span class="line">fw.close()</span><br></pre></td></tr></table></figure>
+<p>这段代码结合上面分词的代码，即可生成统计表，近期来群里关键字出现的字眼一目了然<br><img src="python-对失物招领群进行词频分析/失物招领群1词频统计.png"><br>失物招领群1词频统计<br>谢谢的次数即代表我们一个月发过的消息总数，因为我们要求每条消息后面必须加个谢谢<br>由图可见，我们一个月发了1910条消息<br>其中校园卡类876条<br>寻物消息585条<br>失物消息526条<br>身份证消息41条  等等</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/11/13/python-%E5%AF%B9%E5%A4%B1%E7%89%A9%E6%8B%9B%E9%A2%86%E7%BE%A4%E8%BF%9B%E8%A1%8C%E8%AF%8D%E9%A2%91%E5%88%86%E6%9E%90/" data-id="ck8sepakk002xkstg2kpvg35o" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E8%AF%8D%E9%A2%91%E5%88%86%E6%9E%90%E7%94%9F%E6%88%90%E8%AF%8D%E4%BA%91/" rel="tag">词频分析生成词云</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/12/09/leetcode-twoSum/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          leetcode twoSum
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/11/05/Brave-new-world/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Brave new world</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/python/">python</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%B9%A0/">前端学习</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%88%91%E7%9A%84%E7%BD%91%E7%AB%99%E5%88%B6%E4%BD%9C%E4%B9%8B%E6%97%85/">我的网站制作之旅</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%96%87%E5%AD%A6/">文学</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%9C%8D%E5%8A%A1%E5%99%A8%E8%84%9A%E6%9C%AC%E8%AF%AD%E8%A8%80/">服务器脚本语言</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%B8%B8%E6%88%8F/">游戏</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/">编程语言</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BE%8E%E6%96%87%E6%AC%A3%E8%B5%8F/">美文欣赏</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%A1%E5%88%92/">计划</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">计算机操作系统</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">计算机网络</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django/" rel="tag">Django</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/" rel="tag">Java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Javascript/" rel="tag">Javascript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/" rel="tag">Python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/google%E6%90%9C%E7%B4%A2%E7%A1%AE%E8%AE%A4%E6%96%87%E4%BB%B6/" rel="tag">google搜索确认文件</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/html/" rel="tag">html</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/" rel="tag">java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/javascript/" rel="tag">javascript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/plan/" rel="tag">plan</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/" rel="tag">python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/test/" rel="tag">test</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E3%80%90%E6%B8%B8%E6%88%8F%E4%BB%8B%E7%BB%8D%E3%80%91/" rel="tag">【游戏介绍】</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AD%A6%E4%B9%A0Python/" rel="tag">学习Python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AD%A6%E4%B9%A0%E5%B0%8F%E7%BB%93/" rel="tag">学习小结</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" rel="tag">学习笔记</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%84%9F%E6%83%B3%E7%BE%8E%E6%96%87/" rel="tag">感想美文</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%99%E7%A8%8B/" rel="tag">教程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%96%87%E5%AD%A6/" rel="tag">文学</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%96%87%E5%AD%A6%E8%B5%8F%E6%9E%90%E8%AF%BB%E5%90%8E%E6%84%9F/" rel="tag">文学赏析读后感</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8%E8%84%9A%E6%9C%ACphp%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/" rel="tag">服务器脚本php环境配置</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" rel="tag">正则表达式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%88%AC%E8%99%AB/" rel="tag">爬虫</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%94%9F%E4%BA%A7%E5%AE%9E%E4%B9%A0/" rel="tag">生产实习</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%94%B5%E5%BD%B1/" rel="tag">电影</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BD%91%E7%BB%9C/" rel="tag">网络</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BD%91%E9%A1%B5%E5%88%B6%E4%BD%9C/" rel="tag">网页制作</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BD%91%E9%A1%B5%E9%83%A8%E7%BD%B2/" rel="tag">网页部署</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BE%8E%E6%96%87/" rel="tag">美文</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AF%8D%E9%A2%91%E5%88%86%E6%9E%90%E7%94%9F%E6%88%90%E8%AF%8D%E4%BA%91/" rel="tag">词频分析生成词云</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AF%97%E8%AF%8D/" rel="tag">诗词</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AF%BB%E4%B9%A6/" rel="tag">读书</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" rel="tag">读书笔记</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%97%B2%E8%B0%88/" rel="tag">闲谈</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%A1%B9%E7%9B%AE/" rel="tag">项目</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Django/" style="font-size: 10px;">Django</a> <a href="/tags/Java/" style="font-size: 17.5px;">Java</a> <a href="/tags/Javascript/" style="font-size: 10px;">Javascript</a> <a href="/tags/Python/" style="font-size: 15px;">Python</a> <a href="/tags/google%E6%90%9C%E7%B4%A2%E7%A1%AE%E8%AE%A4%E6%96%87%E4%BB%B6/" style="font-size: 10px;">google搜索确认文件</a> <a href="/tags/html/" style="font-size: 17.5px;">html</a> <a href="/tags/java/" style="font-size: 20px;">java</a> <a href="/tags/javascript/" style="font-size: 12.5px;">javascript</a> <a href="/tags/plan/" style="font-size: 10px;">plan</a> <a href="/tags/python/" style="font-size: 15px;">python</a> <a href="/tags/test/" style="font-size: 10px;">test</a> <a href="/tags/%E3%80%90%E6%B8%B8%E6%88%8F%E4%BB%8B%E7%BB%8D%E3%80%91/" style="font-size: 10px;">【游戏介绍】</a> <a href="/tags/%E5%AD%A6%E4%B9%A0Python/" style="font-size: 10px;">学习Python</a> <a href="/tags/%E5%AD%A6%E4%B9%A0%E5%B0%8F%E7%BB%93/" style="font-size: 17.5px;">学习小结</a> <a href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" style="font-size: 10px;">学习笔记</a> <a href="/tags/%E6%84%9F%E6%83%B3%E7%BE%8E%E6%96%87/" style="font-size: 10px;">感想美文</a> <a href="/tags/%E6%95%99%E7%A8%8B/" style="font-size: 10px;">教程</a> <a href="/tags/%E6%96%87%E5%AD%A6/" style="font-size: 12.5px;">文学</a> <a href="/tags/%E6%96%87%E5%AD%A6%E8%B5%8F%E6%9E%90%E8%AF%BB%E5%90%8E%E6%84%9F/" style="font-size: 15px;">文学赏析读后感</a> <a href="/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8%E8%84%9A%E6%9C%ACphp%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/" style="font-size: 10px;">服务器脚本php环境配置</a> <a href="/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" style="font-size: 10px;">正则表达式</a> <a href="/tags/%E7%88%AC%E8%99%AB/" style="font-size: 10px;">爬虫</a> <a href="/tags/%E7%94%9F%E4%BA%A7%E5%AE%9E%E4%B9%A0/" style="font-size: 10px;">生产实习</a> <a href="/tags/%E7%94%B5%E5%BD%B1/" style="font-size: 10px;">电影</a> <a href="/tags/%E7%AE%97%E6%B3%95/" style="font-size: 12.5px;">算法</a> <a href="/tags/%E7%BD%91%E7%BB%9C/" style="font-size: 17.5px;">网络</a> <a href="/tags/%E7%BD%91%E9%A1%B5%E5%88%B6%E4%BD%9C/" style="font-size: 12.5px;">网页制作</a> <a href="/tags/%E7%BD%91%E9%A1%B5%E9%83%A8%E7%BD%B2/" style="font-size: 10px;">网页部署</a> <a href="/tags/%E7%BE%8E%E6%96%87/" style="font-size: 10px;">美文</a> <a href="/tags/%E8%AF%8D%E9%A2%91%E5%88%86%E6%9E%90%E7%94%9F%E6%88%90%E8%AF%8D%E4%BA%91/" style="font-size: 10px;">词频分析生成词云</a> <a href="/tags/%E8%AF%97%E8%AF%8D/" style="font-size: 10px;">诗词</a> <a href="/tags/%E8%AF%BB%E4%B9%A6/" style="font-size: 12.5px;">读书</a> <a href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" style="font-size: 12.5px;">读书笔记</a> <a href="/tags/%E9%97%B2%E8%B0%88/" style="font-size: 10px;">闲谈</a> <a href="/tags/%E9%A1%B9%E7%9B%AE/" style="font-size: 10px;">项目</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">四月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">三月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">二月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">一月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">十月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">八月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">三月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">一月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">十二月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">十一月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">八月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">七月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">六月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">五月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">四月 2018</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2020/04/09/test-my-site/">test_my_site</a>
+          </li>
+        
+          <li>
+            <a href="/2020/04/09/hello-world/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/2020/04/08/java%E6%B1%82%E8%B4%A8%E6%95%B0%E7%9A%84%E6%96%B9%E6%B3%95/">java求质数的方法</a>
+          </li>
+        
+          <li>
+            <a href="/2020/03/11/file%E5%AF%B9%E8%B1%A1/">file对象</a>
+          </li>
+        
+          <li>
+            <a href="/2020/03/10/java-%E4%BD%BF%E7%94%A8list/">java-使用list</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2020 Larnonudo chan<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>

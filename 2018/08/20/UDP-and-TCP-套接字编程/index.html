@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>UDP and TCP 套接字编程 | Shengqian&#39;s Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="TCP and UDP 套接字编程">
+<meta property="og:type" content="article">
+<meta property="og:title" content="UDP and TCP 套接字编程">
+<meta property="og:url" content="http://yoursite.com/2018/08/20/UDP-and-TCP-%E5%A5%97%E6%8E%A5%E5%AD%97%E7%BC%96%E7%A8%8B/index.html">
+<meta property="og:site_name" content="Shengqian&#39;s Blog">
+<meta property="og:description" content="TCP and UDP 套接字编程">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://yoursite.com/2018/08/20/UDP-and-TCP-%E5%A5%97%E6%8E%A5%E5%AD%97%E7%BC%96%E7%A8%8B/UDP-and-TCP-%E5%A5%97%E6%8E%A5%E5%AD%97%E7%BC%96%E7%A8%8B/1.png">
+<meta property="og:image" content="http://yoursite.com/2018/08/20/UDP-and-TCP-%E5%A5%97%E6%8E%A5%E5%AD%97%E7%BC%96%E7%A8%8B/UDP-and-TCP-%E5%A5%97%E6%8E%A5%E5%AD%97%E7%BC%96%E7%A8%8B/2.png">
+<meta property="article:published_time" content="2018-08-20T12:49:27.000Z">
+<meta property="article:modified_time" content="2018-08-21T01:45:52.686Z">
+<meta property="article:author" content="Larnonudo chan">
+<meta property="article:tag" content="网络">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/2018/08/20/UDP-and-TCP-%E5%A5%97%E6%8E%A5%E5%AD%97%E7%BC%96%E7%A8%8B/UDP-and-TCP-%E5%A5%97%E6%8E%A5%E5%AD%97%E7%BC%96%E7%A8%8B/1.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Shengqian&#39;s Blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Shengqian&#39;s Blog</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">每一个不曾起舞的日子都是对生命的辜负</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-UDP-and-TCP-套接字编程" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/08/20/UDP-and-TCP-%E5%A5%97%E6%8E%A5%E5%AD%97%E7%BC%96%E7%A8%8B/" class="article-date">
+  <time datetime="2018-08-20T12:49:27.000Z" itemprop="datePublished">2018-08-20</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">计算机网络</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      UDP and TCP 套接字编程
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>今天，在家里闲着没什么事情做，把《计算机网络-自顶向下》这本书看了一些，看到TCP和UDP套接字编程这一节，觉得颇有趣，就想亲自来捣鼓捣鼓，因为白天在复习c语言数据结构，所以这件事情就留在刚刚完成了，前后用了不到20分钟就搞定了，嘿嘿，那么现在来开始吧。先来简单介绍一下什么是TCP套接字编程以及什么是UDP套接字编程</p>
+<h1>UDP套接字编程</h1>
+运行在不同机器上的进程彼此通过套接字发送报文来进行通信。我们说过每个进程就好比是一座房子，该进程的套接字就好比是一扇门。应用程序位于房子中门的一侧；运输层位于该门朝外的一侧。应用程序开发者在套接字的应用层一侧可以控制所有东西；然而，它几乎无法控制运输层一侧。
+
+<p>现在我们仔细观察使用UDP套接字的两个通信进程之间的交互。在发送进程能够将数据分组推出套接字之门之前，当使用UDP时，必须先将目的地址附于该分组之上。在该分组传过发送方的套接字之后，因特网将使用该目的地址通过因特网为该分组选路到接受该进程的套接字。当分组到达接收套接字时，接受进程将通过套接字取回分组，进而检查分组的内容并适当采取适当的动作。</p>
+<p>因此现在你可能想知道，附在分组上的目的地址包含了什么？如你所期待的，目的地址的ip地址是目的地址的主要部分。通过在分组中包括目的地址的ip地址，因特网中的路由器将能够通过因特网将分组选路到目的主机。但是因为一台主机可能运行许多网络应用进程，每个进程具有一个或多个套接字，所以在目的主机指定特定的套接字也是必要的。当生成一个套接字时，就为它分配一个<b>端口号</b>(port number)的标识符。因此，如你所期待的，分组的目的地址也包括该套接字的端口号。归纳起来，发送进程为分组附上的目的地址是由目的主机的ip地址和目的地的套接字的端口号组成。此外，如我们很快将看到的那样，发送方的源地址也是由源主机的ip地址和源套接字的端口号组成，该源地址也要附在分组之上。然而，将源地址附在分组之上通常并不是由UDP应用程序代码所为，而是由底层操作系统自动完成的.</p>
+<p>接下来呢，我们将使用最简单的客户-服务器应用程序来演示对于UDP和TCP的套接字编程:</p>
+<ol>
+<li>客户从键盘读取一行字符并将数据向服务器发送M</li>
+<li>服务器收到该数据并将这些字符转换为大写</li>
+<li>服务器将修改的数据发送给客户</li>
+<li>客户接收修改的数据并在其显视器上将该行显示出来</li>
+</ol>
+
+<p>好了，明确了目的，我门就要开始实践了</p>
+<h1>UDP客户端套接字代码及代码分析</h1>
+
+<p>我们现在自己来动手查看这对客户-服务器程序，用UDP实现这个简单应用程序。客户程序被称为UDPClient.py,服务器程序被称为UDPServer.py.在这次编程中，我们随机选择12000作为服务器的端口号</p>
+<p>我们打开终端，输入vim UDPClient.py，开始编写代码</p>
+<p>1、UDPClient.py</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">from socket import *</span><br><span class="line">serverName &#x3D; &#39;hostname&#39;</span><br><span class="line">serverPort &#x3D; 12000</span><br><span class="line">clientSocket &#x3D; socket(AF_INET, SOCK_DGRAM)</span><br><span class="line">message &#x3D; raw_input(&#39;Input lowercase sentence: &#39;)</span><br><span class="line">clientSocket.sendto(message,(serverName,serverPort))</span><br><span class="line">modifiedMessage,serverAddress &#x3D; clientSocket.recvfrom(2048)</span><br><span class="line">print modifiedMessage</span><br><span class="line">clientSocket.close()</span><br></pre></td></tr></table></figure>
+
+<p>程序呢，就这么简单，下面来分析一下每一行代码.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">from socket import *</span><br></pre></td></tr></table></figure>
+
+<p>该socket模块形成了在Python中所有网络通信的基础。包括了这行，我们将能够在程序中创建套接字</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">serverName &#x3D; &#39;Hostname&#39;</span><br><span class="line">serverPort &#x3D; 12000</span><br></pre></td></tr></table></figure>
+
+<p>这一行将变量serverName置为字符串”Hostname”。这里，可以将自己的一台主机的ip地址或者域名代入即可。第二行将整数变量serverPort置为12000。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">clientSocket &#x3D; socket(socket.AF_INET,socket.SOCK_DGRAM)</span><br></pre></td></tr></table></figure>
+
+<p>该行创建了客户的套接字，称为clientSocket。第一个参数指示了地址簇: 特别是，AF_INET指示了底层网络使用了IPV4。 第二个参数指示了该套接字是SOCL_DGRAM类型的，也就意味着它是一个UDP套接字（而不是一个TCP套接字）.值得注意的是，当创建套接字时，我们并没有指定客户套接字的端口号；相反，我们让操作系统为我们做这件事。既然客户进程的门已经创建，我们将要生成通过该门发送的报文。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">message &#x3D; raw_input(&#39;Input lowercase sentence: &#39;)</span><br></pre></td></tr></table></figure>
+<p>raw_input()是Python中的内置功能。当执行这条命令时，在客户上的用户将以单词”Input lowercase sentence: “进行提示。用户使用它的键盘来输入这一行，这被放入变量message中。既然我们有了一个套接字和一条报文，我们将要通过该套接字向目的主机发送报文。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">clientSocket.sendto(message(serverName,serverPort))</span><br></pre></td></tr></table></figure>
+
+<p>在上述这行中，方法sendto()为报文附上目的地址(serverName,serverPort)并且向进程的套接字clientSocket发送结果分组。（如前面所述，源地址也附到分组上，尽管这是自动完成的，而不是显示的由代码完成的。）经一个UDP套接字发送一个客户到服务器的报文非常简单！在发送分组之后，客户等待来自服务器的数据。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">modifiedMessage,serverAddress &#x3D; clientSocket.recvfrom(2048)</span><br></pre></td></tr></table></figure>
+
+<p>对于上面这一行，当一个来自因特网的分组到达该客户套接字时，该分组的数据被放置到变量modifiedMessage中，其源地址被放置到变量serverAddress中。变量serverAddress包含了服务器的ip地址和服务器的端口号。程序UDPClient实际上并不需要服务器的地址信息，因为它从开始就已经知道了该服务器地址；而这行Python代码仍然提供了服务器的地址，方法recvfrom也缓存长度2048作为输入</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">print modifiedMessage</span><br></pre></td></tr></table></figure>
+
+<p>这行在用户显示器上打印出modifiedMessage。它应当是变用户键入的原始行，现在只是变为大写的了。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">clientSocket.close()</span><br></pre></td></tr></table></figure>
+
+<p>该行关闭了套接字，然后关闭了该进程。</p>
+<h1>UDP服务器端代码及分析</h1>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">from socket import *</span><br><span class="line">serverPort &#x3D; 12000</span><br><span class="line">serverSocket &#x3D; socket(AF_INET,SOCK_DGRAM)</span><br><span class="line">serverSocket.bind((&#39;&#39;,serverPort))</span><br><span class="line">print &quot;The server is ready to receive&quot;</span><br><span class="line">while True:</span><br><span class="line">        message, clientAddress &#x3D; serverSocket.recvfrom(2048)</span><br><span class="line">        modifiedMessage &#x3D; message.upper()</span><br><span class="line">        serverSocket.sendto(modifiedMessage,clientAddress)</span><br></pre></td></tr></table></figure>
+<p>注意到UDPServer的开始部分与UDPClient类似。它也是导入套接字模块，也将整数变量serverPort设置为12000，并且也创建套接字类型SOCK_DGRAM,与UDPClient有很大不同的一行是:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">serverSocket.bind((&#39;&#39;, serverPort))</span><br></pre></td></tr></table></figure>
+<p>上面行将端口号12000与各服务器的套接字绑定在一起。因此在UDPServer中，代码显式地为套接字分配一个端口号。以这种方式。当任何人向位于该服务器的IP地址的端口12000发送一个分组，该分组将指向该套接字。UDPServer然后进入一个while循环；该while循环将允许UDPServer无限期地接收并处理来自客户的分组。在该while循环中，UDPServer等待一个分组到达。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">message,clientAddress &#x3D; serverSocket.recvfrom(2048)</span><br></pre></td></tr></table></figure>
+<p>这行代码类似于我们在UDPClient中看到的。当某分组到达该服务器的套接字时，该分组的数据就被放置到变量message中，其源地址被放置到变量clientAddress中。变量clientAddress包含了客户的IP地址和客户端口号。这里，UDPServer将利用该地址信息，因为它提供了返回地址，类似于普通邮件的返回地址。使用该源地址，服务器此时知道了它应将回答发往何处。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">modifiedMessage &#x3D; message.upper()</span><br></pre></td></tr></table></figure>
+<p>此行是这个简单应用程序的关键部分。它获取由客户发送的行并使用方法upper()将其转换为大写。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">serverSocket.sendto(modifiedMessage,clientAddress)</span><br></pre></td></tr></table></figure>
+
+<p>最后一行将客户的地址附到大写报文上，并将所得的分组发送到服务器的套接字中。因特网则将分组交付到该客户地址。在服务器发送该分组后，它仍维持在while循环中，等待另一个UDP分组到达。</p>
+<h1>TCP套接字编程</h1>
+与UDP不同，TCP是一个面向连接的协议。这意味着在客户和服务器能够开始互相发送数据之前，它们先要握手创建一个TCP连接。TCP连接的一端与客户套接字相联系，另一端与服务器套接字相联系。当创建该TCP连接时，我们将其与客户套接字地址和服务器套接字地址关联起来。使用创建的TCP连接，当一侧要向另一侧发送数据时，它只需经过其套接字将数据丢给TCP连接。这与UDP不同，UDP服务器在将分组丢进套接字之前必须为其附上一个目的地址。
+
+<p>现在我们来仔细观察一下TCP中客户程序和服务器程序的交互。客户具有向服务器发起接触的任务。服务器为了能够对客户的初始接触作出反应，服务器必须已经准备好。这意味着两件事。第一，在与UDP中的情况一样，TCP服务器在客户试图发起接触前必须作为进程运行起来。第二，服务器程序必须有一扇特殊的门，更精确地说是一个特殊的套接字，该门欢迎来自运行在任意主机上的客户进程的某些初始接触。使用房子/门来比喻进程/套接字，有时候我们将客户的初始接触称为“敲欢迎之门“。</p>
+<p>在三次握手期间，客户进程敲服务器进程的欢迎之门。当该服务器”听“到敲门时，它将生成一扇新门（更精确的讲是一个新套接字），它专门用于特定的用户。在下面的例子中，欢迎之门是一个我们称为serverSocket的TCP套接字对象：它专门对客户进行连接的新生成的套接字，称为连接套接字</p>
+<h1>TCPClient.py源码及分析</h1>
+
+<p>TCPClient.py</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">from socket import *</span><br><span class="line">serverName &#x3D; &#39;servername&#39;</span><br><span class="line">serverPort &#x3D; 12000</span><br><span class="line">clientSocjet &#x3D; socket(AF_INET,SOCK_STREAM)</span><br><span class="line">clientSocket.connect((serverName,serverPort))</span><br><span class="line">sentence &#x3D; raw_input(&#39;Input lowercase sentence: &#39;)</span><br><span class="line">clientSocket.send(sentence)</span><br><span class="line">modifiedSentence &#x3D; clientSocket.recv(1024)</span><br><span class="line">print &#39;From Server:&#39;,modifiedSentence</span><br><span class="line">clientSocket.close()</span><br></pre></td></tr></table></figure>
+
+<p>现在我们查看这些代码中的与UDP实现有很大差别的各行。首当其冲的是客户套接字的创建。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">clientSocket &#x3D; socket(AF_INET, SOCK_STREAM)</span><br></pre></td></tr></table></figure>
+<p>该行创建了客户的套接字，称为clientSocket。第一个参数仍指示底层网络使用IPV4，第二个参数指示该套接字是SOCK_STREAM类型。这表明它是一个TCP套接字（而不是一个UDP套接字）。值得注意的是当我们创建客户套接字时仍未指定其端口号；相反，我们让操作系统为我们做这件事。此时的下一行代码与我们1在UDPClient中看到的极为不同：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">clientSocket.connect((serverName,serverPort))</span><br></pre></td></tr></table></figure>
+
+<p>前面讲过在客户能够使用一个TCP套接字向服务器发送数据之前（反之亦然），必须在客户与服务器之间创建一个TCP连接。上面这行就发起了客户和服务器之间的TCP连接。connect()方法的参数是这条连接中的服务器地址。这行代码执行完后，执行三次握手，并在客户与服务器之间创建一个TCP连接.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sentence &#x3D; raw_input(&#39;Input lowercase sentence:&#39;)</span><br></pre></td></tr></table></figure>
+
+<p>如同UDPClient一样，上一行从用户获得了一个句子。字符串sentence连续收集字符直到用户键入回车以终止该行为止。代码的下一行也与UDPClient极为不同：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">clientSocket.send(sentence)</span><br></pre></td></tr></table></figure>
+
+<p>上一行通过该客户的套接字并进入TCP连接发送字符串sentence。值得注意的是，该程序并未显示的创建一个分组并为该分组附上目的地址，而使用UDP套接字却要那样做。相反，客户程序只是将字符串sentence中的字节放入该TCP连接中去。客户就等待接收来自服务器的字节。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">modifiedSentence &#x3D; clientSocket.recv(1024)</span><br></pre></td></tr></table></figure>
+
+<p>当字符到达服务器时，它们被放置在字符串modifiedSentence中。字符继续积累在modifiedSentence中，直到收到回车字符才会结束该行。在打印大写句子之后，我们将关闭客户的套接字。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">clientSocket.close()</span><br></pre></td></tr></table></figure>
+
+<p>最后一行关闭了套接字，因此关闭了客户和服务器之间的TCp连接。它引起客户中的TCP向服务器中的TCP发送一条TCP报文</p>
+<h1>TCPServer.py源码及分析</h1>
+
+<p>TCPServer.py</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">from socket import *</span><br><span class="line">serverPort &#x3D; 12000</span><br><span class="line">serverSocket &#x3D; socket(AF_INET,SOCK_STREAM)</span><br><span class="line">serverSocket.bind((&#39;&#39;,serverPort))</span><br><span class="line">serverSocket.listen(1)</span><br><span class="line">print &#39;The server is ready to receive&#39;</span><br><span class="line">while 1:</span><br><span class="line">    connectionSocket,addr &#x3D; serverSocket.accept()</span><br><span class="line">    sentence &#x3D; connectionSocket.recv(1024)</span><br><span class="line">    capitalizedSentence &#x3D; sentence.upper()</span><br><span class="line">    connectionSocket.send(capitalizedSentence)</span><br><span class="line">    connectionSocket.close()</span><br></pre></td></tr></table></figure>
+
+<p>源码分析比较简单，在此略去</p>
+<p>下面是我所作的结果示意图</p>
+<img src="UDP-and-TCP-套接字编程/1.png">
+<img src="UDP-and-TCP-套接字编程/2.png">
+
+<p>其中，在UDP套接字的实验中出现了客户端与服务端代码均能运行，但客户端发送字符后长时间收不到来自服务器的响应，这个问题留待解决<br>好了，就这样吧，这篇博客字真多，手都敲酸了…..</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/08/20/UDP-and-TCP-%E5%A5%97%E6%8E%A5%E5%AD%97%E7%BC%96%E7%A8%8B/" data-id="ck8sepai7000ykstgffml98ez" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%BD%91%E7%BB%9C/" rel="tag">网络</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/08/21/%E8%B5%8F-%E8%91%AC%E8%8A%B1%E5%90%9F/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          赏-葬花吟
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/08/20/%E8%A7%A3%E5%89%96shadowsocks%E4%B9%8B%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">解剖shadowsocks之源码分析</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/python/">python</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%B9%A0/">前端学习</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%88%91%E7%9A%84%E7%BD%91%E7%AB%99%E5%88%B6%E4%BD%9C%E4%B9%8B%E6%97%85/">我的网站制作之旅</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%96%87%E5%AD%A6/">文学</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%9C%8D%E5%8A%A1%E5%99%A8%E8%84%9A%E6%9C%AC%E8%AF%AD%E8%A8%80/">服务器脚本语言</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%B8%B8%E6%88%8F/">游戏</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/">编程语言</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BE%8E%E6%96%87%E6%AC%A3%E8%B5%8F/">美文欣赏</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%A1%E5%88%92/">计划</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">计算机操作系统</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">计算机网络</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django/" rel="tag">Django</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/" rel="tag">Java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Javascript/" rel="tag">Javascript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/" rel="tag">Python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/google%E6%90%9C%E7%B4%A2%E7%A1%AE%E8%AE%A4%E6%96%87%E4%BB%B6/" rel="tag">google搜索确认文件</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/html/" rel="tag">html</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/" rel="tag">java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/javascript/" rel="tag">javascript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/plan/" rel="tag">plan</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/" rel="tag">python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/test/" rel="tag">test</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E3%80%90%E6%B8%B8%E6%88%8F%E4%BB%8B%E7%BB%8D%E3%80%91/" rel="tag">【游戏介绍】</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AD%A6%E4%B9%A0Python/" rel="tag">学习Python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AD%A6%E4%B9%A0%E5%B0%8F%E7%BB%93/" rel="tag">学习小结</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" rel="tag">学习笔记</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%84%9F%E6%83%B3%E7%BE%8E%E6%96%87/" rel="tag">感想美文</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%99%E7%A8%8B/" rel="tag">教程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%96%87%E5%AD%A6/" rel="tag">文学</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%96%87%E5%AD%A6%E8%B5%8F%E6%9E%90%E8%AF%BB%E5%90%8E%E6%84%9F/" rel="tag">文学赏析读后感</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8%E8%84%9A%E6%9C%ACphp%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/" rel="tag">服务器脚本php环境配置</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" rel="tag">正则表达式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%88%AC%E8%99%AB/" rel="tag">爬虫</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%94%9F%E4%BA%A7%E5%AE%9E%E4%B9%A0/" rel="tag">生产实习</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%94%B5%E5%BD%B1/" rel="tag">电影</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BD%91%E7%BB%9C/" rel="tag">网络</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BD%91%E9%A1%B5%E5%88%B6%E4%BD%9C/" rel="tag">网页制作</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BD%91%E9%A1%B5%E9%83%A8%E7%BD%B2/" rel="tag">网页部署</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BE%8E%E6%96%87/" rel="tag">美文</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AF%8D%E9%A2%91%E5%88%86%E6%9E%90%E7%94%9F%E6%88%90%E8%AF%8D%E4%BA%91/" rel="tag">词频分析生成词云</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AF%97%E8%AF%8D/" rel="tag">诗词</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AF%BB%E4%B9%A6/" rel="tag">读书</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" rel="tag">读书笔记</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%97%B2%E8%B0%88/" rel="tag">闲谈</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%A1%B9%E7%9B%AE/" rel="tag">项目</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Django/" style="font-size: 10px;">Django</a> <a href="/tags/Java/" style="font-size: 17.5px;">Java</a> <a href="/tags/Javascript/" style="font-size: 10px;">Javascript</a> <a href="/tags/Python/" style="font-size: 15px;">Python</a> <a href="/tags/google%E6%90%9C%E7%B4%A2%E7%A1%AE%E8%AE%A4%E6%96%87%E4%BB%B6/" style="font-size: 10px;">google搜索确认文件</a> <a href="/tags/html/" style="font-size: 17.5px;">html</a> <a href="/tags/java/" style="font-size: 20px;">java</a> <a href="/tags/javascript/" style="font-size: 12.5px;">javascript</a> <a href="/tags/plan/" style="font-size: 10px;">plan</a> <a href="/tags/python/" style="font-size: 15px;">python</a> <a href="/tags/test/" style="font-size: 10px;">test</a> <a href="/tags/%E3%80%90%E6%B8%B8%E6%88%8F%E4%BB%8B%E7%BB%8D%E3%80%91/" style="font-size: 10px;">【游戏介绍】</a> <a href="/tags/%E5%AD%A6%E4%B9%A0Python/" style="font-size: 10px;">学习Python</a> <a href="/tags/%E5%AD%A6%E4%B9%A0%E5%B0%8F%E7%BB%93/" style="font-size: 17.5px;">学习小结</a> <a href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" style="font-size: 10px;">学习笔记</a> <a href="/tags/%E6%84%9F%E6%83%B3%E7%BE%8E%E6%96%87/" style="font-size: 10px;">感想美文</a> <a href="/tags/%E6%95%99%E7%A8%8B/" style="font-size: 10px;">教程</a> <a href="/tags/%E6%96%87%E5%AD%A6/" style="font-size: 12.5px;">文学</a> <a href="/tags/%E6%96%87%E5%AD%A6%E8%B5%8F%E6%9E%90%E8%AF%BB%E5%90%8E%E6%84%9F/" style="font-size: 15px;">文学赏析读后感</a> <a href="/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8%E8%84%9A%E6%9C%ACphp%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/" style="font-size: 10px;">服务器脚本php环境配置</a> <a href="/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" style="font-size: 10px;">正则表达式</a> <a href="/tags/%E7%88%AC%E8%99%AB/" style="font-size: 10px;">爬虫</a> <a href="/tags/%E7%94%9F%E4%BA%A7%E5%AE%9E%E4%B9%A0/" style="font-size: 10px;">生产实习</a> <a href="/tags/%E7%94%B5%E5%BD%B1/" style="font-size: 10px;">电影</a> <a href="/tags/%E7%AE%97%E6%B3%95/" style="font-size: 12.5px;">算法</a> <a href="/tags/%E7%BD%91%E7%BB%9C/" style="font-size: 17.5px;">网络</a> <a href="/tags/%E7%BD%91%E9%A1%B5%E5%88%B6%E4%BD%9C/" style="font-size: 12.5px;">网页制作</a> <a href="/tags/%E7%BD%91%E9%A1%B5%E9%83%A8%E7%BD%B2/" style="font-size: 10px;">网页部署</a> <a href="/tags/%E7%BE%8E%E6%96%87/" style="font-size: 10px;">美文</a> <a href="/tags/%E8%AF%8D%E9%A2%91%E5%88%86%E6%9E%90%E7%94%9F%E6%88%90%E8%AF%8D%E4%BA%91/" style="font-size: 10px;">词频分析生成词云</a> <a href="/tags/%E8%AF%97%E8%AF%8D/" style="font-size: 10px;">诗词</a> <a href="/tags/%E8%AF%BB%E4%B9%A6/" style="font-size: 12.5px;">读书</a> <a href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" style="font-size: 12.5px;">读书笔记</a> <a href="/tags/%E9%97%B2%E8%B0%88/" style="font-size: 10px;">闲谈</a> <a href="/tags/%E9%A1%B9%E7%9B%AE/" style="font-size: 10px;">项目</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">四月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">三月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">二月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">一月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">十月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">八月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">三月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">一月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">十二月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">十一月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">八月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">七月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">六月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">五月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">四月 2018</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2020/04/09/test-my-site/">test_my_site</a>
+          </li>
+        
+          <li>
+            <a href="/2020/04/09/hello-world/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/2020/04/08/java%E6%B1%82%E8%B4%A8%E6%95%B0%E7%9A%84%E6%96%B9%E6%B3%95/">java求质数的方法</a>
+          </li>
+        
+          <li>
+            <a href="/2020/03/11/file%E5%AF%B9%E8%B1%A1/">file对象</a>
+          </li>
+        
+          <li>
+            <a href="/2020/03/10/java-%E4%BD%BF%E7%94%A8list/">java-使用list</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2020 Larnonudo chan<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>
