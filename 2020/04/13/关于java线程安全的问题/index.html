@@ -2,9 +2,9 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>关于Ingress | Shengqian&#39;s Blog</title>
-  <meta name="keywords" content=" 【游戏介绍】 ">
-  <meta name="description" content="关于Ingress | Shengqian&#39;s Blog">
+  <title>关于java线程安全的问题 | Shengqian&#39;s Blog</title>
+  <meta name="keywords" content=" java ">
+  <meta name="description" content="关于java线程安全的问题 | Shengqian&#39;s Blog">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="description" content="Fight for liberty">
 <meta property="og:type" content="website">
@@ -1123,36 +1123,30 @@
 </aside>
 <div class="post">
     <div class="pjax">
-        <article id="post-关于Ingress" class="article article-type-post" itemscope itemprop="blogPost">
+        <article id="post-关于java线程安全的问题" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <h1 class="article-title">关于Ingress</h1>
+        <h1 class="article-title">关于java线程安全的问题</h1>
     
     <div class="article-meta">
         
         
-        
-        <span class="book">
-            
-                <a  data-rel="游戏">游戏</a>
-            
-        </span>
         
         
         <span class="tag">
             
-            <a class="color2">【游戏介绍】</a>
+            <a class="color5">java</a>
             
         </span>
         
     </div>
     <div class="article-meta">
         
-        创建时间:<time class="date" title='更新时间: 2018-04-23 19:22:15'>2018-04-23 12:09</time>
+        创建时间:<time class="date" title='更新时间: 2020-04-13 23:46:17'>2020-04-13 23:40</time>
         
     </div>
     <div class="article-meta">
         
-        <span>字数:1.7k</span>
+        <span>字数:397</span>
         
         
         <span id="busuanzi_container_page_pv">
@@ -1171,7 +1165,7 @@
     
     <div class="toc-ref">
     
-        
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#"><span class="toc-text">HashMap和HashTable的区别</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#"><span class="toc-text">StringBuffer和StringBuilder的区别</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#"><span class="toc-text">ArrayList和Vector的区别</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#"><span class="toc-text">把非线程安全的集合转换为线程安全</span></a></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -1187,18 +1181,41 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>故事背景<br>游戏的故事背景是一群欧洲科学家偶然发现某种神秘的能量XM（Exotic Matter），这一能量的来源和用途无人知晓，研究人员认为可以开发并善用这能量，但另一方面却担心这样的能量会影响人们的思考甚至被能量本身奴役。</p>
-<p>游戏中有两大主要阵营，这两大互相争夺主控权的全球性组织分别是“反抗军”和“启蒙军”。“启蒙军”（Enlightened，以绿色标示）阵营希望能接纳这股“神秘的能量XM”，并相信这股能量能赐予人类进步与改革，其追随者相信神秘的能量会催生影响重大的“启蒙运动”，使全人类进化。另一派“反抗军”（Resistance，以蓝色标示）阵营则奋力捍卫并守护仅存的人性，有些人认为他们对于变化或进步感到畏惧，但反抗军坚信这一切都是为了保护人类。[6]游戏的玩家被称为特工（Agent），两个阵营互相角力，争夺控制真实世界中的地标性建筑或雕塑等Portal（译作“传送门”）。</p>
-<a id="more"></a>
+        <h1>HashMap和HashTable的区别</h1>
+HashMap和HashTable都实现了map接口，都是键值对保存数据的方式
+区别1:
+    HashMap可以存放null
+    HashTable不能存放null
+区别2：
+    HashMap不是线程安全的类
+    Hashtable是线程安全的类
 
-<p>游戏内容<br>游戏内容和真实世界的地理状况结合，游戏会通过手持装置的GPS、AGPS以及Wi-Fi信息确认玩家的位置，而玩家可以通过游戏的扫描器（Scanner）界面看到自身周围的传送门、XM或物品。游戏地图上各处散落着白色亮点，代表XM所在的位置，玩家在接近XM时会自动收集，而对传送门进行任何操作均需耗用XM。传送门主要是各种建筑、雕塑、艺术品等，玩家需亲自持手机接近这些传送门，进行部署（Deploy）、入侵（Hack）、补充能量（Recharge）、发射XMP等动作。玩家在游戏中的目标是通过连接多个本阵营控制的传送门，建立控制场（Control Field），覆盖最多的“Mind Units（MUs）”。[8]</p>
-<p>Portal<br>在游戏中，全球各处存在着大量传送门（Portal），可以在游戏软件中察看。传送门都与实际地标关联，并且位在可被公众探访且步行能抵达的地点，例如：雕塑、壁画、公共艺术、喷泉、艺术涂鸦、图书馆、教学楼、水塔、邮局、纪念馆、宗教建筑、地铁站；醒目的建筑和独特的当地企业；国家公园、露营地、主题公园的入口等。根据当前控制传送门的阵营不同，传送门会呈现出不同的颜色：启蒙军阵营控制时为绿色，反抗军阵营控制时为蓝色，无人控制时为灰色，双方的玩家都可以占领这些灰色的传送门。</p>
-<p>Portal的申请<br>除了游戏中已经存在的传送门，玩家亦可以提交申请以将新的传送门纳入Ingress。[9][10]2015年9月3日，NIA Ops的Google+页面发布了新传送门的提交功能即日起被暂停的消息。[11]从2017年开始，逐步通过增加申请条件限制恢复新传送门的提交功能，[12]例如2017年4月22日仅限于韩国和巴西玩家开放申请Portal。[13]2017年9月26日全面开放有条件申请，并开放OPR（Operation Portal Recon）系统以允许部分符合级别的玩家参与新传送门提交的审核工作。Niantic对重新开放的申请条件加以限制：</p>
-<p>10级及以上的玩家才能申请<br>每位特工在 14 天的周期内最多可以申请 14 个 Portal, 每个 Portal 申请的配额将会拥有独立的 14 天冷却时间[14]<br>Portal的作用<br>在游戏中，玩家对传送门最基本的操作是入侵（Hack），入侵一个传送门可以让玩家获得游戏物品。游戏物品包含了共振器（Resonator）、XMP炸弹（XMP Burster）、能量方块（Power Cube）、各种强化包（Modification，可以用来强化传送门的物品）、钥匙（Portal Key）、储存胶囊（Capsule）、媒体（Media）等。共振器和炸弹有着从L1到L8八个等级，玩家必须达到对应的等级才能使用较为高级的物品，而高等级的物品会比低等级的物品强大。玩家在游戏中的动作通常会让他获得AP（Action Point），玩家在累积了一定的AP以后，就会升级（从L1到L8），并因此可以使用等级更高的游戏物品。在1.51.0版本过后，游戏开放玩家等级上限为L16，L9到L16的升级需求不仅需要AP，还需要收集到足够的成就徽章方能达到升级的门槛。</p>
-<p>连结（link）和控制场（Field）<br>游戏的目的是争夺传送门并制造控制场（Control Field），以获取Mind Units。玩家可以使用炸弹（XMP）攻击敌方传送门，削弱目标据点共振器的能量值，要是一个共振器失去全部能量，它就被摧毁了。如果全部的共振器都被摧毁，传送门就会转为中性（Neutral），玩家接着可以放置最多八个共振器控制该传送门。另外，共振器的能量每天都会下降，而玩家可以替他充能（Recharge）以使其保持较高的能量，以免敌人轻易摧毁这些共振器。除了在传送门旁边直接替它充能，玩家若持有一条传送门的钥匙亦可在一定距离外替它充能，只是充能效益（Recharge Efficiency）会随玩家与传送门的距离有所衰减。</p>
-<p>当两个传送门都已摆满八个共振器，而玩家同时持有目标的钥匙，且目标在所在传送门的覆盖范围之内，就可以在两个传送门间建立链接（Link）。如果玩家在游戏中使三个传送门连成三角形，就会产生一个控制场（Control Field）。控制场会让玩家的阵营获得Mind Units（MUs），面积愈大的控制场就包含了愈多的MUs，玩家在局势 （Intel）标签下可以查看两大阵营各自累积了多少MUs。</p>
-<p>由于三角形潜在的相互嵌套的几何性质，玩家可依照特定的连结顺序，建立多重控制场 ，在同一区域获取多倍的 AP 值。 玩家也能够利用 Ingress 情报地图（Ingress Intel Map）查看区域乃至世界的连结及控制场布局，规划战略。</p>
+<img src="/2020/04/13/%E5%85%B3%E4%BA%8Ejava%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8%E7%9A%84%E9%97%AE%E9%A2%98/hash.png">
 
+<h1>StringBuffer和StringBuilder的区别</h1>
+StringBuffer 是线程安全的
+StringBuilder 是非线程安全的
+
+<p>所以当进行大量字符串拼接操作的时候，如果是单线程就用StringBuilder会更快些，如果是多线程，就需要用StringBuffer 保证数据的安全性</p>
+<p>非线程安全的为什么会比线程安全的 快？ 因为不需要同步嘛，省略了些时间</p>
+<h1>ArrayList和Vector的区别</h1>
+
+<p>通过在eclipse中查看源代码可以得知：</p>
+<p>ArrayList类的声明：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ArrayList</span>&lt;<span class="title">E</span>&gt; <span class="keyword">extends</span> <span class="title">AbstractList</span>&lt;<span class="title">E</span>&gt;</span></span><br><span class="line"><span class="class">        <span class="keyword">implements</span> <span class="title">List</span>&lt;<span class="title">E</span>&gt;, <span class="title">RandomAccess</span>, <span class="title">Cloneable</span>, <span class="title">java</span>.<span class="title">io</span>.<span class="title">Serializable</span></span></span><br></pre></td></tr></table></figure>
+
+
+<p>Vector类的声明：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Vector</span>&lt;<span class="title">E</span>&gt;    <span class="keyword">extends</span> <span class="title">AbstractList</span>&lt;<span class="title">E</span>&gt;</span></span><br><span class="line"><span class="class">    <span class="keyword">implements</span> <span class="title">List</span>&lt;<span class="title">E</span>&gt;, <span class="title">RandomAccess</span>, <span class="title">Cloneable</span>, <span class="title">java</span>.<span class="title">io</span>.<span class="title">Serializable</span></span></span><br></pre></td></tr></table></figure>
+
+
+<p>一模一样的~<br>他们的区别也在于，Vector是线程安全的类，而ArrayList是非线程安全的。</p>
+<h1>把非线程安全的集合转换为线程安全</h1>
+ArrayList是非线程安全的，换句话说，多个线程可以同时进入一个ArrayList对象的add方法
+
+<p>借助Collections.synchronizedList，可以把ArrayList转换为线程安全的List。</p>
+<p>与此类似的，还有HashSet,LinkedList,HashMap等等非线程安全的类，都通过工具类Collections转换为线程安全的</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.ArrayList;</span><br><span class="line"><span class="keyword">import</span> java.util.Collections;</span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"> </span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestThread</span> </span>&#123;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        List&lt;Integer&gt; list1 = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        List&lt;Integer&gt; list2 = Collections.synchronizedList(list1);</span><br><span class="line">    &#125;</span><br><span class="line">        </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
       
        <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论，也可以邮件至 chenshengqianw2020@gmail.com </span>
     </div>
@@ -1211,12 +1228,12 @@
 
 
 <div class="article_copyright">
-    <p><span class="copy-title">文章标题:</span>关于Ingress</p>
-    <p><span class="copy-title">文章字数:</span><span class="post-count">1.7k</span></p>
+    <p><span class="copy-title">文章标题:</span>关于java线程安全的问题</p>
+    <p><span class="copy-title">文章字数:</span><span class="post-count">397</span></p>
     <p><span class="copy-title">本文作者:</span><a  title="Larnonudo chan">Larnonudo chan</a></p>
-    <p><span class="copy-title">发布时间:</span>2018-04-23, 12:09:18</p>
-    <p><span class="copy-title">最后更新:</span>2018-04-23, 19:22:15</p>
-    <span class="copy-title">原始链接:</span><a class="post-url" href="/2018/04/23/%E5%85%B3%E4%BA%8EIngress/" title="关于Ingress">http://xiaoqianbaobao.github.io/2018/04/23/%E5%85%B3%E4%BA%8EIngress/</a>
+    <p><span class="copy-title">发布时间:</span>2020-04-13, 23:40:22</p>
+    <p><span class="copy-title">最后更新:</span>2020-04-13, 23:46:17</p>
+    <span class="copy-title">原始链接:</span><a class="post-url" href="/2020/04/13/%E5%85%B3%E4%BA%8Ejava%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8%E7%9A%84%E9%97%AE%E9%A2%98/" title="关于java线程安全的问题">http://xiaoqianbaobao.github.io/2020/04/13/%E5%85%B3%E4%BA%8Ejava%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8%E7%9A%84%E9%97%AE%E9%A2%98/</a>
     <p>
         <span class="copy-title">版权声明:</span><i class="fa fa-creative-commons"></i> <a rel="license noopener" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
     </p>
