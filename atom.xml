@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://xiaoqianbaobao.github.io/"/>
-  <updated>2020-04-25T03:02:10.097Z</updated>
+  <updated>2020-05-21T10:31:39.953Z</updated>
   <id>http://xiaoqianbaobao.github.io/</id>
   
   <author>
@@ -17,13 +17,28 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>学习SVM</title>
+    <link href="http://xiaoqianbaobao.github.io/2020/05/21/%E5%AD%A6%E4%B9%A0SVM/"/>
+    <id>http://xiaoqianbaobao.github.io/2020/05/21/%E5%AD%A6%E4%B9%A0SVM/</id>
+    <published>2020-05-21T10:31:39.000Z</published>
+    <updated>2020-05-21T10:31:39.953Z</updated>
+    
+    <summary type="html">
+    
+    </summary>
+    
+    
+    
+  </entry>
+  
+  <entry>
     <title>JavaWeb项目-持续更新</title>
     <link href="http://xiaoqianbaobao.github.io/2020/04/25/JavaWeb%E9%A1%B9%E7%9B%AE-%E6%8C%81%E7%BB%AD%E6%9B%B4%E6%96%B0/"/>
     <id>http://xiaoqianbaobao.github.io/2020/04/25/JavaWeb%E9%A1%B9%E7%9B%AE-%E6%8C%81%E7%BB%AD%E6%9B%B4%E6%96%B0/</id>
     <published>2020-04-25T02:54:13.000Z</published>
-    <updated>2020-04-25T03:02:10.097Z</updated>
+    <updated>2020-05-16T14:05:30.691Z</updated>
     
-    <content type="html"><![CDATA[<p>项目Demo:<a href="http://121.40.161.242:8080/tmall/">Demo</a>，后续会在该地址发布完整项目，并且会在后续的文章中记录所学习的知识以及所用到的技术和自己的一些理解</p>]]></content>
+    <content type="html"><![CDATA[<p>项目Demo:<a href="http://121.40.161.242:8080/tmall/">Demo</a>，后续会在该地址发布完整项目，并且会在后续的文章中记录所学习的知识以及所用到的技术和自己的一些理解</p><p>整个项目由于过于庞大，服务器可能不太行（买不起比较好一点的服务器， 所以后续我会想办法把项目部署到公网，项目完成后源码会上传到github。</p>]]></content>
     
     <summary type="html">
     
@@ -429,27 +444,6 @@
     
     
       <category term="java" scheme="http://xiaoqianbaobao.github.io/tags/java/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>google verify</title>
-    <link href="http://xiaoqianbaobao.github.io/2020/03/09/google-verify/"/>
-    <id>http://xiaoqianbaobao.github.io/2020/03/09/google-verify/</id>
-    <published>2020-03-09T03:02:25.000Z</published>
-    <updated>2020-03-09T03:18:27.738Z</updated>
-    
-    <content type="html"><![CDATA[<p><a href="/download/google157c22c3e69b07e6.html">点击下载文件</a></p>]]></content>
-    
-    <summary type="html">
-    
-      可以在google上搜索到我的博客了
-    
-    </summary>
-    
-    
-    
-      <category term="google搜索确认文件" scheme="http://xiaoqianbaobao.github.io/tags/google%E6%90%9C%E7%B4%A2%E7%A1%AE%E8%AE%A4%E6%96%87%E4%BB%B6/"/>
     
   </entry>
   
