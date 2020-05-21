@@ -34,7 +34,7 @@ html {
 
 
 body {
-  background: url(https://source.unsplash.com/random/1600x900?wallpapers);
+  background: url(/images/1.jpeg);
   background-size: cover;
   background-repeat: no-repeat;
   background-attachment: fixed;
