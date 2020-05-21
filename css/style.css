@@ -34,7 +34,7 @@ html {
 
 
 body {
-  background: url(/images/1.jpeg);
+  background: url(/images/2.jpg);
   background-size: cover;
   background-repeat: no-repeat;
   background-attachment: fixed;
@@ -44,7 +44,7 @@ body {
 
 .main-inner {
   background: #fff;
-  opacity: 0.8;
+  opacity: 0.7;
 }
 
 
