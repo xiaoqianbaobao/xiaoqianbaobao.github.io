@@ -32,7 +32,7 @@ html {
   -webkit-text-size-adjust: 100%;
 }
 
-// 添加背景图片
+
 body {
   background: url(https://source.unsplash.com/random/1600x900?wallpapers);
   background-size: cover;
@@ -41,13 +41,13 @@ body {
   background-position: 50% 50%;
 }
 
-// 修改主体透明度
+
 .main-inner {
   background: #fff;
   opacity: 0.8;
 }
 
-// 修改菜单栏透明度
+
 .header-inner {
   opacity: 0.8;
 }
