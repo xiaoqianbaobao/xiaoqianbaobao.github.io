@@ -18,17 +18,23 @@
   
   
   <title>学习SVM | CSQBlog</title>
-  <meta name="description" content="Fight for liberty">
+  <meta name="description" content="毕业设计：基于OpenCV的车牌识别系统设计与实现中使用的SVM字符识别算法">
 <meta property="og:type" content="article">
 <meta property="og:title" content="学习SVM">
 <meta property="og:url" content="http://xiaoqianbaobao.github.io/2020/05/21/%E5%AD%A6%E4%B9%A0SVM/index.html">
 <meta property="og:site_name" content="Shengqian&#39;s Blog">
-<meta property="og:description" content="Fight for liberty">
+<meta property="og:description" content="毕业设计：基于OpenCV的车牌识别系统设计与实现中使用的SVM字符识别算法">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://xiaoqianbaobao.github.io/2020/05/21/%E5%AD%A6%E4%B9%A0SVM/1.png">
+<meta property="og:image" content="http://xiaoqianbaobao.github.io/2020/05/21/%E5%AD%A6%E4%B9%A0SVM/2.png">
+<meta property="og:image" content="http://xiaoqianbaobao.github.io/2020/05/21/%E5%AD%A6%E4%B9%A0SVM/3.png">
+<meta property="og:image" content="http://xiaoqianbaobao.github.io/2020/05/21/%E5%AD%A6%E4%B9%A0SVM/4.png">
 <meta property="article:published_time" content="2020-05-21T10:31:39.000Z">
-<meta property="article:modified_time" content="2020-05-21T10:31:39.953Z">
+<meta property="article:modified_time" content="2020-05-22T17:02:24.681Z">
 <meta property="article:author" content="Larnonudo chan">
+<meta property="article:tag" content="SVM支持向量机">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://xiaoqianbaobao.github.io/2020/05/21/%E5%AD%A6%E4%B9%A0SVM/1.png">
   <!-- Canonical links -->
   <link rel="canonical" href="http://xiaoqianbaobao.github.io/2020/05/21/%E5%AD%A6%E4%B9%A0SVM/index.html">
   
@@ -218,7 +224,7 @@
   <div class="widget">
     <h3 class="widget-title">分类</h3>
     <div class="widget-body">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JavaWeb%E9%A1%B9%E7%9B%AE/">JavaWeb项目</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/XML/">XML</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/javascript/">javascript</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/linux/">linux</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/python/">python</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%B9%A0/">前端学习</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%88%91%E7%9A%84%E7%BD%91%E7%AB%99%E5%88%B6%E4%BD%9C%E4%B9%8B%E6%97%85/">我的网站制作之旅</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%96%87%E5%AD%A6/">文学</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%9C%8D%E5%8A%A1%E5%99%A8%E8%84%9A%E6%9C%AC%E8%AF%AD%E8%A8%80/">服务器脚本语言</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%B8%B8%E6%88%8F/">游戏</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%94%B5%E5%BD%B1/">电影</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/">编程语言</a><span class="category-list-count">12</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BE%8E%E6%96%87%E6%AC%A3%E8%B5%8F/">美文欣赏</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%A1%E5%88%92/">计划</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">计算机操作系统</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">计算机网络</a><span class="category-list-count">2</span></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JavaWeb%E9%A1%B9%E7%9B%AE/">JavaWeb项目</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/XML/">XML</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/javascript/">javascript</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/linux/">linux</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/python/">python</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%B9%A0/">前端学习</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%88%91%E7%9A%84%E7%BD%91%E7%AB%99%E5%88%B6%E4%BD%9C%E4%B9%8B%E6%97%85/">我的网站制作之旅</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%96%87%E5%AD%A6/">文学</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%9C%8D%E5%8A%A1%E5%99%A8%E8%84%9A%E6%9C%AC%E8%AF%AD%E8%A8%80/">服务器脚本语言</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%AF%95%E4%B8%9A%E8%AE%BE%E8%AE%A1/">毕业设计</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%B8%B8%E6%88%8F/">游戏</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%94%B5%E5%BD%B1/">电影</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/">编程语言</a><span class="category-list-count">12</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BE%8E%E6%96%87%E6%AC%A3%E8%B5%8F/">美文欣赏</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%A1%E5%88%92/">计划</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">计算机操作系统</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">计算机网络</a><span class="category-list-count">2</span></li></ul>
     </div>
   </div>
 
@@ -228,7 +234,7 @@
   <div class="widget">
     <h3 class="widget-title">标签</h3>
     <div class="widget-body">
-      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django/" rel="tag">Django</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/" rel="tag">Java</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Javascript/" rel="tag">Javascript</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/" rel="tag">Python</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/XML/" rel="tag">XML</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/google%E6%90%9C%E7%B4%A2%E7%A1%AE%E8%AE%A4%E6%96%87%E4%BB%B6/" rel="tag">google搜索确认文件</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/html/" rel="tag">html</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/" rel="tag">java</a><span class="tag-list-count">20</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/javascript/" rel="tag">javascript</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/javaweb/" rel="tag">javaweb</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/js/" rel="tag">js</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/" rel="tag">linux</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/plan/" rel="tag">plan</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/" rel="tag">python</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tcp/" rel="tag">tcp</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/test/" rel="tag">test</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E3%80%90%E6%B8%B8%E6%88%8F%E4%BB%8B%E7%BB%8D%E3%80%91/" rel="tag">【游戏介绍】</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8F%8D%E5%B0%84/" rel="tag">反射</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AD%A6%E4%B9%A0Python/" rel="tag">学习Python</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AD%A6%E4%B9%A0%E5%B0%8F%E7%BB%93/" rel="tag">学习小结</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" rel="tag">学习笔记</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%84%9F%E6%83%B3%E7%BE%8E%E6%96%87/" rel="tag">感想美文</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" rel="tag">操作系统</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%99%E7%A8%8B/" rel="tag">教程</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" rel="tag">数据库</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%96%87%E5%AD%A6/" rel="tag">文学</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%96%87%E5%AD%A6%E8%B5%8F%E6%9E%90%E8%AF%BB%E5%90%8E%E6%84%9F/" rel="tag">文学赏析读后感</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8%E8%84%9A%E6%9C%ACphp%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/" rel="tag">服务器脚本php环境配置</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" rel="tag">正则表达式</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%88%AC%E8%99%AB/" rel="tag">爬虫</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%94%9F%E4%BA%A7%E5%AE%9E%E4%B9%A0/" rel="tag">生产实习</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%94%B5%E5%BD%B1/" rel="tag">电影</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BD%91%E7%BB%9C/" rel="tag">网络</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BD%91%E9%A1%B5%E5%88%B6%E4%BD%9C/" rel="tag">网页制作</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BD%91%E9%A1%B5%E9%83%A8%E7%BD%B2/" rel="tag">网页部署</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BE%8E%E6%96%87/" rel="tag">美文</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AF%8D%E9%A2%91%E5%88%86%E6%9E%90%E7%94%9F%E6%88%90%E8%AF%8D%E4%BA%91/" rel="tag">词频分析生成词云</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AF%97%E8%AF%8D/" rel="tag">诗词</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AF%BB%E4%B9%A6/" rel="tag">读书</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" rel="tag">读书笔记</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%97%B2%E8%B0%88/" rel="tag">闲谈</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%A1%B9%E7%9B%AE/" rel="tag">项目</a><span class="tag-list-count">1</span></li></ul>
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django/" rel="tag">Django</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/" rel="tag">Java</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Javascript/" rel="tag">Javascript</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/" rel="tag">Python</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SVM%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BA/" rel="tag">SVM支持向量机</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/XML/" rel="tag">XML</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/google%E6%90%9C%E7%B4%A2%E7%A1%AE%E8%AE%A4%E6%96%87%E4%BB%B6/" rel="tag">google搜索确认文件</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/html/" rel="tag">html</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/" rel="tag">java</a><span class="tag-list-count">20</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/javascript/" rel="tag">javascript</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/javaweb/" rel="tag">javaweb</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/js/" rel="tag">js</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/" rel="tag">linux</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/plan/" rel="tag">plan</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/" rel="tag">python</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tcp/" rel="tag">tcp</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/test/" rel="tag">test</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E3%80%90%E6%B8%B8%E6%88%8F%E4%BB%8B%E7%BB%8D%E3%80%91/" rel="tag">【游戏介绍】</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8F%8D%E5%B0%84/" rel="tag">反射</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AD%A6%E4%B9%A0Python/" rel="tag">学习Python</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AD%A6%E4%B9%A0%E5%B0%8F%E7%BB%93/" rel="tag">学习小结</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" rel="tag">学习笔记</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%84%9F%E6%83%B3%E7%BE%8E%E6%96%87/" rel="tag">感想美文</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" rel="tag">操作系统</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%99%E7%A8%8B/" rel="tag">教程</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" rel="tag">数据库</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%96%87%E5%AD%A6/" rel="tag">文学</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%96%87%E5%AD%A6%E8%B5%8F%E6%9E%90%E8%AF%BB%E5%90%8E%E6%84%9F/" rel="tag">文学赏析读后感</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8%E8%84%9A%E6%9C%ACphp%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/" rel="tag">服务器脚本php环境配置</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" rel="tag">正则表达式</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%88%AC%E8%99%AB/" rel="tag">爬虫</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%94%9F%E4%BA%A7%E5%AE%9E%E4%B9%A0/" rel="tag">生产实习</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%94%B5%E5%BD%B1/" rel="tag">电影</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BD%91%E7%BB%9C/" rel="tag">网络</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BD%91%E9%A1%B5%E5%88%B6%E4%BD%9C/" rel="tag">网页制作</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BD%91%E9%A1%B5%E9%83%A8%E7%BD%B2/" rel="tag">网页部署</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BE%8E%E6%96%87/" rel="tag">美文</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AF%8D%E9%A2%91%E5%88%86%E6%9E%90%E7%94%9F%E6%88%90%E8%AF%8D%E4%BA%91/" rel="tag">词频分析生成词云</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AF%97%E8%AF%8D/" rel="tag">诗词</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AF%BB%E4%B9%A6/" rel="tag">读书</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" rel="tag">读书笔记</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%97%B2%E8%B0%88/" rel="tag">闲谈</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%A1%B9%E7%9B%AE/" rel="tag">项目</a><span class="tag-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -238,7 +244,7 @@
   <div class="widget">
     <h3 class="widget-title">标签云</h3>
     <div class="widget-body tagcloud">
-      <a href="/tags/Django/" style="font-size: 13px;">Django</a> <a href="/tags/Java/" style="font-size: 13.5px;">Java</a> <a href="/tags/Javascript/" style="font-size: 13px;">Javascript</a> <a href="/tags/Python/" style="font-size: 13.5px;">Python</a> <a href="/tags/XML/" style="font-size: 13px;">XML</a> <a href="/tags/google%E6%90%9C%E7%B4%A2%E7%A1%AE%E8%AE%A4%E6%96%87%E4%BB%B6/" style="font-size: 13px;">google搜索确认文件</a> <a href="/tags/html/" style="font-size: 13.75px;">html</a> <a href="/tags/java/" style="font-size: 14px;">java</a> <a href="/tags/javascript/" style="font-size: 13.25px;">javascript</a> <a href="/tags/javaweb/" style="font-size: 13px;">javaweb</a> <a href="/tags/js/" style="font-size: 13.25px;">js</a> <a href="/tags/linux/" style="font-size: 13px;">linux</a> <a href="/tags/plan/" style="font-size: 13px;">plan</a> <a href="/tags/python/" style="font-size: 13.5px;">python</a> <a href="/tags/tcp/" style="font-size: 13px;">tcp</a> <a href="/tags/test/" style="font-size: 13px;">test</a> <a href="/tags/%E3%80%90%E6%B8%B8%E6%88%8F%E4%BB%8B%E7%BB%8D%E3%80%91/" style="font-size: 13px;">【游戏介绍】</a> <a href="/tags/%E5%8F%8D%E5%B0%84/" style="font-size: 13px;">反射</a> <a href="/tags/%E5%AD%A6%E4%B9%A0Python/" style="font-size: 13px;">学习Python</a> <a href="/tags/%E5%AD%A6%E4%B9%A0%E5%B0%8F%E7%BB%93/" style="font-size: 13.75px;">学习小结</a> <a href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" style="font-size: 13px;">学习笔记</a> <a href="/tags/%E6%84%9F%E6%83%B3%E7%BE%8E%E6%96%87/" style="font-size: 13px;">感想美文</a> <a href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" style="font-size: 13px;">操作系统</a> <a href="/tags/%E6%95%99%E7%A8%8B/" style="font-size: 13px;">教程</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" style="font-size: 13.25px;">数据库</a> <a href="/tags/%E6%96%87%E5%AD%A6/" style="font-size: 13.25px;">文学</a> <a href="/tags/%E6%96%87%E5%AD%A6%E8%B5%8F%E6%9E%90%E8%AF%BB%E5%90%8E%E6%84%9F/" style="font-size: 13.5px;">文学赏析读后感</a> <a href="/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8%E8%84%9A%E6%9C%ACphp%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/" style="font-size: 13px;">服务器脚本php环境配置</a> <a href="/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" style="font-size: 13px;">正则表达式</a> <a href="/tags/%E7%88%AC%E8%99%AB/" style="font-size: 13px;">爬虫</a> <a href="/tags/%E7%94%9F%E4%BA%A7%E5%AE%9E%E4%B9%A0/" style="font-size: 13px;">生产实习</a> <a href="/tags/%E7%94%B5%E5%BD%B1/" style="font-size: 13.25px;">电影</a> <a href="/tags/%E7%AE%97%E6%B3%95/" style="font-size: 13.25px;">算法</a> <a href="/tags/%E7%BD%91%E7%BB%9C/" style="font-size: 13.75px;">网络</a> <a href="/tags/%E7%BD%91%E9%A1%B5%E5%88%B6%E4%BD%9C/" style="font-size: 13.25px;">网页制作</a> <a href="/tags/%E7%BD%91%E9%A1%B5%E9%83%A8%E7%BD%B2/" style="font-size: 13px;">网页部署</a> <a href="/tags/%E7%BE%8E%E6%96%87/" style="font-size: 13px;">美文</a> <a href="/tags/%E8%AF%8D%E9%A2%91%E5%88%86%E6%9E%90%E7%94%9F%E6%88%90%E8%AF%8D%E4%BA%91/" style="font-size: 13px;">词频分析生成词云</a> <a href="/tags/%E8%AF%97%E8%AF%8D/" style="font-size: 13px;">诗词</a> <a href="/tags/%E8%AF%BB%E4%B9%A6/" style="font-size: 13.25px;">读书</a> <a href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" style="font-size: 13.25px;">读书笔记</a> <a href="/tags/%E9%97%B2%E8%B0%88/" style="font-size: 13px;">闲谈</a> <a href="/tags/%E9%A1%B9%E7%9B%AE/" style="font-size: 13px;">项目</a>
+      <a href="/tags/Django/" style="font-size: 13px;">Django</a> <a href="/tags/Java/" style="font-size: 13.5px;">Java</a> <a href="/tags/Javascript/" style="font-size: 13px;">Javascript</a> <a href="/tags/Python/" style="font-size: 13.5px;">Python</a> <a href="/tags/SVM%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BA/" style="font-size: 13px;">SVM支持向量机</a> <a href="/tags/XML/" style="font-size: 13px;">XML</a> <a href="/tags/google%E6%90%9C%E7%B4%A2%E7%A1%AE%E8%AE%A4%E6%96%87%E4%BB%B6/" style="font-size: 13px;">google搜索确认文件</a> <a href="/tags/html/" style="font-size: 13.75px;">html</a> <a href="/tags/java/" style="font-size: 14px;">java</a> <a href="/tags/javascript/" style="font-size: 13.25px;">javascript</a> <a href="/tags/javaweb/" style="font-size: 13px;">javaweb</a> <a href="/tags/js/" style="font-size: 13.25px;">js</a> <a href="/tags/linux/" style="font-size: 13px;">linux</a> <a href="/tags/plan/" style="font-size: 13px;">plan</a> <a href="/tags/python/" style="font-size: 13.5px;">python</a> <a href="/tags/tcp/" style="font-size: 13px;">tcp</a> <a href="/tags/test/" style="font-size: 13px;">test</a> <a href="/tags/%E3%80%90%E6%B8%B8%E6%88%8F%E4%BB%8B%E7%BB%8D%E3%80%91/" style="font-size: 13px;">【游戏介绍】</a> <a href="/tags/%E5%8F%8D%E5%B0%84/" style="font-size: 13px;">反射</a> <a href="/tags/%E5%AD%A6%E4%B9%A0Python/" style="font-size: 13px;">学习Python</a> <a href="/tags/%E5%AD%A6%E4%B9%A0%E5%B0%8F%E7%BB%93/" style="font-size: 13.75px;">学习小结</a> <a href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" style="font-size: 13px;">学习笔记</a> <a href="/tags/%E6%84%9F%E6%83%B3%E7%BE%8E%E6%96%87/" style="font-size: 13px;">感想美文</a> <a href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" style="font-size: 13px;">操作系统</a> <a href="/tags/%E6%95%99%E7%A8%8B/" style="font-size: 13px;">教程</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" style="font-size: 13.25px;">数据库</a> <a href="/tags/%E6%96%87%E5%AD%A6/" style="font-size: 13.25px;">文学</a> <a href="/tags/%E6%96%87%E5%AD%A6%E8%B5%8F%E6%9E%90%E8%AF%BB%E5%90%8E%E6%84%9F/" style="font-size: 13.5px;">文学赏析读后感</a> <a href="/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8%E8%84%9A%E6%9C%ACphp%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/" style="font-size: 13px;">服务器脚本php环境配置</a> <a href="/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" style="font-size: 13px;">正则表达式</a> <a href="/tags/%E7%88%AC%E8%99%AB/" style="font-size: 13px;">爬虫</a> <a href="/tags/%E7%94%9F%E4%BA%A7%E5%AE%9E%E4%B9%A0/" style="font-size: 13px;">生产实习</a> <a href="/tags/%E7%94%B5%E5%BD%B1/" style="font-size: 13.25px;">电影</a> <a href="/tags/%E7%AE%97%E6%B3%95/" style="font-size: 13.25px;">算法</a> <a href="/tags/%E7%BD%91%E7%BB%9C/" style="font-size: 13.75px;">网络</a> <a href="/tags/%E7%BD%91%E9%A1%B5%E5%88%B6%E4%BD%9C/" style="font-size: 13.25px;">网页制作</a> <a href="/tags/%E7%BD%91%E9%A1%B5%E9%83%A8%E7%BD%B2/" style="font-size: 13px;">网页部署</a> <a href="/tags/%E7%BE%8E%E6%96%87/" style="font-size: 13px;">美文</a> <a href="/tags/%E8%AF%8D%E9%A2%91%E5%88%86%E6%9E%90%E7%94%9F%E6%88%90%E8%AF%8D%E4%BA%91/" style="font-size: 13px;">词频分析生成词云</a> <a href="/tags/%E8%AF%97%E8%AF%8D/" style="font-size: 13px;">诗词</a> <a href="/tags/%E8%AF%BB%E4%B9%A6/" style="font-size: 13.25px;">读书</a> <a href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" style="font-size: 13.25px;">读书笔记</a> <a href="/tags/%E9%97%B2%E8%B0%88/" style="font-size: 13px;">闲谈</a> <a href="/tags/%E9%A1%B9%E7%9B%AE/" style="font-size: 13px;">项目</a>
     </div>
   </div>
 
@@ -247,7 +253,7 @@
   <div class="widget">
     <h3 class="widget-title">归档</h3>
     <div class="widget-body">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">五月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">四月 2020</a><span class="archive-list-count">16</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">三月 2020</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">二月 2020</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">一月 2020</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">十月 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">八月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">三月 2019</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">一月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">十二月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">十一月 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">八月 2018</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">七月 2018</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">六月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">五月 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">四月 2018</a><span class="archive-list-count">5</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">五月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">四月 2020</a><span class="archive-list-count">16</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">三月 2020</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">二月 2020</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">一月 2020</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">十月 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">八月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">三月 2019</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">一月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">十二月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">十一月 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">八月 2018</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">七月 2018</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">六月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">五月 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">四月 2018</a><span class="archive-list-count">5</span></li></ul>
     </div>
   </div>
 
@@ -264,6 +270,21 @@
             <div class="item-inner">
               <p class="item-category">
                 
+              </p>
+              <p class="item-title">
+                <a href="/2020/05/23/%E5%AD%A6%E4%B9%A0layui/" class="title">学习layui</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2020-05-22T16:53:24.000Z" itemprop="datePublished">2020-05-23</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/%E6%AF%95%E4%B8%9A%E8%AE%BE%E8%AE%A1/">毕业设计</a>
               </p>
               <p class="item-title">
                 <a href="/2020/05/21/%E5%AD%A6%E4%B9%A0SVM/" class="title">学习SVM</a>
@@ -319,21 +340,6 @@
             </div>
           </li>
           
-          <li>
-            
-            <div class="item-inner">
-              <p class="item-category">
-                <a class="category-link" href="/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a>
-              </p>
-              <p class="item-title">
-                <a href="/2020/04/23/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86%E7%82%B9%E5%B0%8F%E7%BB%93/" class="title">操作系统相关知识点小结</a>
-              </p>
-              <p class="item-date">
-                <time datetime="2020-04-22T16:04:44.000Z" itemprop="datePublished">2020-04-23</time>
-              </p>
-            </div>
-          </li>
-          
       </ul>
     </div>
   </div>
@@ -367,7 +373,17 @@
 	</a>
 </span>
         
+  <span class="article-category">
+    <i class="icon icon-folder"></i>
+    <a class="article-category-link" href="/categories/%E6%AF%95%E4%B8%9A%E8%AE%BE%E8%AE%A1/">毕业设计</a>
+  </span>
+
         
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link" href="/tags/SVM%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BA/" rel="tag">SVM支持向量机</a>
+  </span>
+
 
         
 	<span class="article-read hidden-xs">
@@ -388,17 +404,154 @@
         <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2020/05/21/%E5%AD%A6%E4%B9%A0SVM/#comments" class="article-comment-link">评论</a></span>
         
 	
-		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计: 0(字)</span>
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计: 1.8k(字)</span>
 	
 	
-		<span class="post-readcount hidden-xs" itemprop="timeRequired">阅读时长: 1(分)</span>
+		<span class="post-readcount hidden-xs" itemprop="timeRequired">阅读时长: 6(分)</span>
 	
 
       </div>
     </div>
     <div class="article-entry marked-body" itemprop="articleBody">
       
-        
+        <head>
+<meta charset="utf-8">
+  <title>Layui</title>
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <link rel="stylesheet" href="..学习layui/layui/css/layui.css" media="all">
+<meta name="generator" content="Hexo 4.2.0"><link rel="alternate" href="/atom.xml" title="Shengqian's Blog" type="application/atom+xml">
+</head>
+<body>
+
+<h2 style="text-align:center">毕业设计：基于OpenCV的车牌识别系统设计与实现中字符识别算法SVM学习小结</h2>
+
+<h3 style="text-align:center">简介</h3>
+
+<p><a href="https://zh.wikipedia.org/zh-hans/%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BA" target="_blank" rel="noopener">支持向量机（SVM）</a>，一个神秘而众知的名字，在其出来就受到了莫大的追捧，号称最优秀的分类算法之一，以其简单的理论构造了复杂的算法，又以其简单的用法实现了复杂的问题，不得不说确实完美。</p>
+<p>因为在毕业设计需要的情况下，让我接触了SVM这个概念。因为SVM算法是车牌识别系统中的最后一步：字符识别，因此我因此机缘了解到了有关svm相关的知识，并且阅读了大量有关svm的博客和论文文献，也有了一些自己的理解，在这里做一个记录。因为要在论文中也要详细介绍svm算法，因此也算提前在这里把论文有关svm算法的研究写在这里，后面论文可以在这里参考和“CV”了。</p>
+<p>在之前的博客和文献中，我仅仅是去关注关于svm算法是如何工作相关的知识点，而在后来的一篇博客中，详细的介绍了拉格朗日乘子法以及什么是对偶问题，这些问题的研究与探讨都有助于我们研究svm算法。关于svm算法，刚开始我仅仅是知道怎么在python里面运用它来识别字符，并不知道它是怎么运作的，它的原理是什么，它的数学模型，公式是什么，我都不知道，只知道它可以用来作为车牌识别的字符识别，并且字符识别的准确率很高，仅此而已。</p>
+<p>在研究svm之前，我们需要了解拉格朗日乘子法，需要了解对偶问题。需要了解它是如何解决问题的。然后需要了解kkt条件。这篇博客是我做毕设做的一个学习记录，里面会有很多的是来自于其他论文博客和文献，参考的所有文章会在文章末尾一一列出，尊重各位大佬的产权</p>
+<h4>1、拉格朗日乘子法和KKT条件</h4>
+
+<h5>1) 关于拉格朗日乘子法</h5>
+首先我们来了解拉格朗日乘子法，为什么需要拉格朗日乘子法呢？记住，有需要拉格朗日乘子法的地方，必然是一个组合优化问题。那么带约束的优化问题很好说，就比如说下面这个：<br><br>
+
+<img src="/2020/05/21/%E5%AD%A6%E4%B9%A0SVM/1.png">
+
+<p>这是一个带等式约束的优化问题，有目标值，有约束条件。那么你可以想想，假设没有约束条件这个问题是怎么求解的呢？</p>
+<p>是不是直接f对各个x求导等于0，解x就可以了，可以看到没有约束的话，求导为0，那么各个x均为0吧，这样f=0了，最小。但是x都为0不满足约束条件呀，那么问题就来了。</p>
+<p>这里在说一点的是，为什么上面说求导为0就可以呢？理论上多数问题是可以的，但是有的问题不可以。如果求导为0一定可以的话，那么f一定是个凸优化问题，什么是凸的呢？像下面这个左图：</p>
+<img src="/2020/05/21/%E5%AD%A6%E4%B9%A0SVM/2.png">
+
+<p>凸的就是开口朝一个方向（向上或向下）。更准确的数学关系就是：</p>
+<img src="/2020/05/21/%E5%AD%A6%E4%B9%A0SVM/3.png">
+
+<p>就是我们在高等数学中学习的凹函数和凸函数的定义。注意的是这个条件是对函数的任意x取值。如果满足第一个就是开口向上的凸，第二个是开口向下的凸。</p>
+<p>对于凸函数，如果去求导的话，就只有一个极值点，那么这个点就成称为最优点。而在第二个图中，很明显这个条件对于任意的取值都不满足，有时满足第一个关系，有时会满足第二个消息。</p>
+<p>然而从图上可以看到，只有其中一个极点是最优解，其他的是局部最优解，那么当真实问题的时候你选择哪个？说了半天要说啥呢，就是拉格朗日法是一定适合于凸问题的，不一定适合于其他问题，还好我们最终的问题是凸问题。</p>
+<p>回头再来看看有约束的问题，既然有了约束不能直接求导，那么如果把约束去掉不就可以了吗？怎么去掉呢？这才需要拉格朗日方法。既然是等式约束，那么我们把这个约束乘一个系数加到<button data-method="notice" class="layui-btn">目标函数</button>中去，这样就相当于既考虑了原目标函数，也考虑了约束条件，比如上面那个函数，加进去就变为：</p>
+<p>这里可以看到与相乘的部分都为0，所以的取值为全体实数。现在这个优化目标函数就没有约束条件了吧，既然如此，求法就简单了，分别对x求导等于0，如下：</p>
+<img src="/2020/05/21/%E5%AD%A6%E4%B9%A0SVM/4.png">
+
+
+
+<script src="..学习layui/layui/layui.js" charset="utf-8"></script>
+
+<script>
+layui.use('layer', function(){ //独立版的layer无需执行这一句
+  var $ = layui.jquery, layer = layui.layer; //独立版的layer无需执行这一句
+
+  //触发事件
+  var active = {
+    setTop: function(){
+      var that = this; 
+      //多窗口模式，层叠置顶
+      layer.open({
+        type: 2 //此处以iframe举例
+        ,title: '当你选择该窗体时，即会在最顶端'
+        ,area: ['390px', '260px']
+        ,shade: 0
+        ,maxmin: true
+        ,offset: [ //为了演示，随机坐标
+          Math.random()*($(window).height()-300)
+          ,Math.random()*($(window).width()-390)
+        ] 
+        ,content: '//layer.layui.com/test/settop.html'
+        ,btn: ['继续弹出', '全部关闭'] //只是为了演示
+        ,yes: function(){
+          $(that).click(); 
+        }
+        ,btn2: function(){
+          layer.closeAll();
+        }
+
+        ,zIndex: layer.zIndex //重点1
+        ,success: function(layero){
+          layer.setTop(layero); //重点2
+        }
+      });
+    }
+    ,confirmTrans: function(){
+      //配置一个透明的询问框
+      layer.msg('大部分参数都是可以公用的<br>合理搭配，展示不一样的风格', {
+        time: 20000, //20s后自动关闭
+        btn: ['明白了', '知道了', '哦']
+      });
+    }
+    ,notice: function(){
+      //示范一个公告层
+      layer.open({
+        type: 1
+        ,title: false //不显示标题栏
+        ,closeBtn: false
+        ,area: '300px;'
+        ,shade: 0.8
+        ,id: 'LAY_layuipro' //设定一个id，防止重复弹出
+        ,btn: ['火速围观', '残忍拒绝']
+        ,btnAlign: 'c'
+        ,moveType: 1 //拖拽模式，0或者1
+        ,content: '<div style="padding: 50px; line-height: 22px; background-color: #393D49; color: #fff; font-weight: 300;">目标函数<br>目标函数f(x)就是用设计变量来表示的所追求的目标形式，所以目标函数就是设计变量的函数，是一个标量。从工程意义讲，目标函数是系统的性能标准，比如，一个结构的最轻重量、最低造价、最合理形式；一件产品的最短生产时间、最小能量消耗；一个实验的最佳配方等等，建立目标函数的过程就是寻找设计变量与目标的关系的过程，目标函数和设计变量的关系可用曲线、曲面或超曲面表示。 来源：<a href="https://baike.baidu.com/item/%E7%9B%AE%E6%A0%87%E5%87%BD%E6%95%B0" target="_blank" rel="noopener">百度百科</a></div>'
+        ,success: function(layero){
+          var btn = layero.find('.layui-layer-btn');
+          btn.find('.layui-layer-btn0').attr({
+            href: 'http://www.layui.com/'
+            ,target: '_blank'
+          });
+        }
+      });
+    }
+    ,offset: function(othis){
+      var type = othis.data('type')
+      ,text = othis.text();
+
+      layer.open({
+        type: 1
+        ,offset: type //具体配置参考：http://www.layui.com/doc/modules/layer.html#offset
+        ,id: 'layerDemo'+type //防止重复弹出
+        ,content: '<div style="padding: 20px 100px;">'+ text +'</div>'
+        ,btn: '关闭全部'
+        ,btnAlign: 'c' //按钮居中
+        ,shade: 0 //不显示遮罩
+        ,yes: function(){
+          layer.closeAll();
+        }
+      });
+    }
+  };
+
+  $('#layerDemo .layui-btn').on('click', function(){
+    var othis = $(this), method = othis.data('method');
+    active[method] ? active[method].call(this, othis) : '';
+  });
+
+});
+</script>
+
+<body>
+
+</body></body>
       
     </div>
     <div class="article-footer">
@@ -452,6 +605,10 @@
   <div class="bar-inner">
   
   <ul class="pager pull-left">
+    
+    <li class="prev">
+      <a href="/2020/05/23/%E5%AD%A6%E4%B9%A0layui/" title="学习layui"><i class="icon icon-angle-left" aria-hidden="true"></i><span>&nbsp;&nbsp;上一篇</span></a>
+    </li>
     
     
     <li class="next">
