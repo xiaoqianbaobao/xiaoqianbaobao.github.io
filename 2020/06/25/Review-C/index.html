@@ -27,7 +27,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://xiaoqianbaobao.github.io/.io//1.png">
 <meta property="article:published_time" content="2020-06-25T13:58:07.000Z">
-<meta property="article:modified_time" content="2020-06-25T14:30:38.333Z">
+<meta property="article:modified_time" content="2020-06-25T14:33:01.719Z">
 <meta property="article:author" content="Larnonudo chan">
 <meta property="article:tag" content="C语言">
 <meta name="twitter:card" content="summary">
@@ -412,10 +412,10 @@
     <div class="article-entry marked-body" itemprop="articleBody">
       
         <p>最近在家二刷cssapp，里面很多题目都要求是用c写的，因此抽空来把c语言复习一遍。复习使用的是c primer plus，然后前面的基本语法就直接跳过了，主要是复习指针这一块，感觉指针还是重要啊，而且我也忘记的差不多了。边复习边写一些笔记。</p>
-<h2>编译运行环境<h2>
+<h2 style="color:blue">编译运行环境</h2>
 由于在windows上使用vscode编译c需要配置一堆乱七八糟的东西，因此这里采用的是wsl2子系统来编译运行，然后使用Vscode来写代码，美滋滋。
 
-<h2>数组<h2>
+<h2 style="color:blue">数组</h2>
 数组是一系列类型相同的的元素构成的。可以使用声明来告诉编译器我需要的一个数组。数组声明中包括数组元素的数目以及元素的类型。编译器根据这些信息创造合适的数组。数组元素可以具有用普通变量一样的类型。下面是一个数组声明的例子：
 
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">float</span> candy[<span class="number">365</span>];</span><br><span class="line">    <span class="keyword">char</span> code[<span class="number">12</span>];</span><br><span class="line">    <span class="keyword">int</span> states[<span class="number">50</span>];</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -430,7 +430,7 @@
 <img src="/.io//1.png">
 
 <p>这个程序并不完善，但是它4年仅仅打错一个月份的天数。程序使用括在花括号里面的一系列数值对days[]进行初始化，数值之间用逗号分开来。</p>
-</h2></h2></h2></h2>
+
       
     </div>
     <div class="article-footer">
