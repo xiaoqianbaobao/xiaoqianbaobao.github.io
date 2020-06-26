@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://xiaoqianbaobao.github.io/"/>
-  <updated>2020-06-26T03:11:27.036Z</updated>
+  <updated>2020-06-26T03:31:16.408Z</updated>
   <id>http://xiaoqianbaobao.github.io/</id>
   
   <author>
@@ -15,6 +15,27 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>关于hexo4.2更新后图片无法显示的问题</title>
+    <link href="http://xiaoqianbaobao.github.io/2020/06/26/%E5%85%B3%E4%BA%8Ehexo4-2%E6%9B%B4%E6%96%B0%E5%90%8E%E5%9B%BE%E7%89%87%E6%97%A0%E6%B3%95%E6%98%BE%E7%A4%BA%E7%9A%84%E9%97%AE%E9%A2%98/"/>
+    <id>http://xiaoqianbaobao.github.io/2020/06/26/%E5%85%B3%E4%BA%8Ehexo4-2%E6%9B%B4%E6%96%B0%E5%90%8E%E5%9B%BE%E7%89%87%E6%97%A0%E6%B3%95%E6%98%BE%E7%A4%BA%E7%9A%84%E9%97%AE%E9%A2%98/</id>
+    <published>2020-06-26T03:15:52.000Z</published>
+    <updated>2020-06-26T03:31:16.408Z</updated>
+    
+    <summary type="html">
+    
+      更新后的hexo图片都无法显示了
+    
+    </summary>
+    
+    
+      <category term="hexo" scheme="http://xiaoqianbaobao.github.io/categories/hexo/"/>
+    
+    
+      <category term="hexo" scheme="http://xiaoqianbaobao.github.io/tags/hexo/"/>
+    
+  </entry>
   
   <entry>
     <title>Review C</title>
@@ -412,25 +433,6 @@
     
     
       <category term="tcp" scheme="http://xiaoqianbaobao.github.io/tags/tcp/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>关于java线程安全的问题</title>
-    <link href="http://xiaoqianbaobao.github.io/2020/04/13/%E5%85%B3%E4%BA%8Ejava%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8%E7%9A%84%E9%97%AE%E9%A2%98/"/>
-    <id>http://xiaoqianbaobao.github.io/2020/04/13/%E5%85%B3%E4%BA%8Ejava%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8%E7%9A%84%E9%97%AE%E9%A2%98/</id>
-    <published>2020-04-13T15:40:22.000Z</published>
-    <updated>2020-04-13T15:46:17.000Z</updated>
-    
-    <summary type="html">
-    
-      关于java线程安全的几个问题
-    
-    </summary>
-    
-    
-    
-      <category term="java" scheme="http://xiaoqianbaobao.github.io/tags/java/"/>
     
   </entry>
   
