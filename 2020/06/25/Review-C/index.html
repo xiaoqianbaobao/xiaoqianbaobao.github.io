@@ -26,8 +26,12 @@
 <meta property="og:description" content="在家复习一下c语言，因为在二刷cssapp以及严蔚敏的数据结构">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://xiaoqianbaobao.github.io/2020/06/25/Review-C/1.png">
+<meta property="og:image" content="http://xiaoqianbaobao.github.io/2020/06/25/Review-C/2.png">
+<meta property="og:image" content="http://xiaoqianbaobao.github.io/2020/06/25/Review-C/3.png">
+<meta property="og:image" content="http://xiaoqianbaobao.github.io/2020/06/25/Review-C/4.png">
+<meta property="og:image" content="http://xiaoqianbaobao.github.io/2020/06/25/Review-C/5.png">
 <meta property="article:published_time" content="2020-06-25T13:58:07.000Z">
-<meta property="article:modified_time" content="2020-06-26T03:11:27.036Z">
+<meta property="article:modified_time" content="2020-06-26T06:39:05.539Z">
 <meta property="article:author" content="Larnonudo chan">
 <meta property="article:tag" content="C语言">
 <meta name="twitter:card" content="summary">
@@ -399,10 +403,10 @@
         <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2020/06/25/Review-C/#comments" class="article-comment-link">评论</a></span>
         
 	
-		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计: 628(字)</span>
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计: 2.6k(字)</span>
 	
 	
-		<span class="post-readcount hidden-xs" itemprop="timeRequired">阅读时长: 2(分)</span>
+		<span class="post-readcount hidden-xs" itemprop="timeRequired">阅读时长: 9(分)</span>
 	
 
       </div>
@@ -425,13 +429,88 @@
 <p>下面举一个例子：day_mon1.c程序</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> MONTHS 12</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> days[MONTHS] = &#123;<span class="number">31</span>, <span class="number">28</span>, <span class="number">31</span>, <span class="number">30</span>, <span class="number">31</span>, <span class="number">30</span>, <span class="number">31</span>, <span class="number">31</span>, <span class="number">30</span>, <span class="number">31</span>, <span class="number">30</span>, <span class="number">31</span>&#125;;</span><br><span class="line">    <span class="keyword">int</span> index;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span>(index = <span class="number">0</span>; index &lt; MONTHS; index++)&#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"MONTH %d has %2d days.\n"</span> ,index+<span class="number">1</span>, days[index]);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<img src="/2020/06/25/Review-C/1.png">
-
-<p>这个程序并不完善，但是它4年仅仅打错一个月份的天数。程序使用括在花括号里面的一系列数值对days[]进行初始化，数值之间用逗号分开来。</p>
+<p><img src="/2020/06/25/Review-C/1.png"><br><br><br><br>这个程序并不完善，但是它4年仅仅打错一个月份的天数。程序使用括在花括号里面的一系列数值对days[]进行初始化，数值之间用逗号分开来。</p>
 <h3>数组边界</h3>
 
 <p>使用数组的时候，需要注意的是数组索引不能超过数组边界，也就是说，数组索引应该具有对于数组来说有效的数值。例如：</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> SIZE 4</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> value1 = <span class="number">44</span>;</span><br><span class="line">    <span class="keyword">int</span> arr[SIZE];</span><br><span class="line">    <span class="keyword">int</span> value2 = <span class="number">88</span>;</span><br><span class="line">    <span class="keyword">int</span> i;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"value1 = %d, value2 = %d\n"</span>, value1, value2);</span><br><span class="line">    <span class="keyword">for</span>(i = <span class="number">-1</span>; i &lt;=SIZE; i++)&#123;</span><br><span class="line">        arr[i] = <span class="number">2</span> * i + <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span>(i = <span class="number">-1</span>; i &lt; <span class="number">7</span>; i++)&#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"%2d %d\n"</span>, i, arr[i])'</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"value1=%d, value2=%d\n"</span>,value1, value2);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<br>
+<img src="/2020/06/25/Review-C/2.png">
+<br>
+
+<p>编译器不检查索引的合法性。在标准C中，如果使用了错误的索引，程序的执行结果是不可知的。也就是说程序能够运行，但是执行的结果会很奇怪，也会有可能引起程序的中断。由上面运行的结果观察：<br></p>
+<p>我们使用的编译器看起来是把value2正好存储在数组后面的那个存储单元中，把value1存储在数组前面的那个存储单元中（其他编译器可能采取不同的顺序在内存中存储数据）。这样arr[-1]就和value1对应同一个存储单元，arr[4]和value2对应同一个存储单元。因此，使用超出边界的索引会改变其他变量的数值。对于不同的编译器，输出结果可能会不同。</p>
+<h2>指针简介</h2>
+
+<p>究竟什么是指针？一般来讲，指针是一起其数值为地址的变量（或更一般地说是一个数据对象），正如char类型的变量用字符作为其数值，而int类型变量的数值是整数，指针变量的数值表示的是地址。</p>
+<img src="/2020/06/25/Review-C/3.png">
+
+<p>如果我们项把某个指针变量命名为ptr，就可以使用一下语句：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ptr = &amp;pooh <span class="comment">/*把pooh的地址赋给ptr     */</span></span><br></pre></td></tr></table></figure>
+
+<p>要创建一个指针变量，首先需要声明其类型。</p>
+<h2>为什么需要指针</h2>
+
+<p>指针解决了一些编程中基本的问题。</p>
+<p>第一，指针的使用使得不同区域的代码可以轻易的共享内存数据。当然你也可以通过数据的复制达到相同的效果，但是这样往往效率不太好，因为诸如结构体等大型数据，占用的字节数多，复制很消耗性能。但使用指针就可以很好的避免这个问题，因为任何类型的指针占用的字节数都是一样的（根据平台不同，有4字节或者8字节或者其他可能）。</p>
+<p>第二，指针使得一些复杂的链接性的数据结构的构建成为可能，比如链表，链式二叉树等等。</p>
+<p>第三，有些操作必须使用指针。如操作申请的堆内存。</p>
+<p>还有一点：</p><p style="color:red">C语言中的一切函数调用中，实参传递给形参的机理都是“按值传递(pass by value)”的，如果我们要在函数中修改被传递过来的对象，就必须通过这个对象的指针来完成。</p><p></p>
+<h2>指针变量和指向关系</h2>
+
+<p>用来保存 指针(地址) 的变量，就是指针变量。如果指针变量p1保存了变量 num的地址，则就说：p1指向了变量num，也可以说p1指向了num所在的内存块 ，这种指向关系，在图中一般用 箭头表示。</p>
+<img src="/2020/06/25/Review-C/4.png">
+<br>
+<br>
+上图中，指针变量p1指向了num所在的内存块 ，即从地址0028FF40开始的4个byte 的内存块。
+<br><br>
+这里学2个名词，读英文资料的时候可能会用到
+
+<li>pointer：指针，例如上面例子中的p1</li><br>
+<li>pointee：被指向的数据对象，例如上面例子中的num</li><br>
+<li>所以我们可以说：a pointer stores the address of a pointee</li>
+<br>
+<b>定义指针变量</b>
+<br>
+C语言中，定义变量时，在变量名 前 写一个 * 星号，这个变量就变成了对应变量类型的指针变量。必要时要加( ) 来避免优先级的问题。
+
+<p>引申：C语言中，定义变量时，在定义的最前面写上typedef ，那么这个变量名就成了一种类型，即这个类型的同义词。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> a ; <span class="comment">//int类型变量 a</span></span><br><span class="line"><span class="keyword">int</span>* p ; <span class="comment">//int* 变量p</span></span><br><span class="line"><span class="keyword">int</span> arr[<span class="number">3</span>]; <span class="comment">//arr是包含3个int元素的数组</span></span><br><span class="line"><span class="keyword">int</span> (* parr )[<span class="number">3</span>]; <span class="comment">//parr是一个指向【包含3个int元素的数组】的指针变量</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">//-----------------各种类型的指针------------------------------</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span>* p_int; <span class="comment">//指向int类型变量的指针 </span></span><br><span class="line"></span><br><span class="line"><span class="keyword">double</span>* p_double; <span class="comment">//指向double类型变量的指针 </span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Student</span> *<span class="title">p_struct</span>;</span> <span class="comment">//结构体类型的指针</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span>(*p_func)(<span class="keyword">int</span>,<span class="keyword">int</span>); <span class="comment">//指向返回类型为int，有2个int形参的函数的指针 </span></span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span>(*p_arr)[<span class="number">3</span>]; <span class="comment">//指向含有3个int元素的数组的指针 </span></span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span>** p_pointer; <span class="comment">//指向 一个整形变量指针的指针</span></span><br></pre></td></tr></table></figure>
+<br>
+<b>取地址</b>
+<br>
+既然有了指针变量，那就得让他保存其它变量的地址，使用& 运算符取得一个变量的地址。
+
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">add</span><span class="params">(<span class="keyword">int</span> a , <span class="keyword">int</span> b)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> a + b;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> num = <span class="number">97</span>;</span><br><span class="line">    <span class="keyword">float</span> score = <span class="number">10.00F</span>;</span><br><span class="line">    <span class="keyword">int</span> arr[<span class="number">3</span>] = &#123;<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>&#125;;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//-----------------------</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span>* p_num = &amp;num;</span><br><span class="line">    <span class="keyword">float</span>* p_score = &amp;score;</span><br><span class="line">    <span class="keyword">int</span> (*p_arr)[<span class="number">3</span>] = &amp;arr;           </span><br><span class="line">    <span class="keyword">int</span> (*fp_add)(<span class="keyword">int</span> ,<span class="keyword">int</span> )  = &amp;add;  <span class="comment">//p_add是指向函数add的函数指针</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<br>
+特殊的情况，他们并不一定需要使用&取地址：<br>
+<br>
+<li>数组名的值就是这个数组的第一个元素的地址。</li><br>
+<li>函数名的值就是这个函数的地址</li><br>
+<li>字符串字面值常量作为右值时，就是这个字符串对应的字符数组的名称,也就是这个字符串在内存中的地址。</li><br>
+
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">add</span><span class="params">(<span class="keyword">int</span> a , <span class="keyword">int</span> b)</span></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> a + b;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> arr[<span class="number">3</span>] = &#123;<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>&#125;;</span><br><span class="line">    <span class="comment">//-----------------------</span></span><br><span class="line">    <span class="keyword">int</span>* p_first = arr;</span><br><span class="line">    <span class="keyword">int</span> (*fp_add)(<span class="keyword">int</span> ,<span class="keyword">int</span> )  =  add;</span><br><span class="line">    <span class="keyword">const</span> <span class="keyword">char</span>* msg = <span class="string">"Hello world"</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<br>
+<b>解地址</b>
+
+<p>我们需要一个数据的指针变量干什么？当然使用通过它来操作（读/写）它指向的数据啦。对一个指针解地址，就可以取到这个内存数据，解地址的写法，就是在指针的前面加一个*号。<br></p>
+<p>解指针的实质是：从指针指向的内存块中取出这个内存数据。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> age = <span class="number">19</span>;</span><br><span class="line">    <span class="keyword">int</span>*p_age = &amp;age;</span><br><span class="line">    *p_age  = <span class="number">20</span>;  <span class="comment">//通过指针修改指向的内存数据</span></span><br><span class="line"></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"age = %d\n"</span>,*p_age);   <span class="comment">//通过指针读取指向的内存数据</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"age = %d\n"</span>,age);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><b>指针之间的赋值</b></p>
+<p>指针赋值和int变量赋值一样，就是将地址的值拷贝给另外一个。指针之间的赋值是一种浅拷贝，是在多个编程单元之间共享内存数据的高效的方法。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span>* p1  = &amp; num;</span><br><span class="line"><span class="keyword">int</span>* p3 = p1;</span><br><span class="line"></span><br><span class="line"><span class="comment">//通过指针 p1 、 p3 都可以对内存数据 num 进行读写，如果2个函数分别使用了p1 和p3，那么这2个函数就共享了数据num。</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="/2020/06/25/Review-C/5.png"><br><br><br><br><b>空指针</b></p>
+<p>指向空，或者说不指向任何东西。在C语言中，我们让指针变量赋值为NULL表示一个空指针，而C语言中，NULL实质是 ((void*)0) ，  在C++中，NULL实质是0。<br><br>换种说法：任何程序数据都不会存储在地址为0的内存块中，它是被操作系统预留的内存块。</p>
+<p><b>坏指针</b></p>
+<p>指针变量的值是NULL，或者未知的地址值，或者是当前应用程序不可访问的地址值，这样的指针就是坏指针，不能对他们做解指针操作，否则程序会出现运行时错误，导致程序意外终止。<br>任何一个指针变量在做 解地址操作前，都必须保证它指向的是有效的，可用的内存块，否则就会出错。坏指针是造成C语言Bug的最频繁的原因之一。</p>
+<p>下面的代码就是错误的示例。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">opp</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">     <span class="keyword">int</span>*p = <span class="literal">NULL</span>;</span><br><span class="line">     *p = <span class="number">10</span>;      <span class="comment">//Oops! 不能对NULL解地址</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">foo</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">     <span class="keyword">int</span>*p;</span><br><span class="line">     *p = <span class="number">10</span>;      <span class="comment">//Oops! 不能对一个未知的地址解地址</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">bar</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">     <span class="keyword">int</span>*p = (<span class="keyword">int</span>*)<span class="number">1000</span>; </span><br><span class="line">     *p =<span class="number">10</span>;      <span class="comment">//Oops!   不能对一个可能不属于本程序的内存的地址的指针解地址</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2>指针的2个重要属性</h2>
+
+<p>指针也是一种数据，指针变量也是一种变量，因此指针 这种数据也符合前面 变量和内存 主题中的特性。 这里强调2个属性： 指针的类型，指针的值。</p>
 
       
     </div>
