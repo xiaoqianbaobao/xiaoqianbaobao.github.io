@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no,email=no,adress=no">
+  <!-- Color theme for statusbar -->
+  <meta name="theme-color" content="#000000" />
+  <!-- 强制页面在当前窗口以独立页面显示,防止别人在框架里调用页面 -->
+  <meta http-equiv="window-target" content="_top" />
+  
+  
+  <title>python 对失物招领群进行词频分析 | CSQBlog</title>
+  <meta name="description" content="python对失物招领群消息进行词频分析并生成词云">
+<meta property="og:type" content="article">
+<meta property="og:title" content="python 对失物招领群进行词频分析">
+<meta property="og:url" content="http://xiaoqianbaobao.github.io/python-%E5%AF%B9%E5%A4%B1%E7%89%A9%E6%8B%9B%E9%A2%86%E7%BE%A4%E8%BF%9B%E8%A1%8C%E8%AF%8D%E9%A2%91%E5%88%86%E6%9E%90.html">
+<meta property="og:site_name" content="Shengqian&#39;s Blog">
+<meta property="og:description" content="python对失物招领群消息进行词频分析并生成词云">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://xiaoqianbaobao.github.io/1.png">
+<meta property="og:image" content="http://xiaoqianbaobao.github.io/2.png">
+<meta property="og:image" content="http://xiaoqianbaobao.github.io/%E5%AE%89%E5%B7%A5%E7%A8%8B%E5%A4%B1%E7%89%A9%E6%8B%9B%E9%A2%86%E7%BE%A41%E8%AF%8D%E9%A2%91%E5%88%86%E6%9E%90.png">
+<meta property="og:image" content="http://xiaoqianbaobao.github.io/%E7%AC%AC%E4%B8%89%E5%B1%8A%E5%8D%83%E5%AF%BB%E5%A4%B1%E7%89%A9%E6%8B%9B%E9%A2%86%E7%BE%A4%E8%AF%8D%E4%BA%91%E5%88%86%E6%9E%90.png">
+<meta property="og:image" content="http://xiaoqianbaobao.github.io/%E5%A4%B1%E7%89%A9%E6%8B%9B%E9%A2%86%E4%BA%A4%E6%B5%81%E7%BE%A4%E8%AF%8D%E9%A2%91%E5%88%86%E6%9E%90.png">
+<meta property="og:image" content="http://xiaoqianbaobao.github.io/%E6%A0%A1%E5%9B%AD%E6%B7%98%E6%B7%98%E6%97%A7%E8%AF%8D%E9%A2%91%E5%88%86%E6%9E%90.png">
+<meta property="og:image" content="http://xiaoqianbaobao.github.io/%E5%BC%82%E6%AD%A5%E8%AF%BB%E8%80%85%E7%BE%A4%E8%AF%8D%E9%A2%91%E5%88%86%E6%9E%90.png">
+<meta property="og:image" content="http://xiaoqianbaobao.github.io/%E5%A4%B1%E7%89%A9%E6%8B%9B%E9%A2%86%E7%BE%A41%E8%AF%8D%E9%A2%91%E7%BB%9F%E8%AE%A1.png">
+<meta property="article:published_time" content="2018-11-13T03:48:53.000Z">
+<meta property="article:modified_time" content="2018-11-14T23:28:38.234Z">
+<meta property="article:author" content="Larnonudo chan">
+<meta property="article:tag" content="词频分析生成词云">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://xiaoqianbaobao.github.io/1.png">
+  <!-- Canonical links -->
+  <link rel="canonical" href="http://xiaoqianbaobao.github.io/python-%E5%AF%B9%E5%A4%B1%E7%89%A9%E6%8B%9B%E9%A2%86%E7%BE%A4%E8%BF%9B%E8%A1%8C%E8%AF%8D%E9%A2%91%E5%88%86%E6%9E%90.html">
+  
+    <link rel="alternate" href="/atom.xml" title="Shengqian&#39;s Blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png" type="image/x-icon">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+  
+  
+  
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+
+<body class="main-center theme-black" itemscope itemtype="http://schema.org/WebPage">
+  <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+  <div class="slimContent">
+    <div class="navbar-header">
+      
+      
+      <div class="profile-block text-center">
+        <a id="avatar" href="https://github.com/xiaoqianbaobao" target="_blank">
+          <img class="img-circle img-rotate" src="/images/avatar.jpg" width="200" height="200">
+        </a>
+        <h2 id="name" class="hidden-xs hidden-sm">qian</h2>
+        <h3 id="title" class="hidden-xs hidden-sm hidden-md">Dever</h3>
+        <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i> Shenzhen, China</small>
+      </div>
+      
+      <div class="search" id="search-form-wrap">
+
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="搜索" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i class="icon icon-search"></i></button>
+            </span>
+        </div>
+    </form>
+    <div class="ins-search">
+  <div class="ins-search-mask"></div>
+  <div class="ins-search-container">
+    <div class="ins-input-wrapper">
+      <input type="text" class="ins-search-input" placeholder="想要查找什么..." x-webkit-speech />
+      <button type="button" class="close ins-close ins-selectable" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+    </div>
+    <div class="ins-section-wrapper">
+      <div class="ins-section-container"></div>
+    </div>
+  </div>
+</div>
+
+
+</div>
+      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+      <ul class="nav navbar-nav main-nav menu-highlight">
+        
+        
+        <li class="menu-item menu-item-home">
+          <a href="/.">
+            
+            <i class="icon icon-home-fill"></i>
+            
+            <span class="menu-title">首页</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            
+            <i class="icon icon-archives-fill"></i>
+            
+            <span class="menu-title">归档</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories">
+            
+            <i class="icon icon-folder"></i>
+            
+            <span class="menu-title">分类</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            
+            <i class="icon icon-tags"></i>
+            
+            <span class="menu-title">标签</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-repository">
+          <a href="/repository">
+            
+            <i class="icon icon-project"></i>
+            
+            <span class="menu-title">项目</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-books">
+          <a href="/books">
+            
+            <i class="icon icon-book-fill"></i>
+            
+            <span class="menu-title">书单</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-links">
+          <a href="/links">
+            
+            <i class="icon icon-friendship"></i>
+            
+            <span class="menu-title">友链</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about">
+            
+            <i class="icon icon-cup-fill"></i>
+            
+            <span class="menu-title">关于</span>
+          </a>
+        </li>
+        
+      </ul>
+      
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/xiaoqianbaobao" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="http://weibo.com/大白1212大白" target="_blank" title="Weibo" data-toggle=tooltip data-placement=top><i class="icon icon-weibo"></i></a></li>
+        
+        <li><a href="https://twitter.com/naughty_qian" target="_blank" title="Twitter" data-toggle=tooltip data-placement=top><i class="icon icon-twitter"></i></a></li>
+        
+        <li><a href="/atom.xml" target="_blank" title="Rss" data-toggle=tooltip data-placement=top><i class="icon icon-rss"></i></a></li>
+        
+    </ul>
+
+    </nav>
+  </div>
+</header>
+
+  
+    <aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">公告</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content">
+                <p>欢迎交流与分享经验!</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget-body">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JavaWeb%E9%A1%B9%E7%9B%AE/">JavaWeb项目</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java%E9%A1%B9%E7%9B%AE/">Java项目</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/XML/">XML</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/javascript/">javascript</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/linux/">linux</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/python/">python</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%B9%A0/">前端学习</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%BA%95%E5%B1%82%E7%9F%A5%E8%AF%86/">底层知识</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%88%91%E7%9A%84%E7%BD%91%E7%AB%99%E5%88%B6%E4%BD%9C%E4%B9%8B%E6%97%85/">我的网站制作之旅</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%96%87%E5%AD%A6/">文学</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%9C%8D%E5%8A%A1%E5%99%A8%E8%84%9A%E6%9C%AC%E8%AF%AD%E8%A8%80/">服务器脚本语言</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%AF%95%E4%B8%9A%E8%AE%BE%E8%AE%A1/">毕业设计</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%B8%B8%E6%88%8F/">游戏</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%94%B5%E5%BD%B1/">电影</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/">编程语言</a><span class="category-list-count">12</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BE%8E%E6%96%87%E6%AC%A3%E8%B5%8F/">美文欣赏</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%A1%E5%88%92/">计划</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">计算机操作系统</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">计算机网络</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AF%BB%E4%B9%A6/">读书</a><span class="category-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget-body">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C%E8%AF%AD%E8%A8%80/" rel="tag">C语言</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django/" rel="tag">Django</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Http/" rel="tag">Http</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/" rel="tag">Java</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Javascript/" rel="tag">Javascript</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/" rel="tag">Python</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SVM%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BA/" rel="tag">SVM支持向量机</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/XML/" rel="tag">XML</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/google%E6%90%9C%E7%B4%A2%E7%A1%AE%E8%AE%A4%E6%96%87%E4%BB%B6/" rel="tag">google搜索确认文件</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/" rel="tag">hexo</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/html/" rel="tag">html</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/" rel="tag">java</a><span class="tag-list-count">20</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/javascript/" rel="tag">javascript</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/javaweb/" rel="tag">javaweb</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/js/" rel="tag">js</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/" rel="tag">linux</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/plan/" rel="tag">plan</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/" rel="tag">python</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tcp/" rel="tag">tcp</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/test/" rel="tag">test</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E3%80%90%E6%B8%B8%E6%88%8F%E4%BB%8B%E7%BB%8D%E3%80%91/" rel="tag">【游戏介绍】</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/" rel="tag">卷积神经网络</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8F%8D%E5%B0%84/" rel="tag">反射</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AD%A6%E4%B9%A0Python/" rel="tag">学习Python</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AD%A6%E4%B9%A0%E5%B0%8F%E7%BB%93/" rel="tag">学习小结</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" rel="tag">学习笔记</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%84%9F%E6%83%B3%E7%BE%8E%E6%96%87/" rel="tag">感想美文</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" rel="tag">操作系统</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%99%E7%A8%8B/" rel="tag">教程</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" rel="tag">数据库</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%96%87%E5%AD%A6/" rel="tag">文学</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%96%87%E5%AD%A6%E8%B5%8F%E6%9E%90%E8%AF%BB%E5%90%8E%E6%84%9F/" rel="tag">文学赏析读后感</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8%E8%84%9A%E6%9C%ACphp%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/" rel="tag">服务器脚本php环境配置</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" rel="tag">正则表达式</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%88%AC%E8%99%AB/" rel="tag">爬虫</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%94%9F%E4%BA%A7%E5%AE%9E%E4%B9%A0/" rel="tag">生产实习</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%94%B5%E5%BD%B1/" rel="tag">电影</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BD%91%E7%BB%9C/" rel="tag">网络</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BD%91%E9%A1%B5%E5%88%B6%E4%BD%9C/" rel="tag">网页制作</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BD%91%E9%A1%B5%E9%83%A8%E7%BD%B2/" rel="tag">网页部署</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BE%8E%E6%96%87/" rel="tag">美文</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AF%8D%E9%A2%91%E5%88%86%E6%9E%90%E7%94%9F%E6%88%90%E8%AF%8D%E4%BA%91/" rel="tag">词频分析生成词云</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AF%97%E8%AF%8D/" rel="tag">诗词</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AF%BB%E4%B9%A6/" rel="tag">读书</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" rel="tag">读书笔记</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%97%B2%E8%B0%88/" rel="tag">闲谈</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%A1%B9%E7%9B%AE/" rel="tag">项目</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget-body tagcloud">
+      <a href="/tags/C%E8%AF%AD%E8%A8%80/" style="font-size: 13px;">C语言</a> <a href="/tags/Django/" style="font-size: 13px;">Django</a> <a href="/tags/Http/" style="font-size: 13px;">Http</a> <a href="/tags/Java/" style="font-size: 13.75px;">Java</a> <a href="/tags/Javascript/" style="font-size: 13px;">Javascript</a> <a href="/tags/Python/" style="font-size: 13.5px;">Python</a> <a href="/tags/SVM%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BA/" style="font-size: 13px;">SVM支持向量机</a> <a href="/tags/XML/" style="font-size: 13px;">XML</a> <a href="/tags/google%E6%90%9C%E7%B4%A2%E7%A1%AE%E8%AE%A4%E6%96%87%E4%BB%B6/" style="font-size: 13px;">google搜索确认文件</a> <a href="/tags/hexo/" style="font-size: 13px;">hexo</a> <a href="/tags/html/" style="font-size: 13.75px;">html</a> <a href="/tags/java/" style="font-size: 14px;">java</a> <a href="/tags/javascript/" style="font-size: 13.25px;">javascript</a> <a href="/tags/javaweb/" style="font-size: 13px;">javaweb</a> <a href="/tags/js/" style="font-size: 13.25px;">js</a> <a href="/tags/linux/" style="font-size: 13px;">linux</a> <a href="/tags/plan/" style="font-size: 13px;">plan</a> <a href="/tags/python/" style="font-size: 13.5px;">python</a> <a href="/tags/tcp/" style="font-size: 13px;">tcp</a> <a href="/tags/test/" style="font-size: 13px;">test</a> <a href="/tags/%E3%80%90%E6%B8%B8%E6%88%8F%E4%BB%8B%E7%BB%8D%E3%80%91/" style="font-size: 13px;">【游戏介绍】</a> <a href="/tags/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/" style="font-size: 13px;">卷积神经网络</a> <a href="/tags/%E5%8F%8D%E5%B0%84/" style="font-size: 13px;">反射</a> <a href="/tags/%E5%AD%A6%E4%B9%A0Python/" style="font-size: 13px;">学习Python</a> <a href="/tags/%E5%AD%A6%E4%B9%A0%E5%B0%8F%E7%BB%93/" style="font-size: 13.75px;">学习小结</a> <a href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" style="font-size: 13px;">学习笔记</a> <a href="/tags/%E6%84%9F%E6%83%B3%E7%BE%8E%E6%96%87/" style="font-size: 13px;">感想美文</a> <a href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" style="font-size: 13px;">操作系统</a> <a href="/tags/%E6%95%99%E7%A8%8B/" style="font-size: 13px;">教程</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" style="font-size: 13.25px;">数据库</a> <a href="/tags/%E6%96%87%E5%AD%A6/" style="font-size: 13.25px;">文学</a> <a href="/tags/%E6%96%87%E5%AD%A6%E8%B5%8F%E6%9E%90%E8%AF%BB%E5%90%8E%E6%84%9F/" style="font-size: 13.5px;">文学赏析读后感</a> <a href="/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8%E8%84%9A%E6%9C%ACphp%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/" style="font-size: 13px;">服务器脚本php环境配置</a> <a href="/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" style="font-size: 13px;">正则表达式</a> <a href="/tags/%E7%88%AC%E8%99%AB/" style="font-size: 13px;">爬虫</a> <a href="/tags/%E7%94%9F%E4%BA%A7%E5%AE%9E%E4%B9%A0/" style="font-size: 13px;">生产实习</a> <a href="/tags/%E7%94%B5%E5%BD%B1/" style="font-size: 13.25px;">电影</a> <a href="/tags/%E7%AE%97%E6%B3%95/" style="font-size: 13.25px;">算法</a> <a href="/tags/%E7%BD%91%E7%BB%9C/" style="font-size: 13.75px;">网络</a> <a href="/tags/%E7%BD%91%E9%A1%B5%E5%88%B6%E4%BD%9C/" style="font-size: 13.25px;">网页制作</a> <a href="/tags/%E7%BD%91%E9%A1%B5%E9%83%A8%E7%BD%B2/" style="font-size: 13px;">网页部署</a> <a href="/tags/%E7%BE%8E%E6%96%87/" style="font-size: 13px;">美文</a> <a href="/tags/%E8%AF%8D%E9%A2%91%E5%88%86%E6%9E%90%E7%94%9F%E6%88%90%E8%AF%8D%E4%BA%91/" style="font-size: 13px;">词频分析生成词云</a> <a href="/tags/%E8%AF%97%E8%AF%8D/" style="font-size: 13px;">诗词</a> <a href="/tags/%E8%AF%BB%E4%B9%A6/" style="font-size: 13.25px;">读书</a> <a href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" style="font-size: 13.5px;">读书笔记</a> <a href="/tags/%E9%97%B2%E8%B0%88/" style="font-size: 13px;">闲谈</a> <a href="/tags/%E9%A1%B9%E7%9B%AE/" style="font-size: 13px;">项目</a>
+    </div>
+  </div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget-body">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">六月 2020</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">五月 2020</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">四月 2020</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">三月 2020</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">二月 2020</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">一月 2020</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">十月 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">八月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">三月 2019</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">一月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">十二月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">十一月 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">八月 2018</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">七月 2018</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">六月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">五月 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">四月 2018</a><span class="archive-list-count">5</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget-body">
+      <ul class="recent-post-list list-unstyled no-thumbnail">
+        
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/hexo/">hexo</a>
+              </p>
+              <p class="item-title">
+                <a href="/%E5%85%B3%E4%BA%8Ehexo4-2%E6%9B%B4%E6%96%B0%E5%90%8E%E5%9B%BE%E7%89%87%E6%97%A0%E6%B3%95%E6%98%BE%E7%A4%BA%E7%9A%84%E9%97%AE%E9%A2%98.html" class="title">关于hexo4.2更新后图片无法显示的问题</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2020-06-26T03:15:52.000Z" itemprop="datePublished">2020-06-26</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/%E5%BA%95%E5%B1%82%E7%9F%A5%E8%AF%86/">底层知识</a>
+              </p>
+              <p class="item-title">
+                <a href="/Review-C.html" class="title">Review C</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2020-06-25T13:58:07.000Z" itemprop="datePublished">2020-06-25</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/hello-world.html" class="title">Hello World</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2020-06-22T05:21:37.181Z" itemprop="datePublished">2020-06-22</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">计算机网络</a>
+              </p>
+              <p class="item-title">
+                <a href="/http%E4%B8%8D%E5%90%8C%E7%89%88%E6%9C%AC%E7%9A%84%E7%89%B9%E7%82%B9%E5%92%8C%E5%8C%BA%E5%88%AB.html" class="title">http不同版本的特点和区别</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2020-06-10T17:34:07.000Z" itemprop="datePublished">2020-06-11</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/%E6%AF%95%E4%B8%9A%E8%AE%BE%E8%AE%A1/">毕业设计</a>
+              </p>
+              <p class="item-title">
+                <a href="/%E5%AD%A6%E4%B9%A0CNN%E7%AE%97%E6%B3%95.html" class="title">学习CNN算法</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2020-06-05T05:49:57.000Z" itemprop="datePublished">2020-06-05</time>
+              </p>
+            </div>
+          </li>
+          
+      </ul>
+    </div>
+  </div>
+  
+
+    
+  </div>
+</aside>
+
+  
+  
+<main class="main" role="main">
+  <div class="content">
+  <article id="post-python-对失物招领群进行词频分析" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      
+        
+  
+    <h1 class="article-title" itemprop="name">
+      python 对失物招领群进行词频分析
+    </h1>
+  
+
+      
+      <div class="article-meta">
+        <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/python-%E5%AF%B9%E5%A4%B1%E7%89%A9%E6%8B%9B%E9%A2%86%E7%BE%A4%E8%BF%9B%E8%A1%8C%E8%AF%8D%E9%A2%91%E5%88%86%E6%9E%90.html" class="article-date">
+	  <time datetime="2018-11-13T03:48:53.000Z" itemprop="datePublished">2018-11-13</time>
+	</a>
+</span>
+        
+        
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link" href="/tags/%E8%AF%8D%E9%A2%91%E5%88%86%E6%9E%90%E7%94%9F%E6%88%90%E8%AF%8D%E4%BA%91/" rel="tag">词频分析生成词云</a>
+  </span>
+
+
+        
+	<span class="article-read hidden-xs">
+	    <i class="icon icon-eye-fill" aria-hidden="true"></i>
+	    <span id="busuanzi_container_page_pv">
+			<span id="busuanzi_value_page_pv">0</span>
+		</span>
+	</span>
+
+
+	<span class="article-read hidden-xs">
+    	<i class="icon icon-eye-fill" aria-hidden="true"></i>
+    	<span id="/python-%E5%AF%B9%E5%A4%B1%E7%89%A9%E6%8B%9B%E9%A2%86%E7%BE%A4%E8%BF%9B%E8%A1%8C%E8%AF%8D%E9%A2%91%E5%88%86%E6%9E%90.html" class="leancloud_visitors"  data-flag-title="python 对失物招领群进行词频分析">
+			<span class="leancloud-visitors-count">0</span>
+		</span>
+    </span>
+
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/python-%E5%AF%B9%E5%A4%B1%E7%89%A9%E6%8B%9B%E9%A2%86%E7%BE%A4%E8%BF%9B%E8%A1%8C%E8%AF%8D%E9%A2%91%E5%88%86%E6%9E%90.html#comments" class="article-comment-link">评论</a></span>
+        
+	
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计: 1.2k(字)</span>
+	
+	
+		<span class="post-readcount hidden-xs" itemprop="timeRequired">阅读时长: 5(分)</span>
+	
+
+      </div>
+    </div>
+    <div class="article-entry marked-body" itemprop="articleBody">
+      
+        <p>上午两节课睡过了，就没去了，吃了个早饭，还有一堆事情没有做，就开始先把昨晚没弄完的python词频分析的代码给写完了。做一个记录吧，防止以后用得着</p>
+<h1>工具</h1>
+工具：python3.7 Vscode wordcloud jieba 等
+
+<h1>获取数据源</h1>
+点击Tim左上角头像
+<img src="/1.png">
+<img src="/2.png">
+选择安工程失物招领群1，导出消息记录
+要用txt导出到任意盘，接下来就是要对导出的文件进行数据分析
+
+<h1>下载对应库</h1>
+到官方网站下载对应包
+<a href="https://www.lfd.uci.edu/~gohlke/pythonlibs/#wordcloud" target="_blank" rel="noopener">传送门</a>
+<b>重要提醒：通过cmd中输入 Python -V 来查看python版本并下载相应的安装包，同时注意python是32位的还是64位的，我这里是32位的</b>
+下载完成后，进入刚刚下载该文件的路径，使用pip3 install wordcloud-1.3.3-cp-37-cp-37-win_amd32-whl命令开始安装，
+这样 wordcloud就安装完成了。
+接下来还要安装jieba matplotlib scipy
+均使用 pip3 install xxx 即可
+
+<h1>代码</h1>
+<ol>
+<li>首先过滤掉txt文件中无用的信息，比如时间，以及聊天的名片，避免词云中都是无效信息，并用jieba进行分词</li>
+</ol>
+
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">import jieba</span><br><span class="line"> </span><br><span class="line">newtext &#x3D; []</span><br><span class="line"># 打开E盘下的聊天记录文件qq.txt</span><br><span class="line">for word in open(&#39;E:\\qq.txt&#39;, &#39;r&#39;, encoding&#x3D;&#39;utf-8&#39;):</span><br><span class="line">    tmp &#x3D; word[0:4]</span><br><span class="line">    if (tmp &#x3D;&#x3D; &quot;2017&quot; or tmp &#x3D;&#x3D; &quot;&#x3D;&#x3D;&#x3D;&#x3D;&quot;or tmp &#x3D;&#x3D; &quot;2018&quot;):  # 过滤掉聊天记录的时间和qq名称</span><br><span class="line">        continue</span><br><span class="line">    tmp &#x3D; word[0:2]</span><br><span class="line">    if (tmp[0] &#x3D;&#x3D; &#39;[&#39; or tmp[0] &#x3D;&#x3D; &#39;&#x2F;&#39;or tmp[0] &#x3D;&#x3D; &#39;@&#39;):  # 过滤掉图片和表情，例如[图片]，&#x2F;滑稽</span><br><span class="line">        continue</span><br><span class="line">    newtext.append(word)</span><br><span class="line"># 将过滤掉图片和表情和时间信息和qq名称剩下的文字重新写入E盘下的q1.txt文件中去</span><br><span class="line">with open(&#39;E:\\q1.txt&#39;, &#39;w&#39;, encoding&#x3D;&#39;utf-8&#39;) as f:</span><br><span class="line">    for i in newtext:</span><br><span class="line">        f.write(i)</span><br><span class="line"> # 打开新生成的聊天记录文件</span><br><span class="line">text &#x3D; open(&#39;E:\\q1.txt&#39;, &#39;r&#39;, encoding&#x3D;&#39;utf-8&#39;).read()</span><br><span class="line">word_jieba &#x3D; jieba.cut(text, cut_all&#x3D;True)</span><br><span class="line">word_split &#x3D; &quot; &quot;.join(word_jieba)</span><br></pre></td></tr></table></figure>
+<p>通过这步在E盘中得到了一个q1.txt文件，打开会发现变的整洁干净了许多.</p>
+<p>2.再新建一个.py文件，用到wordcloud库来绘制词云图</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">from wordcloud import WordCloud,STOPWORDS,ImageColorGenerator</span><br><span class="line">import matplotlib.pyplot as plt</span><br><span class="line">from scipy.misc import imread</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">text &#x3D; open(&#39;E:\\q1.txt&#39;, &#39;r&#39;, encoding&#x3D;&#39;utf-8&#39;).read()  # 打开过滤好的txt文件</span><br><span class="line">print(text)</span><br><span class="line">bg_pic &#x3D; imread(&#39;E:\\sjt.jpg&#39;)     # 导入词云背景</span><br><span class="line">wordcloud &#x3D; WordCloud(mask&#x3D;bg_pic, background_color&#x3D;&#39;white&#39;, scale&#x3D;1.5, font_path&#x3D;&#39;C:&#x2F;Windows&#x2F;Fonts&#x2F;simhei.ttf&#39;, width&#x3D;1000,height&#x3D;600,stopwords&#x3D;&#123;&#39;表情&#39;,&#39;糊脸&#39;,&#39;拍桌&#39;,&#39;拍头&#39;&#125;,min_font_size&#x3D;10,max_font_size&#x3D;36,font_step&#x3D;4,</span><br><span class="line">).generate(text)    # 定义词云的各种变量，可以控制词云的形式，这里的控制变量可以去网上查找，stopwords&#x3D;&#123;&#39;表情&#39;,&#39;糊脸&#39;,&#39;拍桌&#39;,&#39;拍头&#39;&#39;是为了过滤掉里面的部分表情信息</span><br><span class="line">image_colors &#x3D; ImageColorGenerator(bg_pic)</span><br><span class="line">plt.imshow(wordcloud)</span><br><span class="line">plt.axis(&#39;off&#39;)</span><br><span class="line">plt.show()</span><br><span class="line">wordcloud.to_file(&#39;E:\\text.jpg&#39;)   # 输出词云</span><br></pre></td></tr></table></figure>
+
+<p>做出的结果图</p>
+<img src="/安工程失物招领群1词频分析.png">
+<img src="/第三届千寻失物招领群词云分析.png">
+<img src="/失物招领交流群词频分析.png">
+<img src="/校园淘淘旧词频分析.png">
+<img src="/异步读者群词频分析.png">
+
+<p>挺好玩的，就多测试了几个群，就这样</p>
+<h1>对词频出现次数进行统计，并生成统计表</h1>
+
+<p>直接上代码:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">import jieba</span><br><span class="line"> </span><br><span class="line">fr&#x3D;open(&#39;q1.txt&#39;,&#39;r&#39;,encoding&#x3D;&#39;utf-8&#39;)   &#x2F;&#x2F;打开上面经过分词后的txt文件</span><br><span class="line"> </span><br><span class="line">s&#x3D;&quot;&quot;</span><br><span class="line">data&#x3D;&#123;&#125;</span><br><span class="line">for line in fr:</span><br><span class="line">    line&#x3D;line.strip()</span><br><span class="line">    if len(line)&#x3D;&#x3D;0:</span><br><span class="line">        continue</span><br><span class="line">    if line[0]&#x3D;&#x3D;&#39;2&#39;:</span><br><span class="line">        continue</span><br><span class="line">    for x in range(0,len(line)):</span><br><span class="line">        if line[x] in [&#39; &#39;,&#39;\t&#39;,&#39;\n&#39;,&#39;。&#39;,&#39;，&#39;,&#39;[&#39;, &#39;]&#39;, &#39;（&#39;, &#39;）&#39;, &#39;:&#39;, &#39;-&#39;,</span><br><span class="line">&#39;？&#39;, &#39;！&#39;, &#39;《&#39;, &#39;》&#39;, &#39;、&#39;, &#39;；&#39;, &#39;“&#39;, &#39;”&#39;, &#39;……&#39;,&#39;0&#39;,&#39;1&#39;,&#39;2&#39;,&#39;3&#39;,&#39;4&#39;,&#39;5&#39;,&#39;6&#39;,&#39;7&#39;,&#39;8&#39;,&#39;9&#39;,&#39;&#x3D;&#39;,&#39;~&#39;,&#39;…&#39;]: &#x2F;&#x2F;去除一些不希望被统计的东西</span><br><span class="line">            continue</span><br><span class="line">        s+&#x3D;str(line[x])</span><br><span class="line">print(s)</span><br><span class="line"> </span><br><span class="line">seg_list &#x3D; jieba.cut(s, cut_all&#x3D;False, HMM&#x3D;True)</span><br><span class="line">for word in seg_list:</span><br><span class="line">    if len(word)&gt;&#x3D;2:</span><br><span class="line">        if not data.__contains__(word):</span><br><span class="line">            data[word]&#x3D;0</span><br><span class="line">        data[word]+&#x3D;1</span><br><span class="line">    </span><br><span class="line">data&#x3D;sorted(data.items(),key&#x3D;lambda d:d[1],reverse&#x3D;True)</span><br><span class="line"> </span><br><span class="line">fw&#x3D;open(&#39;安工程失物招领群1词频统计.csv&#39;,&#39;w&#39;,encoding&#x3D;&#39;utf-8&#39;)     &#x2F;&#x2F;生成词频统计表</span><br><span class="line">fw.write(str(len(data))+&#39;\n&#39;)</span><br><span class="line">for item in data:</span><br><span class="line">    fw.write(item[0]+&#39;,&#39;+str(item[1])+&#39;\n&#39;)</span><br><span class="line">fr.close()</span><br><span class="line">fw.close()</span><br></pre></td></tr></table></figure>
+<p>这段代码结合上面分词的代码，即可生成统计表，近期来群里关键字出现的字眼一目了然<br><img src="/失物招领群1词频统计.png"><br>失物招领群1词频统计<br>谢谢的次数即代表我们一个月发过的消息总数，因为我们要求每条消息后面必须加个谢谢<br>由图可见，我们一个月发了1910条消息<br>其中校园卡类876条<br>寻物消息585条<br>失物消息526条<br>身份证消息41条  等等</p>
+
+      
+    </div>
+    <div class="article-footer">
+      <blockquote class="mt-2x">
+  <ul class="post-copyright list-unstyled">
+    
+    <li class="post-copyright-link hidden-xs">
+      <strong>本文链接：</strong>
+      <a href="http://xiaoqianbaobao.github.io/python-%E5%AF%B9%E5%A4%B1%E7%89%A9%E6%8B%9B%E9%A2%86%E7%BE%A4%E8%BF%9B%E8%A1%8C%E8%AF%8D%E9%A2%91%E5%88%86%E6%9E%90.html" title="python 对失物招领群进行词频分析" target="_blank" rel="external">http://xiaoqianbaobao.github.io/python-%E5%AF%B9%E5%A4%B1%E7%89%A9%E6%8B%9B%E9%A2%86%E7%BE%A4%E8%BF%9B%E8%A1%8C%E8%AF%8D%E9%A2%91%E5%88%86%E6%9E%90.html</a>
+    </li>
+    
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong> 本博客所有文章除特别声明外，均采用 <a href="http://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank" rel="external">CC BY 4.0 CN协议</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+</blockquote>
+
+
+<div class="panel panel-default panel-badger">
+  <div class="panel-body">
+    <figure class="media">
+      <div class="media-left">
+        <a href="https://github.com/xiaoqianbaobao" target="_blank" class="img-burn thumb-sm visible-lg">
+          <img src="/images/avatar.jpg" class="img-rounded w-full" alt="">
+        </a>
+      </div>
+      <div class="media-body">
+        <h3 class="media-heading"><a href="https://github.com/xiaoqianbaobao" target="_blank"><span class="text-dark">qian</span><small class="ml-1x">Dever</small></a></h3>
+        <div>A cute dever</div>
+      </div>
+    </figure>
+  </div>
+</div>
+
+
+    </div>
+  </article>
+  
+    
+  <section id="comments">
+  	
+      <div id="vcomments"></div>
+    
+  </section>
+
+
+  
+</div>
+
+  <nav class="bar bar-footer clearfix" data-stick-bottom>
+  <div class="bar-inner">
+  
+  <ul class="pager pull-left">
+    
+    <li class="prev">
+      <a href="/leetcode-twoSum.html" title="leetcode twoSum"><i class="icon icon-angle-left" aria-hidden="true"></i><span>&nbsp;&nbsp;上一篇</span></a>
+    </li>
+    
+    
+    <li class="next">
+      <a href="/Brave-new-world.html" title="Brave new world"><span>下一篇&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+    </li>
+    
+    
+  </ul>
+  
+  
+  <!-- Button trigger modal -->
+  <button type="button" class="btn btn-fancy btn-donate pop-onhover bg-gradient-warning" data-toggle="modal" data-target="#donateModal"><span>赏</span></button>
+  <!-- <div class="wave-icon wave-icon-danger btn-donate" data-toggle="modal" data-target="#donateModal">
+    <div class="wave-circle"><span class="icon"><i class="icon icon-bill"></i></span></div>
+  </div> -->
+  
+  
+  <div class="bar-right">
+    
+    <div class="share-component" data-sites="weibo,qq,wechat,facebook,twitter" data-mobile-sites="weibo,qq,qzone"></div>
+    
+  </div>
+  </div>
+</nav>
+  
+<!-- Modal -->
+<div class="modal modal-center modal-small modal-xs-full fade" id="donateModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content donate">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <div class="modal-body">
+        <div class="donate-box">
+          <div class="donate-head">
+            <p>感谢您的支持，我会继续努力的!</p>
+          </div>
+          <div class="tab-content">
+            <div role="tabpanel" class="tab-pane fade active in" id="alipay">
+              <div class="donate-payimg">
+                <img src="/images/donate/alipayimg.jpg" alt="扫码支持" title="扫一扫" />
+              </div>
+              <p class="text-muted mv">扫码打赏，你说多少就多少</p>
+              <p class="text-grey">打开支付宝扫一扫，即可进行扫码打赏哦</p>
+            </div>
+            <div role="tabpanel" class="tab-pane fade" id="wechatpay">
+              <div class="donate-payimg">
+                <img src="/images/donate/wechatpayimg.jpg" alt="扫码支持" title="扫一扫" />
+              </div>
+              <p class="text-muted mv">扫码打赏，你说多少就多少</p>
+              <p class="text-grey">打开微信扫一扫，即可进行扫码打赏哦</p>
+            </div>
+          </div>
+          <div class="donate-footer">
+            <ul class="nav nav-tabs nav-justified" role="tablist">
+              <li role="presentation" class="active">
+                <a href="#alipay" id="alipay-tab" role="tab" data-toggle="tab" aria-controls="alipay" aria-expanded="true"><i class="icon icon-alipay"></i> 支付宝</a>
+              </li>
+              <li role="presentation" class="">
+                <a href="#wechatpay" role="tab" id="wechatpay-tab" data-toggle="tab" aria-controls="wechatpay" aria-expanded="false"><i class="icon icon-wepay"></i> 微信支付</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+</main>
+
+  <footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+	
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/xiaoqianbaobao" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="http://weibo.com/大白1212大白" target="_blank" title="Weibo" data-toggle=tooltip data-placement=top><i class="icon icon-weibo"></i></a></li>
+        
+        <li><a href="https://twitter.com/naughty_qian" target="_blank" title="Twitter" data-toggle=tooltip data-placement=top><i class="icon icon-twitter"></i></a></li>
+        
+        <li><a href="/atom.xml" target="_blank" title="Rss" data-toggle=tooltip data-placement=top><i class="icon icon-rss"></i></a></li>
+        
+    </ul>
+
+    <div class="copyright">
+    	
+        &copy; 2020 Larnonudo chan
+        
+        <div class="publishby">
+        	Theme by <a href="https://github.com/cofess" target="_blank"> cofess </a>base on <a href="https://github.com/cofess/hexo-theme-pure" target="_blank">pure</a>.
+        </div>
+    </div>
+</footer>
+  <script src="//cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+<script>
+window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+
+<script src="/js/plugin.min.js"></script>
+
+
+<script src="/js/application.js"></script>
+
+
+    <script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+
+
+
+
+   
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+   
+    
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/valine"></script>
+  <script type="text/javascript">
+  var GUEST = ['nick', 'mail', 'link'];
+  var meta = 'nick,mail,link';
+  meta = meta.split(',').filter(function(item) {
+    return GUEST.indexOf(item) > -1;
+  });
+  new Valine({
+    el: '#vcomments',
+    verify: true,
+    notify: true,
+    appId: 'iu0QRpyOTpkp8bd5ynEiG9uo-gzGzoHsz',
+    appKey: 'Bfq8Uozy2QytHVDsh8GmcecW',
+    placeholder: 'Just go go',
+    avatar: 'mm',
+    meta: meta,
+    pageSize: '10' || 10,
+    visitor: true
+  });
+  </script>
+
+     
+
+
+
+
+
+
+
+</body>
+</html>

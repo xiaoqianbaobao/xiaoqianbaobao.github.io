@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no,email=no,adress=no">
+  <!-- Color theme for statusbar -->
+  <meta name="theme-color" content="#000000" />
+  <!-- 强制页面在当前窗口以独立页面显示,防止别人在框架里调用页面 -->
+  <meta http-equiv="window-target" content="_top" />
+  
+  
+  <title>关于Ingress | CSQBlog</title>
+  <meta name="description" content="什么是Ingress呢？">
+<meta property="og:type" content="article">
+<meta property="og:title" content="关于Ingress">
+<meta property="og:url" content="http://xiaoqianbaobao.github.io/%E5%85%B3%E4%BA%8EIngress.html">
+<meta property="og:site_name" content="Shengqian&#39;s Blog">
+<meta property="og:description" content="什么是Ingress呢？">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2018-04-23T04:09:18.000Z">
+<meta property="article:modified_time" content="2018-04-23T11:22:15.054Z">
+<meta property="article:author" content="Larnonudo chan">
+<meta property="article:tag" content="【游戏介绍】">
+<meta name="twitter:card" content="summary">
+  <!-- Canonical links -->
+  <link rel="canonical" href="http://xiaoqianbaobao.github.io/%E5%85%B3%E4%BA%8EIngress.html">
+  
+    <link rel="alternate" href="/atom.xml" title="Shengqian&#39;s Blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png" type="image/x-icon">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+  
+  
+  
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+
+<body class="main-center theme-black" itemscope itemtype="http://schema.org/WebPage">
+  <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+  <div class="slimContent">
+    <div class="navbar-header">
+      
+      
+      <div class="profile-block text-center">
+        <a id="avatar" href="https://github.com/xiaoqianbaobao" target="_blank">
+          <img class="img-circle img-rotate" src="/images/avatar.jpg" width="200" height="200">
+        </a>
+        <h2 id="name" class="hidden-xs hidden-sm">qian</h2>
+        <h3 id="title" class="hidden-xs hidden-sm hidden-md">Dever</h3>
+        <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i> Shenzhen, China</small>
+      </div>
+      
+      <div class="search" id="search-form-wrap">
+
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="搜索" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i class="icon icon-search"></i></button>
+            </span>
+        </div>
+    </form>
+    <div class="ins-search">
+  <div class="ins-search-mask"></div>
+  <div class="ins-search-container">
+    <div class="ins-input-wrapper">
+      <input type="text" class="ins-search-input" placeholder="想要查找什么..." x-webkit-speech />
+      <button type="button" class="close ins-close ins-selectable" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+    </div>
+    <div class="ins-section-wrapper">
+      <div class="ins-section-container"></div>
+    </div>
+  </div>
+</div>
+
+
+</div>
+      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+      <ul class="nav navbar-nav main-nav menu-highlight">
+        
+        
+        <li class="menu-item menu-item-home">
+          <a href="/.">
+            
+            <i class="icon icon-home-fill"></i>
+            
+            <span class="menu-title">首页</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            
+            <i class="icon icon-archives-fill"></i>
+            
+            <span class="menu-title">归档</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories">
+            
+            <i class="icon icon-folder"></i>
+            
+            <span class="menu-title">分类</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            
+            <i class="icon icon-tags"></i>
+            
+            <span class="menu-title">标签</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-repository">
+          <a href="/repository">
+            
+            <i class="icon icon-project"></i>
+            
+            <span class="menu-title">项目</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-books">
+          <a href="/books">
+            
+            <i class="icon icon-book-fill"></i>
+            
+            <span class="menu-title">书单</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-links">
+          <a href="/links">
+            
+            <i class="icon icon-friendship"></i>
+            
+            <span class="menu-title">友链</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about">
+            
+            <i class="icon icon-cup-fill"></i>
+            
+            <span class="menu-title">关于</span>
+          </a>
+        </li>
+        
+      </ul>
+      
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/xiaoqianbaobao" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="http://weibo.com/大白1212大白" target="_blank" title="Weibo" data-toggle=tooltip data-placement=top><i class="icon icon-weibo"></i></a></li>
+        
+        <li><a href="https://twitter.com/naughty_qian" target="_blank" title="Twitter" data-toggle=tooltip data-placement=top><i class="icon icon-twitter"></i></a></li>
+        
+        <li><a href="/atom.xml" target="_blank" title="Rss" data-toggle=tooltip data-placement=top><i class="icon icon-rss"></i></a></li>
+        
+    </ul>
+
+    </nav>
+  </div>
+</header>
+
+  
+    <aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">公告</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content">
+                <p>欢迎交流与分享经验!</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget-body">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JavaWeb%E9%A1%B9%E7%9B%AE/">JavaWeb项目</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java%E9%A1%B9%E7%9B%AE/">Java项目</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/XML/">XML</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/javascript/">javascript</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/linux/">linux</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/python/">python</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%B9%A0/">前端学习</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%BA%95%E5%B1%82%E7%9F%A5%E8%AF%86/">底层知识</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%88%91%E7%9A%84%E7%BD%91%E7%AB%99%E5%88%B6%E4%BD%9C%E4%B9%8B%E6%97%85/">我的网站制作之旅</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%96%87%E5%AD%A6/">文学</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%9C%8D%E5%8A%A1%E5%99%A8%E8%84%9A%E6%9C%AC%E8%AF%AD%E8%A8%80/">服务器脚本语言</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%AF%95%E4%B8%9A%E8%AE%BE%E8%AE%A1/">毕业设计</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%B8%B8%E6%88%8F/">游戏</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%94%B5%E5%BD%B1/">电影</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/">编程语言</a><span class="category-list-count">12</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BE%8E%E6%96%87%E6%AC%A3%E8%B5%8F/">美文欣赏</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%A1%E5%88%92/">计划</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">计算机操作系统</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">计算机网络</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AF%BB%E4%B9%A6/">读书</a><span class="category-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget-body">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C%E8%AF%AD%E8%A8%80/" rel="tag">C语言</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django/" rel="tag">Django</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Http/" rel="tag">Http</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/" rel="tag">Java</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Javascript/" rel="tag">Javascript</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/" rel="tag">Python</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SVM%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BA/" rel="tag">SVM支持向量机</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/XML/" rel="tag">XML</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/google%E6%90%9C%E7%B4%A2%E7%A1%AE%E8%AE%A4%E6%96%87%E4%BB%B6/" rel="tag">google搜索确认文件</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/" rel="tag">hexo</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/html/" rel="tag">html</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/" rel="tag">java</a><span class="tag-list-count">20</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/javascript/" rel="tag">javascript</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/javaweb/" rel="tag">javaweb</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/js/" rel="tag">js</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/" rel="tag">linux</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/plan/" rel="tag">plan</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/" rel="tag">python</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tcp/" rel="tag">tcp</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/test/" rel="tag">test</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E3%80%90%E6%B8%B8%E6%88%8F%E4%BB%8B%E7%BB%8D%E3%80%91/" rel="tag">【游戏介绍】</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/" rel="tag">卷积神经网络</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8F%8D%E5%B0%84/" rel="tag">反射</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AD%A6%E4%B9%A0Python/" rel="tag">学习Python</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AD%A6%E4%B9%A0%E5%B0%8F%E7%BB%93/" rel="tag">学习小结</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" rel="tag">学习笔记</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%84%9F%E6%83%B3%E7%BE%8E%E6%96%87/" rel="tag">感想美文</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" rel="tag">操作系统</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%99%E7%A8%8B/" rel="tag">教程</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" rel="tag">数据库</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%96%87%E5%AD%A6/" rel="tag">文学</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%96%87%E5%AD%A6%E8%B5%8F%E6%9E%90%E8%AF%BB%E5%90%8E%E6%84%9F/" rel="tag">文学赏析读后感</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8%E8%84%9A%E6%9C%ACphp%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/" rel="tag">服务器脚本php环境配置</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" rel="tag">正则表达式</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%88%AC%E8%99%AB/" rel="tag">爬虫</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%94%9F%E4%BA%A7%E5%AE%9E%E4%B9%A0/" rel="tag">生产实习</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%94%B5%E5%BD%B1/" rel="tag">电影</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BD%91%E7%BB%9C/" rel="tag">网络</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BD%91%E9%A1%B5%E5%88%B6%E4%BD%9C/" rel="tag">网页制作</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BD%91%E9%A1%B5%E9%83%A8%E7%BD%B2/" rel="tag">网页部署</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BE%8E%E6%96%87/" rel="tag">美文</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AF%8D%E9%A2%91%E5%88%86%E6%9E%90%E7%94%9F%E6%88%90%E8%AF%8D%E4%BA%91/" rel="tag">词频分析生成词云</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AF%97%E8%AF%8D/" rel="tag">诗词</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AF%BB%E4%B9%A6/" rel="tag">读书</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" rel="tag">读书笔记</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%97%B2%E8%B0%88/" rel="tag">闲谈</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%A1%B9%E7%9B%AE/" rel="tag">项目</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget-body tagcloud">
+      <a href="/tags/C%E8%AF%AD%E8%A8%80/" style="font-size: 13px;">C语言</a> <a href="/tags/Django/" style="font-size: 13px;">Django</a> <a href="/tags/Http/" style="font-size: 13px;">Http</a> <a href="/tags/Java/" style="font-size: 13.75px;">Java</a> <a href="/tags/Javascript/" style="font-size: 13px;">Javascript</a> <a href="/tags/Python/" style="font-size: 13.5px;">Python</a> <a href="/tags/SVM%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BA/" style="font-size: 13px;">SVM支持向量机</a> <a href="/tags/XML/" style="font-size: 13px;">XML</a> <a href="/tags/google%E6%90%9C%E7%B4%A2%E7%A1%AE%E8%AE%A4%E6%96%87%E4%BB%B6/" style="font-size: 13px;">google搜索确认文件</a> <a href="/tags/hexo/" style="font-size: 13px;">hexo</a> <a href="/tags/html/" style="font-size: 13.75px;">html</a> <a href="/tags/java/" style="font-size: 14px;">java</a> <a href="/tags/javascript/" style="font-size: 13.25px;">javascript</a> <a href="/tags/javaweb/" style="font-size: 13px;">javaweb</a> <a href="/tags/js/" style="font-size: 13.25px;">js</a> <a href="/tags/linux/" style="font-size: 13px;">linux</a> <a href="/tags/plan/" style="font-size: 13px;">plan</a> <a href="/tags/python/" style="font-size: 13.5px;">python</a> <a href="/tags/tcp/" style="font-size: 13px;">tcp</a> <a href="/tags/test/" style="font-size: 13px;">test</a> <a href="/tags/%E3%80%90%E6%B8%B8%E6%88%8F%E4%BB%8B%E7%BB%8D%E3%80%91/" style="font-size: 13px;">【游戏介绍】</a> <a href="/tags/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/" style="font-size: 13px;">卷积神经网络</a> <a href="/tags/%E5%8F%8D%E5%B0%84/" style="font-size: 13px;">反射</a> <a href="/tags/%E5%AD%A6%E4%B9%A0Python/" style="font-size: 13px;">学习Python</a> <a href="/tags/%E5%AD%A6%E4%B9%A0%E5%B0%8F%E7%BB%93/" style="font-size: 13.75px;">学习小结</a> <a href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" style="font-size: 13px;">学习笔记</a> <a href="/tags/%E6%84%9F%E6%83%B3%E7%BE%8E%E6%96%87/" style="font-size: 13px;">感想美文</a> <a href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" style="font-size: 13px;">操作系统</a> <a href="/tags/%E6%95%99%E7%A8%8B/" style="font-size: 13px;">教程</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" style="font-size: 13.25px;">数据库</a> <a href="/tags/%E6%96%87%E5%AD%A6/" style="font-size: 13.25px;">文学</a> <a href="/tags/%E6%96%87%E5%AD%A6%E8%B5%8F%E6%9E%90%E8%AF%BB%E5%90%8E%E6%84%9F/" style="font-size: 13.5px;">文学赏析读后感</a> <a href="/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8%E8%84%9A%E6%9C%ACphp%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/" style="font-size: 13px;">服务器脚本php环境配置</a> <a href="/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" style="font-size: 13px;">正则表达式</a> <a href="/tags/%E7%88%AC%E8%99%AB/" style="font-size: 13px;">爬虫</a> <a href="/tags/%E7%94%9F%E4%BA%A7%E5%AE%9E%E4%B9%A0/" style="font-size: 13px;">生产实习</a> <a href="/tags/%E7%94%B5%E5%BD%B1/" style="font-size: 13.25px;">电影</a> <a href="/tags/%E7%AE%97%E6%B3%95/" style="font-size: 13.25px;">算法</a> <a href="/tags/%E7%BD%91%E7%BB%9C/" style="font-size: 13.75px;">网络</a> <a href="/tags/%E7%BD%91%E9%A1%B5%E5%88%B6%E4%BD%9C/" style="font-size: 13.25px;">网页制作</a> <a href="/tags/%E7%BD%91%E9%A1%B5%E9%83%A8%E7%BD%B2/" style="font-size: 13px;">网页部署</a> <a href="/tags/%E7%BE%8E%E6%96%87/" style="font-size: 13px;">美文</a> <a href="/tags/%E8%AF%8D%E9%A2%91%E5%88%86%E6%9E%90%E7%94%9F%E6%88%90%E8%AF%8D%E4%BA%91/" style="font-size: 13px;">词频分析生成词云</a> <a href="/tags/%E8%AF%97%E8%AF%8D/" style="font-size: 13px;">诗词</a> <a href="/tags/%E8%AF%BB%E4%B9%A6/" style="font-size: 13.25px;">读书</a> <a href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" style="font-size: 13.5px;">读书笔记</a> <a href="/tags/%E9%97%B2%E8%B0%88/" style="font-size: 13px;">闲谈</a> <a href="/tags/%E9%A1%B9%E7%9B%AE/" style="font-size: 13px;">项目</a>
+    </div>
+  </div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget-body">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">六月 2020</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">五月 2020</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">四月 2020</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">三月 2020</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">二月 2020</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">一月 2020</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">十月 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">八月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">三月 2019</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">一月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">十二月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">十一月 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">八月 2018</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">七月 2018</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">六月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">五月 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">四月 2018</a><span class="archive-list-count">5</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget-body">
+      <ul class="recent-post-list list-unstyled no-thumbnail">
+        
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/hexo/">hexo</a>
+              </p>
+              <p class="item-title">
+                <a href="/%E5%85%B3%E4%BA%8Ehexo4-2%E6%9B%B4%E6%96%B0%E5%90%8E%E5%9B%BE%E7%89%87%E6%97%A0%E6%B3%95%E6%98%BE%E7%A4%BA%E7%9A%84%E9%97%AE%E9%A2%98.html" class="title">关于hexo4.2更新后图片无法显示的问题</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2020-06-26T03:15:52.000Z" itemprop="datePublished">2020-06-26</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/%E5%BA%95%E5%B1%82%E7%9F%A5%E8%AF%86/">底层知识</a>
+              </p>
+              <p class="item-title">
+                <a href="/Review-C.html" class="title">Review C</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2020-06-25T13:58:07.000Z" itemprop="datePublished">2020-06-25</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/hello-world.html" class="title">Hello World</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2020-06-22T05:21:37.181Z" itemprop="datePublished">2020-06-22</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">计算机网络</a>
+              </p>
+              <p class="item-title">
+                <a href="/http%E4%B8%8D%E5%90%8C%E7%89%88%E6%9C%AC%E7%9A%84%E7%89%B9%E7%82%B9%E5%92%8C%E5%8C%BA%E5%88%AB.html" class="title">http不同版本的特点和区别</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2020-06-10T17:34:07.000Z" itemprop="datePublished">2020-06-11</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/%E6%AF%95%E4%B8%9A%E8%AE%BE%E8%AE%A1/">毕业设计</a>
+              </p>
+              <p class="item-title">
+                <a href="/%E5%AD%A6%E4%B9%A0CNN%E7%AE%97%E6%B3%95.html" class="title">学习CNN算法</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2020-06-05T05:49:57.000Z" itemprop="datePublished">2020-06-05</time>
+              </p>
+            </div>
+          </li>
+          
+      </ul>
+    </div>
+  </div>
+  
+
+    
+  </div>
+</aside>
+
+  
+  
+<main class="main" role="main">
+  <div class="content">
+  <article id="post-关于Ingress" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      
+        
+  
+    <h1 class="article-title" itemprop="name">
+      关于Ingress
+    </h1>
+  
+
+      
+      <div class="article-meta">
+        <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/%E5%85%B3%E4%BA%8EIngress.html" class="article-date">
+	  <time datetime="2018-04-23T04:09:18.000Z" itemprop="datePublished">2018-04-23</time>
+	</a>
+</span>
+        
+  <span class="article-category">
+    <i class="icon icon-folder"></i>
+    <a class="article-category-link" href="/categories/%E6%B8%B8%E6%88%8F/">游戏</a>
+  </span>
+
+        
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link" href="/tags/%E3%80%90%E6%B8%B8%E6%88%8F%E4%BB%8B%E7%BB%8D%E3%80%91/" rel="tag">【游戏介绍】</a>
+  </span>
+
+
+        
+	<span class="article-read hidden-xs">
+	    <i class="icon icon-eye-fill" aria-hidden="true"></i>
+	    <span id="busuanzi_container_page_pv">
+			<span id="busuanzi_value_page_pv">0</span>
+		</span>
+	</span>
+
+
+	<span class="article-read hidden-xs">
+    	<i class="icon icon-eye-fill" aria-hidden="true"></i>
+    	<span id="/%E5%85%B3%E4%BA%8EIngress.html" class="leancloud_visitors"  data-flag-title="关于Ingress">
+			<span class="leancloud-visitors-count">0</span>
+		</span>
+    </span>
+
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/%E5%85%B3%E4%BA%8EIngress.html#comments" class="article-comment-link">评论</a></span>
+        
+	
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计: 1.7k(字)</span>
+	
+	
+		<span class="post-readcount hidden-xs" itemprop="timeRequired">阅读时长: 5(分)</span>
+	
+
+      </div>
+    </div>
+    <div class="article-entry marked-body" itemprop="articleBody">
+      
+        <p>故事背景<br>游戏的故事背景是一群欧洲科学家偶然发现某种神秘的能量XM（Exotic Matter），这一能量的来源和用途无人知晓，研究人员认为可以开发并善用这能量，但另一方面却担心这样的能量会影响人们的思考甚至被能量本身奴役。</p>
+<p>游戏中有两大主要阵营，这两大互相争夺主控权的全球性组织分别是“反抗军”和“启蒙军”。“启蒙军”（Enlightened，以绿色标示）阵营希望能接纳这股“神秘的能量XM”，并相信这股能量能赐予人类进步与改革，其追随者相信神秘的能量会催生影响重大的“启蒙运动”，使全人类进化。另一派“反抗军”（Resistance，以蓝色标示）阵营则奋力捍卫并守护仅存的人性，有些人认为他们对于变化或进步感到畏惧，但反抗军坚信这一切都是为了保护人类。[6]游戏的玩家被称为特工（Agent），两个阵营互相角力，争夺控制真实世界中的地标性建筑或雕塑等Portal（译作“传送门”）。</p>
+<a id="more"></a>
+
+<p>游戏内容<br>游戏内容和真实世界的地理状况结合，游戏会通过手持装置的GPS、AGPS以及Wi-Fi信息确认玩家的位置，而玩家可以通过游戏的扫描器（Scanner）界面看到自身周围的传送门、XM或物品。游戏地图上各处散落着白色亮点，代表XM所在的位置，玩家在接近XM时会自动收集，而对传送门进行任何操作均需耗用XM。传送门主要是各种建筑、雕塑、艺术品等，玩家需亲自持手机接近这些传送门，进行部署（Deploy）、入侵（Hack）、补充能量（Recharge）、发射XMP等动作。玩家在游戏中的目标是通过连接多个本阵营控制的传送门，建立控制场（Control Field），覆盖最多的“Mind Units（MUs）”。[8]</p>
+<p>Portal<br>在游戏中，全球各处存在着大量传送门（Portal），可以在游戏软件中察看。传送门都与实际地标关联，并且位在可被公众探访且步行能抵达的地点，例如：雕塑、壁画、公共艺术、喷泉、艺术涂鸦、图书馆、教学楼、水塔、邮局、纪念馆、宗教建筑、地铁站；醒目的建筑和独特的当地企业；国家公园、露营地、主题公园的入口等。根据当前控制传送门的阵营不同，传送门会呈现出不同的颜色：启蒙军阵营控制时为绿色，反抗军阵营控制时为蓝色，无人控制时为灰色，双方的玩家都可以占领这些灰色的传送门。</p>
+<p>Portal的申请<br>除了游戏中已经存在的传送门，玩家亦可以提交申请以将新的传送门纳入Ingress。[9][10]2015年9月3日，NIA Ops的Google+页面发布了新传送门的提交功能即日起被暂停的消息。[11]从2017年开始，逐步通过增加申请条件限制恢复新传送门的提交功能，[12]例如2017年4月22日仅限于韩国和巴西玩家开放申请Portal。[13]2017年9月26日全面开放有条件申请，并开放OPR（Operation Portal Recon）系统以允许部分符合级别的玩家参与新传送门提交的审核工作。Niantic对重新开放的申请条件加以限制：</p>
+<p>10级及以上的玩家才能申请<br>每位特工在 14 天的周期内最多可以申请 14 个 Portal, 每个 Portal 申请的配额将会拥有独立的 14 天冷却时间[14]<br>Portal的作用<br>在游戏中，玩家对传送门最基本的操作是入侵（Hack），入侵一个传送门可以让玩家获得游戏物品。游戏物品包含了共振器（Resonator）、XMP炸弹（XMP Burster）、能量方块（Power Cube）、各种强化包（Modification，可以用来强化传送门的物品）、钥匙（Portal Key）、储存胶囊（Capsule）、媒体（Media）等。共振器和炸弹有着从L1到L8八个等级，玩家必须达到对应的等级才能使用较为高级的物品，而高等级的物品会比低等级的物品强大。玩家在游戏中的动作通常会让他获得AP（Action Point），玩家在累积了一定的AP以后，就会升级（从L1到L8），并因此可以使用等级更高的游戏物品。在1.51.0版本过后，游戏开放玩家等级上限为L16，L9到L16的升级需求不仅需要AP，还需要收集到足够的成就徽章方能达到升级的门槛。</p>
+<p>连结（link）和控制场（Field）<br>游戏的目的是争夺传送门并制造控制场（Control Field），以获取Mind Units。玩家可以使用炸弹（XMP）攻击敌方传送门，削弱目标据点共振器的能量值，要是一个共振器失去全部能量，它就被摧毁了。如果全部的共振器都被摧毁，传送门就会转为中性（Neutral），玩家接着可以放置最多八个共振器控制该传送门。另外，共振器的能量每天都会下降，而玩家可以替他充能（Recharge）以使其保持较高的能量，以免敌人轻易摧毁这些共振器。除了在传送门旁边直接替它充能，玩家若持有一条传送门的钥匙亦可在一定距离外替它充能，只是充能效益（Recharge Efficiency）会随玩家与传送门的距离有所衰减。</p>
+<p>当两个传送门都已摆满八个共振器，而玩家同时持有目标的钥匙，且目标在所在传送门的覆盖范围之内，就可以在两个传送门间建立链接（Link）。如果玩家在游戏中使三个传送门连成三角形，就会产生一个控制场（Control Field）。控制场会让玩家的阵营获得Mind Units（MUs），面积愈大的控制场就包含了愈多的MUs，玩家在局势 （Intel）标签下可以查看两大阵营各自累积了多少MUs。</p>
+<p>由于三角形潜在的相互嵌套的几何性质，玩家可依照特定的连结顺序，建立多重控制场 ，在同一区域获取多倍的 AP 值。 玩家也能够利用 Ingress 情报地图（Ingress Intel Map）查看区域乃至世界的连结及控制场布局，规划战略。</p>
+
+      
+    </div>
+    <div class="article-footer">
+      <blockquote class="mt-2x">
+  <ul class="post-copyright list-unstyled">
+    
+    <li class="post-copyright-link hidden-xs">
+      <strong>本文链接：</strong>
+      <a href="http://xiaoqianbaobao.github.io/%E5%85%B3%E4%BA%8EIngress.html" title="关于Ingress" target="_blank" rel="external">http://xiaoqianbaobao.github.io/%E5%85%B3%E4%BA%8EIngress.html</a>
+    </li>
+    
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong> 本博客所有文章除特别声明外，均采用 <a href="http://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank" rel="external">CC BY 4.0 CN协议</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+</blockquote>
+
+
+<div class="panel panel-default panel-badger">
+  <div class="panel-body">
+    <figure class="media">
+      <div class="media-left">
+        <a href="https://github.com/xiaoqianbaobao" target="_blank" class="img-burn thumb-sm visible-lg">
+          <img src="/images/avatar.jpg" class="img-rounded w-full" alt="">
+        </a>
+      </div>
+      <div class="media-body">
+        <h3 class="media-heading"><a href="https://github.com/xiaoqianbaobao" target="_blank"><span class="text-dark">qian</span><small class="ml-1x">Dever</small></a></h3>
+        <div>A cute dever</div>
+      </div>
+    </figure>
+  </div>
+</div>
+
+
+    </div>
+  </article>
+  
+    
+  <section id="comments">
+  	
+      <div id="vcomments"></div>
+    
+  </section>
+
+
+  
+</div>
+
+  <nav class="bar bar-footer clearfix" data-stick-bottom>
+  <div class="bar-inner">
+  
+  <ul class="pager pull-left">
+    
+    <li class="prev">
+      <a href="/Python%E5%AD%A6%E4%B9%A0%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E6%94%BE%E5%BC%83.html" title="Python学习从入门到放弃"><i class="icon icon-angle-left" aria-hidden="true"></i><span>&nbsp;&nbsp;上一篇</span></a>
+    </li>
+    
+    
+    <li class="next">
+      <a href="/%E9%A1%BD%E5%9B%BA%E7%9A%84%E7%9F%B3%E5%A4%B4.html" title="我的第一篇文章"><span>下一篇&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+    </li>
+    
+    
+  </ul>
+  
+  
+  <!-- Button trigger modal -->
+  <button type="button" class="btn btn-fancy btn-donate pop-onhover bg-gradient-warning" data-toggle="modal" data-target="#donateModal"><span>赏</span></button>
+  <!-- <div class="wave-icon wave-icon-danger btn-donate" data-toggle="modal" data-target="#donateModal">
+    <div class="wave-circle"><span class="icon"><i class="icon icon-bill"></i></span></div>
+  </div> -->
+  
+  
+  <div class="bar-right">
+    
+    <div class="share-component" data-sites="weibo,qq,wechat,facebook,twitter" data-mobile-sites="weibo,qq,qzone"></div>
+    
+  </div>
+  </div>
+</nav>
+  
+<!-- Modal -->
+<div class="modal modal-center modal-small modal-xs-full fade" id="donateModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content donate">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <div class="modal-body">
+        <div class="donate-box">
+          <div class="donate-head">
+            <p>感谢您的支持，我会继续努力的!</p>
+          </div>
+          <div class="tab-content">
+            <div role="tabpanel" class="tab-pane fade active in" id="alipay">
+              <div class="donate-payimg">
+                <img src="/images/donate/alipayimg.jpg" alt="扫码支持" title="扫一扫" />
+              </div>
+              <p class="text-muted mv">扫码打赏，你说多少就多少</p>
+              <p class="text-grey">打开支付宝扫一扫，即可进行扫码打赏哦</p>
+            </div>
+            <div role="tabpanel" class="tab-pane fade" id="wechatpay">
+              <div class="donate-payimg">
+                <img src="/images/donate/wechatpayimg.jpg" alt="扫码支持" title="扫一扫" />
+              </div>
+              <p class="text-muted mv">扫码打赏，你说多少就多少</p>
+              <p class="text-grey">打开微信扫一扫，即可进行扫码打赏哦</p>
+            </div>
+          </div>
+          <div class="donate-footer">
+            <ul class="nav nav-tabs nav-justified" role="tablist">
+              <li role="presentation" class="active">
+                <a href="#alipay" id="alipay-tab" role="tab" data-toggle="tab" aria-controls="alipay" aria-expanded="true"><i class="icon icon-alipay"></i> 支付宝</a>
+              </li>
+              <li role="presentation" class="">
+                <a href="#wechatpay" role="tab" id="wechatpay-tab" data-toggle="tab" aria-controls="wechatpay" aria-expanded="false"><i class="icon icon-wepay"></i> 微信支付</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+</main>
+
+  <footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+	
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/xiaoqianbaobao" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="http://weibo.com/大白1212大白" target="_blank" title="Weibo" data-toggle=tooltip data-placement=top><i class="icon icon-weibo"></i></a></li>
+        
+        <li><a href="https://twitter.com/naughty_qian" target="_blank" title="Twitter" data-toggle=tooltip data-placement=top><i class="icon icon-twitter"></i></a></li>
+        
+        <li><a href="/atom.xml" target="_blank" title="Rss" data-toggle=tooltip data-placement=top><i class="icon icon-rss"></i></a></li>
+        
+    </ul>
+
+    <div class="copyright">
+    	
+        &copy; 2020 Larnonudo chan
+        
+        <div class="publishby">
+        	Theme by <a href="https://github.com/cofess" target="_blank"> cofess </a>base on <a href="https://github.com/cofess/hexo-theme-pure" target="_blank">pure</a>.
+        </div>
+    </div>
+</footer>
+  <script src="//cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+<script>
+window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+
+<script src="/js/plugin.min.js"></script>
+
+
+<script src="/js/application.js"></script>
+
+
+    <script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+
+
+
+
+   
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+   
+    
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/valine"></script>
+  <script type="text/javascript">
+  var GUEST = ['nick', 'mail', 'link'];
+  var meta = 'nick,mail,link';
+  meta = meta.split(',').filter(function(item) {
+    return GUEST.indexOf(item) > -1;
+  });
+  new Valine({
+    el: '#vcomments',
+    verify: true,
+    notify: true,
+    appId: 'iu0QRpyOTpkp8bd5ynEiG9uo-gzGzoHsz',
+    appKey: 'Bfq8Uozy2QytHVDsh8GmcecW',
+    placeholder: 'Just go go',
+    avatar: 'mm',
+    meta: meta,
+    pageSize: '10' || 10,
+    visitor: true
+  });
+  </script>
+
+     
+
+
+
+
+
+
+
+</body>
+</html>
