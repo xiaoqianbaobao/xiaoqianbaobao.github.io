@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no,email=no,adress=no">
+  <!-- Color theme for statusbar -->
+  <meta name="theme-color" content="#000000" />
+  <!-- 强制页面在当前窗口以独立页面显示,防止别人在框架里调用页面 -->
+  <meta http-equiv="window-target" content="_top" />
+  
+  
+  <title>一个画板小项目 | CSQBlog</title>
+  <meta name="description" content="之前的一个Java小项目回顾">
+<meta property="og:type" content="article">
+<meta property="og:title" content="一个画板小项目">
+<meta property="og:url" content="http://xiaoqianbaobao.github.io/2020/05/31/%E4%B8%80%E4%B8%AA%E7%94%BB%E6%9D%BF%E5%B0%8F%E9%A1%B9%E7%9B%AE/index.html">
+<meta property="og:site_name" content="Shengqian&#39;s Blog">
+<meta property="og:description" content="之前的一个Java小项目回顾">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://xiaoqianbaobao.github.io/2020/05/31/%E4%B8%80%E4%B8%AA%E7%94%BB%E6%9D%BF%E5%B0%8F%E9%A1%B9%E7%9B%AE/1.png">
+<meta property="article:published_time" content="2020-05-31T00:49:21.000Z">
+<meta property="article:modified_time" content="2020-06-25T05:38:35.007Z">
+<meta property="article:author" content="Larnonudo chan">
+<meta property="article:tag" content="Java">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://xiaoqianbaobao.github.io/2020/05/31/%E4%B8%80%E4%B8%AA%E7%94%BB%E6%9D%BF%E5%B0%8F%E9%A1%B9%E7%9B%AE/1.png">
+  <!-- Canonical links -->
+  <link rel="canonical" href="http://xiaoqianbaobao.github.io/2020/05/31/%E4%B8%80%E4%B8%AA%E7%94%BB%E6%9D%BF%E5%B0%8F%E9%A1%B9%E7%9B%AE/index.html">
+  
+    <link rel="alternate" href="/atom.xml" title="Shengqian&#39;s Blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png" type="image/x-icon">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+  
+  
+  
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+
+<body class="main-center theme-black" itemscope itemtype="http://schema.org/WebPage">
+  <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+  <div class="slimContent">
+    <div class="navbar-header">
+      
+      
+      <div class="profile-block text-center">
+        <a id="avatar" href="https://github.com/xiaoqianbaobao" target="_blank">
+          <img class="img-circle img-rotate" src="/images/avatar.jpg" width="200" height="200">
+        </a>
+        <h2 id="name" class="hidden-xs hidden-sm">qian</h2>
+        <h3 id="title" class="hidden-xs hidden-sm hidden-md">Dever</h3>
+        <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i> Shenzhen, China</small>
+      </div>
+      
+      <div class="search" id="search-form-wrap">
+
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="搜索" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i class="icon icon-search"></i></button>
+            </span>
+        </div>
+    </form>
+    <div class="ins-search">
+  <div class="ins-search-mask"></div>
+  <div class="ins-search-container">
+    <div class="ins-input-wrapper">
+      <input type="text" class="ins-search-input" placeholder="想要查找什么..." x-webkit-speech />
+      <button type="button" class="close ins-close ins-selectable" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+    </div>
+    <div class="ins-section-wrapper">
+      <div class="ins-section-container"></div>
+    </div>
+  </div>
+</div>
+
+
+</div>
+      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+      <ul class="nav navbar-nav main-nav menu-highlight">
+        
+        
+        <li class="menu-item menu-item-home">
+          <a href="/.">
+            
+            <i class="icon icon-home-fill"></i>
+            
+            <span class="menu-title">首页</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            
+            <i class="icon icon-archives-fill"></i>
+            
+            <span class="menu-title">归档</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories">
+            
+            <i class="icon icon-folder"></i>
+            
+            <span class="menu-title">分类</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            
+            <i class="icon icon-tags"></i>
+            
+            <span class="menu-title">标签</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-repository">
+          <a href="/repository">
+            
+            <i class="icon icon-project"></i>
+            
+            <span class="menu-title">项目</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-books">
+          <a href="/books">
+            
+            <i class="icon icon-book-fill"></i>
+            
+            <span class="menu-title">书单</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-links">
+          <a href="/links">
+            
+            <i class="icon icon-friendship"></i>
+            
+            <span class="menu-title">友链</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about">
+            
+            <i class="icon icon-cup-fill"></i>
+            
+            <span class="menu-title">关于</span>
+          </a>
+        </li>
+        
+      </ul>
+      
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/xiaoqianbaobao" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="http://weibo.com/大白1212大白" target="_blank" title="Weibo" data-toggle=tooltip data-placement=top><i class="icon icon-weibo"></i></a></li>
+        
+        <li><a href="https://twitter.com/naughty_qian" target="_blank" title="Twitter" data-toggle=tooltip data-placement=top><i class="icon icon-twitter"></i></a></li>
+        
+        <li><a href="/atom.xml" target="_blank" title="Rss" data-toggle=tooltip data-placement=top><i class="icon icon-rss"></i></a></li>
+        
+    </ul>
+
+    </nav>
+  </div>
+</header>
+
+  
+    <aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">公告</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content">
+                <p>欢迎交流与分享经验!</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget-body">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JavaWeb%E9%A1%B9%E7%9B%AE/">JavaWeb项目</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java%E9%A1%B9%E7%9B%AE/">Java项目</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/XML/">XML</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/javascript/">javascript</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/linux/">linux</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/python/">python</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%B9%A0/">前端学习</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%BA%95%E5%B1%82%E7%9F%A5%E8%AF%86/">底层知识</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%88%91%E7%9A%84%E7%BD%91%E7%AB%99%E5%88%B6%E4%BD%9C%E4%B9%8B%E6%97%85/">我的网站制作之旅</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%96%87%E5%AD%A6/">文学</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%9C%8D%E5%8A%A1%E5%99%A8%E8%84%9A%E6%9C%AC%E8%AF%AD%E8%A8%80/">服务器脚本语言</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%AF%95%E4%B8%9A%E8%AE%BE%E8%AE%A1/">毕业设计</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%B8%B8%E6%88%8F/">游戏</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%94%B5%E5%BD%B1/">电影</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/">编程语言</a><span class="category-list-count">12</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BE%8E%E6%96%87%E6%AC%A3%E8%B5%8F/">美文欣赏</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%A1%E5%88%92/">计划</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">计算机操作系统</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">计算机网络</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AF%BB%E4%B9%A6/">读书</a><span class="category-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget-body">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C%E8%AF%AD%E8%A8%80/" rel="tag">C语言</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django/" rel="tag">Django</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Http/" rel="tag">Http</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/" rel="tag">Java</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Javascript/" rel="tag">Javascript</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/" rel="tag">Python</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SVM%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BA/" rel="tag">SVM支持向量机</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/XML/" rel="tag">XML</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/google%E6%90%9C%E7%B4%A2%E7%A1%AE%E8%AE%A4%E6%96%87%E4%BB%B6/" rel="tag">google搜索确认文件</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/" rel="tag">hexo</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/html/" rel="tag">html</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/" rel="tag">java</a><span class="tag-list-count">20</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/javascript/" rel="tag">javascript</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/javaweb/" rel="tag">javaweb</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/js/" rel="tag">js</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/" rel="tag">linux</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/plan/" rel="tag">plan</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/" rel="tag">python</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tcp/" rel="tag">tcp</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/test/" rel="tag">test</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E3%80%90%E6%B8%B8%E6%88%8F%E4%BB%8B%E7%BB%8D%E3%80%91/" rel="tag">【游戏介绍】</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/" rel="tag">卷积神经网络</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8F%8D%E5%B0%84/" rel="tag">反射</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AD%A6%E4%B9%A0Python/" rel="tag">学习Python</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AD%A6%E4%B9%A0%E5%B0%8F%E7%BB%93/" rel="tag">学习小结</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" rel="tag">学习笔记</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%84%9F%E6%83%B3%E7%BE%8E%E6%96%87/" rel="tag">感想美文</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" rel="tag">操作系统</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%99%E7%A8%8B/" rel="tag">教程</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" rel="tag">数据库</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%96%87%E5%AD%A6/" rel="tag">文学</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%96%87%E5%AD%A6%E8%B5%8F%E6%9E%90%E8%AF%BB%E5%90%8E%E6%84%9F/" rel="tag">文学赏析读后感</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8%E8%84%9A%E6%9C%ACphp%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/" rel="tag">服务器脚本php环境配置</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" rel="tag">正则表达式</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%88%AC%E8%99%AB/" rel="tag">爬虫</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%94%9F%E4%BA%A7%E5%AE%9E%E4%B9%A0/" rel="tag">生产实习</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%94%B5%E5%BD%B1/" rel="tag">电影</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BD%91%E7%BB%9C/" rel="tag">网络</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BD%91%E9%A1%B5%E5%88%B6%E4%BD%9C/" rel="tag">网页制作</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BD%91%E9%A1%B5%E9%83%A8%E7%BD%B2/" rel="tag">网页部署</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BE%8E%E6%96%87/" rel="tag">美文</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AF%8D%E9%A2%91%E5%88%86%E6%9E%90%E7%94%9F%E6%88%90%E8%AF%8D%E4%BA%91/" rel="tag">词频分析生成词云</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AF%97%E8%AF%8D/" rel="tag">诗词</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AF%BB%E4%B9%A6/" rel="tag">读书</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" rel="tag">读书笔记</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%97%B2%E8%B0%88/" rel="tag">闲谈</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%A1%B9%E7%9B%AE/" rel="tag">项目</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget-body tagcloud">
+      <a href="/tags/C%E8%AF%AD%E8%A8%80/" style="font-size: 13px;">C语言</a> <a href="/tags/Django/" style="font-size: 13px;">Django</a> <a href="/tags/Http/" style="font-size: 13px;">Http</a> <a href="/tags/Java/" style="font-size: 13.75px;">Java</a> <a href="/tags/Javascript/" style="font-size: 13px;">Javascript</a> <a href="/tags/Python/" style="font-size: 13.5px;">Python</a> <a href="/tags/SVM%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BA/" style="font-size: 13px;">SVM支持向量机</a> <a href="/tags/XML/" style="font-size: 13px;">XML</a> <a href="/tags/google%E6%90%9C%E7%B4%A2%E7%A1%AE%E8%AE%A4%E6%96%87%E4%BB%B6/" style="font-size: 13px;">google搜索确认文件</a> <a href="/tags/hexo/" style="font-size: 13px;">hexo</a> <a href="/tags/html/" style="font-size: 13.75px;">html</a> <a href="/tags/java/" style="font-size: 14px;">java</a> <a href="/tags/javascript/" style="font-size: 13.25px;">javascript</a> <a href="/tags/javaweb/" style="font-size: 13px;">javaweb</a> <a href="/tags/js/" style="font-size: 13.25px;">js</a> <a href="/tags/linux/" style="font-size: 13px;">linux</a> <a href="/tags/plan/" style="font-size: 13px;">plan</a> <a href="/tags/python/" style="font-size: 13.5px;">python</a> <a href="/tags/tcp/" style="font-size: 13px;">tcp</a> <a href="/tags/test/" style="font-size: 13px;">test</a> <a href="/tags/%E3%80%90%E6%B8%B8%E6%88%8F%E4%BB%8B%E7%BB%8D%E3%80%91/" style="font-size: 13px;">【游戏介绍】</a> <a href="/tags/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/" style="font-size: 13px;">卷积神经网络</a> <a href="/tags/%E5%8F%8D%E5%B0%84/" style="font-size: 13px;">反射</a> <a href="/tags/%E5%AD%A6%E4%B9%A0Python/" style="font-size: 13px;">学习Python</a> <a href="/tags/%E5%AD%A6%E4%B9%A0%E5%B0%8F%E7%BB%93/" style="font-size: 13.75px;">学习小结</a> <a href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" style="font-size: 13px;">学习笔记</a> <a href="/tags/%E6%84%9F%E6%83%B3%E7%BE%8E%E6%96%87/" style="font-size: 13px;">感想美文</a> <a href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" style="font-size: 13px;">操作系统</a> <a href="/tags/%E6%95%99%E7%A8%8B/" style="font-size: 13px;">教程</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" style="font-size: 13.25px;">数据库</a> <a href="/tags/%E6%96%87%E5%AD%A6/" style="font-size: 13.25px;">文学</a> <a href="/tags/%E6%96%87%E5%AD%A6%E8%B5%8F%E6%9E%90%E8%AF%BB%E5%90%8E%E6%84%9F/" style="font-size: 13.5px;">文学赏析读后感</a> <a href="/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8%E8%84%9A%E6%9C%ACphp%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/" style="font-size: 13px;">服务器脚本php环境配置</a> <a href="/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" style="font-size: 13px;">正则表达式</a> <a href="/tags/%E7%88%AC%E8%99%AB/" style="font-size: 13px;">爬虫</a> <a href="/tags/%E7%94%9F%E4%BA%A7%E5%AE%9E%E4%B9%A0/" style="font-size: 13px;">生产实习</a> <a href="/tags/%E7%94%B5%E5%BD%B1/" style="font-size: 13.25px;">电影</a> <a href="/tags/%E7%AE%97%E6%B3%95/" style="font-size: 13.25px;">算法</a> <a href="/tags/%E7%BD%91%E7%BB%9C/" style="font-size: 13.75px;">网络</a> <a href="/tags/%E7%BD%91%E9%A1%B5%E5%88%B6%E4%BD%9C/" style="font-size: 13.25px;">网页制作</a> <a href="/tags/%E7%BD%91%E9%A1%B5%E9%83%A8%E7%BD%B2/" style="font-size: 13px;">网页部署</a> <a href="/tags/%E7%BE%8E%E6%96%87/" style="font-size: 13px;">美文</a> <a href="/tags/%E8%AF%8D%E9%A2%91%E5%88%86%E6%9E%90%E7%94%9F%E6%88%90%E8%AF%8D%E4%BA%91/" style="font-size: 13px;">词频分析生成词云</a> <a href="/tags/%E8%AF%97%E8%AF%8D/" style="font-size: 13px;">诗词</a> <a href="/tags/%E8%AF%BB%E4%B9%A6/" style="font-size: 13.25px;">读书</a> <a href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" style="font-size: 13.5px;">读书笔记</a> <a href="/tags/%E9%97%B2%E8%B0%88/" style="font-size: 13px;">闲谈</a> <a href="/tags/%E9%A1%B9%E7%9B%AE/" style="font-size: 13px;">项目</a>
+    </div>
+  </div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget-body">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">六月 2020</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">五月 2020</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">四月 2020</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">三月 2020</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">二月 2020</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">一月 2020</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">十月 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">八月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">三月 2019</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">一月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">十二月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">十一月 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">八月 2018</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">七月 2018</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">六月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">五月 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">四月 2018</a><span class="archive-list-count">5</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget-body">
+      <ul class="recent-post-list list-unstyled no-thumbnail">
+        
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/hexo/">hexo</a>
+              </p>
+              <p class="item-title">
+                <a href="/2020/06/26/%E5%85%B3%E4%BA%8Ehexo4-2%E6%9B%B4%E6%96%B0%E5%90%8E%E5%9B%BE%E7%89%87%E6%97%A0%E6%B3%95%E6%98%BE%E7%A4%BA%E7%9A%84%E9%97%AE%E9%A2%98/" class="title">关于hexo4.2更新后图片无法显示的问题</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2020-06-26T03:15:52.000Z" itemprop="datePublished">2020-06-26</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/%E5%BA%95%E5%B1%82%E7%9F%A5%E8%AF%86/">底层知识</a>
+              </p>
+              <p class="item-title">
+                <a href="/2020/06/25/Review-C/" class="title">Review C</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2020-06-25T13:58:07.000Z" itemprop="datePublished">2020-06-25</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2020/06/22/hello-world/" class="title">Hello World</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2020-06-22T05:21:37.181Z" itemprop="datePublished">2020-06-22</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">计算机网络</a>
+              </p>
+              <p class="item-title">
+                <a href="/2020/06/11/http%E4%B8%8D%E5%90%8C%E7%89%88%E6%9C%AC%E7%9A%84%E7%89%B9%E7%82%B9%E5%92%8C%E5%8C%BA%E5%88%AB/" class="title">http不同版本的特点和区别</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2020-06-10T17:34:07.000Z" itemprop="datePublished">2020-06-11</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/%E6%AF%95%E4%B8%9A%E8%AE%BE%E8%AE%A1/">毕业设计</a>
+              </p>
+              <p class="item-title">
+                <a href="/2020/06/05/%E5%AD%A6%E4%B9%A0CNN%E7%AE%97%E6%B3%95/" class="title">学习CNN算法</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2020-06-05T05:49:57.000Z" itemprop="datePublished">2020-06-05</time>
+              </p>
+            </div>
+          </li>
+          
+      </ul>
+    </div>
+  </div>
+  
+
+    
+  </div>
+</aside>
+
+  
+  
+<main class="main" role="main">
+  <div class="content">
+  <article id="post-一个画板小项目" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      
+        
+  
+    <h1 class="article-title" itemprop="name">
+      一个画板小项目
+    </h1>
+  
+
+      
+      <div class="article-meta">
+        <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/2020/05/31/%E4%B8%80%E4%B8%AA%E7%94%BB%E6%9D%BF%E5%B0%8F%E9%A1%B9%E7%9B%AE/" class="article-date">
+	  <time datetime="2020-05-31T00:49:21.000Z" itemprop="datePublished">2020-05-31</time>
+	</a>
+</span>
+        
+  <span class="article-category">
+    <i class="icon icon-folder"></i>
+    <a class="article-category-link" href="/categories/Java%E9%A1%B9%E7%9B%AE/">Java项目</a>
+  </span>
+
+        
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link" href="/tags/Java/" rel="tag">Java</a>
+  </span>
+
+
+        
+	<span class="article-read hidden-xs">
+	    <i class="icon icon-eye-fill" aria-hidden="true"></i>
+	    <span id="busuanzi_container_page_pv">
+			<span id="busuanzi_value_page_pv">0</span>
+		</span>
+	</span>
+
+
+	<span class="article-read hidden-xs">
+    	<i class="icon icon-eye-fill" aria-hidden="true"></i>
+    	<span id="/2020/05/31/%E4%B8%80%E4%B8%AA%E7%94%BB%E6%9D%BF%E5%B0%8F%E9%A1%B9%E7%9B%AE/" class="leancloud_visitors"  data-flag-title="一个画板小项目">
+			<span class="leancloud-visitors-count">0</span>
+		</span>
+    </span>
+
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2020/05/31/%E4%B8%80%E4%B8%AA%E7%94%BB%E6%9D%BF%E5%B0%8F%E9%A1%B9%E7%9B%AE/#comments" class="article-comment-link">评论</a></span>
+        
+	
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计: 4.3k(字)</span>
+	
+	
+		<span class="post-readcount hidden-xs" itemprop="timeRequired">阅读时长: 19(分)</span>
+	
+
+      </div>
+    </div>
+    <div class="article-entry marked-body" itemprop="articleBody">
+      
+        <p>这个画板项目是使用java编写的用于模拟Windows系统自带的画图工具的程序。包括如下的功能：设置画笔的粗细，选择背景颜色，绘制图形，清除图像，使用橡皮以及展开简笔画参考示例等功能。其中使用到的类以及技术包括：</p>
+<li>Jframe窗体类</li>
+<li>Canvas画板类的关键方法和事件</li>
+<li>窗体菜单栏的创建以及层级关系</li>
+<li>如何使用工具栏和按钮</li>
+<h2>1、使用到的相关组件及技术</h2>
+
+<p>其中用到的Swing组件有:<br>JFrame窗体类，JWindows无边框窗体类，JButton按钮类，JToggleButton按钮类，JMenuBar菜单栏类，Jmenu菜单类，JMenuItem菜单项类</p>
+<p>Swing事件监听包括对鼠标点击事件监听以及鼠标拖拽事件监听。</p>
+<p>画图工具：</p>
+<p>Graphics2D绘图类</p>
+<p>其他技术：<br>继承与封装<br>IO<br>Image文件类<br>Ellipse2D圆形图形类<br>Rectangle2D方形图形类</p>
+<h2>DrawPictureFrame.java</h2>
+该类实现了画板项目的主要功能。
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br><span class="line">263</span><br><span class="line">264</span><br><span class="line">265</span><br><span class="line">266</span><br><span class="line">267</span><br><span class="line">268</span><br><span class="line">269</span><br><span class="line">270</span><br><span class="line">271</span><br><span class="line">272</span><br><span class="line">273</span><br><span class="line">274</span><br><span class="line">275</span><br><span class="line">276</span><br><span class="line">277</span><br><span class="line">278</span><br><span class="line">279</span><br><span class="line">280</span><br><span class="line">281</span><br><span class="line">282</span><br><span class="line">283</span><br><span class="line">284</span><br><span class="line">285</span><br><span class="line">286</span><br><span class="line">287</span><br><span class="line">288</span><br><span class="line">289</span><br><span class="line">290</span><br><span class="line">291</span><br><span class="line">292</span><br><span class="line">293</span><br><span class="line">294</span><br><span class="line">295</span><br><span class="line">296</span><br><span class="line">297</span><br><span class="line">298</span><br><span class="line">299</span><br><span class="line">300</span><br><span class="line">301</span><br><span class="line">302</span><br><span class="line">303</span><br><span class="line">304</span><br><span class="line">305</span><br><span class="line">306</span><br><span class="line">307</span><br><span class="line">308</span><br><span class="line">309</span><br><span class="line">310</span><br><span class="line">311</span><br><span class="line">312</span><br><span class="line">313</span><br><span class="line">314</span><br><span class="line">315</span><br><span class="line">316</span><br><span class="line">317</span><br><span class="line">318</span><br><span class="line">319</span><br><span class="line">320</span><br><span class="line">321</span><br><span class="line">322</span><br><span class="line">323</span><br><span class="line">324</span><br><span class="line">325</span><br><span class="line">326</span><br><span class="line">327</span><br><span class="line">328</span><br><span class="line">329</span><br><span class="line">330</span><br><span class="line">331</span><br><span class="line">332</span><br><span class="line">333</span><br><span class="line">334</span><br><span class="line">335</span><br><span class="line">336</span><br><span class="line">337</span><br><span class="line">338</span><br><span class="line">339</span><br><span class="line">340</span><br><span class="line">341</span><br><span class="line">342</span><br><span class="line">343</span><br><span class="line">344</span><br><span class="line">345</span><br><span class="line">346</span><br><span class="line">347</span><br><span class="line">348</span><br><span class="line">349</span><br><span class="line">350</span><br><span class="line">351</span><br><span class="line">352</span><br><span class="line">353</span><br><span class="line">354</span><br><span class="line">355</span><br><span class="line">356</span><br><span class="line">357</span><br><span class="line">358</span><br><span class="line">359</span><br><span class="line">360</span><br><span class="line">361</span><br><span class="line">362</span><br><span class="line">363</span><br><span class="line">364</span><br><span class="line">365</span><br><span class="line">366</span><br><span class="line">367</span><br><span class="line">368</span><br><span class="line">369</span><br><span class="line">370</span><br><span class="line">371</span><br><span class="line">372</span><br><span class="line">373</span><br><span class="line">374</span><br><span class="line">375</span><br><span class="line">376</span><br><span class="line">377</span><br><span class="line">378</span><br><span class="line">379</span><br><span class="line">380</span><br><span class="line">381</span><br><span class="line">382</span><br><span class="line">383</span><br><span class="line">384</span><br><span class="line">385</span><br><span class="line">386</span><br><span class="line">387</span><br><span class="line">388</span><br><span class="line">389</span><br><span class="line">390</span><br><span class="line">391</span><br><span class="line">392</span><br><span class="line">393</span><br><span class="line">394</span><br><span class="line">395</span><br><span class="line">396</span><br><span class="line">397</span><br><span class="line">398</span><br><span class="line">399</span><br><span class="line">400</span><br><span class="line">401</span><br><span class="line">402</span><br><span class="line">403</span><br><span class="line">404</span><br><span class="line">405</span><br><span class="line">406</span><br><span class="line">407</span><br><span class="line">408</span><br><span class="line">409</span><br><span class="line">410</span><br><span class="line">411</span><br><span class="line">412</span><br><span class="line">413</span><br><span class="line">414</span><br><span class="line">415</span><br><span class="line">416</span><br><span class="line">417</span><br><span class="line">418</span><br><span class="line">419</span><br><span class="line">420</span><br><span class="line">421</span><br><span class="line">422</span><br><span class="line">423</span><br><span class="line">424</span><br><span class="line">425</span><br><span class="line">426</span><br><span class="line">427</span><br><span class="line">428</span><br><span class="line">429</span><br><span class="line">430</span><br><span class="line">431</span><br><span class="line">432</span><br><span class="line">433</span><br><span class="line">434</span><br><span class="line">435</span><br><span class="line">436</span><br><span class="line">437</span><br><span class="line">438</span><br><span class="line">439</span><br><span class="line">440</span><br><span class="line">441</span><br><span class="line">442</span><br><span class="line">443</span><br><span class="line">444</span><br><span class="line">445</span><br><span class="line">446</span><br><span class="line">447</span><br><span class="line">448</span><br><span class="line">449</span><br><span class="line">450</span><br><span class="line">451</span><br><span class="line">452</span><br><span class="line">453</span><br><span class="line">454</span><br><span class="line">455</span><br><span class="line">456</span><br><span class="line">457</span><br><span class="line">458</span><br><span class="line">459</span><br><span class="line">460</span><br><span class="line">461</span><br><span class="line">462</span><br><span class="line">463</span><br><span class="line">464</span><br><span class="line">465</span><br><span class="line">466</span><br><span class="line">467</span><br><span class="line">468</span><br><span class="line">469</span><br><span class="line">470</span><br><span class="line">471</span><br><span class="line">472</span><br><span class="line">473</span><br><span class="line">474</span><br><span class="line">475</span><br><span class="line">476</span><br><span class="line">477</span><br><span class="line">478</span><br><span class="line">479</span><br><span class="line">480</span><br><span class="line">481</span><br><span class="line">482</span><br><span class="line">483</span><br><span class="line">484</span><br><span class="line">485</span><br><span class="line">486</span><br><span class="line">487</span><br><span class="line">488</span><br><span class="line">489</span><br><span class="line">490</span><br><span class="line">491</span><br><span class="line">492</span><br><span class="line">493</span><br><span class="line">494</span><br><span class="line">495</span><br><span class="line">496</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.mr.draw;</span><br><span class="line"><span class="keyword">import</span>  javax.swing.JFrame;</span><br><span class="line"><span class="keyword">import</span> java.awt.*;</span><br><span class="line"><span class="keyword">import</span> java.awt.image.BufferedImage;</span><br><span class="line"><span class="keyword">import</span> java.awt.event.MouseAdapter;</span><br><span class="line"><span class="keyword">import</span> java.awt.event.MouseEvent;</span><br><span class="line"><span class="keyword">import</span> java.awt.event.MouseMotionAdapter;</span><br><span class="line"><span class="keyword">import</span> javax.swing.ButtonGroup;</span><br><span class="line"><span class="keyword">import</span> javax.swing.JButton;</span><br><span class="line"><span class="keyword">import</span> javax.swing.JToggleButton;</span><br><span class="line"><span class="keyword">import</span> javax.swing.JToolBar;</span><br><span class="line"><span class="keyword">import</span> java.awt.BasicStroke;</span><br><span class="line"><span class="keyword">import</span> java.awt.event.ActionEvent;</span><br><span class="line"><span class="keyword">import</span> java.awt.event.ActionListener;</span><br><span class="line"><span class="keyword">import</span> javax.swing.JColorChooser;</span><br><span class="line"><span class="keyword">import</span> java.awt.geom.Ellipse2D;</span><br><span class="line"><span class="keyword">import</span> java.awt.geom.Rectangle2D;</span><br><span class="line"><span class="keyword">import</span> com.mr.util.FrameGetShape;</span><br><span class="line"><span class="keyword">import</span> com.mr.util.ShapeWindow;</span><br><span class="line"><span class="keyword">import</span> com.mr.util.Shapes;</span><br><span class="line"><span class="keyword">import</span> com.mr.util.DrawImageUtil;</span><br><span class="line"><span class="keyword">import</span> javax.swing.JMenu;</span><br><span class="line"><span class="keyword">import</span> javax.swing.JMenuBar;</span><br><span class="line"><span class="keyword">import</span> javax.swing.JMenuItem;</span><br><span class="line"><span class="keyword">import</span> java.awt.AlphaComposite;</span><br><span class="line"><span class="keyword">import</span> java.awt.Font;</span><br><span class="line"><span class="keyword">import</span> javax.swing.JOptionPane;</span><br><span class="line"><span class="keyword">import</span> java.awt.Image;</span><br><span class="line"><span class="keyword">import</span> java.awt.Point;</span><br><span class="line"><span class="keyword">import</span> java.awt.Toolkit;</span><br><span class="line"><span class="keyword">import</span> java.awt.Cursor;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">* 画图主窗体</span></span><br><span class="line"><span class="comment">* */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DrawPictureFrame</span> <span class="keyword">extends</span> <span class="title">JFrame</span> <span class="keyword">implements</span> <span class="title">FrameGetShape</span></span>&#123;                                <span class="comment">//继承窗体类</span></span><br><span class="line">    <span class="comment">//创建一个8位BGR颜色分量的图像</span></span><br><span class="line">    BufferedImage image = <span class="keyword">new</span> BufferedImage(<span class="number">570</span>, <span class="number">390</span>, BufferedImage.TYPE_INT_BGR);</span><br><span class="line">    Graphics gs = image.getGraphics();                                       <span class="comment">//获得图像的绘图对象</span></span><br><span class="line">    Graphics2D g = (Graphics2D) gs;                                          <span class="comment">//将绘图对象转换为Graphics2D类型</span></span><br><span class="line">    DrawPictureCanvas canvas = <span class="keyword">new</span> DrawPictureCanvas();                      <span class="comment">//创建画布对象</span></span><br><span class="line">    Color foreColor = Color.BLACK;                                           <span class="comment">//定义前景色</span></span><br><span class="line">    Color backgroundColor = Color.WHITE;                                     <span class="comment">//定义背景色</span></span><br><span class="line">    <span class="keyword">int</span> x = -<span class="number">1</span>;                                                              <span class="comment">//上一次鼠标绘制点的横坐标</span></span><br><span class="line">    <span class="keyword">int</span> y = -<span class="number">1</span>;                                                              <span class="comment">//上一次鼠标绘制点的纵坐标</span></span><br><span class="line">    <span class="keyword">boolean</span> rubber = <span class="keyword">false</span>;                                                   <span class="comment">//橡皮标识变量</span></span><br><span class="line">    <span class="keyword">private</span> JToolBar toolBar;                                                <span class="comment">//工具栏</span></span><br><span class="line">    <span class="keyword">private</span> JButton eraserButton;                                            <span class="comment">//橡皮按钮</span></span><br><span class="line">    <span class="keyword">private</span> JToggleButton strokeButton1;                                     <span class="comment">//细线按钮</span></span><br><span class="line">    <span class="keyword">private</span> JToggleButton strokeButton2;                                     <span class="comment">//粗线按钮</span></span><br><span class="line">    <span class="keyword">private</span> JToggleButton strokeButton3;                                     <span class="comment">//较粗按钮</span></span><br><span class="line">    <span class="keyword">private</span> JButton backgroundButton;                                        <span class="comment">//背景色按钮</span></span><br><span class="line">    <span class="keyword">private</span> JButton foregroundButton;                                        <span class="comment">//前景色按钮</span></span><br><span class="line">    <span class="keyword">private</span> JButton clearButton;                                             <span class="comment">//清楚按钮</span></span><br><span class="line">    <span class="keyword">private</span> JButton saveButton;                                              <span class="comment">//保存按钮</span></span><br><span class="line">    <span class="keyword">private</span> JButton shapeButton;                                             <span class="comment">//图形按钮</span></span><br><span class="line">    <span class="keyword">boolean</span> drawShape = <span class="keyword">false</span>;                                               <span class="comment">//画图形标识变量</span></span><br><span class="line">    Shapes shape;                                                            <span class="comment">//绘画的图形</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> JMenuItem strokeMenuItem1;                                       <span class="comment">//细线菜单</span></span><br><span class="line">    <span class="keyword">private</span> JMenuItem strokeMenuItem2;                                       <span class="comment">//粗线菜单</span></span><br><span class="line">    <span class="keyword">private</span> JMenuItem strokeMenuItem3;                                       <span class="comment">//较粗菜单</span></span><br><span class="line">    <span class="keyword">private</span> JMenuItem clearMenuItem;                                         <span class="comment">//清除菜单</span></span><br><span class="line">    <span class="keyword">private</span> JMenuItem foregroundMenuItem;                                    <span class="comment">//前景色菜单</span></span><br><span class="line">    <span class="keyword">private</span> JMenuItem backgroundMenuItem;                                    <span class="comment">//背景色菜单</span></span><br><span class="line">    <span class="keyword">private</span> JMenuItem eraserMenuItem;                                        <span class="comment">//橡皮菜单</span></span><br><span class="line">    <span class="keyword">private</span> JMenuItem exitMenuItem;                                          <span class="comment">//退出菜单</span></span><br><span class="line">    <span class="keyword">private</span> JMenuItem saveMenuItem;                                          <span class="comment">//保存菜单</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> JMenuItem shuiyinMenuItem;                                       <span class="comment">//水印菜单</span></span><br><span class="line">    <span class="keyword">private</span> String shuiyin = <span class="string">""</span>;                                             <span class="comment">//水印字符内容</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> PictureWindow pictureWindow;                                     <span class="comment">//简笔画展示窗体</span></span><br><span class="line">    <span class="keyword">private</span> JButton showPicButton;                                           <span class="comment">//展开简笔画按钮</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">    * 构造方法，添加组件监听方法</span></span><br><span class="line"><span class="comment">    * */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span>  <span class="title">DrawPictureFrame</span><span class="params">()</span></span>&#123;</span><br><span class="line">        setResizable(<span class="keyword">false</span>);                                                 <span class="comment">//窗体不能改变大小</span></span><br><span class="line">        setTitle(<span class="string">"画图程序(水印内容:["</span> + shuiyin +<span class="string">"])"</span>);                      <span class="comment">//设置标题，添加水印内容提示</span></span><br><span class="line">        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);                      <span class="comment">//窗体关闭则停止程序</span></span><br><span class="line">        setBounds(<span class="number">500</span>, <span class="number">100</span>, <span class="number">574</span>, <span class="number">460</span>);                  <span class="comment">//设置窗口位置和宽高</span></span><br><span class="line"></span><br><span class="line">        init();                                                              <span class="comment">//组件初始化</span></span><br><span class="line">        addListener();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">    组件初始化，给窗体添加工具栏及工具栏上的按钮</span></span><br><span class="line"><span class="comment">    * */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">init</span><span class="params">()</span></span>&#123;</span><br><span class="line">        g.setColor(backgroundColor);                                         <span class="comment">//用背景色设置绘图对象的颜色</span></span><br><span class="line">        g.fillRect(<span class="number">0</span>,<span class="number">0</span>,<span class="number">570</span>, <span class="number">390</span>);                       <span class="comment">//用背景色填充整个画布</span></span><br><span class="line">        g.setColor(foreColor);                                               <span class="comment">//用前景色设置绘图对象的颜色</span></span><br><span class="line">        canvas.setImage(image);                                              <span class="comment">//设置画布图像</span></span><br><span class="line">        getContentPane().add(canvas);                                        <span class="comment">//将画布添加到窗体容器默认布局的中部位置</span></span><br><span class="line"></span><br><span class="line">        toolBar = <span class="keyword">new</span> JToolBar();                                            <span class="comment">//初始化工具栏</span></span><br><span class="line">        getContentPane().add(toolBar, BorderLayout.NORTH);                   <span class="comment">//初始化按钮对象，并添加文本内容</span></span><br><span class="line">        showPicButton = <span class="keyword">new</span> JButton(<span class="string">"展开简笔画"</span>);</span><br><span class="line">        toolBar.add(showPicButton);</span><br><span class="line">        saveButton = <span class="keyword">new</span> JButton(<span class="string">"保存"</span>);</span><br><span class="line">        toolBar.add(saveButton);                                             <span class="comment">//工具栏添加按钮</span></span><br><span class="line">        toolBar.addSeparator();                                              <span class="comment">//添加分割线条</span></span><br><span class="line">        <span class="comment">//初始化按钮对象，并添加文本内容</span></span><br><span class="line">        strokeButton1 = <span class="keyword">new</span> JToggleButton(<span class="string">"细线"</span>);</span><br><span class="line">        strokeButton1.setSelected(<span class="keyword">true</span>);                                     <span class="comment">//细线按钮处于被选中状态</span></span><br><span class="line">        toolBar.add(strokeButton1);                                          <span class="comment">//工具栏添加按钮</span></span><br><span class="line">        <span class="comment">//初始化按钮对象，并添加文本内容</span></span><br><span class="line">        strokeButton2 = <span class="keyword">new</span> JToggleButton(<span class="string">"粗线"</span>);</span><br><span class="line">        toolBar.add(strokeButton2);                                         <span class="comment">//工具栏添加按钮</span></span><br><span class="line">        <span class="comment">//初始化有选中状态的按钮对象，并添加文本内容</span></span><br><span class="line">        strokeButton3 = <span class="keyword">new</span> JToggleButton(<span class="string">"较粗"</span>);</span><br><span class="line">        <span class="comment">//画笔粗细按钮组，保证同时只有一个按钮被选中</span></span><br><span class="line">        ButtonGroup strokeGroup = <span class="keyword">new</span> ButtonGroup();</span><br><span class="line">        strokeGroup.add(strokeButton1);                        <span class="comment">//按钮组添加按钮</span></span><br><span class="line">        strokeGroup.add(strokeButton2);                       <span class="comment">//按钮组添加按钮</span></span><br><span class="line">        strokeGroup.add(strokeButton3);                       <span class="comment">//按钮组添加按钮</span></span><br><span class="line">        toolBar.add(strokeButton3);</span><br><span class="line">        toolBar.addSeparator();                               <span class="comment">//添加分割</span></span><br><span class="line">        backgroundButton = <span class="keyword">new</span> JButton(<span class="string">"背景颜色"</span>);  <span class="comment">//初始化按钮对象，并添加文本内容</span></span><br><span class="line">        toolBar.add(backgroundButton);  <span class="comment">//工具栏添加按钮</span></span><br><span class="line">        foregroundButton = <span class="keyword">new</span> JButton(<span class="string">"前景颜色"</span>);</span><br><span class="line">        toolBar.add(foregroundButton);</span><br><span class="line">        toolBar.addSeparator();</span><br><span class="line"></span><br><span class="line">        shapeButton = <span class="keyword">new</span> JButton(<span class="string">"图形"</span>);                              <span class="comment">//初始化按钮对象，并添加文本内容</span></span><br><span class="line">        toolBar.add(shapeButton);                                            <span class="comment">//工具栏添加按钮</span></span><br><span class="line"></span><br><span class="line">        clearButton = <span class="keyword">new</span> JButton(<span class="string">"清除"</span>);</span><br><span class="line">        toolBar.add(clearButton);</span><br><span class="line">        eraserButton = <span class="keyword">new</span> JButton(<span class="string">"橡皮"</span>);</span><br><span class="line">        toolBar.add(eraserButton);</span><br><span class="line"></span><br><span class="line">        JMenuBar menuBar = <span class="keyword">new</span> JMenuBar();          <span class="comment">//创建菜单栏</span></span><br><span class="line">        setJMenuBar(menuBar);               <span class="comment">//窗体载入菜单栏</span></span><br><span class="line"></span><br><span class="line">        JMenu systemMenu = <span class="keyword">new</span> JMenu(<span class="string">"系统"</span>);     <span class="comment">//初始化菜单对象，并添加文本内容</span></span><br><span class="line">        menuBar.add(systemMenu);                     <span class="comment">//菜单栏添加菜单对象</span></span><br><span class="line">        shuiyinMenuItem = <span class="keyword">new</span> JMenuItem(<span class="string">"设置水印"</span>);</span><br><span class="line">        systemMenu.add(shuiyinMenuItem);</span><br><span class="line">        saveMenuItem = <span class="keyword">new</span> JMenuItem(<span class="string">"保存"</span>);   <span class="comment">//初始化菜单对象，并添加文本内容</span></span><br><span class="line">        systemMenu.add(saveMenuItem);</span><br><span class="line">        systemMenu.addSeparator();                   <span class="comment">//添加分割条</span></span><br><span class="line">        exitMenuItem = <span class="keyword">new</span> JMenuItem(<span class="string">"退出"</span>);</span><br><span class="line">        systemMenu.add(exitMenuItem);</span><br><span class="line">        JMenu strokeMenu = <span class="keyword">new</span> JMenu(<span class="string">"线形"</span>);</span><br><span class="line">        menuBar.add(strokeMenu);</span><br><span class="line">        strokeMenuItem1 = <span class="keyword">new</span> JMenuItem(<span class="string">"细线"</span>);</span><br><span class="line">        strokeMenu.add(strokeMenuItem1);</span><br><span class="line">        strokeMenuItem2 = <span class="keyword">new</span> JMenuItem(<span class="string">"粗线"</span>);</span><br><span class="line">        strokeMenu.add(strokeMenuItem2);</span><br><span class="line">        strokeMenuItem3 = <span class="keyword">new</span> JMenuItem(<span class="string">"较粗"</span>);</span><br><span class="line">        strokeMenu.add(strokeMenuItem3);</span><br><span class="line"></span><br><span class="line">        JMenu colorMenu = <span class="keyword">new</span> JMenu(<span class="string">"颜色"</span>);</span><br><span class="line">        menuBar.add(colorMenu);</span><br><span class="line">        foregroundMenuItem = <span class="keyword">new</span> JMenuItem(<span class="string">"前景颜色"</span>);</span><br><span class="line">        colorMenu.add(foregroundMenuItem);</span><br><span class="line">        backgroundMenuItem = <span class="keyword">new</span> JMenuItem(<span class="string">"背景颜色"</span>);</span><br><span class="line">        colorMenu.add(backgroundMenuItem);</span><br><span class="line"></span><br><span class="line">        JMenu editMenu = <span class="keyword">new</span> JMenu(<span class="string">"编辑"</span>);</span><br><span class="line">        menuBar.add(editMenu);</span><br><span class="line">        clearMenuItem = <span class="keyword">new</span> JMenuItem(<span class="string">"清除"</span>);</span><br><span class="line">        editMenu.add(clearMenuItem);</span><br><span class="line">        eraserMenuItem = <span class="keyword">new</span> JMenuItem(<span class="string">"橡皮"</span>);</span><br><span class="line">        editMenu.add(eraserMenuItem);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//创建简笔画展示面板，并将本类当作它的父窗体</span></span><br><span class="line">        pictureWindow = <span class="keyword">new</span> PictureWindow(DrawPictureFrame.<span class="keyword">this</span>);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">    * 为组件添加动作监听</span></span><br><span class="line"><span class="comment">    * */</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">addListener</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="comment">//画板添加鼠标移动事件监听</span></span><br><span class="line">        canvas.addMouseMotionListener(<span class="keyword">new</span> MouseMotionAdapter() &#123;</span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">mouseDragged</span><span class="params">(<span class="keyword">final</span> MouseEvent e)</span> </span>&#123;                     <span class="comment">//当鼠标拖拽时</span></span><br><span class="line">                <span class="keyword">if</span> (x &gt; <span class="number">0</span> &amp;&amp; y &gt; <span class="number">0</span>) &#123;                                           <span class="comment">//如果x和y存在鼠标记录</span></span><br><span class="line">                    <span class="keyword">if</span> (rubber) &#123;                                               <span class="comment">//如果橡皮标识为true，表示使用橡皮</span></span><br><span class="line">                        g.setColor(backgroundColor);                          <span class="comment">//绘图工具使用背景色</span></span><br><span class="line">                        g.fillRect(x, y, <span class="number">10</span>, <span class="number">10</span>);               <span class="comment">//在鼠标滑过的位置画填充的正方形</span></span><br><span class="line">                    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                        g.drawLine(x, y, e.getX(), e.getY());                  <span class="comment">//在鼠标滑过的位置画直线</span></span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">                x = e.getX();       <span class="comment">//上一次鼠标绘制点的横坐标</span></span><br><span class="line">                y = e.getY();       <span class="comment">//上一次鼠标绘制点的纵坐标</span></span><br><span class="line">                canvas.repaint();   <span class="comment">//更新画布</span></span><br><span class="line">            &#125;</span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">mouseMoved</span><span class="params">(<span class="keyword">final</span> MouseEvent arg0)</span></span>&#123;</span><br><span class="line">                <span class="keyword">if</span>(rubber)&#123;</span><br><span class="line">                    <span class="comment">//设置鼠标指针的形状为图片</span></span><br><span class="line">                    Toolkit kit = Toolkit.getDefaultToolkit();    <span class="comment">//获得系统默认的组件工具包</span></span><br><span class="line">                    <span class="comment">//利用工具包获取图片</span></span><br><span class="line">                    Image img = kit.createImage(<span class="string">"src/img/icon/鼠标橡皮.png"</span>);</span><br><span class="line">                    <span class="comment">//利用工具包创建一个自定义的光标对象</span></span><br><span class="line">                    <span class="comment">//参数为图片，光标热点(写成0,0就行)和光标描述字符串</span></span><br><span class="line">                    Cursor c = kit.createCustomCursor(img, <span class="keyword">new</span> Point(<span class="number">0</span>,<span class="number">0</span>), <span class="string">"clear"</span>);</span><br><span class="line">                    setCursor(c);</span><br><span class="line">                &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">                    <span class="comment">//设置鼠标指针为十字光标</span></span><br><span class="line">                    setCursor(Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">        toolBar.addMouseMotionListener(<span class="keyword">new</span> MouseMotionAdapter() &#123;</span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">mouseMoved</span><span class="params">(<span class="keyword">final</span> MouseEvent arg0)</span></span>&#123;</span><br><span class="line">                setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">        canvas.addMouseListener(<span class="keyword">new</span> MouseAdapter() &#123;             <span class="comment">//画板添加鼠标单击事件监听</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">mouseReleased</span><span class="params">(<span class="keyword">final</span> MouseEvent arg0)</span> </span>&#123;     <span class="comment">//当按键抬起时</span></span><br><span class="line">                x = -<span class="number">1</span>;               <span class="comment">//将记录上一次鼠标绘制点的横坐标恢复为-1</span></span><br><span class="line">                y = -<span class="number">1</span>;               <span class="comment">//将记录上一次鼠标绘制点的纵坐标恢复为-1</span></span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">mousePressed</span><span class="params">(MouseEvent e)</span> </span>&#123;</span><br><span class="line">                <span class="keyword">if</span> (drawShape) &#123;</span><br><span class="line">                    <span class="keyword">switch</span> (shape.getType()) &#123;</span><br><span class="line">                        <span class="keyword">case</span> Shapes.YUAN:          <span class="comment">//如果是圆形</span></span><br><span class="line">                            <span class="comment">//计算坐标，让鼠标处于图形的中心位置</span></span><br><span class="line">                            <span class="keyword">int</span> yuanX = e.getX() - shape.getWidth() / <span class="number">2</span>;</span><br><span class="line">                            <span class="keyword">int</span> yuanY = e.getY() - shape.getHeigth() / <span class="number">2</span>;</span><br><span class="line">                            <span class="comment">//创建圆形图形，并指定坐标和宽高</span></span><br><span class="line">                            Ellipse2D yuan = <span class="keyword">new</span> Ellipse2D.Double(yuanX, yuanY, shape.getWidth(), shape.getHeigth());</span><br><span class="line">                            g.draw(yuan);  <span class="comment">//画图工具画此图形</span></span><br><span class="line">                            <span class="keyword">break</span>;</span><br><span class="line">                        <span class="keyword">case</span> Shapes.FANG:          <span class="comment">//如果是方形</span></span><br><span class="line">                            <span class="comment">//计算坐标，让鼠标处于图形的中间位置</span></span><br><span class="line">                            <span class="keyword">int</span> fangX = e.getX() - shape.getWidth() / <span class="number">2</span>;</span><br><span class="line">                            <span class="keyword">int</span> fangY = e.getY() - shape.getHeigth() / <span class="number">2</span>;</span><br><span class="line">                            <span class="comment">//创建方形图形，并指定坐标和宽高</span></span><br><span class="line">                            Rectangle2D fang = <span class="keyword">new</span> Rectangle2D.Double(fangX, fangY, shape.getWidth(), shape.getHeigth());</span><br><span class="line">                            g.draw(fang);</span><br><span class="line">                            <span class="keyword">break</span>;</span><br><span class="line">                    &#125;</span><br><span class="line">                    canvas.repaint();</span><br><span class="line">                    drawShape = <span class="keyword">false</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">        strokeButton1.addActionListener(<span class="keyword">new</span> ActionListener() &#123;   <span class="comment">//细线按钮添加动作监听</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">actionPerformed</span><span class="params">(<span class="keyword">final</span> ActionEvent arg0)</span> </span>&#123; <span class="comment">//单击时</span></span><br><span class="line">                <span class="comment">//声明画笔的属性，粗细为1像素，线条末端无修饰，折线处呈尖角</span></span><br><span class="line">                BasicStroke bs = <span class="keyword">new</span> BasicStroke(<span class="number">1</span>, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER);</span><br><span class="line">                g.setStroke(bs);  <span class="comment">//画图工具使用此画笔</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">        strokeButton2.addActionListener(<span class="keyword">new</span> ActionListener() &#123;  <span class="comment">//粗线按钮动作监听</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">actionPerformed</span><span class="params">(<span class="keyword">final</span> ActionEvent arg0)</span> </span>&#123;</span><br><span class="line">                <span class="comment">//声明画笔的属性，粗细为2像素，线条末端无修饰，折线处呈尖角</span></span><br><span class="line">                BasicStroke bs = <span class="keyword">new</span> BasicStroke(<span class="number">2</span>, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER);</span><br><span class="line">                g.setStroke(bs);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">        strokeButton3.addActionListener(<span class="keyword">new</span> ActionListener() &#123;</span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">actionPerformed</span><span class="params">(<span class="keyword">final</span> ActionEvent arg0)</span> </span>&#123;</span><br><span class="line">                <span class="comment">//声明画笔的属性，粗细为4像素，线条末端无修饰，折线处呈尖角</span></span><br><span class="line">                BasicStroke bs = <span class="keyword">new</span> BasicStroke(<span class="number">4</span>, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER);</span><br><span class="line">                g.setStroke(bs);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">        backgroundButton.addActionListener(<span class="keyword">new</span> ActionListener() &#123;  <span class="comment">//背景颜色按钮添加动作监听</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">actionPerformed</span><span class="params">(<span class="keyword">final</span> ActionEvent arg0)</span> </span>&#123; <span class="comment">//单击时</span></span><br><span class="line">                <span class="comment">//打开颜色选择对话框，参数依次为：父窗体、标题、默认选中的颜色（青色）</span></span><br><span class="line">                Color bgColor = JColorChooser.showDialog(DrawPictureFrame.<span class="keyword">this</span>, <span class="string">"选择颜色对话框"</span>, Color.CYAN);</span><br><span class="line">                <span class="keyword">if</span> (bgColor != <span class="keyword">null</span>) &#123;</span><br><span class="line">                    backgroundColor = bgColor;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="comment">//背景色按钮也更换为这种背景色</span></span><br><span class="line">                backgroundButton.setBackground(backgroundColor);</span><br><span class="line">                g.setColor(backgroundColor);  <span class="comment">//绘图工具使用背景色</span></span><br><span class="line">                g.fillRect(<span class="number">0</span>, <span class="number">0</span>, <span class="number">570</span>, <span class="number">390</span>);  <span class="comment">//画一个背景颜色的方形填满整个画布</span></span><br><span class="line">                g.setColor(foreColor);  <span class="comment">//绘图工具使用前景色</span></span><br><span class="line">                canvas.repaint();</span><br><span class="line">                ;  <span class="comment">//更新画布</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">        foregroundButton.addActionListener(<span class="keyword">new</span> ActionListener() &#123; <span class="comment">//前景色颜色按钮添加动作监听</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">actionPerformed</span><span class="params">(<span class="keyword">final</span> ActionEvent arg0)</span> </span>&#123;</span><br><span class="line">                <span class="comment">//打开颜色选择对话框，参数依次为：父窗体、标题、默认选中的颜色（青色)</span></span><br><span class="line">                Color fColor = JColorChooser.showDialog(DrawPictureFrame.<span class="keyword">this</span>, <span class="string">"选择颜色对话框"</span>, Color.CYAN);</span><br><span class="line">                <span class="keyword">if</span> (fColor != <span class="keyword">null</span>) &#123;</span><br><span class="line">                    foreColor = fColor;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="comment">//前景色按钮的文字也更换为这种颜色</span></span><br><span class="line">                foregroundButton.setForeground(foreColor);</span><br><span class="line">                g.setColor(foreColor);  <span class="comment">//绘图工具使用前景色</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">        clearButton.addActionListener(<span class="keyword">new</span> ActionListener() &#123;  <span class="comment">//清除按钮添加动作监听</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">actionPerformed</span><span class="params">(<span class="keyword">final</span> ActionEvent arg0)</span> </span>&#123;</span><br><span class="line">                g.setColor(backgroundColor);  <span class="comment">//绘图工具使用背景色</span></span><br><span class="line">                g.fillRect(<span class="number">0</span>, <span class="number">0</span>, <span class="number">570</span>, <span class="number">390</span>);  <span class="comment">//画一个背景颜色的方形填满整个画布</span></span><br><span class="line">                g.setColor(foreColor);  <span class="comment">//绘图工具使用前景色</span></span><br><span class="line">                canvas.repaint(); <span class="comment">//更新画布</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">        eraserButton.addActionListener(<span class="keyword">new</span> ActionListener() &#123; <span class="comment">//橡皮按钮添加监听动作</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">actionPerformed</span><span class="params">(<span class="keyword">final</span> ActionEvent arg0)</span> </span>&#123;</span><br><span class="line">                <span class="keyword">if</span> (eraserButton.getText().equals(<span class="string">"橡皮"</span>)) &#123;</span><br><span class="line">                    rubber = <span class="keyword">true</span>;  <span class="comment">//设置1橡皮标识为true</span></span><br><span class="line">                    eraserButton.setText(<span class="string">"画图"</span>); <span class="comment">//改变按钮上显示的文本为画图</span></span><br><span class="line">                &#125; <span class="keyword">else</span> &#123; <span class="comment">//单击工具栏上的画图按钮，使用画笔</span></span><br><span class="line">                    rubber = <span class="keyword">false</span>;  <span class="comment">//设置橡皮表示为false</span></span><br><span class="line">                    eraserButton.setText(<span class="string">"橡皮"</span>); <span class="comment">//改变按钮上显示的文本为橡皮</span></span><br><span class="line">                    g.setColor(foreColor);  <span class="comment">//设置画图对象为前景色</span></span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">        shapeButton.addActionListener(<span class="keyword">new</span> ActionListener() &#123; <span class="comment">//图形按钮添加动作监听</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">actionPerformed</span><span class="params">(ActionEvent e)</span> </span>&#123;</span><br><span class="line">                ShapeWindow shapeWindow = <span class="keyword">new</span> ShapeWindow(DrawPictureFrame.<span class="keyword">this</span>);</span><br><span class="line">                <span class="keyword">int</span> shapeButtonWidth = shapeButton.getWidth(); <span class="comment">//获取图像按钮宽度</span></span><br><span class="line">                <span class="keyword">int</span> shapeWindowWidth = shapeWindow.getWidth(); <span class="comment">//获取图形按钮高度</span></span><br><span class="line">                <span class="keyword">int</span> shapeButtonX = shapeButton.getX(); <span class="comment">//获取图形按钮横坐标</span></span><br><span class="line">                <span class="keyword">int</span> shapeButtonY = shapeButton.getY(); <span class="comment">//获取图形按钮纵坐标</span></span><br><span class="line">                <span class="comment">//计算图形组件横坐标，让组件与“图形”按钮居中对齐</span></span><br><span class="line">                <span class="keyword">int</span> shapeWindowX = getX() + shapeButtonX - (shapeWindowWidth - shapeButtonWidth) / <span class="number">2</span>;</span><br><span class="line">                <span class="comment">//计算图形组件纵坐标，让组件显示在“图形”按钮下方</span></span><br><span class="line">                <span class="keyword">int</span> shapeWindowY = getY() + shapeButtonY + <span class="number">80</span>;</span><br><span class="line">                <span class="comment">//设置图形组件坐标位置</span></span><br><span class="line">                shapeWindow.setLocation(shapeWindowX, shapeWindowY);</span><br><span class="line">                shapeWindow.setVisible(<span class="keyword">true</span>);  <span class="comment">//图形组件可见</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">        saveButton.addActionListener(<span class="keyword">new</span> ActionListener() &#123;</span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">actionPerformed</span><span class="params">(<span class="keyword">final</span> ActionEvent arg0)</span> </span>&#123;</span><br><span class="line">                addWatermark(); <span class="comment">//添加水印</span></span><br><span class="line">                DrawImageUtil.saveImage(DrawPictureFrame.<span class="keyword">this</span>, image); <span class="comment">//打印图片</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">        exitMenuItem.addActionListener(<span class="keyword">new</span> ActionListener() &#123;</span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">actionPerformed</span><span class="params">(<span class="keyword">final</span> ActionEvent e)</span> </span>&#123;</span><br><span class="line">                System.exit(<span class="number">0</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">        eraserMenuItem.addActionListener(<span class="keyword">new</span> ActionListener() &#123;</span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">actionPerformed</span><span class="params">(<span class="keyword">final</span> ActionEvent e)</span> </span>&#123;</span><br><span class="line">                <span class="keyword">if</span> (eraserMenuItem.getText().equals(<span class="string">"橡皮"</span>)) &#123;</span><br><span class="line">                    rubber = <span class="keyword">true</span>;</span><br><span class="line">                    eraserMenuItem.setText(<span class="string">"画图"</span>);</span><br><span class="line">                    eraserButton.setText(<span class="string">"画图"</span>);</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    rubber = <span class="keyword">false</span>;</span><br><span class="line">                    eraserMenuItem.setText(<span class="string">"橡皮"</span>);</span><br><span class="line">                    eraserButton.setText(<span class="string">"橡皮"</span>);</span><br><span class="line">                    g.setColor(foreColor);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">        clearMenuItem.addActionListener(<span class="keyword">new</span> ActionListener() &#123;</span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">actionPerformed</span><span class="params">(<span class="keyword">final</span> ActionEvent e)</span> </span>&#123;</span><br><span class="line">                g.setColor(backgroundColor);</span><br><span class="line">                g.fillRect(<span class="number">0</span>, <span class="number">0</span>, <span class="number">570</span>, <span class="number">390</span>);</span><br><span class="line">                g.setColor(foreColor);</span><br><span class="line">                canvas.repaint();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">        strokeMenuItem1.addActionListener(<span class="keyword">new</span> ActionListener() &#123;</span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">actionPerformed</span><span class="params">(<span class="keyword">final</span> ActionEvent e)</span> </span>&#123;</span><br><span class="line">                BasicStroke bs = <span class="keyword">new</span> BasicStroke(<span class="number">1</span>, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER);</span><br><span class="line">                g.setStroke(bs);</span><br><span class="line">                strokeButton1.setSelected(<span class="keyword">true</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">        strokeMenuItem2.addActionListener(<span class="keyword">new</span> ActionListener() &#123;</span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">actionPerformed</span><span class="params">(<span class="keyword">final</span> ActionEvent e)</span> </span>&#123;</span><br><span class="line">                BasicStroke bs = <span class="keyword">new</span> BasicStroke(<span class="number">2</span>, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER);</span><br><span class="line">                g.setStroke(bs);</span><br><span class="line">                strokeButton2.setSelected(<span class="keyword">true</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">        strokeMenuItem3.addActionListener(<span class="keyword">new</span> ActionListener() &#123;</span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">actionPerformed</span><span class="params">(<span class="keyword">final</span> ActionEvent e)</span> </span>&#123;</span><br><span class="line">                BasicStroke bs = <span class="keyword">new</span> BasicStroke(<span class="number">4</span>, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER);</span><br><span class="line">                g.setStroke(bs);</span><br><span class="line">                strokeButton3.setSelected(<span class="keyword">true</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">        foregroundMenuItem.addActionListener(<span class="keyword">new</span> ActionListener() &#123;</span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">actionPerformed</span><span class="params">(<span class="keyword">final</span> ActionEvent e)</span> </span>&#123;</span><br><span class="line">                Color fColor = JColorChooser.showDialog(DrawPictureFrame.<span class="keyword">this</span>, <span class="string">"选择颜色对话框"</span>, Color.CYAN);</span><br><span class="line">                <span class="keyword">if</span> (fColor != <span class="keyword">null</span>) &#123;</span><br><span class="line">                    foreColor = fColor;</span><br><span class="line">                &#125;</span><br><span class="line">                foregroundButton.setForeground(foreColor);</span><br><span class="line">                g.setColor(foreColor);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">        backgroundMenuItem.addActionListener(<span class="keyword">new</span> ActionListener() &#123;</span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">actionPerformed</span><span class="params">(<span class="keyword">final</span> ActionEvent e)</span> </span>&#123;</span><br><span class="line">                Color bgColor = JColorChooser.showDialog(DrawPictureFrame.<span class="keyword">this</span>, <span class="string">"选择颜色对话框"</span>, Color.CYAN);</span><br><span class="line">                <span class="keyword">if</span> (bgColor != <span class="keyword">null</span>) &#123;</span><br><span class="line">                    backgroundButton.setBackground(backgroundColor);</span><br><span class="line">                    g.setColor(backgroundColor);</span><br><span class="line">                    g.fillRect(<span class="number">0</span>, <span class="number">0</span>, <span class="number">570</span>, <span class="number">390</span>);</span><br><span class="line">                    g.setColor(foreColor);</span><br><span class="line">                    canvas.repaint();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">        saveMenuItem.addActionListener(<span class="keyword">new</span> ActionListener() &#123;</span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">actionPerformed</span><span class="params">(ActionEvent e)</span> </span>&#123;</span><br><span class="line">                addWatermark(); <span class="comment">//添加水印</span></span><br><span class="line">                DrawImageUtil.saveImage(DrawPictureFrame.<span class="keyword">this</span>, image);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">        shuiyinMenuItem.addActionListener(<span class="keyword">new</span> ActionListener() &#123;</span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">actionPerformed</span><span class="params">(ActionEvent e)</span> </span>&#123;</span><br><span class="line">                shuiyin = JOptionPane.showInputDialog(DrawPictureFrame.<span class="keyword">this</span>, <span class="string">"你想添加什么水印？"</span>);</span><br><span class="line">                <span class="keyword">if</span> (<span class="keyword">null</span> == shuiyin) &#123;</span><br><span class="line">                    shuiyin = <span class="string">""</span>;</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    setTitle(<span class="string">"画图程序(水印内容:["</span> + shuiyin + <span class="string">"])"</span>);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">        showPicButton.addActionListener(<span class="keyword">new</span> ActionListener() &#123;</span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">actionPerformed</span><span class="params">(ActionEvent e)</span> </span>&#123;</span><br><span class="line">                <span class="keyword">boolean</span> isVisible = pictureWindow.isVisible();              <span class="comment">//获取简笔画展示窗口可见状态</span></span><br><span class="line">                <span class="keyword">if</span> (isVisible)&#123;</span><br><span class="line">                    showPicButton.setText(<span class="string">"展开简笔画"</span>);</span><br><span class="line">                    pictureWindow.setVisible(<span class="keyword">false</span>);</span><br><span class="line">                &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">                    showPicButton.setText(<span class="string">"隐藏简笔画"</span>);</span><br><span class="line">                    <span class="comment">//重新指定简笔画展示窗口的显示位置</span></span><br><span class="line">                    <span class="comment">//横坐标=主窗体横坐标-简笔画窗体宽度-5</span></span><br><span class="line">                    <span class="comment">//纵坐标=主窗体纵坐标</span></span><br><span class="line">                    pictureWindow.setLocation(getX() - pictureWindow.getWidth() - <span class="number">5</span>, getY());</span><br><span class="line">                    pictureWindow.setVisible(<span class="keyword">true</span>);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">    * 恢复展开简笔画按钮的文本内容，此方法供和、简笔画面板的“隐藏”按钮调用</span></span><br><span class="line"><span class="comment">    * */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">initShowPicButton</span><span class="params">()</span></span>&#123;</span><br><span class="line">        showPicButton.setText(<span class="string">"展开简笔画"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">    * 添加水印</span></span><br><span class="line"><span class="comment">    * */</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">addWatermark</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (!<span class="string">""</span>.equals(shuiyin.trim()))&#123;                        <span class="comment">//如果水印字段不是空字符串</span></span><br><span class="line">            g.rotate(Math.toRadians(-<span class="number">30</span>));                      <span class="comment">//将图片旋转-30弧度</span></span><br><span class="line">            Font font = <span class="keyword">new</span> Font(<span class="string">"楷体"</span>, Font.BOLD, <span class="number">72</span>);      <span class="comment">//设置字体</span></span><br><span class="line">            g.setFont(font);                                              <span class="comment">//载入字体</span></span><br><span class="line">            g.setColor(Color.GRAY);                                       <span class="comment">//使用灰色</span></span><br><span class="line">            AlphaComposite alpha = AlphaComposite.SrcOver.derive(<span class="number">0.4f</span>);   <span class="comment">//设置透明效果</span></span><br><span class="line">            g.setComposite(alpha);                                        <span class="comment">//使用透明效果</span></span><br><span class="line">            g.drawString(shuiyin, <span class="number">150</span>, <span class="number">500</span>);                        <span class="comment">//绘制文字</span></span><br><span class="line">            canvas.repaint();                                              <span class="comment">//面板重绘</span></span><br><span class="line">            g.rotate(Math.toRadians(<span class="number">30</span>));                                  <span class="comment">//将旋转的图片再转回来</span></span><br><span class="line">            alpha = AlphaComposite.SrcOver.derive(<span class="number">1f</span>);                     <span class="comment">//不透明效果</span></span><br><span class="line">            g.setColor(foreColor);                                          <span class="comment">//画笔恢复之前颜色</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">    * FrameGetShape接口实现类，用于获得图形空间返回被选中的图形</span></span><br><span class="line"><span class="comment">    * */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">getShape</span><span class="params">(Shapes shape)</span></span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.shape = shape; <span class="comment">//将返回图形对象赋给类的全局变量</span></span><br><span class="line">        drawShape = <span class="keyword">true</span>; <span class="comment">//画图形标识变量为true，说明现在鼠标画的是图形，而不是线条</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">    * 程序运行主方法</span></span><br><span class="line"><span class="comment">    *</span></span><br><span class="line"><span class="comment">    * @param args - 运行时的参数，本程序用不到*/</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>&#123;</span><br><span class="line">        DrawPictureFrame frame = <span class="keyword">new</span> DrawPictureFrame();    <span class="comment">//创建窗体对象</span></span><br><span class="line">        frame.setVisible(<span class="keyword">true</span>);           <span class="comment">//让窗体可见</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>以上的代码均详细的写了注释，便于理解和阅读</p>
+<h2>DrawPictureCanvas.java</h2>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.mr.draw;</span><br><span class="line"><span class="keyword">import</span> java.awt.Canvas;</span><br><span class="line"><span class="keyword">import</span> java.awt.Graphics;</span><br><span class="line"><span class="keyword">import</span> java.awt.Image;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">* 简笔画展示窗体</span></span><br><span class="line"><span class="comment">**/</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DrawPictureCanvas</span> <span class="keyword">extends</span> <span class="title">Canvas</span></span>&#123;</span><br><span class="line">    <span class="keyword">private</span> Image image = <span class="keyword">null</span>;                         <span class="comment">//创建画板中展示的图片对象</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">/*设置画板中的图片</span></span><br><span class="line"><span class="comment">    *</span></span><br><span class="line"><span class="comment">    * @param image - 画板中展示的图片对象*/</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setImage</span><span class="params">(Image image)</span></span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.image = image;                             <span class="comment">//为成员变量赋值</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">* 重写paint()方法，在画布上绘制图像</span></span><br><span class="line"><span class="comment">* */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">paint</span><span class="params">(Graphics g)</span></span>&#123;</span><br><span class="line">        g.drawImage(image, <span class="number">0</span>, <span class="number">0</span>, <span class="keyword">null</span>);  <span class="comment">//在画布上绘制图像</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">    * 重写update()方法，这样可以解决屏幕闪烁的问题*/</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">update</span><span class="params">(Graphics g)</span></span>&#123;</span><br><span class="line">        paint(g);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2>PictureWindow.java</h2>
+
+<p>该类主要是实现简笔画窗口功能。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.mr.draw;</span><br><span class="line"><span class="keyword">import</span> java.awt.BorderLayout;</span><br><span class="line"><span class="keyword">import</span> java.awt.Container;</span><br><span class="line"><span class="keyword">import</span> java.awt.FlowLayout;</span><br><span class="line"><span class="keyword">import</span> java.awt.Image;</span><br><span class="line"><span class="keyword">import</span> java.awt.event.ActionEvent;</span><br><span class="line"><span class="keyword">import</span> java.awt.event.ActionListener;</span><br><span class="line"><span class="keyword">import</span> java.io.File;</span><br><span class="line"><span class="keyword">import</span> javax.swing.ImageIcon;</span><br><span class="line"><span class="keyword">import</span> javax.swing.JButton;</span><br><span class="line"><span class="keyword">import</span> javax.swing.JPanel;</span><br><span class="line"><span class="keyword">import</span> javax.swing.JWindow;</span><br><span class="line"><span class="keyword">import</span> com.mr.util.BackgroundPanel;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">PictureWindow</span> <span class="keyword">extends</span> <span class="title">JWindow</span></span>&#123;</span><br><span class="line">    <span class="keyword">private</span> JButton changeButton;                               <span class="comment">//更换图片按钮</span></span><br><span class="line">    <span class="keyword">private</span> JButton hiddenButton;                               <span class="comment">//隐藏按钮</span></span><br><span class="line">    <span class="keyword">private</span> BackgroundPanel centerPanel;                        <span class="comment">//展示图片的带背景面板</span></span><br><span class="line">    File list[];                                                <span class="comment">//图片文件数组</span></span><br><span class="line">    <span class="keyword">int</span> index;                                                  <span class="comment">//当前选中文件索引</span></span><br><span class="line">    DrawPictureFrame frame;                                     <span class="comment">//父窗体</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">    * 构造方法</span></span><br><span class="line"><span class="comment">    * @param frame - 父窗体</span></span><br><span class="line"><span class="comment">    * */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">PictureWindow</span><span class="params">(DrawPictureFrame frame)</span></span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.frame = frame;                                      <span class="comment">//构造参数的值赋给父窗体</span></span><br><span class="line">        setSize(<span class="number">400</span>, <span class="number">460</span>);                         <span class="comment">//设置窗体宽高</span></span><br><span class="line">        init();                                             <span class="comment">//初始化窗体组件</span></span><br><span class="line">        addListener();                                      <span class="comment">//给组件添加监听</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">    * 组件初始化方法</span></span><br><span class="line"><span class="comment">    * */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">init</span><span class="params">()</span></span>&#123;</span><br><span class="line">        Container c = getContentPane();                     <span class="comment">//获取窗体主容器</span></span><br><span class="line">        File dir = <span class="keyword">new</span> File(<span class="string">"src/img/picture"</span>);  <span class="comment">//创建简笔画素材文件夹对象</span></span><br><span class="line">        list = dir.listFiles();                             <span class="comment">//获取文件夹里的所有文件</span></span><br><span class="line">        <span class="comment">//初始化背景面板，使用图片文件夹里的第一张简笔画</span></span><br><span class="line">        centerPanel = <span class="keyword">new</span> BackgroundPanel(getListImage());</span><br><span class="line">        c.add(centerPanel, BorderLayout.CENTER);            <span class="comment">//背景面板放到主容器中部</span></span><br><span class="line">        FlowLayout flow = <span class="keyword">new</span> FlowLayout(FlowLayout.RIGHT); <span class="comment">//创建右对齐的流布局</span></span><br><span class="line">        flow.setHgap(<span class="number">20</span>);                                   <span class="comment">//水平间隔20像素</span></span><br><span class="line">        JPanel southPanel = <span class="keyword">new</span> JPanel();                   <span class="comment">//创建南部面板</span></span><br><span class="line">        southPanel.setLayout(flow);                         <span class="comment">//南部面板使用刚才创建好的流布局</span></span><br><span class="line">        changeButton = <span class="keyword">new</span> JButton(<span class="string">"更换图片"</span>);         <span class="comment">//实例化“更换图片”按钮</span></span><br><span class="line">        southPanel.add(changeButton);                       <span class="comment">//南部面板添加按钮</span></span><br><span class="line">        hiddenButton = <span class="keyword">new</span> JButton(<span class="string">"隐藏"</span>);</span><br><span class="line">        southPanel.add(hiddenButton);</span><br><span class="line">        c.add(southPanel, BorderLayout.SOUTH);              <span class="comment">//南部面板放到主容器的南部位置</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">    * 添加监听</span></span><br><span class="line"><span class="comment">    * */</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">addListener</span><span class="params">()</span></span>&#123;</span><br><span class="line">        hiddenButton.addActionListener(<span class="keyword">new</span> ActionListener() &#123;       <span class="comment">//隐藏按钮添加动作监听</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">actionPerformed</span><span class="params">(ActionEvent e)</span> </span>&#123;</span><br><span class="line">                setVisible(<span class="keyword">false</span>);                                  <span class="comment">//本窗体不可见</span></span><br><span class="line">                frame.initShowPicButton();                          <span class="comment">//父窗体还原简笔画按钮的文本内容</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">        changeButton.addActionListener(<span class="keyword">new</span> ActionListener() &#123;</span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">actionPerformed</span><span class="params">(ActionEvent e)</span> </span>&#123;</span><br><span class="line">                centerPanel.setImage(getListImage());                 <span class="comment">//背景面板重新载入图片</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">    * 获取图片文件夹下的图片，每次调用此方法，都会获得不同的文件对象</span></span><br><span class="line"><span class="comment">    * @reutrn 返回文件对象</span></span><br><span class="line"><span class="comment">    * */</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> Image <span class="title">getListImage</span><span class="params">()</span></span>&#123;</span><br><span class="line">        String imgPath = list[index].getAbsolutePath();             <span class="comment">//获取当前索引下的图片文件路径</span></span><br><span class="line">        ImageIcon image = <span class="keyword">new</span> ImageIcon(imgPath);                   <span class="comment">//获取此图片文件的图标对象</span></span><br><span class="line">        index++;</span><br><span class="line">        <span class="keyword">if</span> (index &gt;= list.length)&#123;</span><br><span class="line">            index = <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> image.getImage();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>运行结果：</p>
+<img src="/2020/05/31/%E4%B8%80%E4%B8%AA%E7%94%BB%E6%9D%BF%E5%B0%8F%E9%A1%B9%E7%9B%AE/1.png">
+
+<p>其中需要使用的jar包在我的github中可以下载，</p>
+<p><a href="https://github.com/xiaoqianbaobao/Painttogether" target="_blank" rel="noopener">画板项目</a></p>
+
+      
+    </div>
+    <div class="article-footer">
+      <blockquote class="mt-2x">
+  <ul class="post-copyright list-unstyled">
+    
+    <li class="post-copyright-link hidden-xs">
+      <strong>本文链接：</strong>
+      <a href="http://xiaoqianbaobao.github.io/2020/05/31/%E4%B8%80%E4%B8%AA%E7%94%BB%E6%9D%BF%E5%B0%8F%E9%A1%B9%E7%9B%AE/" title="一个画板小项目" target="_blank" rel="external">http://xiaoqianbaobao.github.io/2020/05/31/%E4%B8%80%E4%B8%AA%E7%94%BB%E6%9D%BF%E5%B0%8F%E9%A1%B9%E7%9B%AE/</a>
+    </li>
+    
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong> 本博客所有文章除特别声明外，均采用 <a href="http://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank" rel="external">CC BY 4.0 CN协议</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+</blockquote>
+
+
+<div class="panel panel-default panel-badger">
+  <div class="panel-body">
+    <figure class="media">
+      <div class="media-left">
+        <a href="https://github.com/xiaoqianbaobao" target="_blank" class="img-burn thumb-sm visible-lg">
+          <img src="/images/avatar.jpg" class="img-rounded w-full" alt="">
+        </a>
+      </div>
+      <div class="media-body">
+        <h3 class="media-heading"><a href="https://github.com/xiaoqianbaobao" target="_blank"><span class="text-dark">qian</span><small class="ml-1x">Dever</small></a></h3>
+        <div>A cute dever</div>
+      </div>
+    </figure>
+  </div>
+</div>
+
+
+    </div>
+  </article>
+  
+    
+  <section id="comments">
+  	
+      <div id="vcomments"></div>
+    
+  </section>
+
+
+  
+</div>
+
+  <nav class="bar bar-footer clearfix" data-stick-bottom>
+  <div class="bar-inner">
+  
+  <ul class="pager pull-left">
+    
+    <li class="prev">
+      <a href="/2020/05/31/%E6%9E%AA%E7%82%AE%E3%80%81%E7%97%85%E8%8F%8C%E4%B8%8E%E9%92%A2%E9%93%81/" title="枪炮、病菌与钢铁"><i class="icon icon-angle-left" aria-hidden="true"></i><span>&nbsp;&nbsp;上一篇</span></a>
+    </li>
+    
+    
+    <li class="next">
+      <a href="/2020/05/29/%E5%9F%BA%E4%BA%8EOpenCV%E7%9A%84%E8%BD%A6%E7%89%8C%E8%AF%86%E5%88%AB%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%AE%9E%E7%8E%B0-%E8%AE%BA%E6%96%87%E5%88%9D%E7%A8%BF/" title="基于OpenCV的车牌识别系统设计与实现-论文初稿"><span>下一篇&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+    </li>
+    
+    
+  </ul>
+  
+  
+  <!-- Button trigger modal -->
+  <button type="button" class="btn btn-fancy btn-donate pop-onhover bg-gradient-warning" data-toggle="modal" data-target="#donateModal"><span>赏</span></button>
+  <!-- <div class="wave-icon wave-icon-danger btn-donate" data-toggle="modal" data-target="#donateModal">
+    <div class="wave-circle"><span class="icon"><i class="icon icon-bill"></i></span></div>
+  </div> -->
+  
+  
+  <div class="bar-right">
+    
+    <div class="share-component" data-sites="weibo,qq,wechat,facebook,twitter" data-mobile-sites="weibo,qq,qzone"></div>
+    
+  </div>
+  </div>
+</nav>
+  
+<!-- Modal -->
+<div class="modal modal-center modal-small modal-xs-full fade" id="donateModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content donate">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <div class="modal-body">
+        <div class="donate-box">
+          <div class="donate-head">
+            <p>感谢您的支持，我会继续努力的!</p>
+          </div>
+          <div class="tab-content">
+            <div role="tabpanel" class="tab-pane fade active in" id="alipay">
+              <div class="donate-payimg">
+                <img src="/images/donate/alipayimg.jpg" alt="扫码支持" title="扫一扫" />
+              </div>
+              <p class="text-muted mv">扫码打赏，你说多少就多少</p>
+              <p class="text-grey">打开支付宝扫一扫，即可进行扫码打赏哦</p>
+            </div>
+            <div role="tabpanel" class="tab-pane fade" id="wechatpay">
+              <div class="donate-payimg">
+                <img src="/images/donate/wechatpayimg.jpg" alt="扫码支持" title="扫一扫" />
+              </div>
+              <p class="text-muted mv">扫码打赏，你说多少就多少</p>
+              <p class="text-grey">打开微信扫一扫，即可进行扫码打赏哦</p>
+            </div>
+          </div>
+          <div class="donate-footer">
+            <ul class="nav nav-tabs nav-justified" role="tablist">
+              <li role="presentation" class="active">
+                <a href="#alipay" id="alipay-tab" role="tab" data-toggle="tab" aria-controls="alipay" aria-expanded="true"><i class="icon icon-alipay"></i> 支付宝</a>
+              </li>
+              <li role="presentation" class="">
+                <a href="#wechatpay" role="tab" id="wechatpay-tab" data-toggle="tab" aria-controls="wechatpay" aria-expanded="false"><i class="icon icon-wepay"></i> 微信支付</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+</main>
+
+  <footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+	
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/xiaoqianbaobao" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="http://weibo.com/大白1212大白" target="_blank" title="Weibo" data-toggle=tooltip data-placement=top><i class="icon icon-weibo"></i></a></li>
+        
+        <li><a href="https://twitter.com/naughty_qian" target="_blank" title="Twitter" data-toggle=tooltip data-placement=top><i class="icon icon-twitter"></i></a></li>
+        
+        <li><a href="/atom.xml" target="_blank" title="Rss" data-toggle=tooltip data-placement=top><i class="icon icon-rss"></i></a></li>
+        
+    </ul>
+
+    <div class="copyright">
+    	
+        &copy; 2020 Larnonudo chan
+        
+        <div class="publishby">
+        	Theme by <a href="https://github.com/cofess" target="_blank"> cofess </a>base on <a href="https://github.com/cofess/hexo-theme-pure" target="_blank">pure</a>.
+        </div>
+    </div>
+</footer>
+  <script src="//cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+<script>
+window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+
+<script src="/js/plugin.min.js"></script>
+
+
+<script src="/js/application.js"></script>
+
+
+    <script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+
+
+
+
+   
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+   
+    
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/valine"></script>
+  <script type="text/javascript">
+  var GUEST = ['nick', 'mail', 'link'];
+  var meta = 'nick,mail,link';
+  meta = meta.split(',').filter(function(item) {
+    return GUEST.indexOf(item) > -1;
+  });
+  new Valine({
+    el: '#vcomments',
+    verify: true,
+    notify: true,
+    appId: 'iu0QRpyOTpkp8bd5ynEiG9uo-gzGzoHsz',
+    appKey: 'Bfq8Uozy2QytHVDsh8GmcecW',
+    placeholder: 'Just go go',
+    avatar: 'mm',
+    meta: meta,
+    pageSize: '10' || 10,
+    visitor: true
+  });
+  </script>
+
+     
+
+
+
+
+
+
+
+</body>
+</html>
