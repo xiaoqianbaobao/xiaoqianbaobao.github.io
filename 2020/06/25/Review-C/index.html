@@ -34,7 +34,7 @@
 <meta property="og:image" content="http://xiaoqianbaobao.github.io/2020/06/25/Review-C/6.png">
 <meta property="og:image" content="http://xiaoqianbaobao.github.io/2020/06/25/Review-C/7.png">
 <meta property="article:published_time" content="2020-06-25T13:58:07.000Z">
-<meta property="article:modified_time" content="2020-06-26T10:43:19.884Z">
+<meta property="article:modified_time" content="2020-06-26T14:28:15.701Z">
 <meta property="article:author" content="Larnonudo chan">
 <meta property="article:tag" content="C语言">
 <meta name="twitter:card" content="summary">
@@ -581,6 +581,11 @@ const到底修饰谁？谁才是不变的？<br>
 <br>
 
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="keyword">int</span>* <span class="keyword">pint_t</span>;  <span class="comment">//将 int* 类型 包装为 pint_t,则pint_t 现在是一个完整的原子类型</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">   </span><br><span class="line">    <span class="keyword">int</span> a  = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">const</span> <span class="keyword">pint_t</span> p1 = &amp;a;  <span class="comment">//同样，const跳过类型pint_t，修饰p1，指针p1本身是const</span></span><br><span class="line">    <span class="keyword">pint_t</span> <span class="keyword">const</span> p2 = &amp;a;  <span class="comment">//const 直接修饰p，同上</span></span><br><span class="line">   </span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2>参考文章</h2>
+
+<p><a href="https://www.cnblogs.com/lulipro/p/7460206.html" target="_blank" rel="noopener">c语言指针详解</a><br><br>《C Primer Plus》(第五版)中文版</p>
+
       
     </div>
     <div class="article-footer">
