@@ -25,13 +25,13 @@
 <meta property="og:site_name" content="Shengqian&#39;s Blog">
 <meta property="og:description" content="static,this,private关键字用法">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://xiaoqianbaobao.github.io/.io//java.dib">
+<meta property="og:image" content="http://xiaoqianbaobao.github.io/2018/04/25/Java-%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86%E8%AE%B0%E5%BD%95/java.dib">
 <meta property="article:published_time" content="2018-04-25T00:45:30.000Z">
 <meta property="article:modified_time" content="2018-04-25T00:50:17.035Z">
 <meta property="article:author" content="Larnonudo chan">
 <meta property="article:tag" content="Java">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://xiaoqianbaobao.github.io/.io//java.dib">
+<meta name="twitter:image" content="http://xiaoqianbaobao.github.io/2018/04/25/Java-%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86%E8%AE%B0%E5%BD%95/java.dib">
   <!-- Canonical links -->
   <link rel="canonical" href="http://xiaoqianbaobao.github.io/2018/04/25/Java-%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86%E8%AE%B0%E5%BD%95/index.html">
   
@@ -421,7 +421,7 @@
 <p>思考题：构造方法中可不可以有return语句呢?<br>可以。而是我们写成这个样子就OK了：return;<br>其实，在任何的void类型的方法的最后你都可以写上：return;<br>(3)构造方法的注意事项<br>A:如果我们没写构造方法，系统将提供一个默认的无参构造方法<br>B:如果我们给出了构造方法，系统将不再提供默认构造方法<br>如果这个时候，我们要使用无参构造方法，就必须自己给出。<br>推荐：永远手动自己给出无参构造方法。<br>(4)给成员变量赋值的方式<br>A:setXxx()<br>B:带参构造方法</p>
 <p>8:static关键字(理解)</p>
 <p>用static修饰的变量是全局变量，且static变量不能在方法中定义。</p>
-<p>(1)静态的意思。可以修饰成员变量和成员方法。<br>(2)静态的特点：<br>A:随着类的加载而加载<br>B:优先与对象存在<br>C:被类的所有对象共享<br>这其实也是我们判断该不该使用静态的依据。<br>D:可以通过类名调用<br>既可以通过对象名调用，也可以通过类名调用，建议通过类名调用。<br>(3)静态的内存图<br>静态的内容在方法区的静态区<br>(4)静态的注意事项；<br>A:在静态方法中没有this对象<br>B:静态只能访问静态(代码测试过)<br>(5)静态变量和成员变量的区别<br>A:所属不同<br>静态变量：属于类，类变量<br>成员变量：属于对象，对象变量，实例变量<br>B:内存位置不同<br>静态变量：方法区的静态区<br>成员变量：堆内存<br>C:生命周期不同<br>静态变量：静态变量是随着类的加载而加载，随着类的消失而消失<br>成员变量：成员变量是随着对象的创建而存在，随着对象的消失而消失<br>D:调用不同<br>静态变量：可以通过对象名调用，也可以通过类名调用<br>成员变量：只能通过对象名调用<br>(6)main方法是静态的<br>public:权限最大<br>static:不用创建对象调用<br>void:返回值给jvm没有意义<br>main:就是一个常见的名称。<br>String[] args:可以接收数据，提供程序的灵活性<br><img src="/.io//java.dib" alt="相关图片?"></p>
+<p>(1)静态的意思。可以修饰成员变量和成员方法。<br>(2)静态的特点：<br>A:随着类的加载而加载<br>B:优先与对象存在<br>C:被类的所有对象共享<br>这其实也是我们判断该不该使用静态的依据。<br>D:可以通过类名调用<br>既可以通过对象名调用，也可以通过类名调用，建议通过类名调用。<br>(3)静态的内存图<br>静态的内容在方法区的静态区<br>(4)静态的注意事项；<br>A:在静态方法中没有this对象<br>B:静态只能访问静态(代码测试过)<br>(5)静态变量和成员变量的区别<br>A:所属不同<br>静态变量：属于类，类变量<br>成员变量：属于对象，对象变量，实例变量<br>B:内存位置不同<br>静态变量：方法区的静态区<br>成员变量：堆内存<br>C:生命周期不同<br>静态变量：静态变量是随着类的加载而加载，随着类的消失而消失<br>成员变量：成员变量是随着对象的创建而存在，随着对象的消失而消失<br>D:调用不同<br>静态变量：可以通过对象名调用，也可以通过类名调用<br>成员变量：只能通过对象名调用<br>(6)main方法是静态的<br>public:权限最大<br>static:不用创建对象调用<br>void:返回值给jvm没有意义<br>main:就是一个常见的名称。<br>String[] args:可以接收数据，提供程序的灵活性<br><img src="/2018/04/25/Java-%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86%E8%AE%B0%E5%BD%95/java.dib" alt="相关图片?"></p>
 
       
     </div>

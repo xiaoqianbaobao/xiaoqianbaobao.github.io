@@ -25,17 +25,17 @@
 <meta property="og:site_name" content="Shengqian&#39;s Blog">
 <meta property="og:description" content="如何使用shadowsocks实现科学上网">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://xiaoqianbaobao.github.io/.io//1.png">
-<meta property="og:image" content="http://xiaoqianbaobao.github.io/.io//2.jpg">
-<meta property="og:image" content="http://xiaoqianbaobao.github.io/.io//3.jpg">
-<meta property="og:image" content="http://xiaoqianbaobao.github.io/.io//4.jpg">
-<meta property="og:image" content="http://xiaoqianbaobao.github.io/.io//5.png">
+<meta property="og:image" content="http://xiaoqianbaobao.github.io/2018/08/05/shadowsocks%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%90%AD%E5%BB%BA%E6%95%99%E7%A8%8B/1.png">
+<meta property="og:image" content="http://xiaoqianbaobao.github.io/2018/08/05/shadowsocks%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%90%AD%E5%BB%BA%E6%95%99%E7%A8%8B/2.jpg">
+<meta property="og:image" content="http://xiaoqianbaobao.github.io/2018/08/05/shadowsocks%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%90%AD%E5%BB%BA%E6%95%99%E7%A8%8B/3.jpg">
+<meta property="og:image" content="http://xiaoqianbaobao.github.io/2018/08/05/shadowsocks%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%90%AD%E5%BB%BA%E6%95%99%E7%A8%8B/4.jpg">
+<meta property="og:image" content="http://xiaoqianbaobao.github.io/2018/08/05/shadowsocks%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%90%AD%E5%BB%BA%E6%95%99%E7%A8%8B/5.png">
 <meta property="article:published_time" content="2018-08-05T00:28:07.000Z">
 <meta property="article:modified_time" content="2019-01-01T14:10:52.535Z">
 <meta property="article:author" content="Larnonudo chan">
 <meta property="article:tag" content="网络">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://xiaoqianbaobao.github.io/.io//1.png">
+<meta name="twitter:image" content="http://xiaoqianbaobao.github.io/2018/08/05/shadowsocks%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%90%AD%E5%BB%BA%E6%95%99%E7%A8%8B/1.png">
   <!-- Canonical links -->
   <link rel="canonical" href="http://xiaoqianbaobao.github.io/2018/08/05/shadowsocks%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%90%AD%E5%BB%BA%E6%95%99%E7%A8%8B/index.html">
   
@@ -431,10 +431,10 @@ shadowsocks搭建科学上网的教程。
 <h2>配置VPS</h2>
 选择左侧栏的Servers：Server Location是Los Angels和Tokyo的比较好；Server Type选择Ubuntu（当然也可以不选择Ubuntu，本教程是基于Ubuntu的）,Server Size根据需求选择。其他都可以默认，然后选择Deploy Now就可以了。
 具体如下图所示：
-<img src="/.io//1.png">
-<img src="/.io//2.jpg">
-<img src="/.io//3.jpg">
-<img src="/.io//4.jpg">
+<img src="/2018/08/05/shadowsocks%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%90%AD%E5%BB%BA%E6%95%99%E7%A8%8B/1.png">
+<img src="/2018/08/05/shadowsocks%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%90%AD%E5%BB%BA%E6%95%99%E7%A8%8B/2.jpg">
+<img src="/2018/08/05/shadowsocks%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%90%AD%E5%BB%BA%E6%95%99%E7%A8%8B/3.jpg">
+<img src="/2018/08/05/shadowsocks%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%90%AD%E5%BB%BA%E6%95%99%E7%A8%8B/4.jpg">
 
 <h2>查看相关信息</h2>
 配置完服务器后，在Servers就可以看到自己服务的信息了，包括我们需要用到的IP和Password。得到IP和密码就可以用XShell进行连接了。
@@ -538,7 +538,7 @@ BBR是Google开源的一套内核加速算法，可以让你搭建的shadowsocks
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">net.ipv4.tcp_available_congestion_control &#x3D; bbr cubic reno</span><br></pre></td></tr></table></figure>
 
 <p>后面有bbr就说明安装成功了</p>
-<p>更新bbr加速：<br>···<br>echo “net.core.default_qdisc=fq” &gt;&gt; /etc/sysctl.conf<br>echo “net.ipv4.tcp_congestion_control=bbr” &gt;&gt; /etc/sysctl.conf<br>sysctl -p<br>sysctl net.ipv4.tcp_available_congestion_control<br>lsmod | grep bbr<br>···<br>，在shell中运行该段代码即可<br>这样，我们就可以飞一样的享受yutube蓝光的感受了，来感受一把吧:<br><a href="http://www.youtube.com" target="_blank" rel="noopener">Yutube</a><br>来看一下速度：<br><img src="/.io//5.png"></p>
+<p>更新bbr加速：<br>···<br>echo “net.core.default_qdisc=fq” &gt;&gt; /etc/sysctl.conf<br>echo “net.ipv4.tcp_congestion_control=bbr” &gt;&gt; /etc/sysctl.conf<br>sysctl -p<br>sysctl net.ipv4.tcp_available_congestion_control<br>lsmod | grep bbr<br>···<br>，在shell中运行该段代码即可<br>这样，我们就可以飞一样的享受yutube蓝光的感受了，来感受一把吧:<br><a href="http://www.youtube.com" target="_blank" rel="noopener">Yutube</a><br>来看一下速度：<br><img src="/2018/08/05/shadowsocks%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%90%AD%E5%BB%BA%E6%95%99%E7%A8%8B/5.png"></p>
 </a></body></html>
       
     </div>

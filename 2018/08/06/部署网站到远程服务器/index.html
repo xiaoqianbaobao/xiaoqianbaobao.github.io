@@ -25,13 +25,13 @@
 <meta property="og:site_name" content="Shengqian&#39;s Blog">
 <meta property="og:description" content="将网站部署到远程服务器">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://xiaoqianbaobao.github.io/.io//nginx.png">
+<meta property="og:image" content="http://xiaoqianbaobao.github.io/2018/08/06/%E9%83%A8%E7%BD%B2%E7%BD%91%E7%AB%99%E5%88%B0%E8%BF%9C%E7%A8%8B%E6%9C%8D%E5%8A%A1%E5%99%A8/nginx.png">
 <meta property="article:published_time" content="2018-08-06T12:38:51.000Z">
 <meta property="article:modified_time" content="2018-08-06T17:32:38.327Z">
 <meta property="article:author" content="Larnonudo chan">
 <meta property="article:tag" content="网页部署">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://xiaoqianbaobao.github.io/.io//nginx.png">
+<meta name="twitter:image" content="http://xiaoqianbaobao.github.io/2018/08/06/%E9%83%A8%E7%BD%B2%E7%BD%91%E7%AB%99%E5%88%B0%E8%BF%9C%E7%A8%8B%E6%9C%8D%E5%8A%A1%E5%99%A8/nginx.png">
   <!-- Canonical links -->
   <link rel="canonical" href="http://xiaoqianbaobao.github.io/2018/08/06/%E9%83%A8%E7%BD%B2%E7%BD%91%E7%AB%99%E5%88%B0%E8%BF%9C%E7%A8%8B%E6%9C%8D%E5%8A%A1%E5%99%A8/index.html">
   
@@ -427,7 +427,7 @@ so，现在我们需要远程控制云主机，我这里选择的是ubuntu的服
 <a href="https://zh.wikipedia.org/zh-hans/Nginx" target="_blank" rel="noopener">什么是nginx</a>,如何安装nginx呢，不急哈，我慢慢写来：
 首先安装nginx:(全程root权限)
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt-get install nginx</span><br></pre></td></tr></table></figure>
-安装过程就像电视里黑客那样，命令行自己滚啊滚啊的，直到光标等在那里就说明结束了。OK,nginx安装好了，咱就先不管了，我们来把本地的网站文件上传到远程服务器上去，这个时候在windows上面需要拥戴一个软件叫: WinSCP，<a href="https://winscp.net/" target="_blank" rel="noopener">点击下载WinSCP</a>，和Xshell一样，也要远程连接到我们的服务器，因为上传文件比较方便，不需要使用git和码云来上传本地文件，对于像我这样的菜鸟很容易就能做到。安装完nginx后，在浏览器中输入云主机的ip地址，看到如图所示的样子，就安装成功啦<img src="/.io//nginx.png">
+安装过程就像电视里黑客那样，命令行自己滚啊滚啊的，直到光标等在那里就说明结束了。OK,nginx安装好了，咱就先不管了，我们来把本地的网站文件上传到远程服务器上去，这个时候在windows上面需要拥戴一个软件叫: WinSCP，<a href="https://winscp.net/" target="_blank" rel="noopener">点击下载WinSCP</a>，和Xshell一样，也要远程连接到我们的服务器，因为上传文件比较方便，不需要使用git和码云来上传本地文件，对于像我这样的菜鸟很容易就能做到。安装完nginx后，在浏览器中输入云主机的ip地址，看到如图所示的样子，就安装成功啦<img src="/2018/08/06/%E9%83%A8%E7%BD%B2%E7%BD%91%E7%AB%99%E5%88%B0%E8%BF%9C%E7%A8%8B%E6%9C%8D%E5%8A%A1%E5%99%A8/nginx.png">
 
 <h1>上传本地文件</h1>
 上传本地文件之前呢，我们要先在服务器上建立一个目录以存放我们的网站文件，在Xshell中

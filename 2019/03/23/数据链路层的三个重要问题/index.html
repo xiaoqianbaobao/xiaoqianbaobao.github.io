@@ -25,14 +25,14 @@
 <meta property="og:site_name" content="Shengqian&#39;s Blog">
 <meta property="og:description" content="数据链路层的三个重要问题：封装成帧，差错检测和可靠传输">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://xiaoqianbaobao.github.io/.io//a.jpg">
-<meta property="og:image" content="http://xiaoqianbaobao.github.io/.io//b.jpg">
+<meta property="og:image" content="http://xiaoqianbaobao.github.io/2019/03/23/%E6%95%B0%E6%8D%AE%E9%93%BE%E8%B7%AF%E5%B1%82%E7%9A%84%E4%B8%89%E4%B8%AA%E9%87%8D%E8%A6%81%E9%97%AE%E9%A2%98/a.jpg">
+<meta property="og:image" content="http://xiaoqianbaobao.github.io/2019/03/23/%E6%95%B0%E6%8D%AE%E9%93%BE%E8%B7%AF%E5%B1%82%E7%9A%84%E4%B8%89%E4%B8%AA%E9%87%8D%E8%A6%81%E9%97%AE%E9%A2%98/b.jpg">
 <meta property="article:published_time" content="2019-03-23T01:59:09.000Z">
 <meta property="article:modified_time" content="2019-03-23T02:11:39.567Z">
 <meta property="article:author" content="Larnonudo chan">
 <meta property="article:tag" content="学习小结">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://xiaoqianbaobao.github.io/.io//a.jpg">
+<meta name="twitter:image" content="http://xiaoqianbaobao.github.io/2019/03/23/%E6%95%B0%E6%8D%AE%E9%93%BE%E8%B7%AF%E5%B1%82%E7%9A%84%E4%B8%89%E4%B8%AA%E9%87%8D%E8%A6%81%E9%97%AE%E9%A2%98/a.jpg">
   <!-- Canonical links -->
   <link rel="canonical" href="http://xiaoqianbaobao.github.io/2019/03/23/%E6%95%B0%E6%8D%AE%E9%93%BE%E8%B7%AF%E5%B1%82%E7%9A%84%E4%B8%89%E4%B8%AA%E9%87%8D%E8%A6%81%E9%97%AE%E9%A2%98/index.html">
   
@@ -411,7 +411,7 @@
 </head><body>
 <h1>一. 封装成帧</h1>
 
-<pre><code>封装成帧（framing）就是在一段数据的前后分别添加首部和尾部，这样就构成了一个帧。接收端在收到物理层上交的比特流后，就能根据首部和尾部的标记，从比特流中识别帧的开始和结束。</code></pre><img src="/.io//a.jpg">
+<pre><code>封装成帧（framing）就是在一段数据的前后分别添加首部和尾部，这样就构成了一个帧。接收端在收到物理层上交的比特流后，就能根据首部和尾部的标记，从比特流中识别帧的开始和结束。</code></pre><img src="/2019/03/23/%E6%95%B0%E6%8D%AE%E9%93%BE%E8%B7%AF%E5%B1%82%E7%9A%84%E4%B8%89%E4%B8%AA%E9%87%8D%E8%A6%81%E9%97%AE%E9%A2%98/a.jpg">
 
 <p><font color="#ff0000">      首部和尾部的一个重要作用就是进行帧定界（即确定帧的界限）。此外，首部和尾部还包括许多必要的控制信息。</font></p>
 <pre><code>为了提高帧的传输效率，应当使帧的数据部分长度尽量大于首部和尾部的长度。最大传输单元MTU（Maximum Transfer Unit）：帧数据部分长度上限。
@@ -424,7 +424,7 @@
 
 <pre><code>当传送的帧是用文本文件组成的帧时（文本文件中的字都是从键盘上输入的），其数据部分显然不会出现像SOH或EOT这样的帧定界控制字符。可见不管从键盘上输入什么字符都可以放在这样的帧中传输过去，因此这样的传输就是透明传输。
 
-但当数据部分是非ASCII码的文本文件时（如二进制代码的计算机程序或者图像等），情况就不同了。如果数据中的某个字节的二进制代码恰好和SOH或EOT这种控制字符一样，数据链路层就好错误地“找到帧的边界”，把部分帧收下（误以为是个完整的帧），而把剩下的那部分数据丢弃（这部分找不到帧定界控制字符SOH）。这种情况就不是透明传输，因为当遇到书中碰巧出现字符“EOT”时就传不过去了，而其后面的数据因找不到“SOH”被接收端当做无效帧而丢弃。但实际上数据中出现的字符“EOT”并非控制字符而仅仅是二进制数据00000100 。</code></pre><img src="/.io//b.jpg">
+但当数据部分是非ASCII码的文本文件时（如二进制代码的计算机程序或者图像等），情况就不同了。如果数据中的某个字节的二进制代码恰好和SOH或EOT这种控制字符一样，数据链路层就好错误地“找到帧的边界”，把部分帧收下（误以为是个完整的帧），而把剩下的那部分数据丢弃（这部分找不到帧定界控制字符SOH）。这种情况就不是透明传输，因为当遇到书中碰巧出现字符“EOT”时就传不过去了，而其后面的数据因找不到“SOH”被接收端当做无效帧而丢弃。但实际上数据中出现的字符“EOT”并非控制字符而仅仅是二进制数据00000100 。</code></pre><img src="/2019/03/23/%E6%95%B0%E6%8D%AE%E9%93%BE%E8%B7%AF%E5%B1%82%E7%9A%84%E4%B8%89%E4%B8%AA%E9%87%8D%E8%A6%81%E9%97%AE%E9%A2%98/b.jpg">
 
 <pre><code>为了解决透明传输问题，字节填充法或字符填充：在控制字符SOH、EOT的前面插入一个转义字符ESC（其十六进制编码是1B，二进制是00011011）。而接收端的数据链路层在把数据送往网络层之前删除这个插入的转义字符。</code></pre><h1>三. 差错检测</h1>
 

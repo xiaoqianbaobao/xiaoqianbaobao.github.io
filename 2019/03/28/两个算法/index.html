@@ -25,15 +25,15 @@
 <meta property="og:site_name" content="Shengqian&#39;s Blog">
 <meta property="og:description" content="课堂作业，二进制退避算法，停止等待协议算法">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://xiaoqianbaobao.github.io/.io//1.png">
-<meta property="og:image" content="http://xiaoqianbaobao.github.io/.io//2.png">
-<meta property="og:image" content="http://xiaoqianbaobao.github.io/.io//3.png">
+<meta property="og:image" content="http://xiaoqianbaobao.github.io/2019/03/28/%E4%B8%A4%E4%B8%AA%E7%AE%97%E6%B3%95/1.png">
+<meta property="og:image" content="http://xiaoqianbaobao.github.io/2019/03/28/%E4%B8%A4%E4%B8%AA%E7%AE%97%E6%B3%95/2.png">
+<meta property="og:image" content="http://xiaoqianbaobao.github.io/2019/03/28/%E4%B8%A4%E4%B8%AA%E7%AE%97%E6%B3%95/3.png">
 <meta property="article:published_time" content="2019-03-28T15:40:26.000Z">
 <meta property="article:modified_time" content="2019-04-05T01:19:45.606Z">
 <meta property="article:author" content="Larnonudo chan">
 <meta property="article:tag" content="学习小结">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://xiaoqianbaobao.github.io/.io//1.png">
+<meta name="twitter:image" content="http://xiaoqianbaobao.github.io/2019/03/28/%E4%B8%A4%E4%B8%AA%E7%AE%97%E6%B3%95/1.png">
   <!-- Canonical links -->
   <link rel="canonical" href="http://xiaoqianbaobao.github.io/2019/03/28/%E4%B8%A4%E4%B8%AA%E7%AE%97%E6%B3%95/index.html">
   
@@ -420,9 +420,9 @@
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">// Send data <span class="keyword">and</span> wait <span class="keyword">for</span> an ACK. Return bytes sent.</span><br><span class="line">// If error occurs, <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">int send_packet(int sock, struct Packet *packet, int size)&#123;</span><br><span class="line">	struct tftpx_packet rcv_packet;</span><br><span class="line">	int time_wait_ack = <span class="number">0</span>;</span><br><span class="line">	int rxmt = <span class="number">0</span>;</span><br><span class="line">	int r_size = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">for</span>(rxmt = <span class="number">0</span>; rxmt &lt; PKT_MAX_RXMT; rxmt ++)&#123;</span><br><span class="line">		<span class="keyword">if</span>(send(sock, packet, size, <span class="number">0</span>) != size)&#123;</span><br><span class="line">			<span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">for</span>(time_wait_ack = <span class="number">0</span>; time_wait_ack &lt; PKT_RCV_TIMEOUT; time_wait_ack += <span class="number">5000</span>)&#123;</span><br><span class="line">			r_size = recv(sock, &amp;rcv_packet, sizeof(rcv_packet), MSG_DONTWAIT);</span><br><span class="line">			if(r_size &gt; 4 &amp;&amp; rcv_packet.cmd == htons(CMD_ACK) &amp;&amp; rcv_packet.seq== packet-&gt;seq)&#123;</span><br><span class="line">				// Valid ACK</span><br><span class="line">				goto send_done;</span><br><span class="line">			&#125;</span><br><span class="line">			usleep(<span class="number">5000</span>);</span><br><span class="line">		&#125;</span><br><span class="line">		// Retransmission</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span>(rxmt == PKT_MAX_RXMT)&#123;</span><br><span class="line">		// send timeout</span><br><span class="line">		printf(<span class="string">"Sent packet exceeded PKT_MAX_RXMT.\n"</span>);</span><br><span class="line">		<span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">	&#125;</span><br><span class="line">send_done:</span><br><span class="line">	<span class="keyword">return</span> size;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h1>运行结果截图</h1>
 <h2>二进制指数退避算法</h2>
-<img src="/.io//1.png">
-<img src="/.io//2.png">
-<img src="/.io//3.png">
+<img src="/2019/03/28/%E4%B8%A4%E4%B8%AA%E7%AE%97%E6%B3%95/1.png">
+<img src="/2019/03/28/%E4%B8%A4%E4%B8%AA%E7%AE%97%E6%B3%95/2.png">
+<img src="/2019/03/28/%E4%B8%A4%E4%B8%AA%E7%AE%97%E6%B3%95/3.png">
 
       
     </div>
