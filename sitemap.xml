@@ -2,6 +2,20 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://xiaoqianbaobao.github.io/links/index.html</loc>
+    
+    <lastmod>2020-07-01T04:36:30.507Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://xiaoqianbaobao.github.io/about/index.html</loc>
+    
+    <lastmod>2020-07-01T04:09:38.629Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://xiaoqianbaobao.github.io/2020/05/31/%E6%9E%AA%E7%82%AE%E3%80%81%E7%97%85%E8%8F%8C%E4%B8%8E%E9%92%A2%E9%93%81/</loc>
     
     <lastmod>2020-06-29T12:38:12.816Z</lastmod>
@@ -257,13 +271,6 @@
     <loc>http://xiaoqianbaobao.github.io/2020/03/10/java-%E4%BD%BF%E7%94%A8list/</loc>
     
     <lastmod>2020-03-10T10:13:37.585Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://xiaoqianbaobao.github.io/about/index.html</loc>
-    
-    <lastmod>2020-03-09T03:57:43.085Z</lastmod>
     
   </url>
   
