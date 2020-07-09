@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://xiaoqianbaobao.github.io/"/>
-  <updated>2020-07-04T05:48:32.965Z</updated>
+  <updated>2020-07-09T10:42:56.154Z</updated>
   <id>http://xiaoqianbaobao.github.io/</id>
   
   <author>
@@ -15,6 +15,27 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>CSSAPP HomeWork Chapter-2 practice</title>
+    <link href="http://xiaoqianbaobao.github.io/2020/07/06/CSSAPP-HomeWork-Chapter-2-practice/"/>
+    <id>http://xiaoqianbaobao.github.io/2020/07/06/CSSAPP-HomeWork-Chapter-2-practice/</id>
+    <published>2020-07-06T15:52:50.000Z</published>
+    <updated>2020-07-09T10:42:56.154Z</updated>
+    
+    <summary type="html">
+    
+      cssapp第二章家庭作业练习
+    
+    </summary>
+    
+    
+      <category term="cssapp" scheme="http://xiaoqianbaobao.github.io/categories/cssapp/"/>
+    
+    
+      <category term="底层" scheme="http://xiaoqianbaobao.github.io/tags/%E5%BA%95%E5%B1%82/"/>
+    
+  </entry>
   
   <entry>
     <title>在线搜题网站推荐</title>
@@ -404,27 +425,6 @@
     <summary type="html">
     
       a javascript practice
-    
-    </summary>
-    
-    
-      <category term="javascript" scheme="http://xiaoqianbaobao.github.io/categories/javascript/"/>
-    
-    
-      <category term="js" scheme="http://xiaoqianbaobao.github.io/tags/js/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>A js practice</title>
-    <link href="http://xiaoqianbaobao.github.io/2020/04/21/A-js-practice/"/>
-    <id>http://xiaoqianbaobao.github.io/2020/04/21/A-js-practice/</id>
-    <published>2020-04-21T11:38:22.000Z</published>
-    <updated>2020-04-21T11:53:26.540Z</updated>
-    
-    <summary type="html">
-    
-      A javascript practice
     
     </summary>
     
