@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://xiaoqianbaobao.github.io/"/>
-  <updated>2020-07-09T10:55:21.214Z</updated>
+  <updated>2020-08-15T12:16:35.007Z</updated>
   <id>http://xiaoqianbaobao.github.io/</id>
   
   <author>
@@ -17,11 +17,32 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>julia 变量</title>
+    <link href="http://xiaoqianbaobao.github.io/2020/08/15/julia-%E5%8F%98%E9%87%8F/"/>
+    <id>http://xiaoqianbaobao.github.io/2020/08/15/julia-%E5%8F%98%E9%87%8F/</id>
+    <published>2020-08-15T11:54:42.000Z</published>
+    <updated>2020-08-15T12:16:35.007Z</updated>
+    
+    <summary type="html">
+    
+      开始学习julia
+    
+    </summary>
+    
+    
+      <category term="julia" scheme="http://xiaoqianbaobao.github.io/categories/julia/"/>
+    
+    
+      <category term="julia" scheme="http://xiaoqianbaobao.github.io/tags/julia/"/>
+    
+  </entry>
+  
+  <entry>
     <title>CSSAPP HomeWork Chapter-2 practice</title>
     <link href="http://xiaoqianbaobao.github.io/2020/07/06/CSSAPP-HomeWork-Chapter-2-practice/"/>
     <id>http://xiaoqianbaobao.github.io/2020/07/06/CSSAPP-HomeWork-Chapter-2-practice/</id>
     <published>2020-07-06T15:52:50.000Z</published>
-    <updated>2020-07-09T10:55:21.214Z</updated>
+    <updated>2020-07-09T10:55:52.420Z</updated>
     
     <summary type="html">
     
@@ -412,27 +433,6 @@
     
     
       <category term="数据库" scheme="http://xiaoqianbaobao.github.io/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>js practice 2</title>
-    <link href="http://xiaoqianbaobao.github.io/2020/04/21/js-practice-2/"/>
-    <id>http://xiaoqianbaobao.github.io/2020/04/21/js-practice-2/</id>
-    <published>2020-04-21T11:50:02.000Z</published>
-    <updated>2020-04-21T11:54:12.578Z</updated>
-    
-    <summary type="html">
-    
-      a javascript practice
-    
-    </summary>
-    
-    
-      <category term="javascript" scheme="http://xiaoqianbaobao.github.io/categories/javascript/"/>
-    
-    
-      <category term="js" scheme="http://xiaoqianbaobao.github.io/tags/js/"/>
     
   </entry>
   
