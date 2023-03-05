@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>标签2 on Qian&#39;s Blog</title>
-    <link>http://csqread.top/tags/%E6%A0%87%E7%AD%BE2/</link>
+    <link>https://csqread.top/tags/%E6%A0%87%E7%AD%BE2/</link>
     <description>Recent content in 标签2 on Qian&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Sun, 05 Mar 2023 12:47:51 +0800</lastBuildDate><atom:link href="http://csqread.top/tags/%E6%A0%87%E7%AD%BE2/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 05 Mar 2023 12:47:51 +0800</lastBuildDate><atom:link href="https://csqread.top/tags/%E6%A0%87%E7%AD%BE2/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Hugo博客搭建</title>
-      <link>http://csqread.top/posts/blog/hugo%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/</link>
+      <link>https://csqread.top/posts/blog/hugo%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/</link>
       <pubDate>Sun, 05 Mar 2023 12:47:51 +0800</pubDate>
       
-      <guid>http://csqread.top/posts/blog/hugo%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/</guid>
+      <guid>https://csqread.top/posts/blog/hugo%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/</guid>
       <description>Hugo 博客搭建 记录</description>
     </item>
     
