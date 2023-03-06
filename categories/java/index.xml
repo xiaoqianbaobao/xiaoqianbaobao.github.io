@@ -1,21 +1,12 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
-    <title>Qian&#39;s Blog</title>
-    <link>https://csqread.top/</link>
-    <description>Recent content on Qian&#39;s Blog</description>
+    <title>Java on Qian&#39;s Blog</title>
+    <link>https://csqread.top/categories/java/</link>
+    <description>Recent content in Java on Qian&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Mon, 06 Mar 2023 20:50:47 +0800</lastBuildDate><atom:link href="https://csqread.top/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>Hugo博客搭建</title>
-      <link>https://csqread.top/posts/blog/hugo%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/</link>
-      <pubDate>Sun, 05 Mar 2023 12:47:51 +0800</pubDate>
-      
-      <guid>https://csqread.top/posts/blog/hugo%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/</guid>
-      <description>Hugo博客搭建过程及遇到的问题</description>
-    </item>
-    
+    <lastBuildDate>Mon, 06 Mar 2023 20:50:47 +0800</lastBuildDate><atom:link href="https://csqread.top/categories/java/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Java锁优化相关笔记</title>
       <link>https://csqread.top/posts/tech/java%E9%94%81%E4%BC%98%E5%8C%96%E7%9B%B8%E5%85%B3%E7%AC%94%E8%AE%B0/</link>

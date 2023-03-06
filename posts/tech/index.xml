@@ -5,6 +5,16 @@
     <link>https://csqread.top/posts/tech/</link>
     <description>Recent content in 技术 on Qian&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>zh-cn</language><atom:link href="https://csqread.top/posts/tech/index.xml" rel="self" type="application/rss+xml" />
+    <language>zh-cn</language>
+    <lastBuildDate>Mon, 06 Mar 2023 20:50:47 +0800</lastBuildDate><atom:link href="https://csqread.top/posts/tech/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Java锁优化相关笔记</title>
+      <link>https://csqread.top/posts/tech/java%E9%94%81%E4%BC%98%E5%8C%96%E7%9B%B8%E5%85%B3%E7%AC%94%E8%AE%B0/</link>
+      <pubDate>Mon, 06 Mar 2023 20:50:47 +0800</pubDate>
+      
+      <guid>https://csqread.top/posts/tech/java%E9%94%81%E4%BC%98%E5%8C%96%E7%9B%B8%E5%85%B3%E7%AC%94%E8%AE%B0/</guid>
+      <description>JVM对synchronized的优化笔记</description>
+    </item>
+    
   </channel>
 </rss>
