@@ -13,7 +13,7 @@
       <pubDate>Tue, 07 Mar 2023 20:33:00 +0800</pubDate>
       
       <guid>https://csqread.top/posts/tech/java%E4%B8%AD%E7%9A%84%E5%AD%97%E7%AC%A6%E6%93%8D%E4%BD%9C/</guid>
-      <description></description>
+      <description>字符操作 编码与解码 编码就是把字符转换为字节，而解码是把字节重新组合成字符。 如果编码和解码过程使用不同的编码方式那么就出现了乱码。 GBK 编码中，中</description>
     </item>
     
     <item>
