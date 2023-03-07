@@ -294,6 +294,8 @@
 <h2 id="轻量级锁">轻量级锁<a hidden class="anchor" aria-hidden="true" href="#轻量级锁">#</a></h2>
 <p>JDK 1.6 引入了偏向锁和轻量级锁，从而让锁拥有了四个状态：无锁状态（unlocked）、偏向锁状态（biasble）、轻量级锁状态（lightweight locked）和重量级锁状态（inflated）。</p>
 <p>以下是 HotSpot 虚拟机对象头的内存布局，这些数据被称为 Mark Word。其中 tag bits 对应了五个状态，这些状态在右侧的 state 表格中给出。除了 marked for gc 状态，其它四个状态已经在前面介绍过了。</p>
+<p><img loading="lazy" src="bb6a49be-00f2-4f27-a0ce-4ed764bc605c.png" alt=""  />
+</p>
 <div align="center"> <img src="Java锁优化相关笔记/bb6a49be-00f2-4f27-a0ce-4ed764bc605c.png" width="500"/> </div><br>
 <p>下图左侧是一个线程的虚拟机栈，其中有一部分称为 Lock Record 的区域，这是在轻量级锁运行过程创建的，用于存放锁对象的 Mark Word。而右侧就是一个锁对象，包含了 Mark Word 和其它信息。</p>
 <div align="center"> <img src="Java锁优化相关笔记/051e436c-0e46-4c59-8f67-52d89d656182.png" width="500"/> </div><br>
