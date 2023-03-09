@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>分布式性能优化总结 | Qian&#39;s Blog</title>
+<meta name="keywords" content="分布式, 性能优化">
+<meta name="description" content="缓存优化 1、对应参数表数据量如果小于10M，数据要同时缓存到Redis和本地，查询遵循的缓存原则为:优先查询本地缓存，本地没有查询Redis">
+<meta name="author" content="ShengQian">
+<link rel="canonical" href="https://csqread.top/posts/tech/%E5%88%86%E5%B8%83%E5%BC%8F%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E6%80%BB%E7%BB%93/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.62aa25427797f8efd87301a5b69795dc50df2dbe79a5fba0648cc7bb8dbcd7c9.css" integrity="" rel="preload stylesheet" as="style">
+<script defer crossorigin="anonymous" src="/assets/js/highlight.acb54fd32bbc1982428b8850317e45d076b95012730a5936667e6bc21777692a.js" integrity=""
+    onload="hljs.initHighlightingOnLoad();"></script>
+<link rel="icon" href="https://csqread.top/img/Q.gif">
+<link rel="icon" type="image/png" sizes="16x16" href="https://csqread.top/img/%21.jpg">
+<link rel="icon" type="image/png" sizes="32x32" href="https://csqread.top/img/%21.jpg">
+<link rel="apple-touch-icon" href="https://csqread.top/%21.jpg">
+<link rel="mask-icon" href="https://csqread.top/%21.jpg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --hljs-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript><meta property="og:title" content="分布式性能优化总结" />
+<meta property="og:description" content="缓存优化 1、对应参数表数据量如果小于10M，数据要同时缓存到Redis和本地，查询遵循的缓存原则为:优先查询本地缓存，本地没有查询Redis" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://csqread.top/posts/tech/%E5%88%86%E5%B8%83%E5%BC%8F%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E6%80%BB%E7%BB%93/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2023-03-09T20:18:13+08:00" />
+<meta property="article:modified_time" content="2023-03-09T20:18:13+08:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="分布式性能优化总结"/>
+<meta name="twitter:description" content="缓存优化 1、对应参数表数据量如果小于10M，数据要同时缓存到Redis和本地，查询遵循的缓存原则为:优先查询本地缓存，本地没有查询Redis"/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "Posts",
+      "item": "https://csqread.top/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  3 ,
+      "name": "技术",
+      "item": "https://csqread.top/posts/tech/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  4 ,
+      "name": "分布式性能优化总结",
+      "item": "https://csqread.top/posts/tech/%E5%88%86%E5%B8%83%E5%BC%8F%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E6%80%BB%E7%BB%93/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "分布式性能优化总结",
+  "name": "分布式性能优化总结",
+  "description": "缓存优化 1、对应参数表数据量如果小于10M，数据要同时缓存到Redis和本地，查询遵循的缓存原则为:优先查询本地缓存，本地没有查询Redis",
+  "keywords": [
+    "分布式", "性能优化"
+  ],
+  "articleBody": "缓存优化 1、对应参数表数据量如果小于10M，数据要同时缓存到Redis和本地，查询遵循的缓存原则为:优先查询本地缓存，本地没有查询Redis缓存，Redis没有再查询数据库.\n2、对参数表的缓存要分类进行配置：黑名单类参数表查询，Redis缓存为空时不再查询数据库：常规类参数表查询，Redis缓存为空的时候需要再查询数据库\n3、如果参数表出现大量RPC。确定SQL都是等值的情况下，一般是缓存索引配置的不合适/\n4、如果出现大量RPC，在SQL非等值情况下，需要通过等值SQL去查询，然后在程序代码中去判断数据是否符合要求。\n5、针对查询比较多并且修改也比较多的数据，可以针对部分不变的数据配置缓存。 （比如针对内部合约相关的数据，需要频繁的调用内部账的科目存储字段，虽然内部户的一整条数据会经常变动，但是内部户的科目存储字段基本上不会改变，就可以把这些不变的数据配置缓存，提升查询效率，并且可以减少RPC的次数）。\n6、根据不同条件调用他组缓存表的接口时，可以现根据他组配置缓存索引条件进行查询，然后在程序中再根据非索引条件过滤查询结果。\n编码优化 1、当某业务构件执行缓慢时，除了要排查是否有非必要RPC时或环境影响因素外，还需要检查构件中是否有重复执行的代码和SQL，第一次执行向后传递可以提升传递效率。\n2、如果通过实现JAR包调用他组接口还RPC了的，首先检查他们是否缓存表以及缓存表索引配置是否正确，如以上没问题，则可能是JAR包中未打入实现类。\n3、因为Java接口中传递对象是通过引用方式传递的，如果接口对传入的对象进行了修改，当执行完接口在接口外部拿到的该对象中的数据是被修改的，此时在接口外部继续获取对象中被修改的原数据时容易得到意想不到的结果。\n4、调用某构件的时候，构件中又要获取一些数据进行RPC，如果调用构件之前已有相关数据，可以调用构件时传递进去，可减少RPC。\n5、根据不同条件多次使用其他组的接口进行查询时，可以提取多个条件的交集，根据交集条件查询所有数据，然后在程序中分别根据非交集的条件进行过滤。\n6、对于多次循环调用他组同一个方法时，每次输入的值不同，可将所有输入值包装成LIST一次性传入，得到一个查询列表集合作为类似本地缓存，然后对这个LSIT集合进行循环整理。\n7、RPC接口要尽量简单，输入输出接口不要继承一些不需要的东西，既能减少网络传输消耗，还能减少序列化和反序列化的时间。\n数据库及SQL优化 1、尽量避免使用SELECT * 来查询所有字段，仅查询必要数据行及字段，既能减少网络传输消耗，还能提高命中覆盖索引的概率。\n2、写SQK的时候永远记得WHERE条件要和主键或者索引匹配。\n3、对于查询量非常大修改比较少的表， 且SELECT的字段正好比索引多一个或者两个字段的时候，可以采取把多余的一个或者两个字段冗余到索引上，这种一空间换取时间的方式虽然一定程度上增加了索引空间的开销，但是对于非常高频的SQL直接命中了覆盖索引，避免了回表查询，有助于提升查询效率。\n4、对于修改量非常大的交易，要及其精简索引，能不要的索引最好不要建，在修改表的时候可以减少索引的维护，有助于提升修改效率。\n以上是工作中的性能优化总结，后续如果有新的总结再来记录\n",
+  "wordCount" : "1327",
+  "inLanguage": "en",
+  "datePublished": "2023-03-09T20:18:13+08:00",
+  "dateModified": "2023-03-09T20:18:13+08:00",
+  "author":[{
+    "@type": "Person",
+    "name": "ShengQian"
+  }],
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://csqread.top/posts/tech/%E5%88%86%E5%B8%83%E5%BC%8F%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E6%80%BB%E7%BB%93/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Qian's Blog",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://csqread.top/img/Q.gif"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://csqread.top" accesskey="h" title="Qian&#39;s Blog (Alt + H)">
+                <img src="https://csqread.top/img/%21.jpg" alt="" aria-label="logo"
+                    height="35">Qian&#39;s Blog</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="https://csqread.top/search" title="🔍搜索">
+                    <span>🔍搜索</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://csqread.top/" title="🏠主页">
+                    <span>🏠主页</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://csqread.top/posts" title="📚文章">
+                    <span>📚文章</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://csqread.top/archives/" title="⏱时间轴">
+                    <span>⏱时间轴</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://csqread.top/tags" title="🔖标签">
+                    <span>🔖标签</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://csqread.top/about" title="🙋🏻‍♂️关于">
+                    <span>🙋🏻‍♂️关于</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://csqread.top/links" title="🤝友链">
+                    <span>🤝友链</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    <div class="breadcrumbs"><a href="https://csqread.top">Home</a>&nbsp;»&nbsp;<a href="https://csqread.top/posts/">Posts</a>&nbsp;»&nbsp;<a href="https://csqread.top/posts/tech/">技术</a></div>
+    <h1 class="post-title">
+      分布式性能优化总结
+    </h1>
+    <div class="post-meta"><span title='2023-03-09 20:18:13 +0800 CST'>2023-03-09</span>&nbsp;·&nbsp;3 min&nbsp;·&nbsp;ShengQian
+
+</div>
+  </header> <div class="toc">
+    <details  open>
+        <summary accesskey="c" title="(Alt + C)">
+            <span class="details">Table of Contents</span>
+        </summary>
+
+        <div class="inner"><ul>
+                <li>
+                    <a href="#%e7%bc%93%e5%ad%98%e4%bc%98%e5%8c%96" aria-label="缓存优化">缓存优化</a></li>
+                <li>
+                    <a href="#%e7%bc%96%e7%a0%81%e4%bc%98%e5%8c%96" aria-label="编码优化">编码优化</a></li>
+                <li>
+                    <a href="#%e6%95%b0%e6%8d%ae%e5%ba%93%e5%8f%8asql%e4%bc%98%e5%8c%96" aria-label="数据库及SQL优化">数据库及SQL优化</a>
+                </li>
+            </ul>
+        </div>
+    </details>
+</div>
+
+  <div class="post-content"><h1 id="缓存优化">缓存优化<a hidden class="anchor" aria-hidden="true" href="#缓存优化">#</a></h1>
+<p>1、对应参数表数据量如果小于10M，数据要同时缓存到Redis和本地，查询遵循的缓存原则为:优先查询本地缓存，本地没有查询Redis缓存，Redis没有再查询数据库.</p>
+<p>2、对参数表的缓存要分类进行配置：黑名单类参数表查询，Redis缓存为空时不再查询数据库：常规类参数表查询，Redis缓存为空的时候需要再查询数据库</p>
+<p>3、如果参数表出现大量RPC。确定SQL都是等值的情况下，一般是缓存索引配置的不合适/</p>
+<p>4、如果出现大量RPC，在SQL非等值情况下，需要通过等值SQL去查询，然后在程序代码中去判断数据是否符合要求。</p>
+<p>5、针对查询比较多并且修改也比较多的数据，可以针对部分不变的数据配置缓存。
+（比如针对内部合约相关的数据，需要频繁的调用内部账的科目存储字段，虽然内部户的一整条数据会经常变动，但是内部户的科目存储字段基本上不会改变，就可以把这些不变的数据配置缓存，提升查询效率，并且可以减少RPC的次数）。</p>
+<p>6、根据不同条件调用他组缓存表的接口时，可以现根据他组配置缓存索引条件进行查询，然后在程序中再根据非索引条件过滤查询结果。</p>
+<h1 id="编码优化">编码优化<a hidden class="anchor" aria-hidden="true" href="#编码优化">#</a></h1>
+<p>1、当某业务构件执行缓慢时，除了要排查是否有非必要RPC时或环境影响因素外，还需要检查构件中是否有重复执行的代码和SQL，第一次执行向后传递可以提升传递效率。</p>
+<p>2、如果通过实现JAR包调用他组接口还RPC了的，首先检查他们是否缓存表以及缓存表索引配置是否正确，如以上没问题，则可能是JAR包中未打入实现类。</p>
+<p>3、因为Java接口中传递对象是通过引用方式传递的，如果接口对传入的对象进行了修改，当执行完接口在接口外部拿到的该对象中的数据是被修改的，此时在接口外部继续获取对象中被修改的原数据时容易得到意想不到的结果。</p>
+<p>4、调用某构件的时候，构件中又要获取一些数据进行RPC，如果调用构件之前已有相关数据，可以调用构件时传递进去，可减少RPC。</p>
+<p>5、根据不同条件多次使用其他组的接口进行查询时，可以提取多个条件的交集，根据交集条件查询所有数据，然后在程序中分别根据非交集的条件进行过滤。</p>
+<p>6、对于多次循环调用他组同一个方法时，每次输入的值不同，可将所有输入值包装成LIST一次性传入，得到一个查询列表集合作为类似本地缓存，然后对这个LSIT集合进行循环整理。</p>
+<p>7、RPC接口要尽量简单，输入输出接口不要继承一些不需要的东西，既能减少网络传输消耗，还能减少序列化和反序列化的时间。</p>
+<h1 id="数据库及sql优化">数据库及SQL优化<a hidden class="anchor" aria-hidden="true" href="#数据库及sql优化">#</a></h1>
+<p>1、尽量避免使用SELECT * 来查询所有字段，仅查询必要数据行及字段，既能减少网络传输消耗，还能提高命中覆盖索引的概率。</p>
+<p>2、写SQK的时候永远记得WHERE条件要和主键或者索引匹配。</p>
+<p>3、对于查询量非常大修改比较少的表， 且SELECT的字段正好比索引多一个或者两个字段的时候，可以采取把多余的一个或者两个字段冗余到索引上，这种一空间换取时间的方式虽然一定程度上增加了索引空间的开销，但是对于非常高频的SQL直接命中了覆盖索引，避免了回表查询，有助于提升查询效率。</p>
+<p>4、对于修改量非常大的交易，要及其精简索引，能不要的索引最好不要建，在修改表的时候可以减少索引的维护，有助于提升修改效率。</p>
+<p>以上是工作中的性能优化总结，后续如果有新的总结再来记录</p>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+      <li><a href="https://csqread.top/tags/%E5%88%86%E5%B8%83%E5%BC%8F/">分布式</a></li>
+      <li><a href="https://csqread.top/tags/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/">性能优化</a></li>
+    </ul>
+<nav class="paginav">
+  <a class="prev" href="https://csqread.top/posts/blog/hugo%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/">
+    <span class="title">« Prev</span>
+    <br>
+    <span>Hugo博客搭建</span>
+  </a>
+  <a class="next" href="https://csqread.top/posts/tech/java%E4%B8%AD%E7%9A%84%E5%AD%97%E7%AC%A6%E6%93%8D%E4%BD%9C/">
+    <span class="title">Next »</span>
+    <br>
+    <span>Java中的字符操作</span>
+  </a>
+</nav>
+
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+    <span>&copy; 2023 <a href="https://csqread.top">Qian&#39;s Blog</a></span>
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerHTML = 'copy';
+
+        function copyingDone() {
+            copybutton.innerHTML = 'copied!';
+            setTimeout(() => {
+                copybutton.innerHTML = 'copy';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) { };
+            selection.removeRange(range);
+        });
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+        }
+    });
+</script>
+</body>
+
+</html>
