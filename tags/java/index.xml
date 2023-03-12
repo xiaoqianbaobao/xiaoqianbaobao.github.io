@@ -13,7 +13,7 @@
       <pubDate>Thu, 09 Mar 2023 21:09:22 +0800</pubDate>
       
       <guid>https://csqread.top/posts/tech/java-arraylist%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90%E4%B8%8E%E6%80%BB%E7%BB%93/</guid>
-      <description></description>
+      <description>ArrayList 1. 概览 实现了 RandomAccess 接口，因此支持随机访问。这是理所当然的，因为 ArrayList 是基于数组实现的。 1 2 public class ArrayList&amp;lt;E&amp;gt; extends AbstractList&amp;lt;E&amp;gt; implements List&amp;lt;E&amp;gt;, RandomAccess, Cloneable, java.io.Serializable 数组的默认大小为 10。 1 private static final int DEFAULT_CAPACITY =</description>
     </item>
     
   </channel>
