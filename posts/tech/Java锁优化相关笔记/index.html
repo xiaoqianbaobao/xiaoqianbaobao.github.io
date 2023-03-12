@@ -10,7 +10,7 @@
 <meta name="description" content="JVM对synchronized的优化笔记">
 <meta name="author" content="ShengQian">
 <link rel="canonical" href="https://csqread.top/posts/tech/java%E9%94%81%E4%BC%98%E5%8C%96%E7%9B%B8%E5%85%B3%E7%AC%94%E8%AE%B0/">
-<link crossorigin="anonymous" href="/assets/css/stylesheet.62aa25427797f8efd87301a5b69795dc50df2dbe79a5fba0648cc7bb8dbcd7c9.css" integrity="" rel="preload stylesheet" as="style">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.dccf83c007085fae1d65c81e6163e0fd79b183cc25ef930e59c11a34efc2dce9.css" integrity="" rel="preload stylesheet" as="style">
 <script defer crossorigin="anonymous" src="/assets/js/highlight.acb54fd32bbc1982428b8850317e45d076b95012730a5936667e6bc21777692a.js" integrity=""
     onload="hljs.initHighlightingOnLoad();"></script>
 <link rel="icon" href="https://csqread.top/img/Q.gif">
@@ -223,32 +223,92 @@
     <div class="post-meta"><span title='2023-03-06 20:50:47 +0800 CST'>2023-03-06</span>&nbsp;·&nbsp;4 min&nbsp;·&nbsp;ShengQian
 
 </div>
-  </header> <div class="toc">
-    <details  open>
-        <summary accesskey="c" title="(Alt + C)">
-            <span class="details">Table of Contents</span>
-        </summary>
+  </header> <aside id="toc-container" class="toc-container wide">
+    <div class="toc">
+        <details  open>
+            <summary accesskey="c" title="(Alt + C)">
+                <span class="details">Table of Contents</span>
+            </summary>
 
-        <div class="inner"><ul><ul>
-                <li>
-                    <a href="#%e8%87%aa%e6%97%8b%e9%94%81" aria-label="自旋锁">自旋锁</a></li>
-                <li>
-                    <a href="#%e9%94%81%e6%b6%88%e9%99%a4" aria-label="锁消除">锁消除</a></li>
-                <li>
-                    <a href="#%e9%94%81%e7%b2%97%e5%8c%96" aria-label="锁粗化">锁粗化</a></li>
-                <li>
-                    <a href="#%e8%bd%bb%e9%87%8f%e7%ba%a7%e9%94%81" aria-label="轻量级锁">轻量级锁</a></li>
-                <li>
-                    <a href="#%e5%81%8f%e5%90%91%e9%94%81" aria-label="偏向锁">偏向锁</a></li></ul>
-                    
-                <li>
-                    <a href="#%e5%8d%81%e4%b8%89%e5%a4%9a%e7%ba%bf%e7%a8%8b%e5%bc%80%e5%8f%91%e8%89%af%e5%a5%bd%e7%9a%84%e5%ae%9e%e8%b7%b5" aria-label="十三、多线程开发良好的实践">十三、多线程开发良好的实践</a>
-                </li>
-            </ul>
-        </div>
-    </details>
-</div>
+            <div class="inner"><ul><ul>
+                    <li>
+                        <a href="#%e8%87%aa%e6%97%8b%e9%94%81" aria-label="自旋锁">自旋锁</a></li>
+                    <li>
+                        <a href="#%e9%94%81%e6%b6%88%e9%99%a4" aria-label="锁消除">锁消除</a></li>
+                    <li>
+                        <a href="#%e9%94%81%e7%b2%97%e5%8c%96" aria-label="锁粗化">锁粗化</a></li>
+                    <li>
+                        <a href="#%e8%bd%bb%e9%87%8f%e7%ba%a7%e9%94%81" aria-label="轻量级锁">轻量级锁</a></li>
+                    <li>
+                        <a href="#%e5%81%8f%e5%90%91%e9%94%81" aria-label="偏向锁">偏向锁</a></li></ul>
+                        
+                    <li>
+                        <a href="#%e5%8d%81%e4%b8%89%e5%a4%9a%e7%ba%bf%e7%a8%8b%e5%bc%80%e5%8f%91%e8%89%af%e5%a5%bd%e7%9a%84%e5%ae%9e%e8%b7%b5" aria-label="十三、多线程开发良好的实践">十三、多线程开发良好的实践</a>
+                    </li>
+                </ul>
+            </div>
+        </details>
+    </div>
+</aside>
+<script>
+    let activeElement;
+    let elements;
+    window.addEventListener('DOMContentLoaded', function (event) {
+        checkTocPosition();
 
+        elements = document.querySelectorAll('h1[id],h2[id],h3[id],h4[id],h5[id],h6[id]');
+         
+         activeElement = elements[0];
+         const id = encodeURI(activeElement.getAttribute('id')).toLowerCase();
+         document.querySelector(`.inner ul li a[href="#${id}"]`).classList.add('active');
+     }, false);
+
+    window.addEventListener('resize', function(event) {
+        checkTocPosition();
+    }, false);
+
+    window.addEventListener('scroll', () => {
+        
+        activeElement = Array.from(elements).find((element) => {
+            if ((getOffsetTop(element) - window.pageYOffset) > 0 && 
+                (getOffsetTop(element) - window.pageYOffset) < window.innerHeight/2) {
+                return element;
+            }
+        }) || activeElement
+
+        elements.forEach(element => {
+             const id = encodeURI(element.getAttribute('id')).toLowerCase();
+             if (element === activeElement){
+                 document.querySelector(`.inner ul li a[href="#${id}"]`).classList.add('active');
+             } else {
+                 document.querySelector(`.inner ul li a[href="#${id}"]`).classList.remove('active');
+             }
+         })
+     }, false);
+
+    const main = parseInt(getComputedStyle(document.body).getPropertyValue('--article-width'), 10);
+    const toc = parseInt(getComputedStyle(document.body).getPropertyValue('--toc-width'), 10);
+    const gap = parseInt(getComputedStyle(document.body).getPropertyValue('--gap'), 10);
+
+    function checkTocPosition() {
+        const width = document.body.scrollWidth;
+
+        if (width - main - (toc * 2) - (gap * 4) > 0) {
+            document.getElementById("toc-container").classList.add("wide");
+        } else {
+            document.getElementById("toc-container").classList.remove("wide");
+        }
+    }
+
+    function getOffsetTop(element) {
+        if (!element.getClientRects().length) {
+            return 0;
+        }
+        let rect = element.getBoundingClientRect();
+        let win = element.ownerDocument.defaultView;
+        return rect.top + win.pageYOffset;   
+    }
+</script>
   <div class="post-content"><h2 id="自旋锁">自旋锁<a hidden class="anchor" aria-hidden="true" href="#自旋锁">#</a></h2>
 <p>互斥同步进入阻塞状态的开销都很大，应该尽量避免。在许多应用中，共享数据的锁定状态只会持续很短的一段时间。自旋锁的思想是让一个线程在请求一个共享数据的锁时执行忙循环（自旋）一段时间，如果在这段时间内能获得锁，就可以避免进入阻塞状态。</p>
 <p>自旋锁虽然能避免进入阻塞状态从而减少开销，但是它需要进行忙循环操作占用 CPU 时间，它只适用于共享数据的锁定状态很短的场景。</p>

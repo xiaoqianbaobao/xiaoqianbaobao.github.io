@@ -10,7 +10,7 @@
 <meta name="description" content="缓存优化 1、对应参数表数据量如果小于10M，数据要同时缓存到Redis和本地，查询遵循的缓存原则为:优先查询本地缓存，本地没有查询Redis">
 <meta name="author" content="ShengQian">
 <link rel="canonical" href="https://csqread.top/posts/tech/%E5%88%86%E5%B8%83%E5%BC%8F%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E6%80%BB%E7%BB%93/">
-<link crossorigin="anonymous" href="/assets/css/stylesheet.62aa25427797f8efd87301a5b69795dc50df2dbe79a5fba0648cc7bb8dbcd7c9.css" integrity="" rel="preload stylesheet" as="style">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.dccf83c007085fae1d65c81e6163e0fd79b183cc25ef930e59c11a34efc2dce9.css" integrity="" rel="preload stylesheet" as="style">
 <script defer crossorigin="anonymous" src="/assets/js/highlight.acb54fd32bbc1982428b8850317e45d076b95012730a5936667e6bc21777692a.js" integrity=""
     onload="hljs.initHighlightingOnLoad();"></script>
 <link rel="icon" href="https://csqread.top/img/Q.gif">
@@ -220,25 +220,85 @@
     <div class="post-meta"><span title='2023-03-09 20:18:13 +0800 CST'>2023-03-09</span>&nbsp;·&nbsp;3 min&nbsp;·&nbsp;ShengQian
 
 </div>
-  </header> <div class="toc">
-    <details  open>
-        <summary accesskey="c" title="(Alt + C)">
-            <span class="details">Table of Contents</span>
-        </summary>
+  </header> <aside id="toc-container" class="toc-container wide">
+    <div class="toc">
+        <details  open>
+            <summary accesskey="c" title="(Alt + C)">
+                <span class="details">Table of Contents</span>
+            </summary>
 
-        <div class="inner"><ul>
-                <li>
-                    <a href="#%e7%bc%93%e5%ad%98%e4%bc%98%e5%8c%96" aria-label="缓存优化">缓存优化</a></li>
-                <li>
-                    <a href="#%e7%bc%96%e7%a0%81%e4%bc%98%e5%8c%96" aria-label="编码优化">编码优化</a></li>
-                <li>
-                    <a href="#%e6%95%b0%e6%8d%ae%e5%ba%93%e5%8f%8asql%e4%bc%98%e5%8c%96" aria-label="数据库及SQL优化">数据库及SQL优化</a>
-                </li>
-            </ul>
-        </div>
-    </details>
-</div>
+            <div class="inner"><ul>
+                    <li>
+                        <a href="#%e7%bc%93%e5%ad%98%e4%bc%98%e5%8c%96" aria-label="缓存优化">缓存优化</a></li>
+                    <li>
+                        <a href="#%e7%bc%96%e7%a0%81%e4%bc%98%e5%8c%96" aria-label="编码优化">编码优化</a></li>
+                    <li>
+                        <a href="#%e6%95%b0%e6%8d%ae%e5%ba%93%e5%8f%8asql%e4%bc%98%e5%8c%96" aria-label="数据库及SQL优化">数据库及SQL优化</a>
+                    </li>
+                </ul>
+            </div>
+        </details>
+    </div>
+</aside>
+<script>
+    let activeElement;
+    let elements;
+    window.addEventListener('DOMContentLoaded', function (event) {
+        checkTocPosition();
 
+        elements = document.querySelectorAll('h1[id],h2[id],h3[id],h4[id],h5[id],h6[id]');
+         
+         activeElement = elements[0];
+         const id = encodeURI(activeElement.getAttribute('id')).toLowerCase();
+         document.querySelector(`.inner ul li a[href="#${id}"]`).classList.add('active');
+     }, false);
+
+    window.addEventListener('resize', function(event) {
+        checkTocPosition();
+    }, false);
+
+    window.addEventListener('scroll', () => {
+        
+        activeElement = Array.from(elements).find((element) => {
+            if ((getOffsetTop(element) - window.pageYOffset) > 0 && 
+                (getOffsetTop(element) - window.pageYOffset) < window.innerHeight/2) {
+                return element;
+            }
+        }) || activeElement
+
+        elements.forEach(element => {
+             const id = encodeURI(element.getAttribute('id')).toLowerCase();
+             if (element === activeElement){
+                 document.querySelector(`.inner ul li a[href="#${id}"]`).classList.add('active');
+             } else {
+                 document.querySelector(`.inner ul li a[href="#${id}"]`).classList.remove('active');
+             }
+         })
+     }, false);
+
+    const main = parseInt(getComputedStyle(document.body).getPropertyValue('--article-width'), 10);
+    const toc = parseInt(getComputedStyle(document.body).getPropertyValue('--toc-width'), 10);
+    const gap = parseInt(getComputedStyle(document.body).getPropertyValue('--gap'), 10);
+
+    function checkTocPosition() {
+        const width = document.body.scrollWidth;
+
+        if (width - main - (toc * 2) - (gap * 4) > 0) {
+            document.getElementById("toc-container").classList.add("wide");
+        } else {
+            document.getElementById("toc-container").classList.remove("wide");
+        }
+    }
+
+    function getOffsetTop(element) {
+        if (!element.getClientRects().length) {
+            return 0;
+        }
+        let rect = element.getBoundingClientRect();
+        let win = element.ownerDocument.defaultView;
+        return rect.top + win.pageYOffset;   
+    }
+</script>
   <div class="post-content"><h1 id="缓存优化">缓存优化<a hidden class="anchor" aria-hidden="true" href="#缓存优化">#</a></h1>
 <p>1、对应参数表数据量如果小于10M，数据要同时缓存到Redis和本地，查询遵循的缓存原则为:优先查询本地缓存，本地没有查询Redis缓存，Redis没有再查询数据库.</p>
 <p>2、对参数表的缓存要分类进行配置：黑名单类参数表查询，Redis缓存为空时不再查询数据库：常规类参数表查询，Redis缓存为空的时候需要再查询数据库</p>

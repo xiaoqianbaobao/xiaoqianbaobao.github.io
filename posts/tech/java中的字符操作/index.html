@@ -10,7 +10,7 @@
 <meta name="description" content="字符操作 编码与解码 编码就是把字符转换为字节，而解码是把字节重新组合成字符。 如果编码和解码过程使用不同的编码方式那么就出现了乱码。 GBK 编码中，中">
 <meta name="author" content="ShengQian">
 <link rel="canonical" href="https://csqread.top/posts/tech/java%E4%B8%AD%E7%9A%84%E5%AD%97%E7%AC%A6%E6%93%8D%E4%BD%9C/">
-<link crossorigin="anonymous" href="/assets/css/stylesheet.62aa25427797f8efd87301a5b69795dc50df2dbe79a5fba0648cc7bb8dbcd7c9.css" integrity="" rel="preload stylesheet" as="style">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.dccf83c007085fae1d65c81e6163e0fd79b183cc25ef930e59c11a34efc2dce9.css" integrity="" rel="preload stylesheet" as="style">
 <script defer crossorigin="anonymous" src="/assets/js/highlight.acb54fd32bbc1982428b8850317e45d076b95012730a5936667e6bc21777692a.js" integrity=""
     onload="hljs.initHighlightingOnLoad();"></script>
 <link rel="icon" href="https://csqread.top/img/Q.gif">
@@ -220,32 +220,92 @@
     <div class="post-meta"><span title='2023-03-07 20:33:00 +0800 CST'>2023-03-07</span>&nbsp;·&nbsp;2 min&nbsp;·&nbsp;ShengQian
 
 </div>
-  </header> <div class="toc">
-    <details  open>
-        <summary accesskey="c" title="(Alt + C)">
-            <span class="details">Table of Contents</span>
-        </summary>
+  </header> <aside id="toc-container" class="toc-container wide">
+    <div class="toc">
+        <details  open>
+            <summary accesskey="c" title="(Alt + C)">
+                <span class="details">Table of Contents</span>
+            </summary>
 
-        <div class="inner"><ul>
-                <li>
-                    <a href="#%e5%ad%97%e7%ac%a6%e6%93%8d%e4%bd%9c" aria-label="字符操作">字符操作</a><ul>
-                        
-                <li>
-                    <a href="#%e7%bc%96%e7%a0%81%e4%b8%8e%e8%a7%a3%e7%a0%81" aria-label="编码与解码">编码与解码</a></li>
-                <li>
-                    <a href="#string-%e7%9a%84%e7%bc%96%e7%a0%81%e6%96%b9%e5%bc%8f" aria-label="String 的编码方式">String 的编码方式</a></li>
-                <li>
-                    <a href="#reader-%e4%b8%8e-writer" aria-label="Reader 与 Writer">Reader 与 Writer</a></li>
-                <li>
-                    <a href="#%e5%ae%9e%e7%8e%b0%e9%80%90%e8%a1%8c%e8%be%93%e5%87%ba%e6%96%87%e6%9c%ac%e6%96%87%e4%bb%b6%e7%9a%84%e5%86%85%e5%ae%b9" aria-label="实现逐行输出文本文件的内容">实现逐行输出文本文件的内容</a>
+            <div class="inner"><ul>
+                    <li>
+                        <a href="#%e5%ad%97%e7%ac%a6%e6%93%8d%e4%bd%9c" aria-label="字符操作">字符操作</a><ul>
+                            
+                    <li>
+                        <a href="#%e7%bc%96%e7%a0%81%e4%b8%8e%e8%a7%a3%e7%a0%81" aria-label="编码与解码">编码与解码</a></li>
+                    <li>
+                        <a href="#string-%e7%9a%84%e7%bc%96%e7%a0%81%e6%96%b9%e5%bc%8f" aria-label="String 的编码方式">String 的编码方式</a></li>
+                    <li>
+                        <a href="#reader-%e4%b8%8e-writer" aria-label="Reader 与 Writer">Reader 与 Writer</a></li>
+                    <li>
+                        <a href="#%e5%ae%9e%e7%8e%b0%e9%80%90%e8%a1%8c%e8%be%93%e5%87%ba%e6%96%87%e6%9c%ac%e6%96%87%e4%bb%b6%e7%9a%84%e5%86%85%e5%ae%b9" aria-label="实现逐行输出文本文件的内容">实现逐行输出文本文件的内容</a>
+                    </li>
+                </ul>
                 </li>
-            </ul>
-            </li>
-            </ul>
-        </div>
-    </details>
-</div>
+                </ul>
+            </div>
+        </details>
+    </div>
+</aside>
+<script>
+    let activeElement;
+    let elements;
+    window.addEventListener('DOMContentLoaded', function (event) {
+        checkTocPosition();
 
+        elements = document.querySelectorAll('h1[id],h2[id],h3[id],h4[id],h5[id],h6[id]');
+         
+         activeElement = elements[0];
+         const id = encodeURI(activeElement.getAttribute('id')).toLowerCase();
+         document.querySelector(`.inner ul li a[href="#${id}"]`).classList.add('active');
+     }, false);
+
+    window.addEventListener('resize', function(event) {
+        checkTocPosition();
+    }, false);
+
+    window.addEventListener('scroll', () => {
+        
+        activeElement = Array.from(elements).find((element) => {
+            if ((getOffsetTop(element) - window.pageYOffset) > 0 && 
+                (getOffsetTop(element) - window.pageYOffset) < window.innerHeight/2) {
+                return element;
+            }
+        }) || activeElement
+
+        elements.forEach(element => {
+             const id = encodeURI(element.getAttribute('id')).toLowerCase();
+             if (element === activeElement){
+                 document.querySelector(`.inner ul li a[href="#${id}"]`).classList.add('active');
+             } else {
+                 document.querySelector(`.inner ul li a[href="#${id}"]`).classList.remove('active');
+             }
+         })
+     }, false);
+
+    const main = parseInt(getComputedStyle(document.body).getPropertyValue('--article-width'), 10);
+    const toc = parseInt(getComputedStyle(document.body).getPropertyValue('--toc-width'), 10);
+    const gap = parseInt(getComputedStyle(document.body).getPropertyValue('--gap'), 10);
+
+    function checkTocPosition() {
+        const width = document.body.scrollWidth;
+
+        if (width - main - (toc * 2) - (gap * 4) > 0) {
+            document.getElementById("toc-container").classList.add("wide");
+        } else {
+            document.getElementById("toc-container").classList.remove("wide");
+        }
+    }
+
+    function getOffsetTop(element) {
+        if (!element.getClientRects().length) {
+            return 0;
+        }
+        let rect = element.getBoundingClientRect();
+        let win = element.ownerDocument.defaultView;
+        return rect.top + win.pageYOffset;   
+    }
+</script>
   <div class="post-content"><h1 id="字符操作">字符操作<a hidden class="anchor" aria-hidden="true" href="#字符操作">#</a></h1>
 <h2 id="编码与解码">编码与解码<a hidden class="anchor" aria-hidden="true" href="#编码与解码">#</a></h2>
 <p>编码就是把字符转换为字节，而解码是把字节重新组合成字符。</p>
