@@ -6,8 +6,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="robots" content="index, follow">
 <title>拼多多面经 | Qian&#39;s Blog</title>
-<meta name="keywords" content="标签1, 标签2">
-<meta name="description" content="拼多多面经 - Qian&#39;s Blog">
+<meta name="keywords" content="面试, 面试经验与总结">
+<meta name="description" content="拼多多社招面试总结">
 <meta name="author" content="
 作者:&nbsp;ShengQian">
 <link rel="canonical" href="https://csqread.top/posts/tech/%E6%8B%BC%E5%A4%9A%E5%A4%9A%E9%9D%A2%E7%BB%8F/">
@@ -58,7 +58,7 @@
 
     </style>
 </noscript><meta property="og:title" content="拼多多面经" />
-<meta property="og:description" content="" />
+<meta property="og:description" content="拼多多社招面试总结" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://csqread.top/posts/tech/%E6%8B%BC%E5%A4%9A%E5%A4%9A%E9%9D%A2%E7%BB%8F/" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2023-03-12T20:59:03+08:00" />
@@ -66,7 +66,7 @@
 
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="拼多多面经"/>
-<meta name="twitter:description" content=""/>
+<meta name="twitter:description" content="拼多多社招面试总结"/>
 
 
 <script type="application/ld+json">
@@ -101,12 +101,12 @@
   "@type": "BlogPosting",
   "headline": "拼多多面经",
   "name": "拼多多面经",
-  "description": "",
+  "description": "拼多多社招面试总结",
   "keywords": [
-    "标签1", "标签2"
+    "面试", "面试经验与总结"
   ],
-  "articleBody": "",
-  "wordCount" : "0",
+  "articleBody": "1、面试题目 记录下社招面试拼多多的总结与心得，以及失败的原因吧。\n1、服务注册是如何发现的，eureka的基本原理， 容器ip是动态的还是静态的\n答：eureka, 基本原理大概说个一些：包括服务注册，服务发现，心跳机制，服务下线， 自我保护机制等等。\n2、转账，支付如何保证数据一致性的， 说一下分布式事务的实现， 消息的生产和消费机制。\n这个基本上说出个一二三来。其实就是分布式事务，保证这个数据的一致性就是要保证事务的原子性。即，事务要么全部成功，要么全部失败。我就提了下XA协议和TCC模式，具体如何实现的我也不太清楚。\n3、mysql 索引优化，子查询优化\n这里基本上都讲出来了。之前做过很多压测，包括让sql走上索引，参数表添加缓存等等。\n4、线上有排查过什么问题.\n5、MQ的实现原理\n5、图算法题\n还有些问题已经忘了。\n2、总结与回顾 其实关于这次面试，我还是没有做好完全的准备，而且是近三年以来的第一次面试，心里难免还是有点紧张。导致我有些东西知道的知识可能一时半会想不起来。后面把这些问到的知识点再复习一下。基本上只是浅浅的了解了一下，细说一下底层原理我就懵了。大概知道我们有这么个流程，知道哪里出了问题该找谁来看。因为现在吧，大公司基本上就是这么个情况， 包括中间件团队，数据库团队，DTF团队，DCF团队等等。基本上我们只用知道这些东西有，然后找相应团队的负责人帮忙看下问题就能解决。我们都是在脚手架上做着CURD。\n但是还是要把面试问到的东西基本原理做一个小小的总结和记录:\n2.1、Eureka Eureka是Netflix开源的一款提供服务注册和发现的产品， 开源地址为 Eureka, 注册中心是分布式开发的核心组件之一\n而eureka是spring cloud推荐的注册中心实现, Eureka是一个REST (Representational State Transfer)服务 它主要用于AWS云，用于定位服务，以实现中间层服务器的负载平衡和故障转移，我们称此服务为Eureka服务器\nEureka也有一个基于java的客户端组件，Eureka客户端，这使得与服务的交互更加容易，同时客户端也有一个内置的负载平衡器，它执行基本的循环负载均衡。\n2.1.1 自我保护机制 自我保护机制主要在Eureka Client和Eureka Server之间存在网络分区的情况下发挥保护作用，在服务器端和客户端都有对应实现.\n假设在某种特定的情况下（如网络故障）, Eureka Client和Eureka Server无法进行通信，此时Eureka Client无法向Eureka Server发起注册和续约请求，Eureka Server中就可能因注册表中的服务实例租约出现大量过期而面临被剔除的危险，然而此时的Eureka Client可能是处于健康状态的（可接受服务访问），如果直接将注册表中大量过期的服务实例租约剔除显然是不合理的，自我保护机制提高了eureka的服务可用性。\n当自我保护机制触发时，Eureka不再从注册列表中移除因为长时间没收到心跳而应该过期的服务，仍能查询服务信息并且接受新服务注册请求，也就是其他功能是正常的。\n这里思考下，如果eureka节点A触发自我保护机制过程中，有新服务注册了然后网络回复后，其他peer节点能收到A节点的新服务信息，数据同步到peer过程中是有网络异常重试的，也就是说，是能保证最终一致性的。\n2.1.2 服务发现原理 eureka server可以集群部署，多个节点之间会进行（异步方式）数据同步，保证数据最终一致性，Eureka Server作为一个开箱即用的服务注册中心，提供的功能包括：服务注册、接收服务心跳、服务剔除、服务下线等。\n需要注意的是，Eureka Server同时也是一个Eureka Client，在不禁止Eureka Server的客户端行为时，它会向它配置文件中的其他Eureka Server进行拉取注册表、服务注册和发送心跳等操作。\neureka server端通过appName和instanceInfoId来唯一区分一个服务实例，服务实例信息是保存在哪里呢？其实就是一个Map中：\n1 2 // 第一层的key是appName，第二层的key是instanceInfoIdprivate final ConcurrentHashMap",
+  "wordCount" : "5430",
   "inLanguage": "en",
   "datePublished": "2023-03-12T20:59:03+08:00",
   "dateModified": "2023-03-12T20:59:03+08:00",
@@ -218,6 +218,9 @@
     <h1 class="post-title">
       拼多多面经
     </h1>
+    <div class="post-description">
+      拼多多社招面试总结
+    </div>
     <div class="post-meta">
 
 
@@ -229,14 +232,14 @@
 
 
 
-创建:&nbsp;<span title='2023-03-12 20:59:03 +0800 CST'>2023-03-12</span>&nbsp;|&nbsp;更新:&nbsp;2023-03-12&nbsp;|&nbsp;字数:&nbsp;0字&nbsp;|&nbsp;时长: 0分钟&nbsp;|&nbsp;
+创建:&nbsp;<span title='2023-03-12 20:59:03 +0800 CST'>2023-03-12</span>&nbsp;|&nbsp;更新:&nbsp;2023-03-12&nbsp;|&nbsp;字数:&nbsp;5430字&nbsp;|&nbsp;时长: 11分钟&nbsp;|&nbsp;
 作者:&nbsp;ShengQian
 
 
     &nbsp;|&nbsp;标签: &nbsp;
     <ul class="post-tags-meta">
-        <a href="https://csqread.top/tags/%E6%A0%87%E7%AD%BE1/">标签1</a>
-        <a href="https://csqread.top/tags/%E6%A0%87%E7%AD%BE2/">、标签2</a>
+        <a href="https://csqread.top/tags/%E9%9D%A2%E8%AF%95/">面试</a>
+        <a href="https://csqread.top/tags/%E9%9D%A2%E8%AF%95%E7%BB%8F%E9%AA%8C%E4%B8%8E%E6%80%BB%E7%BB%93/">、面试经验与总结</a>
     </ul>
 
     
@@ -285,12 +288,230 @@
     &nbsp;| 评论: &nbsp; <span id="comment_count"></span>
 
 </div>
-  </header> 
+  </header> <aside id="toc-container" class="toc-container wide">
+    <div class="toc">
+        <details  open>
+            <summary accesskey="c" title="(Alt + C)">
+                <span class="details">Table of Contents</span>
+            </summary>
+
+            <div class="inner"><ul>
+                    <li>
+                        <a href="#1%e9%9d%a2%e8%af%95%e9%a2%98%e7%9b%ae" aria-label="1、面试题目">1、面试题目</a></li>
+                    <li>
+                        <a href="#2%e6%80%bb%e7%bb%93%e4%b8%8e%e5%9b%9e%e9%a1%be" aria-label="2、总结与回顾">2、总结与回顾</a><ul>
+                            
+                    <li>
+                        <a href="#21eureka" aria-label="2.1、Eureka">2.1、Eureka</a><ul>
+                            
+                    <li>
+                        <a href="#211-%e8%87%aa%e6%88%91%e4%bf%9d%e6%8a%a4%e6%9c%ba%e5%88%b6" aria-label="2.1.1 自我保护机制">2.1.1 自我保护机制</a></li>
+                    <li>
+                        <a href="#212-%e6%9c%8d%e5%8a%a1%e5%8f%91%e7%8e%b0%e5%8e%9f%e7%90%86" aria-label="2.1.2 服务发现原理">2.1.2 服务发现原理</a></li>
+                    <li>
+                        <a href="#213-%e6%9c%8d%e5%8a%a1%e6%b3%a8%e5%86%8c" aria-label="2.1.3 服务注册">2.1.3 服务注册</a></li>
+                    <li>
+                        <a href="#214-%e5%86%99%e5%85%a5%e6%9c%ac%e5%9c%b0redistry" aria-label="2.1.4 写入本地redistry">2.1.4 写入本地redistry</a></li>
+                    <li>
+                        <a href="#215-%e5%90%8c%e6%ad%a5%e7%bb%99%e5%85%b6%e4%bb%96peer" aria-label="2.1.5 同步给其他peer">2.1.5 同步给其他peer</a></li>
+                    <li>
+                        <a href="#216-%e6%9c%8d%e5%8a%a1%e7%bb%ad%e7%ba%a6" aria-label="2.1.6 服务续约">2.1.6 服务续约</a></li>
+                    <li>
+                        <a href="#217-%e6%9c%8d%e5%8a%a1%e5%a4%b1%e6%95%88%e5%89%94%e9%99%a4" aria-label="2.1.7 服务失效剔除">2.1.7 服务失效剔除</a></li>
+                    <li>
+                        <a href="#218-%e6%9c%8d%e5%8a%a1%e4%bf%a1%e6%81%af%e6%8b%89%e5%8f%96" aria-label="2.1.8 服务信息拉取">2.1.8 服务信息拉取</a></li>
+                    <li>
+                        <a href="#219-eureka-server%e7%9a%84%e4%bc%b8%e7%bc%a9%e5%ae%b9" aria-label="2.1.9 Eureka server的伸缩容">2.1.9 Eureka server的伸缩容</a></li>
+                    <li>
+                        <a href="#2110-service-provider" aria-label="2.1.10 Service Provider">2.1.10 Service Provider</a></li>
+                    <li>
+                        <a href="#2211-service-consumer" aria-label="2.2.11 Service Consumer">2.2.11 Service Consumer</a></li>
+                    <li>
+                        <a href="#2212-%e6%80%bb%e7%bb%93" aria-label="2.2.12 总结">2.2.12 总结</a>
+                    </li>
+                </ul>
+                </li>
+                </ul>
+                </li>
+                </ul>
+            </div>
+        </details>
+    </div>
+</aside>
+<script>
+    let activeElement;
+    let elements;
+    window.addEventListener('DOMContentLoaded', function (event) {
+        checkTocPosition();
+
+        elements = document.querySelectorAll('h1[id],h2[id],h3[id],h4[id],h5[id],h6[id]');
+         
+         activeElement = elements[0];
+         const id = encodeURI(activeElement.getAttribute('id')).toLowerCase();
+         document.querySelector(`.inner ul li a[href="#${id}"]`).classList.add('active');
+     }, false);
+
+    window.addEventListener('resize', function(event) {
+        checkTocPosition();
+    }, false);
+
+    window.addEventListener('scroll', () => {
+        
+        activeElement = Array.from(elements).find((element) => {
+            if ((getOffsetTop(element) - window.pageYOffset) > 0 && 
+                (getOffsetTop(element) - window.pageYOffset) < window.innerHeight/2) {
+                return element;
+            }
+        }) || activeElement
+
+        elements.forEach(element => {
+             const id = encodeURI(element.getAttribute('id')).toLowerCase();
+             if (element === activeElement){
+                 document.querySelector(`.inner ul li a[href="#${id}"]`).classList.add('active');
+             } else {
+                 document.querySelector(`.inner ul li a[href="#${id}"]`).classList.remove('active');
+             }
+         })
+     }, false);
+
+    const main = parseInt(getComputedStyle(document.body).getPropertyValue('--article-width'), 10);
+    const toc = parseInt(getComputedStyle(document.body).getPropertyValue('--toc-width'), 10);
+    const gap = parseInt(getComputedStyle(document.body).getPropertyValue('--gap'), 10);
+
+    function checkTocPosition() {
+        const width = document.body.scrollWidth;
+
+        if (width - main - (toc * 2) - (gap * 4) > 0) {
+            document.getElementById("toc-container").classList.add("wide");
+        } else {
+            document.getElementById("toc-container").classList.remove("wide");
+        }
+    }
+
+    function getOffsetTop(element) {
+        if (!element.getClientRects().length) {
+            return 0;
+        }
+        let rect = element.getBoundingClientRect();
+        let win = element.ownerDocument.defaultView;
+        return rect.top + win.pageYOffset;   
+    }
+</script>
+  <div class="post-content"><h1 id="1面试题目">1、面试题目<a hidden class="anchor" aria-hidden="true" href="#1面试题目">#</a></h1>
+<p>记录下社招面试拼多多的总结与心得，以及失败的原因吧。</p>
+<p>1、服务注册是如何发现的，eureka的基本原理， 容器ip是动态的还是静态的</p>
+<p>答：eureka, 基本原理大概说个一些：包括服务注册，服务发现，心跳机制，服务下线， 自我保护机制等等。</p>
+<p>2、转账，支付如何保证数据一致性的， 说一下分布式事务的实现， 消息的生产和消费机制。</p>
+<p>这个基本上说出个一二三来。其实就是分布式事务，保证这个数据的一致性就是要保证事务的原子性。即，事务要么全部成功，要么全部失败。我就提了下XA协议和TCC模式，具体如何实现的我也不太清楚。</p>
+<p>3、mysql 索引优化，子查询优化</p>
+<p>这里基本上都讲出来了。之前做过很多压测，包括让sql走上索引，参数表添加缓存等等。</p>
+<p>4、线上有排查过什么问题.</p>
+<p>5、MQ的实现原理</p>
+<p>5、图算法题</p>
+<p>还有些问题已经忘了。</p>
+<h1 id="2总结与回顾">2、总结与回顾<a hidden class="anchor" aria-hidden="true" href="#2总结与回顾">#</a></h1>
+<p>其实关于这次面试，我还是没有做好完全的准备，而且是近三年以来的第一次面试，心里难免还是有点紧张。导致我有些东西知道的知识可能一时半会想不起来。后面把这些问到的知识点再复习一下。基本上只是浅浅的了解了一下，细说一下底层原理我就懵了。大概知道我们有这么个流程，知道哪里出了问题该找谁来看。因为现在吧，大公司基本上就是这么个情况， 包括中间件团队，数据库团队，DTF团队，DCF团队等等。基本上我们只用知道这些东西有，然后找相应团队的负责人帮忙看下问题就能解决。我们都是在脚手架上做着CURD。</p>
+<p>但是还是要把面试问到的东西基本原理做一个小小的总结和记录:</p>
+<h2 id="21eureka">2.1、Eureka<a hidden class="anchor" aria-hidden="true" href="#21eureka">#</a></h2>
+<p>Eureka是Netflix开源的一款提供服务注册和发现的产品， 开源地址为 <a href = "https://link.zhihu.com/?target=https%3A//github.com/Netflix/eureka"> Eureka</a>,  注册中心是分布式开发的核心组件之一</p>
+<p>而eureka是spring cloud推荐的注册中心实现, Eureka是一个REST (Representational State Transfer)服务
+它主要用于AWS云，用于定位服务，以实现中间层服务器的负载平衡和故障转移，我们称此服务为Eureka服务器</p>
+<p>Eureka也有一个基于java的客户端组件，Eureka客户端，这使得与服务的交互更加容易，同时客户端也有一个内置的负载平衡器，它执行基本的循环负载均衡。</p>
+<h3 id="211-自我保护机制">2.1.1 自我保护机制<a hidden class="anchor" aria-hidden="true" href="#211-自我保护机制">#</a></h3>
+<p>自我保护机制主要在Eureka Client和Eureka Server之间存在网络分区的情况下发挥保护作用，在服务器端和客户端都有对应实现.</p>
+<p>假设在某种特定的情况下（如网络故障）, Eureka Client和Eureka Server无法进行通信，此时Eureka Client无法向Eureka Server发起注册和续约请求，Eureka Server中就可能因注册表中的服务实例租约出现大量过期而面临被剔除的危险，然而此时的Eureka Client可能是处于健康状态的（可接受服务访问），如果直接将注册表中大量过期的服务实例租约剔除显然是不合理的，自我保护机制提高了eureka的服务可用性。</p>
+<p>当自我保护机制触发时，Eureka不再从注册列表中移除因为长时间没收到心跳而应该过期的服务，仍能查询服务信息并且接受新服务注册请求，也就是其他功能是正常的。</p>
+<p>这里思考下，如果eureka节点A触发自我保护机制过程中，有新服务注册了然后网络回复后，其他peer节点能收到A节点的新服务信息，数据同步到peer过程中是有网络异常重试的，也就是说，是能保证最终一致性的。</p>
+<h3 id="212-服务发现原理">2.1.2 服务发现原理<a hidden class="anchor" aria-hidden="true" href="#212-服务发现原理">#</a></h3>
+<p>eureka server可以集群部署，多个节点之间会进行（异步方式）数据同步，保证数据最终一致性，Eureka Server作为一个开箱即用的服务注册中心，提供的功能包括：服务注册、接收服务心跳、服务剔除、服务下线等。</p>
+<p>需要注意的是，Eureka Server同时也是一个Eureka Client，在不禁止Eureka Server的客户端行为时，它会向它配置文件中的其他Eureka Server进行拉取注册表、服务注册和发送心跳等操作。</p>
+<p>eureka server端通过appName和instanceInfoId来唯一区分一个服务实例，服务实例信息是保存在哪里呢？其实就是一个Map中：</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>// 第一层的key是appName，第二层的key是instanceInfoIdprivate final ConcurrentHashMap&lt;String, Map&lt;String, Lease&lt;InstanceInfo&gt;&gt;&gt; registry
+</span></span><span style="display:flex;"><span>= new ConcurrentHashMap&lt;String, Map&lt;String, Lease&lt;InstanceInfo&gt;&gt;&gt;();
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="213-服务注册">2.1.3 服务注册<a hidden class="anchor" aria-hidden="true" href="#213-服务注册">#</a></h3>
+<p>Service Provider启动时会将服务信息（InstanceInfo）发送给eureka server，eureka server接收到之后会写入registry中，服务注册默认过期时间DEFAULT_DURATION_IN_SECS = 90秒。InstanceInfo写入到本地registry之后，然后同步给其他peer节点，对应方法com.netflix.eureka.registry.PeerAwareInstanceRegistryImpl#replicateToPeers。</p>
+<h3 id="214-写入本地redistry">2.1.4 写入本地redistry<a hidden class="anchor" aria-hidden="true" href="#214-写入本地redistry">#</a></h3>
+<p>服务信息（InstanceInfo）保存在Lease中，写入本地registry对应方法com.netflix.eureka.registry.PeerAwareInstanceRegistryImpl#register，Lease统一保存在内存的ConcurrentHashMap中，在服务注册过程中，首先加个读锁，然后从registry中判断该Lease是否已存在，如果已存在则比较lastDirtyTimestamp时间戳，取二者最大的服务信息，避免发生数据覆盖。使用InstanceInfo创建一个新的InstanceInfo：</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">12
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">13
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">14
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">15
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">16
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">if</span> (existingLastDirtyTimestamp &gt; registrationLastDirtyTimestamp) {
+</span></span><span style="display:flex;"><span>    <span style="color:#007f7f">// 已存在Lease则比较时间戳，取二者最大值
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>    registrant = existingLease.<span style="color:#007f7f">getHolder</span>();
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>Lease&lt;InstanceInfo&gt; lease = <span style="color:#fff;font-weight:bold">new</span> Lease&lt;InstanceInfo&gt;(registrant, leaseDuration);
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">if</span> (existingLease != <span style="color:#fff;font-weight:bold">null</span>) {
+</span></span><span style="display:flex;"><span>    <span style="color:#007f7f">// 已存在Lease则取上次up时间戳
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>    lease.<span style="color:#007f7f">setServiceUpTimestamp</span>(existingLease.<span style="color:#007f7f">getServiceUpTimestamp</span>());
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">public</span> Lease(T r, <span style="color:#fff;font-weight:bold">int</span> durationInSecs) {
+</span></span><span style="display:flex;"><span>    holder = r;
+</span></span><span style="display:flex;"><span>    registrationTimestamp = System.<span style="color:#007f7f">currentTimeMillis</span>(); <span style="color:#007f7f">// 当前时间
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>    lastUpdateTimestamp = registrationTimestamp;
+</span></span><span style="display:flex;"><span>    duration = (durationInSecs * <span style="color:#ff0;font-weight:bold">1000</span>);
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="215-同步给其他peer">2.1.5 同步给其他peer<a hidden class="anchor" aria-hidden="true" href="#215-同步给其他peer">#</a></h3>
+<p>InstanceInfo写入到本地registry之后，然后同步给其他peer节点，对应方法com.netflix.eureka.registry.PeerAwareInstanceRegistryImpl#replicateToPeers。如果当前节点接收到的InstanceInfo本身就是另一个节点同步来的，则不会继续同步给其他节点，避免形成“广播效应”；InstanceInfo同步时会排除当前节点。</p>
+<p>InstanceInfo的状态有依以下几种：Heartbeat, Register, Cancel, StatusUpdate, DeleteStatusOverride，默认情况下同步操作时批量异步执行的，同步请求首先缓存到Map中，key为requestType+appName+id，然后由发送线程将请求发送到peer节点。</p>
+<p>Peer之间的状态是采用异步的方式同步的，所以不保证节点间的状态一定是一致的，不过基本能保证最终状态是一致的。结合服务发现的场景，实际上也并不需要节点间的状态强一致。在一段时间内（比如30秒），节点A比节点B多一个服务实例或少一个服务实例，在业务上也是完全可以接受的（Service Consumer侧一般也会实现错误重试和负载均衡机制）。所以按照CAP理论，Eureka的选择就是放弃C，选择AP。
+如果同步过程中，出现了异常怎么办呢，这时会根据异常信息做对应的处理，如果是读取超时或者网络连接异常，则稍后重试；如果其他异常则打印错误日志不再后续处理。</p>
+<h3 id="216-服务续约">2.1.6 服务续约<a hidden class="anchor" aria-hidden="true" href="#216-服务续约">#</a></h3>
+<p>Renew（服务续约）操作由Service Provider定期调用，类似于heartbeat。主要是用来告诉Eureka Server Service Provider还活着，避免服务被剔除掉。renew接口实现方式和register基本一致：首先更新自身状态，再同步到其它Peer，服务续约也就是把过期时间设置为当前时间加上duration的值。</p>
+<p>注意：服务注册如果InstanceInfo不存在则加入，存在则更新；而服务预约只是进行更新，如果InstanceInfo不存在直接返回false。</p>
+<h3 id="217-服务失效剔除">2.1.7 服务失效剔除<a hidden class="anchor" aria-hidden="true" href="#217-服务失效剔除">#</a></h3>
+<p>Eureka Server中有一个EvictionTask，用于检查服务是否失效。Eviction（失效服务剔除）用来定期（默认为每60秒）在Eureka Server检测失效的服务，检测标准就是超过一定时间没有Renew的服务。默认失效时间为90秒，也就是如果有服务超过90秒没有向Eureka Server发起Renew请求的话，就会被当做失效服务剔除掉。失效时间可以通过eureka.instance.leaseExpirationDurationInSeconds进行配置，定期扫描时间可以通过eureka.server.evictionIntervalTimerInMs进行配置。</p>
+<p>服务剔除#evict方法中有很多限制，都是为了保证Eureka Server的可用性：比如自我保护时期不能进行服务剔除操作、过期操作是分批进行、服务剔除是随机逐个剔除，剔除均匀分布在所有应用中，防止在同一时间内同一服务集群中的服务全部过期被剔除，以致大量剔除发生时，在未进行自我保护前促使了程序的崩溃。</p>
+<h3 id="218-服务信息拉取">2.1.8 服务信息拉取<a hidden class="anchor" aria-hidden="true" href="#218-服务信息拉取">#</a></h3>
+<p>Eureka consumer服务信息的拉取分为全量式拉取和增量式拉取，eureka consumer启动时进行全量拉取，运行过程中由定时任务进行增量式拉取，如果网络出现异常，可能导致先拉取的数据被旧数据覆盖（比如上一次拉取线程获取结果较慢，数据已更新情况下使用返回结果再次更新，导致数据版本落后），产生脏数据。对此，eureka通过类型AtomicLong的fetchRegistryGeneration对数据版本进行跟踪，版本不一致则表示此次拉取到的数据已过期。</p>
+<p>fetchRegistryGeneration过程是在拉取数据之前，执行fetchRegistryGeneration.get获取当前版本号，获取到数据之后，通过fetchRegistryGeneration.compareAndSet来判断当前版本号是否已更新。
+注意：如果增量式更新出现意外，会再次进行一次全量拉取更新。</p>
+<h3 id="219-eureka-server的伸缩容">2.1.9 Eureka server的伸缩容<a hidden class="anchor" aria-hidden="true" href="#219-eureka-server的伸缩容">#</a></h3>
+<p>Eureka Server是怎么知道有多少Peer的呢？Eureka Server在启动后会调用EurekaClientConfig.getEurekaServerServiceUrls来获取所有的Peer节点，并且会定期更新。定期更新频率可以通过eureka.server.peerEurekaNodesUpdateIntervalMs配置。</p>
+<p>这个方法的默认实现是从配置文件读取，所以如果Eureka Server节点相对固定的话，可以通过在配置文件中配置来实现。如果希望能更灵活的控制Eureka Server节点，比如动态扩容/缩容，那么可以override getEurekaServerServiceUrls方法，提供自己的实现，比如我们的项目中会通过数据库读取Eureka Server列表。</p>
+<p>eureka server启动时把自己当做是Service Consumer从其它Peer Eureka获取所有服务的注册信息。然后对每个服务信息，在自己这里执行Register，isReplication=true，从而完成初始化。</p>
+<h3 id="2110-service-provider">2.1.10 Service Provider<a hidden class="anchor" aria-hidden="true" href="#2110-service-provider">#</a></h3>
+<p>Service Provider启动时首先时注册到Eureka Service上，这样其他消费者才能进行服务调用，除了在启动时之外，只要实例状态信息有变化，也会注册到Eureka Service。需要注意的是，需要确保配置eureka.client.registerWithEureka=true。register逻辑在方法AbstractJerseyEurekaHttpClient.register中，Service Provider会依次注册到配置的Eureka Server Url上，如果注册出现异常，则会继续注册其他的url。</p>
+<p>Renew操作会在Service Provider端定期发起，用来通知Eureka Server自己还活着。 这里instance.leaseRenewalIntervalInSeconds属性表示Renew频率。默认是30秒，也就是每30秒会向Eureka Server发起Renew操作。这部分逻辑在HeartbeatThread类中。在Service Provider服务shutdown的时候，需要及时通知Eureka Server把自己剔除，从而避免客户端调用已经下线的服务，逻辑本身比较简单，通过对方法标记@PreDestroy，从而在服务shutdown的时候会被触发。</p>
+<h3 id="2211-service-consumer">2.2.11 Service Consumer<a hidden class="anchor" aria-hidden="true" href="#2211-service-consumer">#</a></h3>
+<p>Service Consumer这块的实现相对就简单一些，因为它只涉及到从Eureka Server获取服务列表和更新服务列表。Service Consumer在启动时会从Eureka Server获取所有服务列表，并在本地缓存。需要注意的是，需要确保配置eureka.client.shouldFetchRegistry=true。由于在本地有一份Service Registries缓存，所以需要定期更新，定期更新频率可以通过eureka.client.registryFetchIntervalSeconds配置。</p>
+<h3 id="2212-总结">2.2.12 总结<a hidden class="anchor" aria-hidden="true" href="#2212-总结">#</a></h3>
+<p>我们为什么要使用Eureka呢，在分布式开发架构中， 任何单点的服务都不能保证不会中断，因此需要服务发现机制，某个节点中断后，服务消费者能及时感知到保证服务高可用。注册中心除了Eureka之外，还有Zookeeper、consul、nacos等解决方案，实现原理不同， 各自适用于不同业务场景。</p>
+
+
+  </div>
 
   <footer class="post-footer">
     <ul class="post-tags">
-      <li><a href="https://csqread.top/tags/%E6%A0%87%E7%AD%BE1/">标签1</a></li>
-      <li><a href="https://csqread.top/tags/%E6%A0%87%E7%AD%BE2/">标签2</a></li>
+      <li><a href="https://csqread.top/tags/%E9%9D%A2%E8%AF%95/">面试</a></li>
+      <li><a href="https://csqread.top/tags/%E9%9D%A2%E8%AF%95%E7%BB%8F%E9%AA%8C%E4%B8%8E%E6%80%BB%E7%BB%93/">面试经验与总结</a></li>
     </ul>
 <nav class="paginav">
   <a class="prev" href="https://csqread.top/posts/blog/hugo%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/">
