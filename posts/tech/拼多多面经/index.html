@@ -105,8 +105,8 @@
   "keywords": [
     "面试", "面试经验与总结"
   ],
-  "articleBody": "1、面试题目 记录下社招面试拼多多的总结与心得，以及失败的原因吧。\n1、服务注册是如何发现的，eureka的基本原理， 容器ip是动态的还是静态的\n答：eureka, 基本原理大概说个一些：包括服务注册，服务发现，心跳机制，服务下线， 自我保护机制等等。\n2、转账，支付如何保证数据一致性的， 说一下分布式事务的实现， 消息的生产和消费机制。\n这个基本上说出个一二三来。其实就是分布式事务，保证这个数据的一致性就是要保证事务的原子性。即，事务要么全部成功，要么全部失败。我就提了下XA协议和TCC模式，具体如何实现的我也不太清楚。\n3、mysql 索引优化，子查询优化\n这里基本上都讲出来了。之前做过很多压测，包括让sql走上索引，参数表添加缓存等等。\n4、线上有排查过什么问题.\n5、MQ的实现原理\n5、图算法题\n还有些问题已经忘了。\n2、总结与回顾 其实关于这次面试，我还是没有做好完全的准备，而且是近三年以来的第一次面试，心里难免还是有点紧张。导致我有些东西知道的知识可能一时半会想不起来。后面把这些问到的知识点再复习一下。基本上只是浅浅的了解了一下，细说一下底层原理我就懵了。大概知道我们有这么个流程，知道哪里出了问题该找谁来看。因为现在吧，大公司基本上就是这么个情况， 包括中间件团队，数据库团队，DTF团队，DCF团队等等。基本上我们只用知道这些东西有，然后找相应团队的负责人帮忙看下问题就能解决。我们都是在脚手架上做着CURD。\n但是还是要把面试问到的东西基本原理做一个小小的总结和记录:\n2.1、Eureka Eureka是Netflix开源的一款提供服务注册和发现的产品， 开源地址为 Eureka, 注册中心是分布式开发的核心组件之一\n而eureka是spring cloud推荐的注册中心实现, Eureka是一个REST (Representational State Transfer)服务 它主要用于AWS云，用于定位服务，以实现中间层服务器的负载平衡和故障转移，我们称此服务为Eureka服务器\nEureka也有一个基于java的客户端组件，Eureka客户端，这使得与服务的交互更加容易，同时客户端也有一个内置的负载平衡器，它执行基本的循环负载均衡。\n2.1.1 自我保护机制 自我保护机制主要在Eureka Client和Eureka Server之间存在网络分区的情况下发挥保护作用，在服务器端和客户端都有对应实现.\n假设在某种特定的情况下（如网络故障）, Eureka Client和Eureka Server无法进行通信，此时Eureka Client无法向Eureka Server发起注册和续约请求，Eureka Server中就可能因注册表中的服务实例租约出现大量过期而面临被剔除的危险，然而此时的Eureka Client可能是处于健康状态的（可接受服务访问），如果直接将注册表中大量过期的服务实例租约剔除显然是不合理的，自我保护机制提高了eureka的服务可用性。\n当自我保护机制触发时，Eureka不再从注册列表中移除因为长时间没收到心跳而应该过期的服务，仍能查询服务信息并且接受新服务注册请求，也就是其他功能是正常的。\n这里思考下，如果eureka节点A触发自我保护机制过程中，有新服务注册了然后网络回复后，其他peer节点能收到A节点的新服务信息，数据同步到peer过程中是有网络异常重试的，也就是说，是能保证最终一致性的。\n2.1.2 服务发现原理 eureka server可以集群部署，多个节点之间会进行（异步方式）数据同步，保证数据最终一致性，Eureka Server作为一个开箱即用的服务注册中心，提供的功能包括：服务注册、接收服务心跳、服务剔除、服务下线等。\n需要注意的是，Eureka Server同时也是一个Eureka Client，在不禁止Eureka Server的客户端行为时，它会向它配置文件中的其他Eureka Server进行拉取注册表、服务注册和发送心跳等操作。\neureka server端通过appName和instanceInfoId来唯一区分一个服务实例，服务实例信息是保存在哪里呢？其实就是一个Map中：\n1 2 // 第一层的key是appName，第二层的key是instanceInfoIdprivate final ConcurrentHashMap",
-  "wordCount" : "5430",
+  "articleBody": "面试题目 记录下社招面试拼多多的总结与心得，以及失败的原因吧。\n1、服务注册是如何发现的，eureka的基本原理， 容器ip是动态的还是静态的\n答：eureka, 基本原理大概说个一些：包括服务注册，服务发现，心跳机制，服务下线， 自我保护机制等等。\n2、转账，支付如何保证数据一致性的， 说一下分布式事务的实现， 消息的生产和消费机制。\n这个基本上说出个一二三来。其实就是分布式事务，保证这个数据的一致性就是要保证事务的原子性。即，事务要么全部成功，要么全部失败。我就提了下XA协议和TCC模式，具体如何实现的我也不太清楚。\n3、mysql 索引优化，子查询优化\n这里基本上都讲出来了。之前做过很多压测，包括让sql走上索引，参数表添加缓存等等。\n4、线上有排查过什么问题.\n5、MQ的实现原理\n5、图算法题\n还有些问题已经忘了。\n总结与回顾 其实关于这次面试，我还是没有做好完全的准备，而且是近三年以来的第一次面试，心里难免还是有点紧张。导致我有些东西知道的知识可能一时半会想不起来。后面把这些问到的知识点再复习一下。基本上只是浅浅的了解了一下，细说一下底层原理我就懵了。大概知道我们有这么个流程，知道哪里出了问题该找谁来看。因为现在吧，大公司基本上就是这么个情况， 包括中间件团队，数据库团队，DTF团队，DCF团队等等。基本上我们只用知道这些东西有，然后找相应团队的负责人帮忙看下问题就能解决。我们都是在脚手架上做着CURD。\n但是还是要把面试问到的东西基本原理做一个小小的总结和记录:\nEureka Eureka是Netflix开源的一款提供服务注册和发现的产品， 开源地址为 Eureka, 注册中心是分布式开发的核心组件之一\n而eureka是spring cloud推荐的注册中心实现, Eureka是一个REST (Representational State Transfer)服务 它主要用于AWS云，用于定位服务，以实现中间层服务器的负载平衡和故障转移，我们称此服务为Eureka服务器\nEureka也有一个基于java的客户端组件，Eureka客户端，这使得与服务的交互更加容易，同时客户端也有一个内置的负载平衡器，它执行基本的循环负载均衡。\n自我保护机制 自我保护机制主要在Eureka Client和Eureka Server之间存在网络分区的情况下发挥保护作用，在服务器端和客户端都有对应实现.\n假设在某种特定的情况下（如网络故障）, Eureka Client和Eureka Server无法进行通信，此时Eureka Client无法向Eureka Server发起注册和续约请求，Eureka Server中就可能因注册表中的服务实例租约出现大量过期而面临被剔除的危险，然而此时的Eureka Client可能是处于健康状态的（可接受服务访问），如果直接将注册表中大量过期的服务实例租约剔除显然是不合理的，自我保护机制提高了eureka的服务可用性。\n当自我保护机制触发时，Eureka不再从注册列表中移除因为长时间没收到心跳而应该过期的服务，仍能查询服务信息并且接受新服务注册请求，也就是其他功能是正常的。\n这里思考下，如果eureka节点A触发自我保护机制过程中，有新服务注册了然后网络回复后，其他peer节点能收到A节点的新服务信息，数据同步到peer过程中是有网络异常重试的，也就是说，是能保证最终一致性的。\n服务发现原理 eureka server可以集群部署，多个节点之间会进行（异步方式）数据同步，保证数据最终一致性，Eureka Server作为一个开箱即用的服务注册中心，提供的功能包括：服务注册、接收服务心跳、服务剔除、服务下线等。\n需要注意的是，Eureka Server同时也是一个Eureka Client，在不禁止Eureka Server的客户端行为时，它会向它配置文件中的其他Eureka Server进行拉取注册表、服务注册和发送心跳等操作。\neureka server端通过appName和instanceInfoId来唯一区分一个服务实例，服务实例信息是保存在哪里呢？其实就是一个Map中：\n1 2 // 第一层的key是appName，第二层的key是instanceInfoIdprivate final ConcurrentHashMap",
+  "wordCount" : "8393",
   "inLanguage": "en",
   "datePublished": "2023-03-12T20:59:03+08:00",
   "dateModified": "2023-03-12T20:59:03+08:00",
@@ -232,7 +232,7 @@
 
 
 
-创建:&nbsp;<span title='2023-03-12 20:59:03 +0800 CST'>2023-03-12</span>&nbsp;|&nbsp;更新:&nbsp;2023-03-12&nbsp;|&nbsp;字数:&nbsp;5430字&nbsp;|&nbsp;时长: 11分钟&nbsp;|&nbsp;
+创建:&nbsp;<span title='2023-03-12 20:59:03 +0800 CST'>2023-03-12</span>&nbsp;|&nbsp;更新:&nbsp;2023-03-12&nbsp;|&nbsp;字数:&nbsp;8393字&nbsp;|&nbsp;时长: 17分钟&nbsp;|&nbsp;
 作者:&nbsp;ShengQian
 
 
@@ -297,38 +297,59 @@
 
             <div class="inner"><ul>
                     <li>
-                        <a href="#1%e9%9d%a2%e8%af%95%e9%a2%98%e7%9b%ae" aria-label="1、面试题目">1、面试题目</a></li>
+                        <a href="#%e9%9d%a2%e8%af%95%e9%a2%98%e7%9b%ae" aria-label="面试题目">面试题目</a></li>
                     <li>
-                        <a href="#2%e6%80%bb%e7%bb%93%e4%b8%8e%e5%9b%9e%e9%a1%be" aria-label="2、总结与回顾">2、总结与回顾</a><ul>
+                        <a href="#%e6%80%bb%e7%bb%93%e4%b8%8e%e5%9b%9e%e9%a1%be" aria-label="总结与回顾">总结与回顾</a><ul>
                             
                     <li>
-                        <a href="#21eureka" aria-label="2.1、Eureka">2.1、Eureka</a><ul>
+                        <a href="#eureka" aria-label="Eureka">Eureka</a><ul>
                             
                     <li>
-                        <a href="#211-%e8%87%aa%e6%88%91%e4%bf%9d%e6%8a%a4%e6%9c%ba%e5%88%b6" aria-label="2.1.1 自我保护机制">2.1.1 自我保护机制</a></li>
+                        <a href="#%e8%87%aa%e6%88%91%e4%bf%9d%e6%8a%a4%e6%9c%ba%e5%88%b6" aria-label="自我保护机制">自我保护机制</a></li>
                     <li>
-                        <a href="#212-%e6%9c%8d%e5%8a%a1%e5%8f%91%e7%8e%b0%e5%8e%9f%e7%90%86" aria-label="2.1.2 服务发现原理">2.1.2 服务发现原理</a></li>
+                        <a href="#%e6%9c%8d%e5%8a%a1%e5%8f%91%e7%8e%b0%e5%8e%9f%e7%90%86" aria-label="服务发现原理">服务发现原理</a></li>
                     <li>
-                        <a href="#213-%e6%9c%8d%e5%8a%a1%e6%b3%a8%e5%86%8c" aria-label="2.1.3 服务注册">2.1.3 服务注册</a></li>
+                        <a href="#%e6%9c%8d%e5%8a%a1%e6%b3%a8%e5%86%8c" aria-label="服务注册">服务注册</a></li>
                     <li>
-                        <a href="#214-%e5%86%99%e5%85%a5%e6%9c%ac%e5%9c%b0redistry" aria-label="2.1.4 写入本地redistry">2.1.4 写入本地redistry</a></li>
+                        <a href="#%e5%86%99%e5%85%a5%e6%9c%ac%e5%9c%b0redistry" aria-label="写入本地redistry">写入本地redistry</a></li>
                     <li>
-                        <a href="#215-%e5%90%8c%e6%ad%a5%e7%bb%99%e5%85%b6%e4%bb%96peer" aria-label="2.1.5 同步给其他peer">2.1.5 同步给其他peer</a></li>
+                        <a href="#%e5%90%8c%e6%ad%a5%e7%bb%99%e5%85%b6%e4%bb%96peer" aria-label="同步给其他peer">同步给其他peer</a></li>
                     <li>
-                        <a href="#216-%e6%9c%8d%e5%8a%a1%e7%bb%ad%e7%ba%a6" aria-label="2.1.6 服务续约">2.1.6 服务续约</a></li>
+                        <a href="#%e6%9c%8d%e5%8a%a1%e7%bb%ad%e7%ba%a6" aria-label="服务续约">服务续约</a></li>
                     <li>
-                        <a href="#217-%e6%9c%8d%e5%8a%a1%e5%a4%b1%e6%95%88%e5%89%94%e9%99%a4" aria-label="2.1.7 服务失效剔除">2.1.7 服务失效剔除</a></li>
+                        <a href="#%e6%9c%8d%e5%8a%a1%e5%a4%b1%e6%95%88%e5%89%94%e9%99%a4" aria-label="服务失效剔除">服务失效剔除</a></li>
                     <li>
-                        <a href="#218-%e6%9c%8d%e5%8a%a1%e4%bf%a1%e6%81%af%e6%8b%89%e5%8f%96" aria-label="2.1.8 服务信息拉取">2.1.8 服务信息拉取</a></li>
+                        <a href="#%e6%9c%8d%e5%8a%a1%e4%bf%a1%e6%81%af%e6%8b%89%e5%8f%96" aria-label="服务信息拉取">服务信息拉取</a></li>
                     <li>
-                        <a href="#219-eureka-server%e7%9a%84%e4%bc%b8%e7%bc%a9%e5%ae%b9" aria-label="2.1.9 Eureka server的伸缩容">2.1.9 Eureka server的伸缩容</a></li>
+                        <a href="#eureka-server%e7%9a%84%e4%bc%b8%e7%bc%a9%e5%ae%b9" aria-label="Eureka server的伸缩容">Eureka server的伸缩容</a></li>
                     <li>
-                        <a href="#2110-service-provider" aria-label="2.1.10 Service Provider">2.1.10 Service Provider</a></li>
+                        <a href="#service-provider" aria-label="Service Provider">Service Provider</a></li>
                     <li>
-                        <a href="#2211-service-consumer" aria-label="2.2.11 Service Consumer">2.2.11 Service Consumer</a></li>
+                        <a href="#service-consumer" aria-label="Service Consumer">Service Consumer</a></li>
                     <li>
-                        <a href="#2212-%e6%80%bb%e7%bb%93" aria-label="2.2.12 总结">2.2.12 总结</a>
+                        <a href="#%e6%80%bb%e7%bb%93" aria-label="总结">总结</a></li></ul>
                     </li>
+                    <li>
+                        <a href="#%e6%95%b0%e6%8d%ae%e4%b8%80%e8%87%b4%e6%80%a7%e9%97%ae%e9%a2%98" aria-label="数据一致性问题">数据一致性问题</a><ul>
+                            
+                    <li>
+                        <a href="#%e4%ba%8b%e5%8a%a1" aria-label="事务">事务</a></li>
+                    <li>
+                        <a href="#%e5%88%86%e5%b8%83%e5%bc%8f%e4%ba%8b%e5%8a%a1" aria-label="分布式事务">分布式事务</a><ul>
+                            
+                    <li>
+                        <a href="#2pc" aria-label="2PC">2PC</a><ul>
+                            
+                    <li>
+                        <a href="#%e5%8d%8f%e8%b0%83%e8%80%85%e6%95%85%e9%9a%9c%e5%88%86%e6%9e%90" aria-label="协调者故障分析">协调者故障分析</a></li>
+                    <li>
+                        <a href="#%e5%8d%8f%e8%b0%83%e8%80%85%e6%95%85%e9%9a%9c%e9%80%9a%e8%bf%87%e9%80%89%e4%b8%be%e5%be%97%e5%88%b0%e6%96%b0%e7%9a%84%e5%8d%8f%e8%b0%83%e8%80%85" aria-label="协调者故障，通过选举得到新的协调者">协调者故障，通过选举得到新的协调者</a></li></ul>
+                    </li>
+                    <li>
+                        <a href="#3pc" aria-label="3PC">3PC</a>
+                    </li>
+                </ul>
+                </li>
                 </ul>
                 </li>
                 </ul>
@@ -397,7 +418,7 @@
         return rect.top + win.pageYOffset;   
     }
 </script>
-  <div class="post-content"><h1 id="1面试题目">1、面试题目<a hidden class="anchor" aria-hidden="true" href="#1面试题目">#</a></h1>
+  <div class="post-content"><h1 id="面试题目">面试题目<a hidden class="anchor" aria-hidden="true" href="#面试题目">#</a></h1>
 <p>记录下社招面试拼多多的总结与心得，以及失败的原因吧。</p>
 <p>1、服务注册是如何发现的，eureka的基本原理， 容器ip是动态的还是静态的</p>
 <p>答：eureka, 基本原理大概说个一些：包括服务注册，服务发现，心跳机制，服务下线， 自我保护机制等等。</p>
@@ -409,20 +430,20 @@
 <p>5、MQ的实现原理</p>
 <p>5、图算法题</p>
 <p>还有些问题已经忘了。</p>
-<h1 id="2总结与回顾">2、总结与回顾<a hidden class="anchor" aria-hidden="true" href="#2总结与回顾">#</a></h1>
+<h1 id="总结与回顾">总结与回顾<a hidden class="anchor" aria-hidden="true" href="#总结与回顾">#</a></h1>
 <p>其实关于这次面试，我还是没有做好完全的准备，而且是近三年以来的第一次面试，心里难免还是有点紧张。导致我有些东西知道的知识可能一时半会想不起来。后面把这些问到的知识点再复习一下。基本上只是浅浅的了解了一下，细说一下底层原理我就懵了。大概知道我们有这么个流程，知道哪里出了问题该找谁来看。因为现在吧，大公司基本上就是这么个情况， 包括中间件团队，数据库团队，DTF团队，DCF团队等等。基本上我们只用知道这些东西有，然后找相应团队的负责人帮忙看下问题就能解决。我们都是在脚手架上做着CURD。</p>
 <p>但是还是要把面试问到的东西基本原理做一个小小的总结和记录:</p>
-<h2 id="21eureka">2.1、Eureka<a hidden class="anchor" aria-hidden="true" href="#21eureka">#</a></h2>
+<h2 id="eureka">Eureka<a hidden class="anchor" aria-hidden="true" href="#eureka">#</a></h2>
 <p>Eureka是Netflix开源的一款提供服务注册和发现的产品， 开源地址为 <a href = "https://link.zhihu.com/?target=https%3A//github.com/Netflix/eureka"> Eureka</a>,  注册中心是分布式开发的核心组件之一</p>
 <p>而eureka是spring cloud推荐的注册中心实现, Eureka是一个REST (Representational State Transfer)服务
 它主要用于AWS云，用于定位服务，以实现中间层服务器的负载平衡和故障转移，我们称此服务为Eureka服务器</p>
 <p>Eureka也有一个基于java的客户端组件，Eureka客户端，这使得与服务的交互更加容易，同时客户端也有一个内置的负载平衡器，它执行基本的循环负载均衡。</p>
-<h3 id="211-自我保护机制">2.1.1 自我保护机制<a hidden class="anchor" aria-hidden="true" href="#211-自我保护机制">#</a></h3>
+<h3 id="自我保护机制">自我保护机制<a hidden class="anchor" aria-hidden="true" href="#自我保护机制">#</a></h3>
 <p>自我保护机制主要在Eureka Client和Eureka Server之间存在网络分区的情况下发挥保护作用，在服务器端和客户端都有对应实现.</p>
 <p>假设在某种特定的情况下（如网络故障）, Eureka Client和Eureka Server无法进行通信，此时Eureka Client无法向Eureka Server发起注册和续约请求，Eureka Server中就可能因注册表中的服务实例租约出现大量过期而面临被剔除的危险，然而此时的Eureka Client可能是处于健康状态的（可接受服务访问），如果直接将注册表中大量过期的服务实例租约剔除显然是不合理的，自我保护机制提高了eureka的服务可用性。</p>
 <p>当自我保护机制触发时，Eureka不再从注册列表中移除因为长时间没收到心跳而应该过期的服务，仍能查询服务信息并且接受新服务注册请求，也就是其他功能是正常的。</p>
 <p>这里思考下，如果eureka节点A触发自我保护机制过程中，有新服务注册了然后网络回复后，其他peer节点能收到A节点的新服务信息，数据同步到peer过程中是有网络异常重试的，也就是说，是能保证最终一致性的。</p>
-<h3 id="212-服务发现原理">2.1.2 服务发现原理<a hidden class="anchor" aria-hidden="true" href="#212-服务发现原理">#</a></h3>
+<h3 id="服务发现原理">服务发现原理<a hidden class="anchor" aria-hidden="true" href="#服务发现原理">#</a></h3>
 <p>eureka server可以集群部署，多个节点之间会进行（异步方式）数据同步，保证数据最终一致性，Eureka Server作为一个开箱即用的服务注册中心，提供的功能包括：服务注册、接收服务心跳、服务剔除、服务下线等。</p>
 <p>需要注意的是，Eureka Server同时也是一个Eureka Client，在不禁止Eureka Server的客户端行为时，它会向它配置文件中的其他Eureka Server进行拉取注册表、服务注册和发送心跳等操作。</p>
 <p>eureka server端通过appName和instanceInfoId来唯一区分一个服务实例，服务实例信息是保存在哪里呢？其实就是一个Map中：</p>
@@ -436,9 +457,9 @@
 </span></span><span style="display:flex;"><span>= new ConcurrentHashMap&lt;String, Map&lt;String, Lease&lt;InstanceInfo&gt;&gt;&gt;();
 </span></span></code></pre></td></tr></table>
 </div>
-</div><h3 id="213-服务注册">2.1.3 服务注册<a hidden class="anchor" aria-hidden="true" href="#213-服务注册">#</a></h3>
+</div><h3 id="服务注册">服务注册<a hidden class="anchor" aria-hidden="true" href="#服务注册">#</a></h3>
 <p>Service Provider启动时会将服务信息（InstanceInfo）发送给eureka server，eureka server接收到之后会写入registry中，服务注册默认过期时间DEFAULT_DURATION_IN_SECS = 90秒。InstanceInfo写入到本地registry之后，然后同步给其他peer节点，对应方法com.netflix.eureka.registry.PeerAwareInstanceRegistryImpl#replicateToPeers。</p>
-<h3 id="214-写入本地redistry">2.1.4 写入本地redistry<a hidden class="anchor" aria-hidden="true" href="#214-写入本地redistry">#</a></h3>
+<h3 id="写入本地redistry">写入本地redistry<a hidden class="anchor" aria-hidden="true" href="#写入本地redistry">#</a></h3>
 <p>服务信息（InstanceInfo）保存在Lease中，写入本地registry对应方法com.netflix.eureka.registry.PeerAwareInstanceRegistryImpl#register，Lease统一保存在内存的ConcurrentHashMap中，在服务注册过程中，首先加个读锁，然后从registry中判断该Lease是否已存在，如果已存在则比较lastDirtyTimestamp时间戳，取二者最大的服务信息，避免发生数据覆盖。使用InstanceInfo创建一个新的InstanceInfo：</p>
 <div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
@@ -478,32 +499,212 @@
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></td></tr></table>
 </div>
-</div><h3 id="215-同步给其他peer">2.1.5 同步给其他peer<a hidden class="anchor" aria-hidden="true" href="#215-同步给其他peer">#</a></h3>
+</div><h3 id="同步给其他peer">同步给其他peer<a hidden class="anchor" aria-hidden="true" href="#同步给其他peer">#</a></h3>
 <p>InstanceInfo写入到本地registry之后，然后同步给其他peer节点，对应方法com.netflix.eureka.registry.PeerAwareInstanceRegistryImpl#replicateToPeers。如果当前节点接收到的InstanceInfo本身就是另一个节点同步来的，则不会继续同步给其他节点，避免形成“广播效应”；InstanceInfo同步时会排除当前节点。</p>
 <p>InstanceInfo的状态有依以下几种：Heartbeat, Register, Cancel, StatusUpdate, DeleteStatusOverride，默认情况下同步操作时批量异步执行的，同步请求首先缓存到Map中，key为requestType+appName+id，然后由发送线程将请求发送到peer节点。</p>
 <p>Peer之间的状态是采用异步的方式同步的，所以不保证节点间的状态一定是一致的，不过基本能保证最终状态是一致的。结合服务发现的场景，实际上也并不需要节点间的状态强一致。在一段时间内（比如30秒），节点A比节点B多一个服务实例或少一个服务实例，在业务上也是完全可以接受的（Service Consumer侧一般也会实现错误重试和负载均衡机制）。所以按照CAP理论，Eureka的选择就是放弃C，选择AP。
 如果同步过程中，出现了异常怎么办呢，这时会根据异常信息做对应的处理，如果是读取超时或者网络连接异常，则稍后重试；如果其他异常则打印错误日志不再后续处理。</p>
-<h3 id="216-服务续约">2.1.6 服务续约<a hidden class="anchor" aria-hidden="true" href="#216-服务续约">#</a></h3>
+<h3 id="服务续约">服务续约<a hidden class="anchor" aria-hidden="true" href="#服务续约">#</a></h3>
 <p>Renew（服务续约）操作由Service Provider定期调用，类似于heartbeat。主要是用来告诉Eureka Server Service Provider还活着，避免服务被剔除掉。renew接口实现方式和register基本一致：首先更新自身状态，再同步到其它Peer，服务续约也就是把过期时间设置为当前时间加上duration的值。</p>
 <p>注意：服务注册如果InstanceInfo不存在则加入，存在则更新；而服务预约只是进行更新，如果InstanceInfo不存在直接返回false。</p>
-<h3 id="217-服务失效剔除">2.1.7 服务失效剔除<a hidden class="anchor" aria-hidden="true" href="#217-服务失效剔除">#</a></h3>
+<h3 id="服务失效剔除">服务失效剔除<a hidden class="anchor" aria-hidden="true" href="#服务失效剔除">#</a></h3>
 <p>Eureka Server中有一个EvictionTask，用于检查服务是否失效。Eviction（失效服务剔除）用来定期（默认为每60秒）在Eureka Server检测失效的服务，检测标准就是超过一定时间没有Renew的服务。默认失效时间为90秒，也就是如果有服务超过90秒没有向Eureka Server发起Renew请求的话，就会被当做失效服务剔除掉。失效时间可以通过eureka.instance.leaseExpirationDurationInSeconds进行配置，定期扫描时间可以通过eureka.server.evictionIntervalTimerInMs进行配置。</p>
 <p>服务剔除#evict方法中有很多限制，都是为了保证Eureka Server的可用性：比如自我保护时期不能进行服务剔除操作、过期操作是分批进行、服务剔除是随机逐个剔除，剔除均匀分布在所有应用中，防止在同一时间内同一服务集群中的服务全部过期被剔除，以致大量剔除发生时，在未进行自我保护前促使了程序的崩溃。</p>
-<h3 id="218-服务信息拉取">2.1.8 服务信息拉取<a hidden class="anchor" aria-hidden="true" href="#218-服务信息拉取">#</a></h3>
+<h3 id="服务信息拉取">服务信息拉取<a hidden class="anchor" aria-hidden="true" href="#服务信息拉取">#</a></h3>
 <p>Eureka consumer服务信息的拉取分为全量式拉取和增量式拉取，eureka consumer启动时进行全量拉取，运行过程中由定时任务进行增量式拉取，如果网络出现异常，可能导致先拉取的数据被旧数据覆盖（比如上一次拉取线程获取结果较慢，数据已更新情况下使用返回结果再次更新，导致数据版本落后），产生脏数据。对此，eureka通过类型AtomicLong的fetchRegistryGeneration对数据版本进行跟踪，版本不一致则表示此次拉取到的数据已过期。</p>
 <p>fetchRegistryGeneration过程是在拉取数据之前，执行fetchRegistryGeneration.get获取当前版本号，获取到数据之后，通过fetchRegistryGeneration.compareAndSet来判断当前版本号是否已更新。
 注意：如果增量式更新出现意外，会再次进行一次全量拉取更新。</p>
-<h3 id="219-eureka-server的伸缩容">2.1.9 Eureka server的伸缩容<a hidden class="anchor" aria-hidden="true" href="#219-eureka-server的伸缩容">#</a></h3>
+<h3 id="eureka-server的伸缩容">Eureka server的伸缩容<a hidden class="anchor" aria-hidden="true" href="#eureka-server的伸缩容">#</a></h3>
 <p>Eureka Server是怎么知道有多少Peer的呢？Eureka Server在启动后会调用EurekaClientConfig.getEurekaServerServiceUrls来获取所有的Peer节点，并且会定期更新。定期更新频率可以通过eureka.server.peerEurekaNodesUpdateIntervalMs配置。</p>
 <p>这个方法的默认实现是从配置文件读取，所以如果Eureka Server节点相对固定的话，可以通过在配置文件中配置来实现。如果希望能更灵活的控制Eureka Server节点，比如动态扩容/缩容，那么可以override getEurekaServerServiceUrls方法，提供自己的实现，比如我们的项目中会通过数据库读取Eureka Server列表。</p>
 <p>eureka server启动时把自己当做是Service Consumer从其它Peer Eureka获取所有服务的注册信息。然后对每个服务信息，在自己这里执行Register，isReplication=true，从而完成初始化。</p>
-<h3 id="2110-service-provider">2.1.10 Service Provider<a hidden class="anchor" aria-hidden="true" href="#2110-service-provider">#</a></h3>
+<h3 id="service-provider">Service Provider<a hidden class="anchor" aria-hidden="true" href="#service-provider">#</a></h3>
 <p>Service Provider启动时首先时注册到Eureka Service上，这样其他消费者才能进行服务调用，除了在启动时之外，只要实例状态信息有变化，也会注册到Eureka Service。需要注意的是，需要确保配置eureka.client.registerWithEureka=true。register逻辑在方法AbstractJerseyEurekaHttpClient.register中，Service Provider会依次注册到配置的Eureka Server Url上，如果注册出现异常，则会继续注册其他的url。</p>
 <p>Renew操作会在Service Provider端定期发起，用来通知Eureka Server自己还活着。 这里instance.leaseRenewalIntervalInSeconds属性表示Renew频率。默认是30秒，也就是每30秒会向Eureka Server发起Renew操作。这部分逻辑在HeartbeatThread类中。在Service Provider服务shutdown的时候，需要及时通知Eureka Server把自己剔除，从而避免客户端调用已经下线的服务，逻辑本身比较简单，通过对方法标记@PreDestroy，从而在服务shutdown的时候会被触发。</p>
-<h3 id="2211-service-consumer">2.2.11 Service Consumer<a hidden class="anchor" aria-hidden="true" href="#2211-service-consumer">#</a></h3>
+<h3 id="service-consumer">Service Consumer<a hidden class="anchor" aria-hidden="true" href="#service-consumer">#</a></h3>
 <p>Service Consumer这块的实现相对就简单一些，因为它只涉及到从Eureka Server获取服务列表和更新服务列表。Service Consumer在启动时会从Eureka Server获取所有服务列表，并在本地缓存。需要注意的是，需要确保配置eureka.client.shouldFetchRegistry=true。由于在本地有一份Service Registries缓存，所以需要定期更新，定期更新频率可以通过eureka.client.registryFetchIntervalSeconds配置。</p>
-<h3 id="2212-总结">2.2.12 总结<a hidden class="anchor" aria-hidden="true" href="#2212-总结">#</a></h3>
+<h3 id="总结">总结<a hidden class="anchor" aria-hidden="true" href="#总结">#</a></h3>
 <p>我们为什么要使用Eureka呢，在分布式开发架构中， 任何单点的服务都不能保证不会中断，因此需要服务发现机制，某个节点中断后，服务消费者能及时感知到保证服务高可用。注册中心除了Eureka之外，还有Zookeeper、consul、nacos等解决方案，实现原理不同， 各自适用于不同业务场景。</p>
+<h2 id="数据一致性问题">数据一致性问题<a hidden class="anchor" aria-hidden="true" href="#数据一致性问题">#</a></h2>
+<h3 id="事务">事务<a hidden class="anchor" aria-hidden="true" href="#事务">#</a></h3>
+<p>严格意义上的事务实现应该是具备原子性、一致性、隔离性和持久性，简称ACID。</p>
+<li> 原子性(Atomicity) ， 可以理解为一个事务内的所有操作要么都执行，要么都不执行。 </li>
+<li> 一致性(Consistency)， 数据是满足完整性约束的，也就是不会存在中间状态的数据，比如说你账户上有400， 我账户上有100， 你给我打200块，此时你账户上的钱应该是200， 我账户上的钱应该是300， 不会存在我账户上的钱加了，你账户上的钱没扣的中间状态</li>
+<li> 隔离性(Lsolation) ，指的是多个事务并发执行的时候不会互相干扰，即事务内部的数据对于其他事务来说是隔离的</li>
+<li> 持久性(Durability), 指的是一个事务完成了之后数据就被永远保存下来，之后的其他操作或故障都不会对事务的结果产生影响</li>
+<p>而通俗意义上事务就是为了使得一些更新操作要么都成功，要么都失败。</p>
+<h3 id="分布式事务">分布式事务<a hidden class="anchor" aria-hidden="true" href="#分布式事务">#</a></h3>
+<p>分布式事务顾名思义就是要在分布式系统中实现事务，它其实是由多个本地事务组合而成。</p>
+<p>对于分布式事务而言几乎满足不了ACID，其实对于单机事务而言大部分情况下也没有满足ACID，不然怎么会有四种隔离级别呢？所以更不用说分布在不用数据库或者不同应用上的分布式事务了。</p>
+<h4 id="2pc">2PC<a hidden class="anchor" aria-hidden="true" href="#2pc">#</a></h4>
+<p>2PC（Two-phase commit protocol），中文叫二阶段提交。 <b>二阶段提交是一种强一致性设计</b>，2PC 引入一个事务协调者的角色来协调管理各参与者（也可称之为各本地资源）的提交和回滚，二阶段分别指的是准备（投票）和提交两个阶段。</p>
+<p>注意这只是协议或者说是理论指导，只阐述了大方向，具体落地还是有会有差异的。</p>
+<p>让我们来看下两个阶段的具体流程。</p>
+<p>准备阶段协调者会给各参与者发送准备命令，你可以把准备命令理解成除了提交事务之外啥事都做完了。</p>
+<p>同步等待所有资源的响应之后就进入第二阶段即提交阶段（注意提交阶段不一定是提交事务，也可能是回滚事务）。</p>
+<p>假如在第一阶段所有参与者都返回准备成功，那么协调者则向所有参与者发送提交事务命令，然后等待所有事务都提交成功之后，返回事务执行成功。</p>
+<p>假如在第一阶段有一个参与者返回失败，那么协调者就会向所有参与者发送回滚事务的请求，即分布式事务执行失败。</p>
+<p>那第二阶段提交失败的话呢？</p>
+<p>这里有两种情况。</p>
+<p>第一种是<b>第二阶段执行的是回滚事务操作</b>，那么答案是不断重试，直到所有参与者都回滚了，不然那些在第一阶段准备成功的参与者会一直阻塞着。</p>
+<p>第二种是<b>第二阶段执行的是提交事务操作</b>，那么答案也是不断重试，因为有可能一些参与者的事务已经提交成功了，这个时候只有一条路，就是头铁往前冲，不断的重试，直到提交成功，到最后真的不行只能人工介入处理。</p>
+<p>大体上二阶段提交的流程就是这样，我们再来看看细节。</p>
+<p>首先 2PC 是一个同步阻塞协议，像第一阶段协调者会等待所有参与者响应才会进行下一步操作，当然第一阶段的协调者有超时机制，假设因为网络原因没有收到某参与者的响应或某参与者挂了，那么超时后就会判断事务失败，向所有参与者发送回滚命令。</p>
+<p>在第二阶段协调者的没法超时，因为按照我们上面分析只能不断重试！</p>
+<h5 id="协调者故障分析">协调者故障分析<a hidden class="anchor" aria-hidden="true" href="#协调者故障分析">#</a></h5>
+<p>协调者是一个单点，存在单点故障问题</p>
+<p>假设协调者在发送准备命令之前挂了， 还行，等于事务没开始。</p>
+<p>假设协调者在发送准备命令之后挂了，这就不太行了，有些参与者等于都执行了处于事务资源锁定的状态。不仅事务执行不下去，还会因为锁定了一些公共资源而阻塞系统其他操作。</p>
+<p>假设协调者在发送事务回滚命令之前挂了，那么事务也是执行不下去，且在第一阶段那些准备成功参与者都阻塞着。</p>
+<p>假设协调者在发送回滚事务命令之后挂了，这个还行，至少命令发出去了，很大概率都会回滚成功，资源都会释放。但是如果出现网络分区问题，某些参与者将因为收不到命令而阻塞着。</p>
+<p>假设协调者在发送提交事务命令之前挂了，这个不行，这下所有资源都阻塞着。</p>
+<p>假设协调者在发送提交事务命令之后挂了，很大概率都会提交成功，然后释放资源。但是如果出现网络分区问题某些参与者因为收不到命令而阻塞着。</p>
+<h5 id="协调者故障通过选举得到新的协调者">协调者故障，通过选举得到新的协调者<a hidden class="anchor" aria-hidden="true" href="#协调者故障通过选举得到新的协调者">#</a></h5>
+<p>因为协调者单点问题，因此我们可以通过选举等操作选出一个新协调者来顶替。</p>
+<p>如果处于第一阶段，其实影响不大都回滚好了，在第一阶段事务肯定还没提交。</p>
+<p>如果处于第二阶段，假设参与者都没挂，此时新协调者可以向所有参与者确认它们自身情况来推断下一步的操作。</p>
+<p>假设有个别参与者挂了！这就有点僵硬了，比如协调者发送了回滚命令，此时第一个参与者收到了并执行，然后协调者和第一个参与者都挂了。</p>
+<p>此时其他参与者都没收到请求，然后新协调者来了，它询问其他参与者都说OK，但它不知道挂了的那个参与者到底O不OK，所以它傻了。</p>
+<p>问题其实就出在每个参与者自身的状态只有自己和协调者知道，因此新协调者无法通过在场的参与者的状态推断出挂了的参与者是什么情况。</p>
+<p>虽然协议上没说，不过在实现的时候我们可以灵活的让协调者将自己发过的请求在哪个地方记一下，也就是日志记录，这样新协调者来的时候不就知道此时该不该发了？</p>
+<p>但是就算协调者知道自己该发提交请求，那么在参与者也一起挂了的情况下没用，因为你不知道参与者在挂之前有没有提交事务。</p>
+<p>如果参与者在挂之前事务提交成功，新协调者确定存活着的参与者都没问题，那肯定得向其他参与者发送提交事务命令才能保证数据一致。</p>
+<p>如果参与者在挂之前事务还未提交成功，参与者恢复了之后数据是回滚的，此时协调者必须是向其他参与者发送回滚事务命令才能保持事务的一致。</p>
+<p>所以说极端情况下还是无法避免数据不一致问题。</p>
+<p>talk is cheap 让我们再来看下代码，可能更加的清晰。以下代码取自 Distributed System: Principles and Paradigms。</p>
+<p>这个代码就是实现了 2PC，但是相比于2PC增加了写日志的动作、参与者之间还会互相通知、参与者也实现了超时。这里要注意，一般所说的2PC，不含上述功能，这都是实现的时候添加的。</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">12
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">13
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">14
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">15
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">16
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">17
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">18
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">19
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">20
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">21
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">22
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">23
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">24
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">25
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">26
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">27
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">28
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">29
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">30
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">31
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">32
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">33
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">34
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">35
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">36
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">37
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">38
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">39
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">40
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">41
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">42
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">43
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">44
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">45
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">46
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">47
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">48
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">49
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">50
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">51
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">52
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">53
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">54
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">55
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">56
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">57
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">58
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">59
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">60
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>协调者:
+</span></span><span style="display:flex;"><span>    write START_2PC to local log; //开始事务
+</span></span><span style="display:flex;"><span>    multicast VOTE_REQUEST to all participants; //广播通知参与者投票
+</span></span><span style="display:flex;"><span>    while not all votes have been collected {
+</span></span><span style="display:flex;"><span>        wait for any incoming vote;
+</span></span><span style="display:flex;"><span>        if timeout { //协调者超时
+</span></span><span style="display:flex;"><span>            write GLOBAL_ABORT to local log; //写日志
+</span></span><span style="display:flex;"><span>            multicast GLOBAL_ABORT to all participants; //通知事务中断
+</span></span><span style="display:flex;"><span>            exit;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        record vote;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    //如果所有参与者都ok
+</span></span><span style="display:flex;"><span>    if all participants sent VOTE_COMMIT and coordinator votes COMMIT {
+</span></span><span style="display:flex;"><span>        write GLOBAL_COMMIT to local log;
+</span></span><span style="display:flex;"><span>        multicast GLOBAL_COMMIT to all participants;
+</span></span><span style="display:flex;"><span>    } else {
+</span></span><span style="display:flex;"><span>        write GLOBAL_ABORT to local log;
+</span></span><span style="display:flex;"><span>        multicast GLOBAL_ABORT to all participants;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>参与者:
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    write INIT to local log; //写日志
+</span></span><span style="display:flex;"><span>    wait for VOTE_REQUEST from coordinator;
+</span></span><span style="display:flex;"><span>    if timeout { //等待超时
+</span></span><span style="display:flex;"><span>        write VOTE_ABORT to local log;
+</span></span><span style="display:flex;"><span>        exit;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    if participant votes COMMIT {
+</span></span><span style="display:flex;"><span>        write VOTE_COMMIT to local log; //记录自己的决策
+</span></span><span style="display:flex;"><span>        send VOTE_COMMIT to coordinator;
+</span></span><span style="display:flex;"><span>        wait for DECISION from coordinator;
+</span></span><span style="display:flex;"><span>        if timeout {
+</span></span><span style="display:flex;"><span>            multicast DECISION_REQUEST to other participants; //超时通知
+</span></span><span style="display:flex;"><span>            wait until DECISION is received;  /* remain blocked*/
+</span></span><span style="display:flex;"><span>            write DECISION to local log;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        if DECISION == GLOBAL_COMMIT
+</span></span><span style="display:flex;"><span>            write GLOBAL_COMMIT to local log;
+</span></span><span style="display:flex;"><span>        else if DECISION == GLOBAL_ABORT
+</span></span><span style="display:flex;"><span>            write GLOBAL_ABORT to local log;
+</span></span><span style="display:flex;"><span>    } else {
+</span></span><span style="display:flex;"><span>        write VOTE_ABORT to local log;
+</span></span><span style="display:flex;"><span>        send VOTE_ABORT to coordinator;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>每个参与者维护一个线程处理其它参与者的DECISION_REQUEST请求：
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    while true {
+</span></span><span style="display:flex;"><span>        wait until any incoming DECISION_REQUEST is received;
+</span></span><span style="display:flex;"><span>        read most recently recorded STATE from the local log;
+</span></span><span style="display:flex;"><span>        if STATE == GLOBAL_COMMIT
+</span></span><span style="display:flex;"><span>            send GLOBAL_COMMIT to requesting participant;
+</span></span><span style="display:flex;"><span>        else if STATE == INIT or STATE == GLOBAL_ABORT;
+</span></span><span style="display:flex;"><span>            send GLOBAL_ABORT to requesting participant;
+</span></span><span style="display:flex;"><span>        else
+</span></span><span style="display:flex;"><span>            skip;  /* participant remains blocked */
+</span></span><span style="display:flex;"><span>    }
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>至此已经详细分析了2PC的各种细节，总结如下：</p>
+<p>2PC是一种尽量保证强一致性的分布式事务，因此它是同步阻塞的，而同步阻塞就导致长久的资源锁定问题，总体而言效率低，并且存在单点故障问题，在极端条件下存在数据不一致的风险。</p>
+<p>当然具体的实现可以变形，比如Tree 2PC、Dynamic 2PC</p>
+<p>2PC适用于数据库层面的分布式事务场景，而我们业务需求有时候不仅仅关乎数据库，也有可能是上传一张图片或者发送一条短信。</p>
+<p>而且像Java中的JTA, 它是基于XA规范实现的事务接口，这里的XA可以简单理解为基于数据库的XA规范来实现的2PC。</p>
+<h4 id="3pc">3PC<a hidden class="anchor" aria-hidden="true" href="#3pc">#</a></h4>
 
 
   </div>
