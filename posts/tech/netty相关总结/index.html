@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>Netty相关总结 | Qian&#39;s Blog</title>
+<meta name="keywords" content="netty, Java">
+<meta name="description" content="今天和同事聊到netty，收到dtf那边经常使用netty 和nio，但是我对于这块不是很了解，因此做一个学习与总结">
+<meta name="author" content="
+作者:&nbsp;ShengQian">
+<link rel="canonical" href="https://csqread.top/posts/tech/netty%E7%9B%B8%E5%85%B3%E6%80%BB%E7%BB%93/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.d056c2d8b86c8da0db95897f49066a3a22d796d21ff6173ef98b613234e402fe.css" integrity="" rel="preload stylesheet" as="style">
+<script defer crossorigin="anonymous" src="/assets/js/highlight.acb54fd32bbc1982428b8850317e45d076b95012730a5936667e6bc21777692a.js" integrity=""
+    onload="hljs.initHighlightingOnLoad();"></script>
+<link rel="icon" href="https://csqread.top/img/Q.gif">
+<link rel="icon" type="image/png" sizes="16x16" href="https://csqread.top/img/%21.jpg">
+<link rel="icon" type="image/png" sizes="32x32" href="https://csqread.top/img/%21.jpg">
+<link rel="apple-touch-icon" href="https://csqread.top/%21.jpg">
+<link rel="mask-icon" href="https://csqread.top/%21.jpg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --hljs-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript><meta property="og:title" content="Netty相关总结" />
+<meta property="og:description" content="今天和同事聊到netty，收到dtf那边经常使用netty 和nio，但是我对于这块不是很了解，因此做一个学习与总结" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://csqread.top/posts/tech/netty%E7%9B%B8%E5%85%B3%E6%80%BB%E7%BB%93/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2023-04-24T21:48:50+08:00" />
+<meta property="article:modified_time" content="2023-04-24T21:48:50+08:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Netty相关总结"/>
+<meta name="twitter:description" content="今天和同事聊到netty，收到dtf那边经常使用netty 和nio，但是我对于这块不是很了解，因此做一个学习与总结"/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "Posts",
+      "item": "https://csqread.top/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  3 ,
+      "name": "技术",
+      "item": "https://csqread.top/posts/tech/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  4 ,
+      "name": "Netty相关总结",
+      "item": "https://csqread.top/posts/tech/netty%E7%9B%B8%E5%85%B3%E6%80%BB%E7%BB%93/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Netty相关总结",
+  "name": "Netty相关总结",
+  "description": "今天和同事聊到netty，收到dtf那边经常使用netty 和nio，但是我对于这块不是很了解，因此做一个学习与总结",
+  "keywords": [
+    "netty", "Java"
+  ],
+  "articleBody": "什么是Netty 1、Netty 是一个 基于 NIO 的 client-server(客户端服务器)框架，使用它可以快速简单地开发网络应用程序。 2、它极大地简化并优化了 TCP 和 UDP 套接字服务器等网络编程,并且性能以及安全性等很多方面甚至都要更好。 3、支持多种协议 如 FTP，SMTP，HTTP 以及各种二进制和基于文本的传统协议。 用官方的总结就是：Netty 成功地找到了一种在不妥协可维护性和性能的情况下实现易于开发，性能，稳定性和灵活性的方法。\n除了上面之外，很多开源项目比如我们常用的 Dubbo、RocketMQ、Elasticsearch、gRPC 等等都用到了 Netty\n相比于直接使用 JDK 自带的 NIO 相关的 API 来说更加易用。 统一的 API，支持多种传输类型，阻塞和非阻塞的。 简单而强大的线程模型。 自带编解码器解决 TCP 粘包/拆包问题。 自带各种协议栈。 真正的无连接数据包套接字支持。 比直接使用 Java 核心 API 有更高的吞吐量、更低的延迟、更低的资源消耗和更少的内存复制。 安全性不错，有完整的 SSL/TLS 以及 StartTLS 支持。 社区活跃、成熟稳定，经历了大型项目的使用和考验，而且很多开源项目都使用到了 Netty， 比如我们经常接触的 Dubbo、RocketMQ 等等。 应用场景 NIO 可以做的事情 ，使用 Netty 都可以做并且更好。Netty 主要用来做网络通信 : 作为 RPC 框架的网络通信工具 ：我们在分布式系统中，不同服务节点之间经常需要相互调用，这个时候就需要 RPC 框架了。不同服务节点之间的通信是如何做的呢？可以使用 Netty 来做。比如我调用另外一个节点的方法的话，至少是要让对方知道我调用的是哪个类中的哪个方法以及相关参数吧！ 实现一个自己的 HTTP 服务器 ：通过 Netty 我们可以自己实现一个简单的 HTTP 服务器，这个大家应该不陌生。说到 HTTP 服务器的话，作为 Java 后端开发，我们一般使用 Tomcat 比较多。一个最基本的 HTTP 服务器可要以处理常见的 HTTP Method 的请求，比如 POST 请求、GET 请求等等。 实现一个即时通讯系统 ：使用 Netty 我们可以实现一个可以聊天类似微信的即时通讯系统， 实现消息推送系统 ：市面上有很多消息推送系统都是基于 Netty 来做的。 Netty 的高性能表现 心跳，对服务端：会定时清除闲置会话 inactive(netty5)，对客户端:用来检测会话是否断开，是否重来，检测网络延迟，其中 idleStateHandler 类 用来检测会话状态 串行无锁化设计，即消息的处理尽可能在同一个线程内完成，期间不进行线程切换，这样就避免了多线程竞争和同步锁。表面上看，串行化设计似乎 CPU 利用率不高，并发程度不够。但是，通过调整 NIO 线程池的线程参数，可以同时启动多个串行化的线程并行运行，这种局部无锁化的串行线程设计相比一个队列-多个工作线程模型性能更优。 可靠性，链路有效性检测：链路空闲检测机制，读/写空闲超时机制；内存保护机制：通过内存池重用 ByteBuf;ByteBuf 的解码保护；优雅停机：不再接收新消息、退出前的预处理操作、资源的释放操作。 Netty 安全性：支持的安全协议：SSL V2 和 V3，TLS，SSL 单向认证、双向认证和第三方 CA认证。 高效并发编程的体现：volatile 的大量、正确使用；CAS 和原子类的广泛使用；线程安全容器的使用；通过读写锁提升并发性能。IO 通信性能三原则：传输（AIO）、协议（Http）、线程（主从多线程） 流量整型的作用（变压器）：防止由于上下游网元性能不均衡导致下游网元被压垮，业务流中断；防止由于通信模块接受消息过快，后端业务线程处理不及时导致撑死问题 Netty核心组件 Bootstrap和ServerBootstrap 当需要连接客户端或者服务器绑定指定端口是需要使用Bootstrap，ServerBootstrap有两种类型，一种是用于客户端的Bootstrap，一种是用于服务端 的ServerBootstrap。不管程序使用哪种协议，无论是创建一个客户端还是服务器都需要使 用“引导”。\nBootstrap 是客户端的启动引导类/辅助类\n1 2 3 4 5 6 7 8 9 10 11 12 13 EventLoopGroup group = new NioEventLoopGroup(); try { //创建客户端启动引导/辅助类： Bootstrap Bootstrap b = new Bootstrap(); //指定线程模型 b.group(group). ...... // 尝试建立连接 ChannelFuture f = b.connect(host, port).sync(); f.channel().closeFuture().sync(); } finally { // 优雅关闭相关线程组资源 group.shutdownGracefully(); } ServerBootstrap 客户端的启动引导类/辅助类\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 // 1.bossGroup 用于接收连接，workerGroup 用于具体的处理 EventLoopGroup bossGroup = new NioEventLoopGroup(1); EventLoopGroup workerGroup = new NioEventLoopGroup(); try { //2.创建服务端启动引导/辅助类： ServerBootstrap ServerBootstrap b = new ServerBootstrap(); //3.给引导类配置两大线程组,确定了线程模型 b.group(bossGroup, workerGroup). ...... // 6.绑定端口 ChannelFuture f = b.bind(port).sync(); // 等待连接关闭 f.channel().closeFuture().sync(); } finally { //7.优雅关闭相关线程组资源 bossGroup.shutdownGracefully(); workerGroup.shutdownGracefully(); } Bootstrap 通常使用 connet() 方法连接到远程的主机和端口，作为一个 Netty TCP 协议通信中的客户端。另外，Bootstrap 也可以通过 bind() 方法绑定本地的一个端口，作为 UDP 协议通信中的一端。 ServerBootstrap通常使用 bind() 方法绑定本地的端口上，然后等待客户端的连接。\nBootstrap 只需要配置一个线程组— EventLoopGroup，而 ServerBootstrap需要配置两个线程组— EventLoopGroup ，一个用于接收连接，一个用于具体的处理。\n一个 ServerBootstrap 可以认为有2个 Channel 集合，\n第一个集合包含一个单例 ServerChannel，代表持有一个绑定了本地端口的 socket;\n第二集合包含所有创建的 Channel，处理服务器所接收到的客户端进来的连接。\nEventLoop和EventLoopGroup EventLoop 定义了 Netty 的核心抽象，用于处理连接的生命周期中所发生的事件。\nEventLoop 的主要作用实际就是负责监听网络事件并调用事件处理器进行相关 I/O 操作的处理。\nChannel 和 EventLoop 直接有啥联系呢？\nChannel 为 Netty 网络操作(读写等操作)抽象类，EventLoop 负责处理注册到其上的Channel 处理 I/O 操作，两者配合参与 I/O 操作。\nEventLoopGroup包含多个EventLoop，每个EventLoop通常内部包含一个线程。EventLoop在处理IO事件时在自己的Thread线程上进行，从而保证线程安全\nNioEventLoopGroup在未指定线程数时，默认时当前cpu线程数*2\nEventLoopGroup 是一组 EventLoop 的抽象，Netty 为了更好的利用多核 CPU 资源，一般会有多个 EventLoop 同时工作，每个 EventLoop 维护着一个 Selector 实例。 EventLoopGroup 提供 next 接口，可以从组里面按照一定规则获取其中一个EventLoop来处理任务。在 Netty 服务器端编程中，我们一般都需要提供两个EventLoopGroup，例如:BossEventLoopGroup 和 WorkerEventLoopGroup。 通常一个服务端口即一个ServerSocketChannel对应一个Selector和一个EventLoop 线程。BossEventLoop 负责接收客户端的连接并将 SocketChannel 交给 WorkerEventLoopGroup 来进行 IO 处理\nBossEventLoopGroup 通常是一个单线程的 EventLoop，EventLoop 维护着一个注册了ServerSocketChannel 的Selector 实例BossEventLoop 不断轮询Selector 将连接事件分离出来 通常是 OP_ACCEPT 事件，然后将接收到的 SocketChannel 交给WorkerEventLoopGroup WorkerEventLoopGroup 会由 next 选择其中一个 EventLoop来将这个SocketChannel 注册到其维护的Selector 并对其后续的 IO 事件进行处理 EventLoop继承图\nChannel通道 Channel 接口是 Netty 对网络操作抽象类，它除了包括基本的 I/O 操作，如 bind()、connect()、read()、write() 等。\n比较常用的Channel接口实现类是NioServerSocketChannel（服务端）和NioSocketChannel（客户端），这两个 Channel 可以和 BIO 编程模型中的ServerSocket以及Socket两个概念对应上。Netty 的 Channel 接口所提供的 API，大大地降低了直接使用 Socket 类的复杂性。\n1 2 3 4 5 6 7 Channel channel = ...; // 获取channel的引用 ByteBuf buf = Unpooled.copiedBuffer(\"your data\", CharsetUtil.UTF_8); //1 ChannelFuture cf = channel.writeAndFlush(buf); //2 cf.addListener(new ChannelFutureListener() { //3 @Override public void operationComplete(ChannelFuture future) { if (future.isSuccess()) { //4 } }); 创建 ByteBuf 保存写的数据 写数据，并刷新 添加 ChannelFutureListener 即可写操作完成后收到通知 写操作没有错误完成 写操作完成时出现错误 channel声明周期 | 状态 | 描述 | | —- | —- | | ChannelUnregistered | Channel 已经被创建，但还未注册到EventLoop | | ChannelRegistered | Channel 已经被注册到了EventLoop | | ChannelActive | Channel 处于活动状态（已经连接到它的远程节点）。它现在可以接收和发送数据了 | | ChannelInactive | Channel 没有连接到远程节点 |\nselector 作用：\nI/O 的就绪与选择 是 NIO 网络编程的基础 SelectonKey 状态 OP_ACCEPT 操作集位用于插座接受操作。 OP_CONNECT 用于套接字连接操作的操作集位。 OP_READ 读操作的操作位。 OP_WRITE 写操作的操作位。 1 2 3 4 5 Selector selector = new Selector.open() SelectorKey selectorKey = channel.register(selector, SelectionKey.OP_READ); int selectNum = selector.select(); Set selectionkeys = selector.selectdkeys(); ",
+  "wordCount" : "3380",
+  "inLanguage": "en",
+  "datePublished": "2023-04-24T21:48:50+08:00",
+  "dateModified": "2023-04-24T21:48:50+08:00",
+  "author":[{
+    "@type": "Person",
+    "name": "ShengQian"
+  }],
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://csqread.top/posts/tech/netty%E7%9B%B8%E5%85%B3%E6%80%BB%E7%BB%93/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Qian's Blog",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://csqread.top/img/Q.gif"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://csqread.top" accesskey="h" title="Qian&#39;s Blog (Alt + H)">
+                <img src="https://csqread.top/img/%21.jpg" alt="" aria-label="logo"
+                    height="35">Qian&#39;s Blog</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="https://csqread.top/search" title="🔍搜索">
+                    <span>🔍搜索</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://csqread.top/" title="🏠主页">
+                    <span>🏠主页</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://csqread.top/posts" title="📚文章">
+                    <span>📚文章</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://csqread.top/archives/" title="⏱时间轴">
+                    <span>⏱时间轴</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://csqread.top/tags" title="🔖标签">
+                    <span>🔖标签</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://csqread.top/about" title="🙋🏻‍♂️关于">
+                    <span>🙋🏻‍♂️关于</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://csqread.top/links" title="🤝友链">
+                    <span>🤝友链</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    <div class="breadcrumbs"><a href="https://csqread.top">Home</a>&nbsp;»&nbsp;<a href="https://csqread.top/posts/">Posts</a>&nbsp;»&nbsp;<a href="https://csqread.top/posts/tech/">技术</a></div>
+    <h1 class="post-title">
+      Netty相关总结
+    </h1>
+    <div class="post-description">
+      今天和同事聊到netty，收到dtf那边经常使用netty 和nio，但是我对于这块不是很了解，因此做一个学习与总结
+    </div>
+    <div class="post-meta">
+
+
+
+
+
+
+
+
+
+
+创建:&nbsp;<span title='2023-04-24 21:48:50 +0800 CST'>2023-04-24</span>&nbsp;|&nbsp;更新:&nbsp;2023-04-24&nbsp;|&nbsp;字数:&nbsp;3380字&nbsp;|&nbsp;时长: 7分钟&nbsp;|&nbsp;
+作者:&nbsp;ShengQian
+
+
+    &nbsp;|&nbsp;标签: &nbsp;
+    <ul class="post-tags-meta">
+        <a href="https://csqread.top/tags/netty/">netty</a>
+        <a href="https://csqread.top/tags/java/">、Java</a>
+    </ul>
+
+    
+    
+    
+    
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span id="busuanzi_container_page_pv">
+        &nbsp;| 访问: <span id="busuanzi_value_page_pv"></span>
+    </span>
+
+    
+    
+    
+    
+    <script src="https://cdn.staticfile.org/twikoo/1.4.11/twikoo.all.min.js">
+    </script>
+    <script>
+        let url = document.documentURI
+        
+        let dnsUrl = "https://csqread.top"
+        let urlSplit = url.split(dnsUrl)
+        let finalUrl = urlSplit[1]
+        if (finalUrl[0] !== '/') {
+            finalUrl = '/'+finalUrl
+        }
+        twikoo.getCommentsCount({
+            envId:  null ,
+            region:  null ,
+            urls: [
+                finalUrl,
+            ],
+            includeReply: false 
+        }).then(function (res) {
+            let count = res[0].count
+            const obj = document.getElementById("comment_count");
+            obj.innerText = count
+            
+            
+            
+        }).catch(function (err) {
+            
+            console.error(err);
+        });
+    </script>
+    &nbsp;| 评论: &nbsp; <span id="comment_count"></span>
+
+</div>
+  </header> <aside id="toc-container" class="toc-container wide">
+    <div class="toc">
+        <details  open>
+            <summary accesskey="c" title="(Alt + C)">
+                <span class="details">Table of Contents</span>
+            </summary>
+
+            <div class="inner"><ul>
+                    <li>
+                        <a href="#%e4%bb%80%e4%b9%88%e6%98%afnetty" aria-label="什么是Netty">什么是Netty</a></li>
+                    <li>
+                        <a href="#%e7%9b%b8%e6%af%94%e4%ba%8e%e7%9b%b4%e6%8e%a5%e4%bd%bf%e7%94%a8-jdk-%e8%87%aa%e5%b8%a6%e7%9a%84-nio-%e7%9b%b8%e5%85%b3%e7%9a%84-api-%e6%9d%a5%e8%af%b4%e6%9b%b4%e5%8a%a0%e6%98%93%e7%94%a8" aria-label="相比于直接使用 JDK 自带的 NIO 相关的 API 来说更加易用。">相比于直接使用 JDK 自带的 NIO 相关的 API 来说更加易用。</a></li>
+                    <li>
+                        <a href="#%e5%ba%94%e7%94%a8%e5%9c%ba%e6%99%af" aria-label="应用场景">应用场景</a></li>
+                    <li>
+                        <a href="#netty-%e7%9a%84%e9%ab%98%e6%80%a7%e8%83%bd%e8%a1%a8%e7%8e%b0" aria-label="Netty 的高性能表现">Netty 的高性能表现</a></li>
+                    <li>
+                        <a href="#netty%e6%a0%b8%e5%bf%83%e7%bb%84%e4%bb%b6" aria-label="Netty核心组件">Netty核心组件</a><ul>
+                            
+                    <li>
+                        <a href="#bootstrap%e5%92%8cserverbootstrap" aria-label="Bootstrap和ServerBootstrap">Bootstrap和ServerBootstrap</a></li>
+                    <li>
+                        <a href="#channel%e9%80%9a%e9%81%93" aria-label="Channel通道">Channel通道</a></li>
+                    <li>
+                        <a href="#selector" aria-label="selector">selector</a>
+                    </li>
+                </ul>
+                </li>
+                </ul>
+            </div>
+        </details>
+    </div>
+</aside>
+<script>
+    let activeElement;
+    let elements;
+    window.addEventListener('DOMContentLoaded', function (event) {
+        checkTocPosition();
+
+        elements = document.querySelectorAll('h1[id],h2[id],h3[id],h4[id],h5[id],h6[id]');
+         
+         activeElement = elements[0];
+         const id = encodeURI(activeElement.getAttribute('id')).toLowerCase();
+         document.querySelector(`.inner ul li a[href="#${id}"]`).classList.add('active');
+     }, false);
+
+    window.addEventListener('resize', function(event) {
+        checkTocPosition();
+    }, false);
+
+    window.addEventListener('scroll', () => {
+        
+        activeElement = Array.from(elements).find((element) => {
+            if ((getOffsetTop(element) - window.pageYOffset) > 0 && 
+                (getOffsetTop(element) - window.pageYOffset) < window.innerHeight/2) {
+                return element;
+            }
+        }) || activeElement
+
+        elements.forEach(element => {
+             const id = encodeURI(element.getAttribute('id')).toLowerCase();
+             if (element === activeElement){
+                 document.querySelector(`.inner ul li a[href="#${id}"]`).classList.add('active');
+             } else {
+                 document.querySelector(`.inner ul li a[href="#${id}"]`).classList.remove('active');
+             }
+         })
+     }, false);
+
+    const main = parseInt(getComputedStyle(document.body).getPropertyValue('--article-width'), 10);
+    const toc = parseInt(getComputedStyle(document.body).getPropertyValue('--toc-width'), 10);
+    const gap = parseInt(getComputedStyle(document.body).getPropertyValue('--gap'), 10);
+
+    function checkTocPosition() {
+        const width = document.body.scrollWidth;
+
+        if (width - main - (toc * 2) - (gap * 4) > 0) {
+            document.getElementById("toc-container").classList.add("wide");
+        } else {
+            document.getElementById("toc-container").classList.remove("wide");
+        }
+    }
+
+    function getOffsetTop(element) {
+        if (!element.getClientRects().length) {
+            return 0;
+        }
+        let rect = element.getBoundingClientRect();
+        let win = element.ownerDocument.defaultView;
+        return rect.top + win.pageYOffset;   
+    }
+</script>
+  <div class="post-content"><h2 id="什么是netty">什么是Netty<a hidden class="anchor" aria-hidden="true" href="#什么是netty">#</a></h2>
+<p>1、Netty 是一个 基于 NIO 的 client-server(客户端服务器)框架，使用它可以快速简单地开发网络应用程序。
+2、它极大地简化并优化了 TCP 和 UDP 套接字服务器等网络编程,并且性能以及安全性等很多方面甚至都要更好。
+3、支持多种协议 如 FTP，SMTP，HTTP 以及各种二进制和基于文本的传统协议。
+用官方的总结就是：Netty 成功地找到了一种在不妥协可维护性和性能的情况下实现易于开发，性能，稳定性和灵活性的方法。</p>
+<p>除了上面之外，很多开源项目比如我们常用的 Dubbo、RocketMQ、Elasticsearch、gRPC 等等都用到了 Netty</p>
+<h2 id="相比于直接使用-jdk-自带的-nio-相关的-api-来说更加易用">相比于直接使用 JDK 自带的 NIO 相关的 API 来说更加易用。<a hidden class="anchor" aria-hidden="true" href="#相比于直接使用-jdk-自带的-nio-相关的-api-来说更加易用">#</a></h2>
+<li>统一的 API，支持多种传输类型，阻塞和非阻塞的。</li>
+<li>简单而强大的线程模型。</li>
+<li>自带编解码器解决 TCP 粘包/拆包问题。</li>
+<li>自带各种协议栈。</li>
+<li>真正的无连接数据包套接字支持。</li>
+<li>比直接使用 Java 核心 API 有更高的吞吐量、更低的延迟、更低的资源消耗和更少的内存复制。</li>
+<li>安全性不错，有完整的 SSL/TLS 以及 StartTLS 支持。</li>
+<li>社区活跃、成熟稳定，经历了大型项目的使用和考验，而且很多开源项目都使用到了 Netty， 比如我们经常接触的 Dubbo、RocketMQ 等等。</li>
+<h2 id="应用场景">应用场景<a hidden class="anchor" aria-hidden="true" href="#应用场景">#</a></h2>
+<li>NIO 可以做的事情 ，使用 Netty 都可以做并且更好。Netty 主要用来做网络通信 :</li>
+<li>作为 RPC 框架的网络通信工具 ：我们在分布式系统中，不同服务节点之间经常需要相互调用，这个时候就需要 RPC 框架了。不同服务节点之间的通信是如何做的呢？可以使用 Netty 来做。比如我调用另外一个节点的方法的话，至少是要让对方知道我调用的是哪个类中的哪个方法以及相关参数吧！</li>
+<li>实现一个自己的 HTTP 服务器 ：通过 Netty 我们可以自己实现一个简单的 HTTP 服务器，这个大家应该不陌生。说到 HTTP 服务器的话，作为 Java 后端开发，我们一般使用 Tomcat 比较多。一个最基本的 HTTP 服务器可要以处理常见的 HTTP Method 的请求，比如 POST 请求、GET 请求等等。</li>
+<li>实现一个即时通讯系统 ：使用 Netty 我们可以实现一个可以聊天类似微信的即时通讯系统，</li>
+<li>实现消息推送系统 ：市面上有很多消息推送系统都是基于 Netty 来做的。</li>
+<h2 id="netty-的高性能表现">Netty 的高性能表现<a hidden class="anchor" aria-hidden="true" href="#netty-的高性能表现">#</a></h2>
+<li>心跳，对服务端：会定时清除闲置会话 inactive(netty5)，对客户端:用来检测会话是否断开，是否重来，检测网络延迟，其中 idleStateHandler 类 用来检测会话状态</li>
+<li>串行无锁化设计，即消息的处理尽可能在同一个线程内完成，期间不进行线程切换，这样就避免了多线程竞争和同步锁。表面上看，串行化设计似乎 CPU 利用率不高，并发程度不够。但是，通过调整 NIO 线程池的线程参数，可以同时启动多个串行化的线程并行运行，这种局部无锁化的串行线程设计相比一个队列-多个工作线程模型性能更优。</li>
+<li>可靠性，链路有效性检测：链路空闲检测机制，读/写空闲超时机制；内存保护机制：通过内存池重用 ByteBuf;ByteBuf 的解码保护；优雅停机：不再接收新消息、退出前的预处理操作、资源的释放操作。</li>
+<li>Netty 安全性：支持的安全协议：SSL V2 和 V3，TLS，SSL 单向认证、双向认证和第三方 CA认证。</li>
+<li>高效并发编程的体现：volatile 的大量、正确使用；CAS 和原子类的广泛使用；线程安全容器的使用；通过读写锁提升并发性能。IO 通信性能三原则：传输（AIO）、协议（Http）、线程（主从多线程）</li>
+<li>流量整型的作用（变压器）：防止由于上下游网元性能不均衡导致下游网元被压垮，业务流中断；防止由于通信模块接受消息过快，后端业务线程处理不及时导致撑死问题</li>
+<h2 id="netty核心组件">Netty核心组件<a hidden class="anchor" aria-hidden="true" href="#netty核心组件">#</a></h2>
+<h3 id="bootstrap和serverbootstrap">Bootstrap和ServerBootstrap<a hidden class="anchor" aria-hidden="true" href="#bootstrap和serverbootstrap">#</a></h3>
+<p>当需要连接客户端或者服务器绑定指定端口是需要使用Bootstrap，ServerBootstrap有两种类型，一种是用于客户端的Bootstrap，一种是用于服务端 的ServerBootstrap。不管程序使用哪种协议，无论是创建一个客户端还是服务器都需要使 用“引导”。</p>
+<p>Bootstrap 是客户端的启动引导类/辅助类</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">12
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">13
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>EventLoopGroup group = <span style="color:#fff;font-weight:bold">new</span> NioEventLoopGroup(); 
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">try</span> { 
+</span></span><span style="display:flex;"><span>    <span style="color:#007f7f">//创建客户端启动引导/辅助类：
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>    Bootstrap Bootstrap b = <span style="color:#fff;font-weight:bold">new</span> Bootstrap(); 
+</span></span><span style="display:flex;"><span>    <span style="color:#007f7f">//指定线程模型 
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>    b.<span style="color:#007f7f">group</span>(group). ...... 
+</span></span><span style="display:flex;"><span>    <span style="color:#007f7f">// 尝试建立连接 
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>    ChannelFuture f = b.<span style="color:#007f7f">connect</span>(host, port).<span style="color:#007f7f">sync</span>(); 
+</span></span><span style="display:flex;"><span>    f.<span style="color:#007f7f">channel</span>().<span style="color:#007f7f">closeFuture</span>().<span style="color:#007f7f">sync</span>(); 
+</span></span><span style="display:flex;"><span>} <span style="color:#fff;font-weight:bold">finally</span> { 
+</span></span><span style="display:flex;"><span>    <span style="color:#007f7f">// 优雅关闭相关线程组资源 
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>    group.<span style="color:#007f7f">shutdownGracefully</span>(); 
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>ServerBootstrap 客户端的启动引导类/辅助类</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">12
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">13
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">14
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">15
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">16
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#007f7f">// 1.bossGroup 用于接收连接，workerGroup 用于具体的处理 
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>EventLoopGroup bossGroup = <span style="color:#fff;font-weight:bold">new</span> NioEventLoopGroup(<span style="color:#ff0;font-weight:bold">1</span>); 
+</span></span><span style="display:flex;"><span>EventLoopGroup workerGroup = <span style="color:#fff;font-weight:bold">new</span> NioEventLoopGroup(); 
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">try</span> { 
+</span></span><span style="display:flex;"><span>    <span style="color:#007f7f">//2.创建服务端启动引导/辅助类：
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>    ServerBootstrap ServerBootstrap b = <span style="color:#fff;font-weight:bold">new</span> ServerBootstrap(); 
+</span></span><span style="display:flex;"><span>    <span style="color:#007f7f">//3.给引导类配置两大线程组,确定了线程模型 
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>    b.<span style="color:#007f7f">group</span>(bossGroup, workerGroup). ...... 
+</span></span><span style="display:flex;"><span>    <span style="color:#007f7f">// 6.绑定端口 
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>    ChannelFuture f = b.<span style="color:#007f7f">bind</span>(port).<span style="color:#007f7f">sync</span>(); 
+</span></span><span style="display:flex;"><span>    <span style="color:#007f7f">// 等待连接关闭 
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>    f.<span style="color:#007f7f">channel</span>().<span style="color:#007f7f">closeFuture</span>().<span style="color:#007f7f">sync</span>(); 
+</span></span><span style="display:flex;"><span>} <span style="color:#fff;font-weight:bold">finally</span> { 
+</span></span><span style="display:flex;"><span>    <span style="color:#007f7f">//7.优雅关闭相关线程组资源 
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>    bossGroup.<span style="color:#007f7f">shutdownGracefully</span>(); workerGroup.<span style="color:#007f7f">shutdownGracefully</span>(); 
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Bootstrap 通常使用 connet() 方法连接到远程的主机和端口，作为一个 Netty TCP 协议通信中的客户端。另外，Bootstrap 也可以通过 bind() 方法绑定本地的一个端口，作为 UDP 协议通信中的一端。
+ServerBootstrap通常使用 bind() 方法绑定本地的端口上，然后等待客户端的连接。</p>
+<p>Bootstrap 只需要配置一个线程组— EventLoopGroup，而 ServerBootstrap需要配置两个线程组— EventLoopGroup ，一个用于接收连接，一个用于具体的处理。</p>
+<p>一个 ServerBootstrap 可以认为有2个 Channel 集合，</p>
+<p>第一个集合包含一个单例 ServerChannel，代表持有一个绑定了本地端口的 socket;</p>
+<p>第二集合包含所有创建的 Channel，处理服务器所接收到的客户端进来的连接。</p>
+<p>EventLoop和EventLoopGroup
+EventLoop 定义了 Netty 的核心抽象，用于处理连接的生命周期中所发生的事件。</p>
+<p>EventLoop 的主要作用实际就是负责监听网络事件并调用事件处理器进行相关 I/O 操作的处理。</p>
+<p>Channel 和 EventLoop 直接有啥联系呢？</p>
+<p>Channel 为 Netty 网络操作(读写等操作)抽象类，EventLoop 负责处理注册到其上的Channel 处理 I/O 操作，两者配合参与 I/O 操作。</p>
+<p>EventLoopGroup包含多个EventLoop，每个EventLoop通常内部包含一个线程。EventLoop在处理IO事件时在自己的Thread线程上进行，从而保证线程安全</p>
+<p>NioEventLoopGroup在未指定线程数时，默认时当前cpu线程数*2</p>
+<p>EventLoopGroup 是一组 EventLoop 的抽象，Netty 为了更好的利用多核 CPU 资源，一般会有多个 EventLoop 同时工作，每个 EventLoop 维护着一个 Selector 实例。
+EventLoopGroup 提供 next 接口，可以从组里面按照一定规则获取其中一个EventLoop来处理任务。在 Netty 服务器端编程中，我们一般都需要提供两个EventLoopGroup，例如:BossEventLoopGroup 和 WorkerEventLoopGroup。
+通常一个服务端口即一个ServerSocketChannel对应一个Selector和一个EventLoop 线程。BossEventLoop 负责接收客户端的连接并将 SocketChannel 交给 WorkerEventLoopGroup 来进行 IO 处理</p>
+<p>BossEventLoopGroup 通常是一个单线程的 EventLoop，EventLoop 维护着一个注册了ServerSocketChannel 的Selector 实例BossEventLoop 不断轮询Selector 将连接事件分离出来
+通常是 OP_ACCEPT 事件，然后将接收到的 SocketChannel 交给WorkerEventLoopGroup
+WorkerEventLoopGroup 会由 next 选择其中一个 EventLoop来将这个SocketChannel 注册到其维护的Selector 并对其后续的 IO 事件进行处理
+EventLoop继承图</p>
+<h3 id="channel通道">Channel通道<a hidden class="anchor" aria-hidden="true" href="#channel通道">#</a></h3>
+<p>Channel 接口是 Netty 对网络操作抽象类，它除了包括基本的 I/O 操作，如 bind()、connect()、read()、write() 等。</p>
+<p>比较常用的Channel接口实现类是NioServerSocketChannel（服务端）和NioSocketChannel（客户端），这两个 Channel 可以和 BIO 编程模型中的ServerSocket以及Socket两个概念对应上。Netty 的 Channel 接口所提供的 API，大大地降低了直接使用 Socket 类的复杂性。</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">7
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>Channel channel = ...; <span style="color:#007f7f">// 获取channel的引用
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>ByteBuf buf = Unpooled.<span style="color:#007f7f">copiedBuffer</span>(<span style="color:#0ff;font-weight:bold">&#34;your data&#34;</span>, CharsetUtil.<span style="color:#007f7f">UTF_8</span>); <span style="color:#007f7f">//1 ChannelFuture cf = channel.writeAndFlush(buf); //2
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>cf.<span style="color:#007f7f">addListener</span>(<span style="color:#fff;font-weight:bold">new</span> ChannelFutureListener() { <span style="color:#007f7f">//3
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>@Override
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">public</span> <span style="color:#fff;font-weight:bold">void</span> operationComplete(ChannelFuture future) {
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">if</span> (future.<span style="color:#007f7f">isSuccess</span>()) { <span style="color:#007f7f">//4
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>} });
+</span></span></code></pre></td></tr></table>
+</div>
+</div><li>创建 ByteBuf 保存写的数据</li>
+<li>写数据，并刷新</li>
+<li>添加 ChannelFutureListener 即可写操作完成后收到通知</li>
+<li>写操作没有错误完成</li>
+<li>写操作完成时出现错误</li>
+<p>channel声明周期</br>
+| 状态 | 描述 |</br>
+| —- | —- |</br>
+| ChannelUnregistered | Channel 已经被创建，但还未注册到EventLoop |</br>
+| ChannelRegistered | Channel 已经被注册到了EventLoop |</br>
+| ChannelActive | Channel 处于活动状态（已经连接到它的远程节点）。它现在可以接收和发送数据了 |</br>
+| ChannelInactive | Channel 没有连接到远程节点 |</p>
+<h3 id="selector">selector<a hidden class="anchor" aria-hidden="true" href="#selector">#</a></h3>
+<p>作用：</p>
+<li>I/O 的就绪与选择</li>
+<li>是 NIO 网络编程的基础</li>
+SelectonKey 状态
+<li>OP_ACCEPT 操作集位用于插座接受操作。</li>
+<li>OP_CONNECT 用于套接字连接操作的操作集位。</li>
+<li>OP_READ 读操作的操作位。</li>
+<li>OP_WRITE 写操作的操作位。</li>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Selector selector = <span style="color:#fff;font-weight:bold">new</span> Selector.<span style="color:#007f7f">open</span>()
+</span></span><span style="display:flex;"><span>SelectorKey selectorKey = channel.<span style="color:#007f7f">register</span>(selector, SelectionKey.<span style="color:#007f7f">OP_READ</span>);
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">int</span> selectNum = selector.<span style="color:#007f7f">select</span>();
+</span></span><span style="display:flex;"><span>Set&lt;Selection&gt; selectionkeys = selector.<span style="color:#007f7f">selectdkeys</span>();
+</span></span></code></pre></td></tr></table>
+</div>
+</div>
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+      <li><a href="https://csqread.top/tags/netty/">netty</a></li>
+      <li><a href="https://csqread.top/tags/java/">Java</a></li>
+    </ul>
+<nav class="paginav">
+  <a class="prev" href="https://csqread.top/posts/blog/hugo%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/">
+    <span class="title">« Prev</span>
+    <br>
+    <span>Hugo博客搭建</span>
+  </a>
+  <a class="next" href="https://csqread.top/posts/tech/%E6%8B%BC%E5%A4%9A%E5%A4%9A%E9%9D%A2%E7%BB%8F/">
+    <span class="title">Next »</span>
+    <br>
+    <span>拼多多面经</span>
+  </a>
+</nav>
+
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+    <span>&copy; 2023 <a href="https://csqread.top">Qian&#39;s Blog</a></span>
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerHTML = 'copy';
+
+        function copyingDone() {
+            copybutton.innerHTML = 'copied!';
+            setTimeout(() => {
+                copybutton.innerHTML = 'copy';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) { };
+            selection.removeRange(range);
+        });
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+        }
+    });
+</script>
+</body>
+
+</html>

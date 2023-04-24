@@ -6,7 +6,7 @@
     <description>Recent content on Qian&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Sun, 12 Mar 2023 20:59:03 +0800</lastBuildDate><atom:link href="https://csqread.top/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 24 Apr 2023 21:48:50 +0800</lastBuildDate><atom:link href="https://csqread.top/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Hugo博客搭建</title>
       <link>https://csqread.top/posts/blog/hugo%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/</link>
@@ -14,6 +14,15 @@
       
       <guid>https://csqread.top/posts/blog/hugo%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/</guid>
       <description>Hugo博客搭建过程及遇到的问题</description>
+    </item>
+    
+    <item>
+      <title>Netty相关总结</title>
+      <link>https://csqread.top/posts/tech/netty%E7%9B%B8%E5%85%B3%E6%80%BB%E7%BB%93/</link>
+      <pubDate>Mon, 24 Apr 2023 21:48:50 +0800</pubDate>
+      
+      <guid>https://csqread.top/posts/tech/netty%E7%9B%B8%E5%85%B3%E6%80%BB%E7%BB%93/</guid>
+      <description>今天和同事聊到netty，收到dtf那边经常使用netty 和nio，但是我对于这块不是很了解，因此做一个学习与总结</description>
     </item>
     
     <item>
