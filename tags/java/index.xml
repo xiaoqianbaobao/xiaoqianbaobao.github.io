@@ -6,7 +6,16 @@
     <description>Recent content in Java on Qian&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Mon, 24 Apr 2023 21:48:50 +0800</lastBuildDate><atom:link href="https://csqread.top/tags/java/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 08 May 2023 22:37:29 +0800</lastBuildDate><atom:link href="https://csqread.top/tags/java/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Java虚拟机知识总结</title>
+      <link>https://csqread.top/posts/tech/java%E8%99%9A%E6%8B%9F%E6%9C%BA%E7%9F%A5%E8%AF%86%E6%80%BB%E7%BB%93/</link>
+      <pubDate>Mon, 08 May 2023 22:37:29 +0800</pubDate>
+      
+      <guid>https://csqread.top/posts/tech/java%E8%99%9A%E6%8B%9F%E6%9C%BA%E7%9F%A5%E8%AF%86%E6%80%BB%E7%BB%93/</guid>
+      <description>将周志明老师的《深入理解Java虚拟机》看完了，二刷， 因此来做一个总结回顾</description>
+    </item>
+    
     <item>
       <title>Netty相关总结</title>
       <link>https://csqread.top/posts/tech/netty%E7%9B%B8%E5%85%B3%E6%80%BB%E7%BB%93/</link>

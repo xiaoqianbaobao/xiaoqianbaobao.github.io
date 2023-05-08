@@ -5,12 +5,12 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="robots" content="index, follow">
-<title>Hugo博客搭建 | Qian&#39;s Blog</title>
-<meta name="keywords" content="博客搭建, 折腾">
-<meta name="description" content="Hugo博客搭建过程及遇到的问题">
+<title>Java虚拟机知识总结 | Qian&#39;s Blog</title>
+<meta name="keywords" content="Java, JVM">
+<meta name="description" content="将周志明老师的《深入理解Java虚拟机》看完了，二刷， 因此来做一个总结回顾">
 <meta name="author" content="
 作者:&nbsp;ShengQian">
-<link rel="canonical" href="https://csqread.top/posts/blog/hugo%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/">
+<link rel="canonical" href="https://csqread.top/posts/tech/java%E8%99%9A%E6%8B%9F%E6%9C%BA%E7%9F%A5%E8%AF%86%E6%80%BB%E7%BB%93/">
 <link crossorigin="anonymous" href="/assets/css/stylesheet.d056c2d8b86c8da0db95897f49066a3a22d796d21ff6173ef98b613234e402fe.css" integrity="" rel="preload stylesheet" as="style">
 <script defer crossorigin="anonymous" src="/assets/js/highlight.acb54fd32bbc1982428b8850317e45d076b95012730a5936667e6bc21777692a.js" integrity=""
     onload="hljs.initHighlightingOnLoad();"></script>
@@ -57,16 +57,16 @@
         }
 
     </style>
-</noscript><meta property="og:title" content="Hugo博客搭建" />
-<meta property="og:description" content="Hugo博客搭建过程及遇到的问题" />
+</noscript><meta property="og:title" content="Java虚拟机知识总结" />
+<meta property="og:description" content="将周志明老师的《深入理解Java虚拟机》看完了，二刷， 因此来做一个总结回顾" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://csqread.top/posts/blog/hugo%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/" /><meta property="article:section" content="posts" />
-<meta property="article:published_time" content="2023-03-05T12:47:51+08:00" />
-<meta property="article:modified_time" content="2023-03-05T12:47:51+08:00" />
+<meta property="og:url" content="https://csqread.top/posts/tech/java%E8%99%9A%E6%8B%9F%E6%9C%BA%E7%9F%A5%E8%AF%86%E6%80%BB%E7%BB%93/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2023-05-08T22:37:29+08:00" />
+<meta property="article:modified_time" content="2023-05-08T22:37:29+08:00" />
 
 <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="Hugo博客搭建"/>
-<meta name="twitter:description" content="Hugo博客搭建过程及遇到的问题"/>
+<meta name="twitter:title" content="Java虚拟机知识总结"/>
+<meta name="twitter:description" content="将周志明老师的《深入理解Java虚拟机》看完了，二刷， 因此来做一个总结回顾"/>
 
 
 <script type="application/ld+json">
@@ -83,14 +83,14 @@
     {
       "@type": "ListItem",
       "position":  3 ,
-      "name": "建站",
-      "item": "https://csqread.top/posts/blog/"
+      "name": "技术",
+      "item": "https://csqread.top/posts/tech/"
     }, 
     {
       "@type": "ListItem",
       "position":  4 ,
-      "name": "Hugo博客搭建",
-      "item": "https://csqread.top/posts/blog/hugo%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/"
+      "name": "Java虚拟机知识总结",
+      "item": "https://csqread.top/posts/tech/java%E8%99%9A%E6%8B%9F%E6%9C%BA%E7%9F%A5%E8%AF%86%E6%80%BB%E7%BB%93/"
     }
   ]
 }
@@ -99,24 +99,24 @@
 {
   "@context": "https://schema.org",
   "@type": "BlogPosting",
-  "headline": "Hugo博客搭建",
-  "name": "Hugo博客搭建",
-  "description": "Hugo博客搭建过程及遇到的问题",
+  "headline": "Java虚拟机知识总结",
+  "name": "Java虚拟机知识总结",
+  "description": "将周志明老师的《深入理解Java虚拟机》看完了，二刷， 因此来做一个总结回顾",
   "keywords": [
-    "博客搭建", "折腾"
+    "Java", "JVM"
   ],
-  "articleBody": "这篇文章主要记录我搭建hugo博客的过程，包括搭建过程中遇到的问题及解决方法\n1、新建github仓库 新建respository, Respository的名称为 “你的github名称.github.io”.\n2、下载并安装对应版本的hugo 下载链接: 点击选择hugo版本下载\n3、创建hugo网站 进入想要存放网站的文件夹，输入以下命令:\n1 hugo new site demo-blog 4、选择主题 输入命令下载主题:\n1 git clone https://github.com/adityatelange/hugo-PaperMod.git 使用该主题的方法就是在站点文件夹下的配置文件里输入主题的名字:\n然后把主题文件夹里面的一些静态文件和配置文件复制到站点目录下，目的是为了可以自定义博客的样式，而不会改动主题文件夹里的样式，这样主题要更新的时候，直接在主题目录下git pull就可以，站点目录的修改会优先覆盖主题里的配置，所以可以实现平滑更新\n",
-  "wordCount" : "353",
+  "articleBody": "JVM 内存结构 Java 虚拟机的内存空间分为 5 个部分：\n程序计数器 Java虚拟机栈 本地方法栈 堆 方法区 JDK 1.8 同 JDK 1.7 比，最大的差别就是：元数据区取代了永久代。元空间的本质和永久代类似，都是对 JVM 规范中方法区的实现。不过元空间与永久代之间最大的区别在于：元数据空间并不在虚拟机中，而是使用本地内存。\n程序计数器(PC寄存器) 程序计数器的定义 程序计数器是一块较小的内存空间，是当前线程正在执行的那条字节码指令的地址。若当前线程正在执行的是一个本地方法，那么此时程序计数器为Undefined。在Java虚拟机的概念模型里，字节码解释器工作时就是通过改变这个计数器的值来选取下一条需要执行的字节码指令，它是程序控制的指示器，分支，循环，跳转、异常处理、线程恢复等基础功能都需要这个计数器来完成。\n程序计数器的作用 字节码解释器通过改变程序计数器来依次读取指令，从而实现代码的流程控制。 在多线程情况下，程序计数器记录的是当前线程执行的位置，从而当线程切换回来时，就知道上次线程执行到哪了 ",
+  "wordCount" : "425",
   "inLanguage": "en",
-  "datePublished": "2023-03-05T12:47:51+08:00",
-  "dateModified": "2023-03-05T12:47:51+08:00",
+  "datePublished": "2023-05-08T22:37:29+08:00",
+  "dateModified": "2023-05-08T22:37:29+08:00",
   "author":[{
     "@type": "Person",
     "name": "ShengQian"
   }],
   "mainEntityOfPage": {
     "@type": "WebPage",
-    "@id": "https://csqread.top/posts/blog/hugo%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/"
+    "@id": "https://csqread.top/posts/tech/java%E8%99%9A%E6%8B%9F%E6%9C%BA%E7%9F%A5%E8%AF%86%E6%80%BB%E7%BB%93/"
   },
   "publisher": {
     "@type": "Organization",
@@ -214,12 +214,12 @@
 
 <article class="post-single">
   <header class="post-header">
-    <div class="breadcrumbs"><a href="https://csqread.top">Home</a>&nbsp;»&nbsp;<a href="https://csqread.top/posts/">Posts</a>&nbsp;»&nbsp;<a href="https://csqread.top/posts/blog/">建站</a></div>
+    <div class="breadcrumbs"><a href="https://csqread.top">Home</a>&nbsp;»&nbsp;<a href="https://csqread.top/posts/">Posts</a>&nbsp;»&nbsp;<a href="https://csqread.top/posts/tech/">技术</a></div>
     <h1 class="post-title">
-      Hugo博客搭建
+      Java虚拟机知识总结
     </h1>
     <div class="post-description">
-      Hugo博客搭建过程及遇到的问题
+      将周志明老师的《深入理解Java虚拟机》看完了，二刷， 因此来做一个总结回顾
     </div>
     <div class="post-meta">
 
@@ -232,14 +232,14 @@
 
 
 
-创建:&nbsp;<span title='2023-03-05 12:47:51 +0800 CST'>2023-03-05</span>&nbsp;|&nbsp;更新:&nbsp;2023-03-05&nbsp;|&nbsp;字数:&nbsp;353字&nbsp;|&nbsp;时长: 1分钟&nbsp;|&nbsp;
+创建:&nbsp;<span title='2023-05-08 22:37:29 +0800 CST'>2023-05-08</span>&nbsp;|&nbsp;更新:&nbsp;2023-05-08&nbsp;|&nbsp;字数:&nbsp;425字&nbsp;|&nbsp;时长: 1分钟&nbsp;|&nbsp;
 作者:&nbsp;ShengQian
 
 
     &nbsp;|&nbsp;标签: &nbsp;
     <ul class="post-tags-meta">
-        <a href="https://csqread.top/tags/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/">博客搭建</a>
-        <a href="https://csqread.top/tags/%E6%8A%98%E8%85%BE/">、折腾</a>
+        <a href="https://csqread.top/tags/java/">Java</a>
+        <a href="https://csqread.top/tags/jvm/">、JVM</a>
     </ul>
 
     
@@ -297,14 +297,23 @@
 
             <div class="inner"><ul>
                     <li>
-                        <a href="#1%e6%96%b0%e5%bb%bagithub%e4%bb%93%e5%ba%93" aria-label="1、新建github仓库">1、新建github仓库</a></li>
+                        <a href="#jvm-%e5%86%85%e5%ad%98%e7%bb%93%e6%9e%84" aria-label="JVM 内存结构">JVM 内存结构</a><ul>
+                            
                     <li>
-                        <a href="#2%e4%b8%8b%e8%bd%bd%e5%b9%b6%e5%ae%89%e8%a3%85%e5%af%b9%e5%ba%94%e7%89%88%e6%9c%ac%e7%9a%84hugo" aria-label="2、下载并安装对应版本的hugo">2、下载并安装对应版本的hugo</a></li>
+                        <a href="#%e7%a8%8b%e5%ba%8f%e8%ae%a1%e6%95%b0%e5%99%a8pc%e5%af%84%e5%ad%98%e5%99%a8" aria-label="程序计数器(PC寄存器)">程序计数器(PC寄存器)</a><ul>
+                            
                     <li>
-                        <a href="#3%e5%88%9b%e5%bb%bahugo%e7%bd%91%e7%ab%99" aria-label="3、创建hugo网站">3、创建hugo网站</a></li>
+                        <a href="#%e7%a8%8b%e5%ba%8f%e8%ae%a1%e6%95%b0%e5%99%a8%e7%9a%84%e5%ae%9a%e4%b9%89" aria-label="程序计数器的定义">程序计数器的定义</a><ul>
+                            
                     <li>
-                        <a href="#4%e9%80%89%e6%8b%a9%e4%b8%bb%e9%a2%98" aria-label="4、选择主题">4、选择主题</a>
+                        <a href="#%e7%a8%8b%e5%ba%8f%e8%ae%a1%e6%95%b0%e5%99%a8%e7%9a%84%e4%bd%9c%e7%94%a8" aria-label="程序计数器的作用">程序计数器的作用</a>
                     </li>
+                </ul>
+                </li>
+                </ul>
+                </li>
+                </ul>
+                </li>
                 </ul>
             </div>
         </details>
@@ -369,47 +378,40 @@
         return rect.top + win.pageYOffset;   
     }
 </script>
-  <div class="post-content"><p>这篇文章主要记录我搭建hugo博客的过程，包括搭建过程中遇到的问题及解决方法</p>
-<h1 id="1新建github仓库">1、新建github仓库<a hidden class="anchor" aria-hidden="true" href="#1新建github仓库">#</a></h1>
-<p>新建respository, Respository的名称为 &ldquo;你的github名称.github.io&rdquo;.</p>
-<h1 id="2下载并安装对应版本的hugo">2、下载并安装对应版本的hugo<a hidden class="anchor" aria-hidden="true" href="#2下载并安装对应版本的hugo">#</a></h1>
-<p>下载链接: <a href = "https://github.com/gohugoio/hugo/releases">点击选择hugo版本下载</a></p>
-<h1 id="3创建hugo网站">3、创建hugo网站<a hidden class="anchor" aria-hidden="true" href="#3创建hugo网站">#</a></h1>
-<p>进入想要存放网站的文件夹，输入以下命令:</p>
-<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>hugo new site demo-blog
-</span></span></code></pre></td></tr></table>
-</div>
-</div><h1 id="4选择主题">4、选择主题<a hidden class="anchor" aria-hidden="true" href="#4选择主题">#</a></h1>
-<p>输入命令下载主题:</p>
-<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>git clone https://github.com/adityatelange/hugo-PaperMod.git
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>使用该主题的方法就是在站点文件夹下的配置文件里输入主题的名字:</p>
-<p>然后把主题文件夹里面的一些静态文件和配置文件复制到站点目录下，目的是为了可以自定义博客的样式，而不会改动主题文件夹里的样式，这样主题要更新的时候，直接在主题目录下git pull就可以，站点目录的修改会优先覆盖主题里的配置，所以可以实现平滑更新</p>
+  <div class="post-content"><h1 id="jvm-内存结构">JVM 内存结构<a hidden class="anchor" aria-hidden="true" href="#jvm-内存结构">#</a></h1>
+<p>Java 虚拟机的内存空间分为 5 个部分：</p>
+<li> 程序计数器</li>
+<li> Java虚拟机栈</li>
+<li> 本地方法栈</li>
+<li> 堆</li>
+<li> 方法区</li>
+<img src="Java虚拟机知识总结/jvm-memory-structure.jpg">
+<p>JDK 1.8 同 JDK 1.7 比，最大的差别就是：元数据区取代了永久代。元空间的本质和永久代类似，都是对 JVM 规范中方法区的实现。不过元空间与永久代之间最大的区别在于：元数据空间并不在虚拟机中，而是使用本地内存。</p>
+<h2 id="程序计数器pc寄存器">程序计数器(PC寄存器)<a hidden class="anchor" aria-hidden="true" href="#程序计数器pc寄存器">#</a></h2>
+<h3 id="程序计数器的定义">程序计数器的定义<a hidden class="anchor" aria-hidden="true" href="#程序计数器的定义">#</a></h3>
+<p>程序计数器是一块较小的内存空间，是当前线程正在执行的那条字节码指令的地址。若当前线程正在执行的是一个本地方法，那么此时程序计数器为Undefined。在Java虚拟机的概念模型里，字节码解释器工作时就是通过改变这个计数器的值来选取下一条需要执行的字节码指令，它是程序控制的指示器，分支，循环，跳转、异常处理、线程恢复等基础功能都需要这个计数器来完成。</p>
+<h4 id="程序计数器的作用">程序计数器的作用<a hidden class="anchor" aria-hidden="true" href="#程序计数器的作用">#</a></h4>
+<li>字节码解释器通过改变程序计数器来依次读取指令，从而实现代码的流程控制。</li>
+<li>在多线程情况下，程序计数器记录的是当前线程执行的位置，从而当线程切换回来时，就知道上次线程执行到哪了</li>
 
 
   </div>
 
   <footer class="post-footer">
     <ul class="post-tags">
-      <li><a href="https://csqread.top/tags/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/">博客搭建</a></li>
-      <li><a href="https://csqread.top/tags/%E6%8A%98%E8%85%BE/">折腾</a></li>
+      <li><a href="https://csqread.top/tags/java/">Java</a></li>
+      <li><a href="https://csqread.top/tags/jvm/">JVM</a></li>
     </ul>
 <nav class="paginav">
-  <a class="next" href="https://csqread.top/posts/tech/%E5%8E%8B%E6%B5%8B%E6%95%B0%E6%8D%AE%E5%BF%AB%E9%80%9F%E7%94%9F%E6%88%90%E5%B9%B6%E6%8F%92%E5%85%A5%E6%95%B0%E6%8D%AE%E5%BA%93%E6%80%BB%E7%BB%93/">
-    <span class="title">Next »</span>
+  <a class="prev" href="https://csqread.top/posts/tech/%E5%8E%8B%E6%B5%8B%E6%95%B0%E6%8D%AE%E5%BF%AB%E9%80%9F%E7%94%9F%E6%88%90%E5%B9%B6%E6%8F%92%E5%85%A5%E6%95%B0%E6%8D%AE%E5%BA%93%E6%80%BB%E7%BB%93/">
+    <span class="title">« Prev</span>
     <br>
     <span>压测数据快速生成并插入数据库总结</span>
+  </a>
+  <a class="next" href="https://csqread.top/posts/tech/netty%E7%9B%B8%E5%85%B3%E6%80%BB%E7%BB%93/">
+    <span class="title">Next »</span>
+    <br>
+    <span>Netty相关总结</span>
   </a>
 </nav>
 
