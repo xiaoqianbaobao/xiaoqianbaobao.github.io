@@ -89,6 +89,24 @@
     </item>
     
     <item>
+      <title>深入理解计算机系统 Chapter 2 Practice</title>
+      <link>https://csqread.top/posts/tech/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-chapter-2-practice/</link>
+      <pubDate>Mon, 06 Jul 2020 18:26:39 +0800</pubDate>
+      
+      <guid>https://csqread.top/posts/tech/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-chapter-2-practice/</guid>
+      <description>C. x的最低有效字节中的位都等于1 D. x的最高有效字节中的位都等于0 代码应该遵循位级整数编码规则，另外还有一个限制，不能使用(==)和(!=)测</description>
+    </item>
+    
+    <item>
+      <title>《开发者》影评</title>
+      <link>https://csqread.top/posts/read/%E5%BC%80%E5%8F%91%E8%80%85%E5%BD%B1%E8%AF%84/</link>
+      <pubDate>Thu, 23 Apr 2020 00:24:57 +0800</pubDate>
+      
+      <guid>https://csqread.top/posts/read/%E5%BC%80%E5%8F%91%E8%80%85%E5%BD%B1%E8%AF%84/</guid>
+      <description>我大概是从3月中旬发现这部剧集的，那个时候还是因为在tg的某句台词引起了我的兴趣，在这里就不说了，说了这篇公众号就发不出去了，说不定我的号也</description>
+    </item>
+    
+    <item>
       <title>2020 NCov爬虫统计</title>
       <link>https://csqread.top/posts/tech/2020-ncov%E7%88%AC%E8%99%AB%E7%BB%9F%E8%AE%A1/</link>
       <pubDate>Thu, 30 Jan 2020 18:15:17 +0800</pubDate>
@@ -104,6 +122,24 @@
       
       <guid>https://csqread.top/posts/read/%E6%88%91%E5%9C%A8%E6%8B%8D%E7%94%B5%E5%BD%B1%E6%97%B6%E6%83%B3%E7%9A%84%E4%BA%8B-%E6%98%AF%E6%9E%9D%E8%A3%95%E5%92%8C/</guid>
       <description>是枝裕和在2016年之前的电影拍的时候他的经历和感想呢，看完使得我对于电影的理解又更深了一些，以及电影是如何制作出来的又了解了一些</description>
+    </item>
+    
+    <item>
+      <title>《美丽新世界》读书笔记</title>
+      <link>https://csqread.top/posts/read/%E7%BE%8E%E4%B8%BD%E6%96%B0%E4%B8%96%E7%95%8C%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/</link>
+      <pubDate>Mon, 05 Nov 2018 18:22:19 +0800</pubDate>
+      
+      <guid>https://csqread.top/posts/read/%E7%BE%8E%E4%B8%BD%E6%96%B0%E4%B8%96%E7%95%8C%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/</guid>
+      <description>“可是为什么要禁掉呢？”野人问道。遇见一位读过莎士比亚的人，使他一时忘了形。 元首耸耸肩膀：“”因为这本书太旧了，这是主要原因。旧东西在我们这</description>
+    </item>
+    
+    <item>
+      <title>自定义我的QQ机器人</title>
+      <link>https://csqread.top/posts/tech/%E8%87%AA%E5%AE%9A%E4%B9%89%E6%88%91%E7%9A%84qq%E6%9C%BA%E5%99%A8%E4%BA%BA/</link>
+      <pubDate>Sun, 16 Sep 2018 17:08:14 +0800</pubDate>
+      
+      <guid>https://csqread.top/posts/tech/%E8%87%AA%E5%AE%9A%E4%B9%89%E6%88%91%E7%9A%84qq%E6%9C%BA%E5%99%A8%E4%BA%BA/</guid>
+      <description>一直以来，我在想做一个qq机器人，能够实现qq消息的转发，因为对于失物招领工作，其他的都挺满意的，但每天发那么多消息确实很浪费时间，所以就想</description>
     </item>
     
   </channel>

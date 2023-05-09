@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>操作系统 on Qian&#39;s Blog</title>
+    <link>https://csqread.top/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/</link>
+    <description>Recent content in 操作系统 on Qian&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Mon, 06 Jul 2020 18:26:39 +0800</lastBuildDate><atom:link href="https://csqread.top/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>深入理解计算机系统 Chapter 2 Practice</title>
+      <link>https://csqread.top/posts/tech/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-chapter-2-practice/</link>
+      <pubDate>Mon, 06 Jul 2020 18:26:39 +0800</pubDate>
+      
+      <guid>https://csqread.top/posts/tech/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-chapter-2-practice/</guid>
+      <description>C. x的最低有效字节中的位都等于1 D. x的最高有效字节中的位都等于0 代码应该遵循位级整数编码规则，另外还有一个限制，不能使用(==)和(!=)测</description>
+    </item>
+    
+  </channel>
+</rss>
