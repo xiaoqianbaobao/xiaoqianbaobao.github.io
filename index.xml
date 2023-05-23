@@ -6,7 +6,7 @@
     <description>Recent content on Qian&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Mon, 08 May 2023 22:53:52 +0800</lastBuildDate><atom:link href="https://csqread.top/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 23 May 2023 22:07:01 +0800</lastBuildDate><atom:link href="https://csqread.top/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Hugo博客搭建</title>
       <link>https://csqread.top/posts/blog/hugo%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/</link>
@@ -14,6 +14,15 @@
       
       <guid>https://csqread.top/posts/blog/hugo%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/</guid>
       <description>Hugo博客搭建过程及遇到的问题</description>
+    </item>
+    
+    <item>
+      <title>进程与线程</title>
+      <link>https://csqread.top/posts/tech/%E8%BF%9B%E7%A8%8B%E4%B8%8E%E7%BA%BF%E7%A8%8B/</link>
+      <pubDate>Tue, 23 May 2023 22:07:01 +0800</pubDate>
+      
+      <guid>https://csqread.top/posts/tech/%E8%BF%9B%E7%A8%8B%E4%B8%8E%E7%BA%BF%E7%A8%8B/</guid>
+      <description>《现代操作系统》复习， 进程与线程相关知识点总结</description>
     </item>
     
     <item>

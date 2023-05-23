@@ -6,7 +6,16 @@
     <description>Recent content in 技术 on Qian&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Mon, 08 May 2023 22:53:52 +0800</lastBuildDate><atom:link href="https://csqread.top/posts/tech/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 23 May 2023 22:07:01 +0800</lastBuildDate><atom:link href="https://csqread.top/posts/tech/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>进程与线程</title>
+      <link>https://csqread.top/posts/tech/%E8%BF%9B%E7%A8%8B%E4%B8%8E%E7%BA%BF%E7%A8%8B/</link>
+      <pubDate>Tue, 23 May 2023 22:07:01 +0800</pubDate>
+      
+      <guid>https://csqread.top/posts/tech/%E8%BF%9B%E7%A8%8B%E4%B8%8E%E7%BA%BF%E7%A8%8B/</guid>
+      <description>《现代操作系统》复习， 进程与线程相关知识点总结</description>
+    </item>
+    
     <item>
       <title>压测数据快速生成并插入数据库总结</title>
       <link>https://csqread.top/posts/tech/%E5%8E%8B%E6%B5%8B%E6%95%B0%E6%8D%AE%E5%BF%AB%E9%80%9F%E7%94%9F%E6%88%90%E5%B9%B6%E6%8F%92%E5%85%A5%E6%95%B0%E6%8D%AE%E5%BA%93%E6%80%BB%E7%BB%93/</link>
