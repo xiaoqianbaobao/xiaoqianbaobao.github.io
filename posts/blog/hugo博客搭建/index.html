@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" dir="auto">
+<html lang="zh" dir="auto">
 
 <head><meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -107,7 +107,7 @@
   ],
   "articleBody": "这篇文章主要记录我搭建hugo博客的过程，包括搭建过程中遇到的问题及解决方法\n1、新建github仓库 新建respository, Respository的名称为 “你的github名称.github.io”.\n2、下载并安装对应版本的hugo 下载链接: 点击选择hugo版本下载\n3、创建hugo网站 进入想要存放网站的文件夹，输入以下命令:\n1 hugo new site demo-blog 4、选择主题 输入命令下载主题:\n1 git clone https://github.com/adityatelange/hugo-PaperMod.git 使用该主题的方法就是在站点文件夹下的配置文件里输入主题的名字:\n然后把主题文件夹里面的一些静态文件和配置文件复制到站点目录下，目的是为了可以自定义博客的样式，而不会改动主题文件夹里的样式，这样主题要更新的时候，直接在主题目录下git pull就可以，站点目录的修改会优先覆盖主题里的配置，所以可以实现平滑更新\n",
   "wordCount" : "353",
-  "inLanguage": "en",
+  "inLanguage": "zh",
   "datePublished": "2023-03-05T12:47:51+08:00",
   "dateModified": "2023-03-05T12:47:51+08:00",
   "author":[{
@@ -214,7 +214,7 @@
 
 <article class="post-single">
   <header class="post-header">
-    <div class="breadcrumbs"><a href="https://csqread.top">Home</a>&nbsp;»&nbsp;<a href="https://csqread.top/posts/">Posts</a>&nbsp;»&nbsp;<a href="https://csqread.top/posts/blog/">建站</a></div>
+    <div class="breadcrumbs"><a href="https://csqread.top">主页</a>&nbsp;»&nbsp;<a href="https://csqread.top/posts/">Posts</a>&nbsp;»&nbsp;<a href="https://csqread.top/posts/blog/">建站</a></div>
     <h1 class="post-title">
       Hugo博客搭建
     </h1>
@@ -292,7 +292,7 @@
     <div class="toc">
         <details  open>
             <summary accesskey="c" title="(Alt + C)">
-                <span class="details">Table of Contents</span>
+                <span class="details">目录</span>
             </summary>
 
             <div class="inner"><ul>
@@ -407,7 +407,7 @@
     </ul>
 <nav class="paginav">
   <a class="next" href="https://csqread.top/posts/tech/%E8%BF%9B%E7%A8%8B%E4%B8%8E%E7%BA%BF%E7%A8%8B/">
-    <span class="title">Next »</span>
+    <span class="title">下一页 »</span>
     <br>
     <span>进程与线程</span>
   </a>
@@ -491,12 +491,12 @@
 
         const copybutton = document.createElement('button');
         copybutton.classList.add('copy-code');
-        copybutton.innerHTML = 'copy';
+        copybutton.innerHTML = '复制';
 
         function copyingDone() {
-            copybutton.innerHTML = 'copied!';
+            copybutton.innerHTML = '已复制！';
             setTimeout(() => {
-                copybutton.innerHTML = 'copy';
+                copybutton.innerHTML = '复制';
             }, 2000);
         }
 

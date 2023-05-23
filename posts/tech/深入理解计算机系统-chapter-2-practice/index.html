@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" dir="auto">
+<html lang="zh" dir="auto">
 
 <head><meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -107,7 +107,7 @@
   ],
   "articleBody": "C. x的最低有效字节中的位都等于1 D. x的最高有效字节中的位都等于0 代码应该遵循位级整数编码规则，另外还有一个限制，不能使用(==)和(!=)测试\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 /* * 2.61.c */ #include #include int A(int x) { return !~x; } int B(int x) { return !x; } int C(int x) { return A(x | ~0xff); } int D(int x) { return B((x \u003e\u003e ((sizeof(int)-1) \u003c\u003c 3)) \u0026 0xff); } int main(int argc, char* argv[]) { int all_bit_one = ~0; int all_bit_zero = 0; assert(A(all_bit_one)); assert(!B(all_bit_one)); assert(C(all_bit_one)); assert(!D(all_bit_one)); assert(!A(all_bit_zero)); assert(B(all_bit_zero)); assert(!C(all_bit_zero)); assert(D(all_bit_zero)); // test magic number 0x1234ff assert(!A(0x1234ff)); assert(!B(0x1234ff)); assert(C(0x1234ff)); assert(D(0x1234ff)); // test magic number 0x1234 assert(!A(0x1234)); assert(!B(0x1234)); assert(!C(0x1234)); assert(D(0x1234)); return 0; } 2.62编写一个函数int_shifts_are_arithemtic()，在对int类型的数使用算数右移的机器上运行时这个函数生成1，而其他情况下生成0.你的代码应该可以运行在任何字长的机器上。在几种机器上测试你的代码。\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 /* * int-shifts-are-arithemetic.c */ #include #include int int_shifts_are_arithemetic() { int num = -1; return !(num ^ (num \u003e\u003e 1)); } int main(int argc, char* argv[]) { assert(int_shifts_are_arithemetic()); return 0; } 2.63 将下面的c代码补充完整。函数srl用算术右移(由值xsra给出)来完成逻辑右移，后面的其他操作不包括右移或者除法。函数sra用逻辑右移(由值xsrl给出)来完成算术右移，后面的其他操作不包括右移或者除法。可以通过计算8*sizeof(int)来确定数据类型int中的位数w。位移量k的取值范围为0~w-1.\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 /* * srl-sra.c */ #include #include unsigned srl(unsigned x, int k) { unsigned xsra = (int) x \u003e\u003e k; int w = sizeof(int) \u003c\u003c 3; int mask = (int) -1 \u003c\u003c (w - k); return xsra \u0026 ~mask; } int sra(int x, int k) { int xsrl = (unsigned) x \u003e\u003e k; int w = sizeof(int) \u003c\u003c 3; int mask = (int) -1 \u003c\u003c (w - k); //let mask remain unchanged when the first bit of x is 1, otherwise 0. int m = 1 \u003c\u003c (w - 1); mask \u0026= ! (x \u0026 m) - 1; return xsrl | mask; } int main(int argc, char* argv[]) { unsigned test_unsigned = 0x12345678; int test_int = 0x12345678; assert(srl(test_unsigned, 4) == test_unsigned \u003e\u003e 4); assert(sra(test_int, 4) == test_int \u003e\u003e 4); test_unsigned = 0x87654321; test_int = 0x87654321; assert (srl (test_unsigned, 4) == test_unsigned \u003e\u003e 4); assert (sra (test_int, 4) == test_int \u003e\u003e 4); return 0; } 2.64 写出代码实现如下函数：\n1 2 /*Return 1 when any odd bit of x equals 1; 0 otherwise. Assume w=32 */ int any_odd_one(unsigned x) 函数应该遵循位级整数编码规则，不过你可以假设数据类型int有w=32位。\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 /* * any-odd-one.c */ #include #include int any_odd_one(unsigned x) { return !!(0xAAAAAAAA \u0026 x); } int main(int argc, char* argv[]) { assert(any_odd_one(0x2)); assert(!any_odd_one(0x4)); return 0; } 2.65 写出代码实现如下函数：\n1 2 /* return 1 when x contains an odd number of 1s; 0 otherwise. Assume w =32 */ int odd_ones(unsigned x); 函数应该遵循位级整数编码规则，不过你可以假设数据类型int有w=32位。你的代码最多只能包含12个算数运算，位运算和逻辑运算。\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 /* * odd-ones.c */ #include #include int odd_ones(unsigned x) { x ^= x \u003e\u003e 16; x ^= x \u003e\u003e 8; x ^= x \u003e\u003e 4; x ^= x \u003e\u003e 2; x ^= x \u003e\u003e 1; x \u0026= 0x1; return x; } int main(int argc, char* argv[]) { assert(odd_ones(0x10101011)); assert(!odd_ones(0x01010101)); return 0; } 代码参考自GitHub\n",
   "wordCount" : "1013",
-  "inLanguage": "en",
+  "inLanguage": "zh",
   "datePublished": "2020-07-06T18:26:39+08:00",
   "dateModified": "2020-07-06T18:26:39+08:00",
   "author":[{
@@ -214,7 +214,7 @@
 
 <article class="post-single">
   <header class="post-header">
-    <div class="breadcrumbs"><a href="https://csqread.top">Home</a>&nbsp;»&nbsp;<a href="https://csqread.top/posts/">Posts</a>&nbsp;»&nbsp;<a href="https://csqread.top/posts/tech/">技术</a></div>
+    <div class="breadcrumbs"><a href="https://csqread.top">主页</a>&nbsp;»&nbsp;<a href="https://csqread.top/posts/">Posts</a>&nbsp;»&nbsp;<a href="https://csqread.top/posts/tech/">技术</a></div>
     <h1 class="post-title">
       深入理解计算机系统 Chapter 2 Practice
     </h1>
@@ -645,12 +645,12 @@ D. x的最高有效字节中的位都等于0
     </ul>
 <nav class="paginav">
   <a class="prev" href="https://csqread.top/posts/tech/java%E9%94%81%E4%BC%98%E5%8C%96%E7%9B%B8%E5%85%B3%E7%AC%94%E8%AE%B0/">
-    <span class="title">« Prev</span>
+    <span class="title">« 上一页</span>
     <br>
     <span>Java锁优化相关笔记</span>
   </a>
   <a class="next" href="https://csqread.top/posts/read/%E5%BC%80%E5%8F%91%E8%80%85%E5%BD%B1%E8%AF%84/">
-    <span class="title">Next »</span>
+    <span class="title">下一页 »</span>
     <br>
     <span>《开发者》影评</span>
   </a>
@@ -734,12 +734,12 @@ D. x的最高有效字节中的位都等于0
 
         const copybutton = document.createElement('button');
         copybutton.classList.add('copy-code');
-        copybutton.innerHTML = 'copy';
+        copybutton.innerHTML = '复制';
 
         function copyingDone() {
-            copybutton.innerHTML = 'copied!';
+            copybutton.innerHTML = '已复制！';
             setTimeout(() => {
-                copybutton.innerHTML = 'copy';
+                copybutton.innerHTML = '复制';
             }, 2000);
         }
 

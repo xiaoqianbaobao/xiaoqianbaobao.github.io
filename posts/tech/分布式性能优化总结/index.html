@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" dir="auto">
+<html lang="zh" dir="auto">
 
 <head><meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -107,7 +107,7 @@
   ],
   "articleBody": "缓存优化 1、对应参数表数据量如果小于10M，数据要同时缓存到Redis和本地，查询遵循的缓存原则为:优先查询本地缓存，本地没有查询Redis缓存，Redis没有再查询数据库.\n2、对参数表的缓存要分类进行配置：黑名单类参数表查询，Redis缓存为空时不再查询数据库：常规类参数表查询，Redis缓存为空的时候需要再查询数据库\n3、如果参数表出现大量RPC。确定SQL都是等值的情况下，一般是缓存索引配置的不合适/\n4、如果出现大量RPC，在SQL非等值情况下，需要通过等值SQL去查询，然后在程序代码中去判断数据是否符合要求。\n5、针对查询比较多并且修改也比较多的数据，可以针对部分不变的数据配置缓存。 （比如针对内部合约相关的数据，需要频繁的调用内部账的科目存储字段，虽然内部户的一整条数据会经常变动，但是内部户的科目存储字段基本上不会改变，就可以把这些不变的数据配置缓存，提升查询效率，并且可以减少RPC的次数）。\n6、根据不同条件调用他组缓存表的接口时，可以现根据他组配置缓存索引条件进行查询，然后在程序中再根据非索引条件过滤查询结果。\n编码优化 1、当某业务构件执行缓慢时，除了要排查是否有非必要RPC时或环境影响因素外，还需要检查构件中是否有重复执行的代码和SQL，第一次执行向后传递可以提升传递效率。\n2、如果通过实现JAR包调用他组接口还RPC了的，首先检查他们是否缓存表以及缓存表索引配置是否正确，如以上没问题，则可能是JAR包中未打入实现类。\n3、因为Java接口中传递对象是通过引用方式传递的，如果接口对传入的对象进行了修改，当执行完接口在接口外部拿到的该对象中的数据是被修改的，此时在接口外部继续获取对象中被修改的原数据时容易得到意想不到的结果。\n4、调用某构件的时候，构件中又要获取一些数据进行RPC，如果调用构件之前已有相关数据，可以调用构件时传递进去，可减少RPC。\n5、根据不同条件多次使用其他组的接口进行查询时，可以提取多个条件的交集，根据交集条件查询所有数据，然后在程序中分别根据非交集的条件进行过滤。\n6、对于多次循环调用他组同一个方法时，每次输入的值不同，可将所有输入值包装成LIST一次性传入，得到一个查询列表集合作为类似本地缓存，然后对这个LSIT集合进行循环整理。\n7、RPC接口要尽量简单，输入输出接口不要继承一些不需要的东西，既能减少网络传输消耗，还能减少序列化和反序列化的时间。\n数据库及SQL优化 1、尽量避免使用SELECT * 来查询所有字段，仅查询必要数据行及字段，既能减少网络传输消耗，还能提高命中覆盖索引的概率。\n2、写SQK的时候永远记得WHERE条件要和主键或者索引匹配。\n3、对于查询量非常大修改比较少的表， 且SELECT的字段正好比索引多一个或者两个字段的时候，可以采取把多余的一个或者两个字段冗余到索引上，这种一空间换取时间的方式虽然一定程度上增加了索引空间的开销，但是对于非常高频的SQL直接命中了覆盖索引，避免了回表查询，有助于提升查询效率。\n4、对于修改量非常大的交易，要及其精简索引，能不要的索引最好不要建，在修改表的时候可以减少索引的维护，有助于提升修改效率。\n以上是工作中的性能优化总结，后续如果有新的总结再来记录\n",
   "wordCount" : "1327",
-  "inLanguage": "en",
+  "inLanguage": "zh",
   "datePublished": "2023-03-09T20:18:13+08:00",
   "dateModified": "2023-03-09T20:18:13+08:00",
   "author":[{
@@ -214,7 +214,7 @@
 
 <article class="post-single">
   <header class="post-header">
-    <div class="breadcrumbs"><a href="https://csqread.top">Home</a>&nbsp;»&nbsp;<a href="https://csqread.top/posts/">Posts</a>&nbsp;»&nbsp;<a href="https://csqread.top/posts/tech/">技术</a></div>
+    <div class="breadcrumbs"><a href="https://csqread.top">主页</a>&nbsp;»&nbsp;<a href="https://csqread.top/posts/">Posts</a>&nbsp;»&nbsp;<a href="https://csqread.top/posts/tech/">技术</a></div>
     <h1 class="post-title">
       分布式性能优化总结
     </h1>
@@ -289,7 +289,7 @@
     <div class="toc">
         <details  open>
             <summary accesskey="c" title="(Alt + C)">
-                <span class="details">Table of Contents</span>
+                <span class="details">目录</span>
             </summary>
 
             <div class="inner"><ul>
@@ -397,12 +397,12 @@
     </ul>
 <nav class="paginav">
   <a class="prev" href="https://csqread.top/posts/tech/java-arraylist%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90%E4%B8%8E%E6%80%BB%E7%BB%93/">
-    <span class="title">« Prev</span>
+    <span class="title">« 上一页</span>
     <br>
     <span>Java ArrayList源码分析与总结</span>
   </a>
   <a class="next" href="https://csqread.top/posts/tech/java%E4%B8%AD%E7%9A%84%E5%AD%97%E7%AC%A6%E6%93%8D%E4%BD%9C/">
-    <span class="title">Next »</span>
+    <span class="title">下一页 »</span>
     <br>
     <span>Java中的字符操作</span>
   </a>
@@ -486,12 +486,12 @@
 
         const copybutton = document.createElement('button');
         copybutton.classList.add('copy-code');
-        copybutton.innerHTML = 'copy';
+        copybutton.innerHTML = '复制';
 
         function copyingDone() {
-            copybutton.innerHTML = 'copied!';
+            copybutton.innerHTML = '已复制！';
             setTimeout(() => {
-                copybutton.innerHTML = 'copy';
+                copybutton.innerHTML = '复制';
             }, 2000);
         }
 

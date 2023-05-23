@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" dir="auto">
+<html lang="zh" dir="auto">
 
 <head><meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -107,7 +107,7 @@
   ],
   "articleBody": "什么是Netty 1、Netty 是一个 基于 NIO 的 client-server(客户端服务器)框架，使用它可以快速简单地开发网络应用程序。 2、它极大地简化并优化了 TCP 和 UDP 套接字服务器等网络编程,并且性能以及安全性等很多方面甚至都要更好。 3、支持多种协议 如 FTP，SMTP，HTTP 以及各种二进制和基于文本的传统协议。 用官方的总结就是：Netty 成功地找到了一种在不妥协可维护性和性能的情况下实现易于开发，性能，稳定性和灵活性的方法。\n除了上面之外，很多开源项目比如我们常用的 Dubbo、RocketMQ、Elasticsearch、gRPC 等等都用到了 Netty\n相比于直接使用 JDK 自带的 NIO 相关的 API 来说更加易用。 统一的 API，支持多种传输类型，阻塞和非阻塞的。 简单而强大的线程模型。 自带编解码器解决 TCP 粘包/拆包问题。 自带各种协议栈。 真正的无连接数据包套接字支持。 比直接使用 Java 核心 API 有更高的吞吐量、更低的延迟、更低的资源消耗和更少的内存复制。 安全性不错，有完整的 SSL/TLS 以及 StartTLS 支持。 社区活跃、成熟稳定，经历了大型项目的使用和考验，而且很多开源项目都使用到了 Netty， 比如我们经常接触的 Dubbo、RocketMQ 等等。 应用场景 NIO 可以做的事情 ，使用 Netty 都可以做并且更好。Netty 主要用来做网络通信 : 作为 RPC 框架的网络通信工具 ：我们在分布式系统中，不同服务节点之间经常需要相互调用，这个时候就需要 RPC 框架了。不同服务节点之间的通信是如何做的呢？可以使用 Netty 来做。比如我调用另外一个节点的方法的话，至少是要让对方知道我调用的是哪个类中的哪个方法以及相关参数吧！ 实现一个自己的 HTTP 服务器 ：通过 Netty 我们可以自己实现一个简单的 HTTP 服务器，这个大家应该不陌生。说到 HTTP 服务器的话，作为 Java 后端开发，我们一般使用 Tomcat 比较多。一个最基本的 HTTP 服务器可要以处理常见的 HTTP Method 的请求，比如 POST 请求、GET 请求等等。 实现一个即时通讯系统 ：使用 Netty 我们可以实现一个可以聊天类似微信的即时通讯系统， 实现消息推送系统 ：市面上有很多消息推送系统都是基于 Netty 来做的。 Netty 的高性能表现 心跳，对服务端：会定时清除闲置会话 inactive(netty5)，对客户端:用来检测会话是否断开，是否重来，检测网络延迟，其中 idleStateHandler 类 用来检测会话状态 串行无锁化设计，即消息的处理尽可能在同一个线程内完成，期间不进行线程切换，这样就避免了多线程竞争和同步锁。表面上看，串行化设计似乎 CPU 利用率不高，并发程度不够。但是，通过调整 NIO 线程池的线程参数，可以同时启动多个串行化的线程并行运行，这种局部无锁化的串行线程设计相比一个队列-多个工作线程模型性能更优。 可靠性，链路有效性检测：链路空闲检测机制，读/写空闲超时机制；内存保护机制：通过内存池重用 ByteBuf;ByteBuf 的解码保护；优雅停机：不再接收新消息、退出前的预处理操作、资源的释放操作。 Netty 安全性：支持的安全协议：SSL V2 和 V3，TLS，SSL 单向认证、双向认证和第三方 CA认证。 高效并发编程的体现：volatile 的大量、正确使用；CAS 和原子类的广泛使用；线程安全容器的使用；通过读写锁提升并发性能。IO 通信性能三原则：传输（AIO）、协议（Http）、线程（主从多线程） 流量整型的作用（变压器）：防止由于上下游网元性能不均衡导致下游网元被压垮，业务流中断；防止由于通信模块接受消息过快，后端业务线程处理不及时导致撑死问题 Netty核心组件 Bootstrap和ServerBootstrap 当需要连接客户端或者服务器绑定指定端口是需要使用Bootstrap，ServerBootstrap有两种类型，一种是用于客户端的Bootstrap，一种是用于服务端 的ServerBootstrap。不管程序使用哪种协议，无论是创建一个客户端还是服务器都需要使 用“引导”。\nBootstrap 是客户端的启动引导类/辅助类\n1 2 3 4 5 6 7 8 9 10 11 12 13 EventLoopGroup group = new NioEventLoopGroup(); try { //创建客户端启动引导/辅助类： Bootstrap Bootstrap b = new Bootstrap(); //指定线程模型 b.group(group). ...... // 尝试建立连接 ChannelFuture f = b.connect(host, port).sync(); f.channel().closeFuture().sync(); } finally { // 优雅关闭相关线程组资源 group.shutdownGracefully(); } ServerBootstrap 客户端的启动引导类/辅助类\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 // 1.bossGroup 用于接收连接，workerGroup 用于具体的处理 EventLoopGroup bossGroup = new NioEventLoopGroup(1); EventLoopGroup workerGroup = new NioEventLoopGroup(); try { //2.创建服务端启动引导/辅助类： ServerBootstrap ServerBootstrap b = new ServerBootstrap(); //3.给引导类配置两大线程组,确定了线程模型 b.group(bossGroup, workerGroup). ...... // 6.绑定端口 ChannelFuture f = b.bind(port).sync(); // 等待连接关闭 f.channel().closeFuture().sync(); } finally { //7.优雅关闭相关线程组资源 bossGroup.shutdownGracefully(); workerGroup.shutdownGracefully(); } Bootstrap 通常使用 connet() 方法连接到远程的主机和端口，作为一个 Netty TCP 协议通信中的客户端。另外，Bootstrap 也可以通过 bind() 方法绑定本地的一个端口，作为 UDP 协议通信中的一端。 ServerBootstrap通常使用 bind() 方法绑定本地的端口上，然后等待客户端的连接。\nBootstrap 只需要配置一个线程组— EventLoopGroup，而 ServerBootstrap需要配置两个线程组— EventLoopGroup ，一个用于接收连接，一个用于具体的处理。\n一个 ServerBootstrap 可以认为有2个 Channel 集合，\n第一个集合包含一个单例 ServerChannel，代表持有一个绑定了本地端口的 socket;\n第二集合包含所有创建的 Channel，处理服务器所接收到的客户端进来的连接。\nEventLoop和EventLoopGroup EventLoop 定义了 Netty 的核心抽象，用于处理连接的生命周期中所发生的事件。\nEventLoop 的主要作用实际就是负责监听网络事件并调用事件处理器进行相关 I/O 操作的处理。\nChannel 和 EventLoop 直接有啥联系呢？\nChannel 为 Netty 网络操作(读写等操作)抽象类，EventLoop 负责处理注册到其上的Channel 处理 I/O 操作，两者配合参与 I/O 操作。\nEventLoopGroup包含多个EventLoop，每个EventLoop通常内部包含一个线程。EventLoop在处理IO事件时在自己的Thread线程上进行，从而保证线程安全\nNioEventLoopGroup在未指定线程数时，默认时当前cpu线程数*2\nEventLoopGroup 是一组 EventLoop 的抽象，Netty 为了更好的利用多核 CPU 资源，一般会有多个 EventLoop 同时工作，每个 EventLoop 维护着一个 Selector 实例。 EventLoopGroup 提供 next 接口，可以从组里面按照一定规则获取其中一个EventLoop来处理任务。在 Netty 服务器端编程中，我们一般都需要提供两个EventLoopGroup，例如:BossEventLoopGroup 和 WorkerEventLoopGroup。 通常一个服务端口即一个ServerSocketChannel对应一个Selector和一个EventLoop 线程。BossEventLoop 负责接收客户端的连接并将 SocketChannel 交给 WorkerEventLoopGroup 来进行 IO 处理\nBossEventLoopGroup 通常是一个单线程的 EventLoop，EventLoop 维护着一个注册了ServerSocketChannel 的Selector 实例BossEventLoop 不断轮询Selector 将连接事件分离出来 通常是 OP_ACCEPT 事件，然后将接收到的 SocketChannel 交给WorkerEventLoopGroup WorkerEventLoopGroup 会由 next 选择其中一个 EventLoop来将这个SocketChannel 注册到其维护的Selector 并对其后续的 IO 事件进行处理 EventLoop继承图\nChannel通道 Channel 接口是 Netty 对网络操作抽象类，它除了包括基本的 I/O 操作，如 bind()、connect()、read()、write() 等。\n比较常用的Channel接口实现类是NioServerSocketChannel（服务端）和NioSocketChannel（客户端），这两个 Channel 可以和 BIO 编程模型中的ServerSocket以及Socket两个概念对应上。Netty 的 Channel 接口所提供的 API，大大地降低了直接使用 Socket 类的复杂性。\n1 2 3 4 5 6 7 Channel channel = ...; // 获取channel的引用 ByteBuf buf = Unpooled.copiedBuffer(\"your data\", CharsetUtil.UTF_8); //1 ChannelFuture cf = channel.writeAndFlush(buf); //2 cf.addListener(new ChannelFutureListener() { //3 @Override public void operationComplete(ChannelFuture future) { if (future.isSuccess()) { //4 } }); 创建 ByteBuf 保存写的数据 写数据，并刷新 添加 ChannelFutureListener 即可写操作完成后收到通知 写操作没有错误完成 写操作完成时出现错误 channel声明周期 | 状态 | 描述 | | —- | —- | | ChannelUnregistered | Channel 已经被创建，但还未注册到EventLoop | | ChannelRegistered | Channel 已经被注册到了EventLoop | | ChannelActive | Channel 处于活动状态（已经连接到它的远程节点）。它现在可以接收和发送数据了 | | ChannelInactive | Channel 没有连接到远程节点 |\nselector 作用：\nI/O 的就绪与选择 是 NIO 网络编程的基础 SelectonKey 状态 OP_ACCEPT 操作集位用于插座接受操作。 OP_CONNECT 用于套接字连接操作的操作集位。 OP_READ 读操作的操作位。 OP_WRITE 写操作的操作位。 1 2 3 4 5 Selector selector = new Selector.open() SelectorKey selectorKey = channel.register(selector, SelectionKey.OP_READ); int selectNum = selector.select(); Set selectionkeys = selector.selectdkeys(); ",
   "wordCount" : "3380",
-  "inLanguage": "en",
+  "inLanguage": "zh",
   "datePublished": "2023-04-24T21:48:50+08:00",
   "dateModified": "2023-04-24T21:48:50+08:00",
   "author":[{
@@ -214,7 +214,7 @@
 
 <article class="post-single">
   <header class="post-header">
-    <div class="breadcrumbs"><a href="https://csqread.top">Home</a>&nbsp;»&nbsp;<a href="https://csqread.top/posts/">Posts</a>&nbsp;»&nbsp;<a href="https://csqread.top/posts/tech/">技术</a></div>
+    <div class="breadcrumbs"><a href="https://csqread.top">主页</a>&nbsp;»&nbsp;<a href="https://csqread.top/posts/">Posts</a>&nbsp;»&nbsp;<a href="https://csqread.top/posts/tech/">技术</a></div>
     <h1 class="post-title">
       Netty相关总结
     </h1>
@@ -292,7 +292,7 @@
     <div class="toc">
         <details  open>
             <summary accesskey="c" title="(Alt + C)">
-                <span class="details">Table of Contents</span>
+                <span class="details">目录</span>
             </summary>
 
             <div class="inner"><ul>
@@ -574,12 +574,12 @@ SelectonKey 状态
     </ul>
 <nav class="paginav">
   <a class="prev" href="https://csqread.top/posts/tech/java%E8%99%9A%E6%8B%9F%E6%9C%BA%E7%9F%A5%E8%AF%86%E6%80%BB%E7%BB%93/">
-    <span class="title">« Prev</span>
+    <span class="title">« 上一页</span>
     <br>
     <span>Java虚拟机知识总结</span>
   </a>
   <a class="next" href="https://csqread.top/posts/tech/%E6%8B%BC%E5%A4%9A%E5%A4%9A%E9%9D%A2%E7%BB%8F/">
-    <span class="title">Next »</span>
+    <span class="title">下一页 »</span>
     <br>
     <span>拼多多面经</span>
   </a>
@@ -663,12 +663,12 @@ SelectonKey 状态
 
         const copybutton = document.createElement('button');
         copybutton.classList.add('copy-code');
-        copybutton.innerHTML = 'copy';
+        copybutton.innerHTML = '复制';
 
         function copyingDone() {
-            copybutton.innerHTML = 'copied!';
+            copybutton.innerHTML = '已复制！';
             setTimeout(() => {
-                copybutton.innerHTML = 'copy';
+                copybutton.innerHTML = '复制';
             }, 2000);
         }
 

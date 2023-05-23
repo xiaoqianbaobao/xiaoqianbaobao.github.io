@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" dir="auto">
+<html lang="zh" dir="auto">
 
 <head><meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -107,7 +107,7 @@
   ],
   "articleBody": "刚开始我没想到用爬虫，就直接手创了一个字典… 需要安装模块pyechart and pyechart-china-provinces-pypkg\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 from pyecharts.charts import Map from pyecharts import options as opts #省和直辖市 province_distribution = { '湖北': 4586, '浙江': 428, '广东': 311, '湖南': 277, '河南': 278, '安徽': 200, '重庆': 165, '山东': 145, '江西': 162, '四川': 142, '江苏': 129, '北京': 111, '福建': 101, '上海': 101, '广西': 78, '陕西': 56, '河北': 48, '云南': 44, '海南': 43, '黑龙江': 43, '辽宁': 39, '山西': 35, '天津': 28, '甘肃': 26, '内蒙古': 16, '新疆': 14, '宁夏': 12, '贵州': 12, '吉林': 14, '台湾': 8, '香港': 10, '澳门': 7, '青海': 6, '西藏': 1 } # maptype = 'china' 只显示全国直辖市和省级 map = Map() map.set_global_opts( title_opts=opts.TitleOpts(title=\"2020中国疫情地图\"), visualmap_opts=opts.VisualMapOpts(max_=3600, is_piecewise=True, pieces=[ {\"max\": 5000, \"min\": 1001, \"label\": \"\u003e1000\", \"color\": \"#8A0808\"}, {\"max\": 1000, \"min\": 500, \"label\": \"500-1000\", \"color\": \"#B40404\"}, {\"max\": 499, \"min\": 100, \"label\": \"10-99\", \"color\": \"#78181\"}, {\"max\": 99, \"min\": 1, \"label\": \"1-9\", \"color\": \"#F5A9A9\"}, {\"max\": 0, \"min\": 0, \"label\": \"0\", \"color\": \"#FFFFFF\"}, ] ) ) map.add(\"20200130中国疫情地图\", data_pair=province_distribution.items(), maptype=\"china\", is_roam=True) map.render('20200130中国1疫情地图.html') 然后生成了一张图，看起来还行 但是昨天学习了API调用，以及进行可视化，今天怎么能用这么粗糙的方法来做统计，直接爬下来放到字典里然后用pyechart进行可视化岂不美哉\nmain.py\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72 73 74 75 76 77 78 79 80 81 82 83 84 85 86 87 88 89 90 91 92 93 94 95 96 97 98 99 100 101 102 103 104 105 106 107 108 109 110 111 112 113 114 115 116 117 118 119 120 121 122 123 124 125 126 127 128 129 130 131 132 133 134 135 136 137 138 139 140 141 142 143 144 145 146 147 148 149 150 151 152 153 154 155 156 157 158 159 160 161 162 163 164 165 166 167 168 169 170 171 172 173 174 175 176 177 178 179 180 181 182 183 184 185 186 187 188 189 190 191 192 193 194 195 196 197 198 199 200 201 202 203 204 205 206 207 208 209 210 211 212 213 214 215 216 217 218 219 220 221 222 223 224 225 226 227 228 229 230 231 232 233 234 235 236 237 238 239 240 241 242 243 244 245 246 247 248 import matplotlib.pyplot as plt import numpy as np import json import requests from matplotlib.font_manager import FontProperties import re import os from pyecharts.charts import Line, Pie, Map from pyecharts import options as opts import pygal from pygal.style import LightColorizedStyle as LCS, LightenStyle as LS # 获取各省市今日的数据，存入josn文件 def get_province_data(month, day, province_name=None): file = open('results/%d%d.json' % (month, day), 'r', encoding='UTF-8') json_array = json.loads(file.read()) file.close() if not province_name: return json_array for json_object in json_array: if json_object['provinceName'] == province_name: return json_object if json_object['provinceShortName'] == province_name: return json_object return None def get_province_status(month, day, province_name=None): if province_name: print(province_name) json_object = get_province_data(month, day, province_name) data = [] for city in json_object['cities']: data.append((city['cityName'], city['confirmedCount'])) data.sort(key=lambda x: -x[1]) title = '%s2020年%d月%d日确诊病例' % (province_name, month, day) else: json_array = get_province_data(month, day, province_name) data = [] for province in json_array: data.append((province['provinceShortName'], province['confirmedCount'])) data.sort(key=lambda x: -x[1]) title = '全国2020年%d月%d日确诊病例' % (month, day) labels = [d[0] for d in data] counts = [d[1] for d in data] return labels, counts, title def show_province_status(month, day, province_name=None): labels, counts, title = get_province_status(month, day, province_name) # draw_pie(month, day, labels, counts, title) get_pyecharts_pie(month, day, labels, counts, title) #饼状图 def draw_pie(month, day, labels, counts, title): if len(labels) == 0: return labels = np.array(labels) counts = np.array(counts) title += '-%d例' % sum(counts) fig, ax = plt.subplots(figsize=(6, 3), subplot_kw=dict(aspect=\"equal\")) explode = np.zeros(len(labels)) explode[np.argmax(counts)] = 0.1 wedges, texts = ax.pie(counts, wedgeprops=dict(width=0.5), startangle=-40, explode=explode) font = FontProperties(fname='font/ZiXinFangYunYuanTi-2.ttf') bbox_props = dict(boxstyle=\"square,pad=0.3\", fc=\"w\", ec=\"k\", lw=0.72) kw = dict(arrowprops=dict(arrowstyle=\"-\"), bbox=bbox_props, zorder=0, va=\"center\", fontproperties=font) for i, p in enumerate(wedges[:6]): ang = (p.theta2 - p.theta1) / 2. + p.theta1 y = np.sin(np.deg2rad(ang)) x = np.cos(np.deg2rad(ang)) horizontalalignment = {-1: \"right\", 1: \"left\"}[int(np.sign(x))] connectionstyle = \"angle,angleA=0,angleB={}\".format(ang) kw[\"arrowprops\"].update({\"connectionstyle\": connectionstyle}) ax.annotate('%s-%d例' % (labels[i], counts[i]), xy=(x, y), xytext=(1.35 * np.sign(x), 1.4 * y), horizontalalignment=horizontalalignment, **kw) ax.set_title(title, fontproperties=font) root = 'charts/%d%d' % (month, day) create_dir(root) plt.savefig('%s/%s.jpg' % (root, title)) plt.show() def create_dir(root): if not os.path.exists(root): os.makedirs(root) def draw(month, day): provinces = get_province_data(month, day) for p in provinces: show_province_status(month, day, p['provinceShortName']) show_province_status(month, day) def get_html(month, day): import requests url = 'http://3g.dxy.cn/newh5/view/pneumonia' response = requests.get(url) html = str(response.content, 'UTF-8') html_file = open('results/%d%d.html' % (month, day), 'w', encoding='UTF-8') html_file.write(html) html_file.close() json_file = open('results/%d%d.json' % (month, day), 'w', encoding='UTF-8') matches = re.findall('\\[[^\u003e]+\\]', html) for match in matches: if 'provinceName' in json.loads(match)[0]: json_file.write(match) break json_file.close() def compare(m1, d1, m2, d2): ps1 = get_province_data(m1, d1) ps2 = get_province_data(m2, d2) ps_dict1 = {} ps_dict2 = {} for p in ps1: ps_dict1[p['provinceShortName']] = p['confirmedCount'] for p in ps2: ps_dict2[p['provinceShortName']] = p['confirmedCount'] data = [] for key in ps_dict2: increased_count = ps_dict2[key] if key in ps_dict1: increased_count -= ps_dict1[key] data.append((key, increased_count)) data.sort(key=lambda x: -x[1]) labels = [d[0] for d in data] counts = [d[1] for d in data] title = '2020年%d月%d日全国新增确诊病例' % (m2, d2) draw_pie(m2, d2, labels, counts, title) get_pyecharts_pie(m2, d2, labels, counts, title) def get_pyecharts_pie(month, day, labels, counts, title): title += '-%d例' % (sum(counts)) c = ( Pie(init_opts=opts.InitOpts(width='1200px', height='700px')) .add( \"\", [list(z) for z in zip(labels, counts)], radius=[\"40%\", \"80%\"], center=['50%', '60%'], ) .set_global_opts( title_opts=opts.TitleOpts(title=title), legend_opts=opts.LegendOpts( orient=\"vertical\", pos_top=\"15%\", pos_left=\"2%\" ), ) .set_series_opts(label_opts=opts.LabelOpts(formatter=\"{b}: {c}\")) ) root = 'html-charts/%d%d' % (month, day) create_dir(root) c.render() c.render('%s/%s.html' % (root, title)) return c def draw_tendency(month, day): dates = ['1-%d' % i for i in range(16, 30)] v0 = [4, 17, 59, 78, 92, 149, 131, 259, 444, 688, 769, 1771, 1459, 1576 ] v1 = [4, 17, 59, 77, 72, 105, 69, 105, 180, 323, 371, 1291, 840, 1032] c = ( Line() .add_xaxis(dates) .add_yaxis(\"全国新增确诊病例\", v0, is_smooth=True, linestyle_opts=opts.LineStyleOpts(width=4, color='#B44038'), itemstyle_opts=opts.ItemStyleOpts( color='#B44038', border_color=\"#B44038\", border_width=5 )) .add_yaxis(\"湖北新增确诊病例\", v1, is_smooth=True, linestyle_opts=opts.LineStyleOpts(width=2, color='6FA0A7'), label_opts=opts.LabelOpts(position='bottom'), itemstyle_opts=opts.ItemStyleOpts( color='#6FA0A7', border_color=\"#6FA0A7\", border_width=3 )) .set_global_opts(title_opts=opts.TitleOpts(title=\"\"), yaxis_opts=opts.AxisOpts( type_=\"log\", name=\"y\", splitline_opts=opts.SplitLineOpts(is_show=True), is_scale=True, axisline_opts=opts.AxisLineOpts(is_show=False) ) ) ) c.render('results/%d%d-新增病例趋势图.html' % (month, day)) return c def draw_map(month, day): labels, counts, title = get_province_status(month, day, None) c = ( Map() .add(\"\", [list(z) for z in zip(labels, counts)], \"china\") .set_global_opts( title_opts=opts.TitleOpts(title=\"新型肺炎全国确诊病例\"), visualmap_opts=opts.VisualMapOpts( pieces=[ {'min': 1000, 'color': '#450704'}, {'max': 999, 'min': 100, 'color': '#75140B'}, {'max': 99, 'min': 10, 'color': '#AD2217'}, {'max': 9, 'min': 1, 'color': '#DE605B'}, {'max': 0, 'color': '#FFFEE7'}, ], is_piecewise=True ), ) ) c.render('results/%d%d-疫情地图.html' % (month, day)) if __name__ == '__main__': m, d = 1, 30 #get_html(m, d) #draw(m, d) #compare(1, 28, 1, 29) #show_province_status(m, d, '云南') #show_province_status(m, d, None) draw_tendency(m, d) draw_map(m, d) 函数直接都放一个文件里面了，其实进行重构一下代码会更简洁一些\n",
   "wordCount" : "2178",
-  "inLanguage": "en",
+  "inLanguage": "zh",
   "datePublished": "2020-01-30T18:15:17+08:00",
   "dateModified": "2020-01-30T18:15:17+08:00",
   "author":[{
@@ -214,7 +214,7 @@
 
 <article class="post-single">
   <header class="post-header">
-    <div class="breadcrumbs"><a href="https://csqread.top">Home</a>&nbsp;»&nbsp;<a href="https://csqread.top/posts/">Posts</a>&nbsp;»&nbsp;<a href="https://csqread.top/posts/tech/">技术</a></div>
+    <div class="breadcrumbs"><a href="https://csqread.top">主页</a>&nbsp;»&nbsp;<a href="https://csqread.top/posts/">Posts</a>&nbsp;»&nbsp;<a href="https://csqread.top/posts/tech/">技术</a></div>
     <h1 class="post-title">
       2020 NCov爬虫统计
     </h1>
@@ -887,12 +887,12 @@
     </ul>
 <nav class="paginav">
   <a class="prev" href="https://csqread.top/posts/read/%E5%BC%80%E5%8F%91%E8%80%85%E5%BD%B1%E8%AF%84/">
-    <span class="title">« Prev</span>
+    <span class="title">« 上一页</span>
     <br>
     <span>《开发者》影评</span>
   </a>
   <a class="next" href="https://csqread.top/posts/read/%E6%88%91%E5%9C%A8%E6%8B%8D%E7%94%B5%E5%BD%B1%E6%97%B6%E6%83%B3%E7%9A%84%E4%BA%8B-%E6%98%AF%E6%9E%9D%E8%A3%95%E5%92%8C/">
-    <span class="title">Next »</span>
+    <span class="title">下一页 »</span>
     <br>
     <span>‘我在拍电影时想的事‘ 是枝裕和</span>
   </a>
@@ -976,12 +976,12 @@
 
         const copybutton = document.createElement('button');
         copybutton.classList.add('copy-code');
-        copybutton.innerHTML = 'copy';
+        copybutton.innerHTML = '复制';
 
         function copyingDone() {
-            copybutton.innerHTML = 'copied!';
+            copybutton.innerHTML = '已复制！';
             setTimeout(() => {
-                copybutton.innerHTML = 'copy';
+                copybutton.innerHTML = '复制';
             }, 2000);
         }
 

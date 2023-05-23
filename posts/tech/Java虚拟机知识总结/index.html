@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" dir="auto">
+<html lang="zh" dir="auto">
 
 <head><meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -107,7 +107,7 @@
   ],
   "articleBody": "JVM 内存结构 Java 虚拟机的内存空间分为 5 个部分：\n程序计数器 Java虚拟机栈 本地方法栈 堆 方法区 JDK 1.8 同 JDK 1.7 比，最大的差别就是：元数据区取代了永久代。元空间的本质和永久代类似，都是对 JVM 规范中方法区的实现。不过元空间与永久代之间最大的区别在于：元数据空间并不在虚拟机中，而是使用本地内存。\n程序计数器(PC寄存器) 程序计数器的定义 程序计数器是一块较小的内存空间，是当前线程正在执行的那条字节码指令的地址。若当前线程正在执行的是一个本地方法，那么此时程序计数器为Undefined。在Java虚拟机的概念模型里，字节码解释器工作时就是通过改变这个计数器的值来选取下一条需要执行的字节码指令，它是程序控制的指示器，分支，循环，跳转、异常处理、线程恢复等基础功能都需要这个计数器来完成。\n程序计数器的作用 字节码解释器通过改变程序计数器来依次读取指令，从而实现代码的流程控制。 在多线程情况下，程序计数器记录的是当前线程执行的位置，从而当线程切换回来时，就知道上次线程执行到哪了 ",
   "wordCount" : "425",
-  "inLanguage": "en",
+  "inLanguage": "zh",
   "datePublished": "2023-05-08T22:37:29+08:00",
   "dateModified": "2023-05-08T22:37:29+08:00",
   "author":[{
@@ -214,7 +214,7 @@
 
 <article class="post-single">
   <header class="post-header">
-    <div class="breadcrumbs"><a href="https://csqread.top">Home</a>&nbsp;»&nbsp;<a href="https://csqread.top/posts/">Posts</a>&nbsp;»&nbsp;<a href="https://csqread.top/posts/tech/">技术</a></div>
+    <div class="breadcrumbs"><a href="https://csqread.top">主页</a>&nbsp;»&nbsp;<a href="https://csqread.top/posts/">Posts</a>&nbsp;»&nbsp;<a href="https://csqread.top/posts/tech/">技术</a></div>
     <h1 class="post-title">
       Java虚拟机知识总结
     </h1>
@@ -292,7 +292,7 @@
     <div class="toc">
         <details  open>
             <summary accesskey="c" title="(Alt + C)">
-                <span class="details">Table of Contents</span>
+                <span class="details">目录</span>
             </summary>
 
             <div class="inner"><ul>
@@ -404,12 +404,12 @@
     </ul>
 <nav class="paginav">
   <a class="prev" href="https://csqread.top/posts/tech/%E5%8E%8B%E6%B5%8B%E6%95%B0%E6%8D%AE%E5%BF%AB%E9%80%9F%E7%94%9F%E6%88%90%E5%B9%B6%E6%8F%92%E5%85%A5%E6%95%B0%E6%8D%AE%E5%BA%93%E6%80%BB%E7%BB%93/">
-    <span class="title">« Prev</span>
+    <span class="title">« 上一页</span>
     <br>
     <span>压测数据快速生成并插入数据库总结</span>
   </a>
   <a class="next" href="https://csqread.top/posts/tech/netty%E7%9B%B8%E5%85%B3%E6%80%BB%E7%BB%93/">
-    <span class="title">Next »</span>
+    <span class="title">下一页 »</span>
     <br>
     <span>Netty相关总结</span>
   </a>
@@ -493,12 +493,12 @@
 
         const copybutton = document.createElement('button');
         copybutton.classList.add('copy-code');
-        copybutton.innerHTML = 'copy';
+        copybutton.innerHTML = '复制';
 
         function copyingDone() {
-            copybutton.innerHTML = 'copied!';
+            copybutton.innerHTML = '已复制！';
             setTimeout(() => {
-                copybutton.innerHTML = 'copy';
+                copybutton.innerHTML = '复制';
             }, 2000);
         }
 
