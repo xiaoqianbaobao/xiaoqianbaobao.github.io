@@ -5,12 +5,12 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="robots" content="index, follow">
-<title>Hugo博客搭建 | Qian&#39;s Blog</title>
-<meta name="keywords" content="博客搭建, 折腾">
-<meta name="description" content="Hugo博客搭建过程及遇到的问题">
+<title>数据密集型应用系统设计 | Qian&#39;s Blog</title>
+<meta name="keywords" content="">
+<meta name="description" content="《数据密集型应用系统设计》，英文名称是《Designing Data-Intensive Application》 ，也被简称为 DDIA。 这是本神书，豆瓣评分高达 9.7 分。">
 <meta name="author" content="
 作者:&nbsp;ShengQian">
-<link rel="canonical" href="https://csqread.top/posts/blog/hugo%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/">
+<link rel="canonical" href="https://csqread.top/posts/tech/%E6%95%B0%E6%8D%AE%E5%AF%86%E9%9B%86%E5%9E%8B%E5%BA%94%E7%94%A8%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/">
 <link crossorigin="anonymous" href="/assets/css/stylesheet.d056c2d8b86c8da0db95897f49066a3a22d796d21ff6173ef98b613234e402fe.css" integrity="" rel="preload stylesheet" as="style">
 <script defer crossorigin="anonymous" src="/assets/js/highlight.acb54fd32bbc1982428b8850317e45d076b95012730a5936667e6bc21777692a.js" integrity=""
     onload="hljs.initHighlightingOnLoad();"></script>
@@ -57,16 +57,16 @@
         }
 
     </style>
-</noscript><meta property="og:title" content="Hugo博客搭建" />
-<meta property="og:description" content="Hugo博客搭建过程及遇到的问题" />
+</noscript><meta property="og:title" content="数据密集型应用系统设计" />
+<meta property="og:description" content="《数据密集型应用系统设计》，英文名称是《Designing Data-Intensive Application》 ，也被简称为 DDIA。 这是本神书，豆瓣评分高达 9.7 分。" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://csqread.top/posts/blog/hugo%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/" /><meta property="article:section" content="posts" />
-<meta property="article:published_time" content="2023-03-05T12:47:51+08:00" />
-<meta property="article:modified_time" content="2023-03-05T12:47:51+08:00" />
+<meta property="og:url" content="https://csqread.top/posts/tech/%E6%95%B0%E6%8D%AE%E5%AF%86%E9%9B%86%E5%9E%8B%E5%BA%94%E7%94%A8%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2023-07-19T22:19:57+08:00" />
+<meta property="article:modified_time" content="2023-07-19T22:19:57+08:00" />
 
 <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="Hugo博客搭建"/>
-<meta name="twitter:description" content="Hugo博客搭建过程及遇到的问题"/>
+<meta name="twitter:title" content="数据密集型应用系统设计"/>
+<meta name="twitter:description" content="《数据密集型应用系统设计》，英文名称是《Designing Data-Intensive Application》 ，也被简称为 DDIA。 这是本神书，豆瓣评分高达 9.7 分。"/>
 
 
 <script type="application/ld+json">
@@ -83,14 +83,14 @@
     {
       "@type": "ListItem",
       "position":  3 ,
-      "name": "建站",
-      "item": "https://csqread.top/posts/blog/"
+      "name": "技术",
+      "item": "https://csqread.top/posts/tech/"
     }, 
     {
       "@type": "ListItem",
       "position":  4 ,
-      "name": "Hugo博客搭建",
-      "item": "https://csqread.top/posts/blog/hugo%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/"
+      "name": "数据密集型应用系统设计",
+      "item": "https://csqread.top/posts/tech/%E6%95%B0%E6%8D%AE%E5%AF%86%E9%9B%86%E5%9E%8B%E5%BA%94%E7%94%A8%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/"
     }
   ]
 }
@@ -99,24 +99,24 @@
 {
   "@context": "https://schema.org",
   "@type": "BlogPosting",
-  "headline": "Hugo博客搭建",
-  "name": "Hugo博客搭建",
-  "description": "Hugo博客搭建过程及遇到的问题",
+  "headline": "数据密集型应用系统设计",
+  "name": "数据密集型应用系统设计",
+  "description": "《数据密集型应用系统设计》，英文名称是《Designing Data-Intensive Application》 ，也被简称为 DDIA。 这是本神书，豆瓣评分高达 9.7 分。",
   "keywords": [
-    "博客搭建", "折腾"
+    
   ],
-  "articleBody": "这篇文章主要记录我搭建hugo博客的过程，包括搭建过程中遇到的问题及解决方法\n1、新建github仓库 新建respository, Respository的名称为 “你的github名称.github.io”.\n2、下载并安装对应版本的hugo 下载链接: 点击选择hugo版本下载\n3、创建hugo网站 进入想要存放网站的文件夹，输入以下命令:\n1 hugo new site demo-blog 4、选择主题 输入命令下载主题:\n1 git clone https://github.com/adityatelange/hugo-PaperMod.git 使用该主题的方法就是在站点文件夹下的配置文件里输入主题的名字:\n然后把主题文件夹里面的一些静态文件和配置文件复制到站点目录下，目的是为了可以自定义博客的样式，而不会改动主题文件夹里的样式，这样主题要更新的时候，直接在主题目录下git pull就可以，站点目录的修改会优先覆盖主题里的配置，所以可以实现平滑更新\n",
-  "wordCount" : "353",
+  "articleBody": "推荐序 这本书的适合所有后台开发工程师、大数据工程师，也很适合面试前复习系统设计的同学。\n什么是「数据密集型应用系统」？\n当数据（数据量、数据复杂度、数据变化速度）是一个应用的主要挑战，那么可以把这个应用称为数据密集型的。与之相对的是计算密集型——处理器速度是主要瓶颈。\n其实我们平时遇到的大部分系统都是数据密集型的——应用代码访问内存、硬盘、数据库、消息队列中的数据，经过业务逻辑处理，再返回给用户。\n很多应用都是在解决不同场景下的数据存储和检索问题——MySQL，Redis，HBase，Kafka，ElasticSearch…… 还有很多技术是围绕着数据展开——索引，编码（JSON, XML, Thrift, ProtoBuffer），行列存储…… 当数据在分布式处理时，要考虑——数据复制，分区，事务…… 大数据场景下，我们会使用——MapReduce，Spark，Flink 等批处理、流处理框架。 《数据密集型应用系统设计》这本书，把所有跟「数据」有关的知识点做了剖析、整理、总结，从一个很高的层次把各项技术的共性和区别讲得透彻。 当我们懂了底层原理之后，就明白了每项技术产生的背景是什么，解决了什么问题，有什么适用场景。\n这本书既有理论也有实践，基本没有公式，图很多，阅读起来很流畅，比较容易理解。\n这本书分为了三部分： ● 第一部分：数据系统的基石，包括数据模型与查询语言、存储与检索、数据编码与演化； ● 第二部分：分布式数据，包括复制、分片、事务、一致性与共识； ● 第三部分：衍生数据，包括批处理、流处理、数据系统的未来。\n阅读资源 这是一些阅读资源：\n《数据密集型应用系统设计》开源翻译仓库（9.3K star）： https://github.com/Vonng/ddia 开源版本在线阅读： https://vonng.gitbooks.io/ddia-cn/content/ 负雪明烛的读书笔记：数据密集型应用系统设计 《数据密集型应用系统设计》纸质书（翻译水平比开源在线阅读版好很多，强烈建议买书）：京东购买链接 辅助资料 ddia-references 这个仓库包含了《数据密集型应用系统设计》每章后面的所有参考文献对应的 pdf。 地址是：https://github.com/ept/ddia-references\nBook Review 这里有个很不错的 Book Review，是一个小哥讲了《DDIA》每一章的概述，作者很用心。 全英文的，在油管可以看到。地址是： https://www.youtube.com/watch?v=PdtlXdse7pw\u0026list=PL4KdJM8LzAMecwInbBK5GJ3Anz-ts75RQ\n连载 后续我会把我读书笔记以及读书感想连载更新，这里是抄的一位大佬的序 https://www.yuque.com/fuxuemingzhu/ddia/kpqcs3\n",
+  "wordCount" : "946",
   "inLanguage": "zh",
-  "datePublished": "2023-03-05T12:47:51+08:00",
-  "dateModified": "2023-03-05T12:47:51+08:00",
+  "datePublished": "2023-07-19T22:19:57+08:00",
+  "dateModified": "2023-07-19T22:19:57+08:00",
   "author":[{
     "@type": "Person",
     "name": "ShengQian"
   }],
   "mainEntityOfPage": {
     "@type": "WebPage",
-    "@id": "https://csqread.top/posts/blog/hugo%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/"
+    "@id": "https://csqread.top/posts/tech/%E6%95%B0%E6%8D%AE%E5%AF%86%E9%9B%86%E5%9E%8B%E5%BA%94%E7%94%A8%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/"
   },
   "publisher": {
     "@type": "Organization",
@@ -214,12 +214,12 @@
 
 <article class="post-single">
   <header class="post-header">
-    <div class="breadcrumbs"><a href="https://csqread.top">主页</a>&nbsp;»&nbsp;<a href="https://csqread.top/posts/">Posts</a>&nbsp;»&nbsp;<a href="https://csqread.top/posts/blog/">建站</a></div>
+    <div class="breadcrumbs"><a href="https://csqread.top">主页</a>&nbsp;»&nbsp;<a href="https://csqread.top/posts/">Posts</a>&nbsp;»&nbsp;<a href="https://csqread.top/posts/tech/">技术</a></div>
     <h1 class="post-title">
-      Hugo博客搭建
+      数据密集型应用系统设计
     </h1>
     <div class="post-description">
-      Hugo博客搭建过程及遇到的问题
+      《数据密集型应用系统设计》，英文名称是《Designing Data-Intensive Application》 ，也被简称为 DDIA。 这是本神书，豆瓣评分高达 9.7 分。
     </div>
     <div class="post-meta">
 
@@ -232,15 +232,11 @@
 
 
 
-创建:&nbsp;<span title='2023-03-05 12:47:51 +0800 CST'>2023-03-05</span>&nbsp;|&nbsp;更新:&nbsp;2023-03-05&nbsp;|&nbsp;字数:&nbsp;353字&nbsp;|&nbsp;时长: 1分钟&nbsp;|&nbsp;
+创建:&nbsp;<span title='2023-07-19 22:19:57 +0800 CST'>2023-07-19</span>&nbsp;|&nbsp;更新:&nbsp;2023-07-19&nbsp;|&nbsp;字数:&nbsp;946字&nbsp;|&nbsp;时长: 2分钟&nbsp;|&nbsp;
 作者:&nbsp;ShengQian
 
 
     &nbsp;|&nbsp;标签: &nbsp;
-    <ul class="post-tags-meta">
-        <a href="https://csqread.top/tags/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/">博客搭建</a>
-        <a href="https://csqread.top/tags/%E6%8A%98%E8%85%BE/">、折腾</a>
-    </ul>
 
     
     
@@ -297,13 +293,19 @@
 
             <div class="inner"><ul>
                     <li>
-                        <a href="#1%e6%96%b0%e5%bb%bagithub%e4%bb%93%e5%ba%93" aria-label="1、新建github仓库">1、新建github仓库</a></li>
+                        <a href="#%e6%8e%a8%e8%8d%90%e5%ba%8f" aria-label="推荐序">推荐序</a></li>
                     <li>
-                        <a href="#2%e4%b8%8b%e8%bd%bd%e5%b9%b6%e5%ae%89%e8%a3%85%e5%af%b9%e5%ba%94%e7%89%88%e6%9c%ac%e7%9a%84hugo" aria-label="2、下载并安装对应版本的hugo">2、下载并安装对应版本的hugo</a></li>
+                        <a href="#%e9%98%85%e8%af%bb%e8%b5%84%e6%ba%90" aria-label="阅读资源">阅读资源</a></li>
                     <li>
-                        <a href="#3%e5%88%9b%e5%bb%bahugo%e7%bd%91%e7%ab%99" aria-label="3、创建hugo网站">3、创建hugo网站</a></li>
+                        <a href="#%e8%be%85%e5%8a%a9%e8%b5%84%e6%96%99" aria-label="辅助资料">辅助资料</a><ul>
+                            
                     <li>
-                        <a href="#4%e9%80%89%e6%8b%a9%e4%b8%bb%e9%a2%98" aria-label="4、选择主题">4、选择主题</a>
+                        <a href="#ddia-references" aria-label="ddia-references">ddia-references</a></li>
+                    <li>
+                        <a href="#book-review" aria-label="Book Review">Book Review</a></li></ul>
+                    </li>
+                    <li>
+                        <a href="#%e8%bf%9e%e8%bd%bd" aria-label="连载">连载</a>
                     </li>
                 </ul>
             </div>
@@ -369,47 +371,54 @@
         return rect.top + win.pageYOffset;   
     }
 </script>
-  <div class="post-content"><p>这篇文章主要记录我搭建hugo博客的过程，包括搭建过程中遇到的问题及解决方法</p>
-<h1 id="1新建github仓库">1、新建github仓库<a hidden class="anchor" aria-hidden="true" href="#1新建github仓库">#</a></h1>
-<p>新建respository, Respository的名称为 &ldquo;你的github名称.github.io&rdquo;.</p>
-<h1 id="2下载并安装对应版本的hugo">2、下载并安装对应版本的hugo<a hidden class="anchor" aria-hidden="true" href="#2下载并安装对应版本的hugo">#</a></h1>
-<p>下载链接: <a href = "https://github.com/gohugoio/hugo/releases">点击选择hugo版本下载</a></p>
-<h1 id="3创建hugo网站">3、创建hugo网站<a hidden class="anchor" aria-hidden="true" href="#3创建hugo网站">#</a></h1>
-<p>进入想要存放网站的文件夹，输入以下命令:</p>
-<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>hugo new site demo-blog
-</span></span></code></pre></td></tr></table>
-</div>
-</div><h1 id="4选择主题">4、选择主题<a hidden class="anchor" aria-hidden="true" href="#4选择主题">#</a></h1>
-<p>输入命令下载主题:</p>
-<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>git clone https://github.com/adityatelange/hugo-PaperMod.git
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>使用该主题的方法就是在站点文件夹下的配置文件里输入主题的名字:</p>
-<p>然后把主题文件夹里面的一些静态文件和配置文件复制到站点目录下，目的是为了可以自定义博客的样式，而不会改动主题文件夹里的样式，这样主题要更新的时候，直接在主题目录下git pull就可以，站点目录的修改会优先覆盖主题里的配置，所以可以实现平滑更新</p>
+  <div class="post-content"><h1 id="推荐序">推荐序<a hidden class="anchor" aria-hidden="true" href="#推荐序">#</a></h1>
+<p>这本书的适合所有后台开发工程师、大数据工程师，也很适合面试前复习系统设计的同学。</p>
+<p>什么是「数据密集型应用系统」？</p>
+<p>当数据（数据量、数据复杂度、数据变化速度）是一个应用的主要挑战，那么可以把这个应用称为数据密集型的。与之相对的是计算密集型——处理器速度是主要瓶颈。</p>
+<p>其实我们平时遇到的大部分系统都是数据密集型的——应用代码访问内存、硬盘、数据库、消息队列中的数据，经过业务逻辑处理，再返回给用户。</p>
+<li> 很多应用都是在解决不同场景下的数据存储和检索问题——MySQL，Redis，HBase，Kafka，ElasticSearch……
+<li>还有很多技术是围绕着数据展开——索引，编码（JSON, XML, Thrift, ProtoBuffer），行列存储……
+<li>当数据在分布式处理时，要考虑——数据复制，分区，事务……
+<li>大数据场景下，我们会使用——MapReduce，Spark，Flink 等批处理、流处理框架。
+<p>《数据密集型应用系统设计》这本书，把所有跟「数据」有关的知识点做了剖析、整理、总结，从一个很高的层次把各项技术的共性和区别讲得透彻。 当我们懂了底层原理之后，就明白了每项技术产生的背景是什么，解决了什么问题，有什么适用场景。</p>
+<p>这本书既有理论也有实践，基本没有公式，图很多，阅读起来很流畅，比较容易理解。</p>
+<p>这本书分为了三部分：
+● 第一部分：数据系统的基石，包括数据模型与查询语言、存储与检索、数据编码与演化；
+● 第二部分：分布式数据，包括复制、分片、事务、一致性与共识；
+● 第三部分：衍生数据，包括批处理、流处理、数据系统的未来。</p>
+<h1 id="阅读资源">阅读资源<a hidden class="anchor" aria-hidden="true" href="#阅读资源">#</a></h1>
+<p>这是一些阅读资源：</p>
+<li> 《数据密集型应用系统设计》开源翻译仓库（9.3K star）： https://github.com/Vonng/ddia
+<li> 开源版本在线阅读： https://vonng.gitbooks.io/ddia-cn/content/
+<li> 负雪明烛的读书笔记：<a href = 'https://www.yuque.com/fuxuemingzhu/cdpqne'>数据密集型应用系统设计</a>
+<li> 《数据密集型应用系统设计》纸质书（翻译水平比开源在线阅读版好很多，强烈建议买书）：<a href = 'https://union-click.jd.com/jdc?e=&p=JF8BAMIJK1olXDYCV1tfDkwUBl9MRANLAjZbERscSkAJHTdNTwcKBlMdBgABFksUBm0OHFgQQl9HCANtcz9TdjBcE0F1HE57VzUCSQhgfmx-a1cZbQcyV19dDUkeAW4BEmslXQEyAjBdCUoWAm4MH14dbQcyVFlYCU4UAWsME1kQWDYFVFdt0c6528WTzPKqi7SoZG5tC3snM284GGtXMw4CBl1YW0IQAjtfTl4dCQJRXAxbAR5CBTwBTwwcXQ5RZFxcCU8eMw'>京东购买链接</a>
+<h1 id="辅助资料">辅助资料<a hidden class="anchor" aria-hidden="true" href="#辅助资料">#</a></h1>
+<h2 id="ddia-references">ddia-references<a hidden class="anchor" aria-hidden="true" href="#ddia-references">#</a></h2>
+<p>这个仓库包含了《数据密集型应用系统设计》每章后面的所有参考文献对应的 pdf。
+地址是：https://github.com/ept/ddia-references</p>
+<h2 id="book-review">Book Review<a hidden class="anchor" aria-hidden="true" href="#book-review">#</a></h2>
+<p>这里有个很不错的 Book Review，是一个小哥讲了《DDIA》每一章的概述，作者很用心。
+全英文的，在油管可以看到。地址是：
+<a href="https://www.youtube.com/watch?v=PdtlXdse7pw&amp;list=PL4KdJM8LzAMecwInbBK5GJ3Anz-ts75RQ">https://www.youtube.com/watch?v=PdtlXdse7pw&amp;list=PL4KdJM8LzAMecwInbBK5GJ3Anz-ts75RQ</a></p>
+<h1 id="连载">连载<a hidden class="anchor" aria-hidden="true" href="#连载">#</a></h1>
+<p>后续我会把我读书笔记以及读书感想连载更新，这里是抄的一位大佬的序 <a href="https://www.yuque.com/fuxuemingzhu/ddia/kpqcs3">https://www.yuque.com/fuxuemingzhu/ddia/kpqcs3</a></p>
 
 
   </div>
 
   <footer class="post-footer">
     <ul class="post-tags">
-      <li><a href="https://csqread.top/tags/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/">博客搭建</a></li>
-      <li><a href="https://csqread.top/tags/%E6%8A%98%E8%85%BE/">折腾</a></li>
     </ul>
 <nav class="paginav">
-  <a class="next" href="https://csqread.top/posts/tech/%E6%95%B0%E6%8D%AE%E5%AF%86%E9%9B%86%E5%9E%8B%E5%BA%94%E7%94%A8%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/">
+  <a class="prev" href="https://csqread.top/posts/blog/hugo%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/">
+    <span class="title">« 上一页</span>
+    <br>
+    <span>Hugo博客搭建</span>
+  </a>
+  <a class="next" href="https://csqread.top/posts/tech/%E5%88%86%E5%B8%83%E5%BC%8F%E7%A7%92%E6%9D%80%E4%BA%A4%E6%98%93%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E8%AE%B0%E5%BD%95/">
     <span class="title">下一页 »</span>
     <br>
-    <span>数据密集型应用系统设计</span>
+    <span>分布式秒杀交易性能优化记录</span>
   </a>
 </nav>
 
