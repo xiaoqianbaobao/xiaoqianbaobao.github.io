@@ -6,7 +6,16 @@
     <description>Recent content in DDIA on Qian&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Fri, 04 Aug 2023 08:39:31 +0800</lastBuildDate><atom:link href="https://csqread.top/categories/ddia/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 08 Aug 2023 22:06:41 +0800</lastBuildDate><atom:link href="https://csqread.top/categories/ddia/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>DDIA第二章</title>
+      <link>https://csqread.top/posts/tech/ddia%E7%AC%AC%E4%BA%8C%E7%AB%A0/</link>
+      <pubDate>Tue, 08 Aug 2023 22:06:41 +0800</pubDate>
+      
+      <guid>https://csqread.top/posts/tech/ddia%E7%AC%AC%E4%BA%8C%E7%AB%A0/</guid>
+      <description>第二章：数据模型与查询语言 数据模型可能是软件开发中最重要的部分了，因为它们的影响如此深远：不仅仅影响着软件的编写方式，而且影响着我们的解题思</description>
+    </item>
+    
     <item>
       <title>DDIA第一章</title>
       <link>https://csqread.top/posts/tech/ddia%E7%AC%AC%E4%B8%80%E7%AB%A0/</link>
