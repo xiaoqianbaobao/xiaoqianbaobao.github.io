@@ -6,7 +6,16 @@
     <description>Recent content in DDIA on Qian&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Tue, 08 Aug 2023 22:06:41 +0800</lastBuildDate><atom:link href="https://csqread.top/categories/ddia/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 15 Aug 2023 21:26:51 +0800</lastBuildDate><atom:link href="https://csqread.top/categories/ddia/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>DDIA第三章</title>
+      <link>https://csqread.top/posts/tech/ddia%E7%AC%AC%E4%B8%89%E7%AB%A0/</link>
+      <pubDate>Tue, 15 Aug 2023 21:26:51 +0800</pubDate>
+      
+      <guid>https://csqread.top/posts/tech/ddia%E7%AC%AC%E4%B8%89%E7%AB%A0/</guid>
+      <description>第三章：存储与检索 本章介绍了传统关系型数据库与“NoSQL”数据库的存储引擎。 我们会研究两大类存储引擎：日志结构（log-structure</description>
+    </item>
+    
     <item>
       <title>DDIA第二章</title>
       <link>https://csqread.top/posts/tech/ddia%E7%AC%AC%E4%BA%8C%E7%AB%A0/</link>
