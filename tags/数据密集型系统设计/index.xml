@@ -6,7 +6,16 @@
     <description>Recent content in 数据密集型系统设计 on Qian&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Tue, 15 Aug 2023 21:26:51 +0800</lastBuildDate><atom:link href="https://csqread.top/tags/%E6%95%B0%E6%8D%AE%E5%AF%86%E9%9B%86%E5%9E%8B%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 28 Aug 2023 22:07:57 +0800</lastBuildDate><atom:link href="https://csqread.top/tags/%E6%95%B0%E6%8D%AE%E5%AF%86%E9%9B%86%E5%9E%8B%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>DDIA第四章</title>
+      <link>https://csqread.top/posts/tech/ddia%E7%AC%AC%E5%9B%9B%E7%AB%A0/</link>
+      <pubDate>Mon, 28 Aug 2023 22:07:57 +0800</pubDate>
+      
+      <guid>https://csqread.top/posts/tech/ddia%E7%AC%AC%E5%9B%9B%E7%AB%A0/</guid>
+      <description>数据编码与演化 应用程序总是增增改改。 修改程序大多数情况下也在修改存储的数据。 关系数据库通常假定数据库中的所有数据都遵循一个模式：尽管可以更改</description>
+    </item>
+    
     <item>
       <title>DDIA第三章</title>
       <link>https://csqread.top/posts/tech/ddia%E7%AC%AC%E4%B8%89%E7%AB%A0/</link>

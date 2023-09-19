@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html lang="zh" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>DDIA第四章 | Qian&#39;s Blog</title>
+<meta name="keywords" content="数据密集型系统设计">
+<meta name="description" content="数据编码与演化 应用程序总是增增改改。 修改程序大多数情况下也在修改存储的数据。 关系数据库通常假定数据库中的所有数据都遵循一个模式：尽管可以更改">
+<meta name="author" content="
+作者:&nbsp;ShengQian">
+<link rel="canonical" href="https://csqread.top/posts/tech/ddia%E7%AC%AC%E5%9B%9B%E7%AB%A0/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.d056c2d8b86c8da0db95897f49066a3a22d796d21ff6173ef98b613234e402fe.css" integrity="" rel="preload stylesheet" as="style">
+<script defer crossorigin="anonymous" src="/assets/js/highlight.acb54fd32bbc1982428b8850317e45d076b95012730a5936667e6bc21777692a.js" integrity=""
+    onload="hljs.initHighlightingOnLoad();"></script>
+<link rel="icon" href="https://csqread.top/img/Q.gif">
+<link rel="icon" type="image/png" sizes="16x16" href="https://csqread.top/img/%21.jpg">
+<link rel="icon" type="image/png" sizes="32x32" href="https://csqread.top/img/%21.jpg">
+<link rel="apple-touch-icon" href="https://csqread.top/%21.jpg">
+<link rel="mask-icon" href="https://csqread.top/%21.jpg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --hljs-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript><meta property="og:title" content="DDIA第四章" />
+<meta property="og:description" content="数据编码与演化 应用程序总是增增改改。 修改程序大多数情况下也在修改存储的数据。 关系数据库通常假定数据库中的所有数据都遵循一个模式：尽管可以更改" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://csqread.top/posts/tech/ddia%E7%AC%AC%E5%9B%9B%E7%AB%A0/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2023-08-28T22:07:57+08:00" />
+<meta property="article:modified_time" content="2023-08-28T22:07:57+08:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="DDIA第四章"/>
+<meta name="twitter:description" content="数据编码与演化 应用程序总是增增改改。 修改程序大多数情况下也在修改存储的数据。 关系数据库通常假定数据库中的所有数据都遵循一个模式：尽管可以更改"/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "Posts",
+      "item": "https://csqread.top/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  3 ,
+      "name": "技术",
+      "item": "https://csqread.top/posts/tech/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  4 ,
+      "name": "DDIA第四章",
+      "item": "https://csqread.top/posts/tech/ddia%E7%AC%AC%E5%9B%9B%E7%AB%A0/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "DDIA第四章",
+  "name": "DDIA第四章",
+  "description": "数据编码与演化 应用程序总是增增改改。 修改程序大多数情况下也在修改存储的数据。 关系数据库通常假定数据库中的所有数据都遵循一个模式：尽管可以更改",
+  "keywords": [
+    "数据密集型系统设计"
+  ],
+  "articleBody": "数据编码与演化 应用程序总是增增改改。 修改程序大多数情况下也在修改存储的数据。\n关系数据库通常假定数据库中的所有数据都遵循一个模式：尽管可以更改该模式（通过模式迁移，即ALTER语句），但是在任何时间点都有且仅有一个正确的模式。 读时模式（schema-on-read）（或 无模式（schemaless））数据库不会强制一个模式，因此数据库可以包含在不同时间写入的新老数据格式的混合。 当数据格式发生改变时，需要代码更改：\n服务端应用程序，会灰度发布； 客户端应用程序，看用户心情。 新旧版本的代码和数据，可能同时共处。 系统需要双向兼容：\n向后兼容：新代码可以读旧数据。容易。 向前兼容：旧代码可以读新数据。难。 编码数据的格式 程序通常（至少）使用两种形式的数据：\n在内存中，数据保存在对象，结构体，列表，数组，哈希表，树等中。 这些数据结构针对CPU的高效访问和操作进行了优化（通常使用指针）。 如果要将数据写入文件，或通过网络发送，则必须将其 编码（encode） 为某种自包含的字节序列（例如，JSON文档）。 由于每个进程都有自己独立的地址空间，一个进程中的指针对任何其他进程都没有意义，所以这个字节序列表示会与通常在内存中使用的数据结构完全不同。 所以，需要在两种表示之间进行某种类型的翻译。\n从内存中表示到字节序列的转换称为 编码（Encoding） （也称为序列化（serialization） 或编组（marshalling））； 反过来称为解码（Decoding）ii（解析（Parsing），反序列化（deserialization），反编组( unmarshalling））译i。 语言特定的格式 许多编程语言都内建了将内存对象编码为字节序列的支持。例如，Java有java.io.Serializable ，Ruby有Marshal，Python有pickle .\n这些库很方便，但是有深层次问题：\n与特定的编程语言绑定。 为了恢复相同对象类型的数据，解码过程需要实例化任意类的能力，这是安全问题的来源。 数据版本控制不方便。 效率也不高。 只适合临时使用。\nJSON，XML和二进制变体 跨语言的编码：JSON，XML和CSV，属于文本格式，因此具有人类可读性。 除了语法问题外，还有问题：\n数值编码有歧义：XML 和 CSV 不能区分数字和字符串。JSON 不能区分整数和浮点数。 处理大数值困难。 JSON 和 XML 对 unicode（人类可读的文本）有很好的支持，但是不支持二进制。通过 base64 绕过这个限制。 XML 和 JSON 都有可选的模式支持。 CSV 没有模式，行列的含义完全由应用程序指定。格式模糊。 虽然问题多，但是大家对这些达成了意见一致。\n二进制编码 当数据很多的时候，数据格式的选择会有很大影响。 JSON比XML简洁，但与二进制格式相比还是太占空间。现在有很多二进制格式的 JSON（MessagePack，BSON，BJSON，UBJSON，BISON和Smile等）。 JSON 字符串是：\n1 2 3 4 5 6 { \"userName\": \"Martin\", \"favoriteNumber\": 1337, \"interests\": [\"daydreaming\", \"hacking\"] } 二进制编码长度为66个字节，仅略小于文本JSON编码所取的81个字节（删除了空白）。\nThrift与Protocol Buffers Protocol Buffers最初是在Google开发的，Thrift最初是在Facebook开发的，并且在2007~2008年都是开源的，都是二进制编码库。 Thrift和Protocol Buffers都需要一个模式来编码任何数据。 接口定义语言（IDL） 来描述模式。\nThrift 比如： 1 2 3 4 5 struct Person { 1: required string userName, 2: optional i64 favoriteNumber, 3: optional list interests } Protocol Buffers的等效模式定义看起来非常相似： 1 2 3 4 5 message Person { required string user_name = 1; optional int64 favorite_number = 2; repeated string interests = 3; } Thrift和Protocol Buffers每一个都带有一个代码生成工具，可以调用此代码对模式进行编码和解码。 Thrift 编码格式\nThrift 有两种不同的二进制编码格式，分别称为 BinaryProtocol 和 CompactProtocol BinaryProtocol\n– 对上面的信息编码只需要59个字节\n每个字段都有一个类型注释（用于指示它是一个字符串，整数，列表等），还可以根据需要指定长度（字符串的长度，列表中的项目数） 。 最大的区别是没有字段名，而只有字段标签，即数字 1，2，3，就像别名。 CompactProtocol\n语义上等同于BinaryProtocol 将字段类型和标签号打包到单个字节中，并使用可变长度整数来实现 相同的信息打包成只有 34 个字节 将数字 1337 编码成为 2 个字节，每个字节的最高位标识是否还有更多的字节。 Protocol Buffers\n只有一种二进制编码格式，与Thrift的CompactProtocol非常相似。 同样的记录塞进了33个字节中。 字段是否为必须？\n如果字段没有设置值，则从编码记录中省略。 模式中每个字段标记为是否为必须，但对编码无影响。 区别在于，如果字段设置为必须，但是未设置，那么运行时检查会失败。 字段标签和模式演变 字段标记很重要！可以改字段的名字，但是不能改字段标记。 向前兼容：可以添加新字段，只要有一个新的标记号码。 向后兼容：在模式初始部署之后，添加的每个字段必须是可选的或具有默认值。否则之前的代码会检查失败。 删除字段：只能删除可选字段；不能再次使用相同的标签号码。 数据类型和模式演变 ",
+  "wordCount" : "2047",
+  "inLanguage": "zh",
+  "datePublished": "2023-08-28T22:07:57+08:00",
+  "dateModified": "2023-08-28T22:07:57+08:00",
+  "author":[{
+    "@type": "Person",
+    "name": "ShengQian"
+  }],
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://csqread.top/posts/tech/ddia%E7%AC%AC%E5%9B%9B%E7%AB%A0/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Qian's Blog",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://csqread.top/img/Q.gif"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://csqread.top" accesskey="h" title="Qian&#39;s Blog (Alt + H)">
+                <img src="https://csqread.top/img/%21.jpg" alt="" aria-label="logo"
+                    height="35">Qian&#39;s Blog</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="https://csqread.top/search" title="🔍搜索">
+                    <span>🔍搜索</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://csqread.top/" title="🏠主页">
+                    <span>🏠主页</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://csqread.top/posts" title="📚文章">
+                    <span>📚文章</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://csqread.top/archives/" title="⏱时间轴">
+                    <span>⏱时间轴</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://csqread.top/tags" title="🔖标签">
+                    <span>🔖标签</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://csqread.top/about" title="🙋🏻‍♂️关于">
+                    <span>🙋🏻‍♂️关于</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://csqread.top/links" title="🤝友链">
+                    <span>🤝友链</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    <div class="breadcrumbs"><a href="https://csqread.top">主页</a>&nbsp;»&nbsp;<a href="https://csqread.top/posts/">Posts</a>&nbsp;»&nbsp;<a href="https://csqread.top/posts/tech/">技术</a></div>
+    <h1 class="post-title">
+      DDIA第四章
+    </h1>
+    <div class="post-meta">
+
+
+
+
+
+
+
+
+
+
+创建:&nbsp;<span title='2023-08-28 22:07:57 +0800 CST'>2023-08-28</span>&nbsp;|&nbsp;更新:&nbsp;2023-08-28&nbsp;|&nbsp;字数:&nbsp;2047字&nbsp;|&nbsp;时长: 5分钟&nbsp;|&nbsp;
+作者:&nbsp;ShengQian
+
+
+    &nbsp;|&nbsp;标签: &nbsp;
+    <ul class="post-tags-meta">
+        <a href="https://csqread.top/tags/%E6%95%B0%E6%8D%AE%E5%AF%86%E9%9B%86%E5%9E%8B%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/">数据密集型系统设计</a>
+    </ul>
+
+    
+    
+    
+    
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span id="busuanzi_container_page_pv">
+        &nbsp;| 访问: <span id="busuanzi_value_page_pv"></span>
+    </span>
+
+    
+    
+    
+    
+    <script src="https://cdn.staticfile.org/twikoo/1.4.11/twikoo.all.min.js">
+    </script>
+    <script>
+        let url = document.documentURI
+        
+        let dnsUrl = "https://csqread.top"
+        let urlSplit = url.split(dnsUrl)
+        let finalUrl = urlSplit[1]
+        if (finalUrl[0] !== '/') {
+            finalUrl = '/'+finalUrl
+        }
+        twikoo.getCommentsCount({
+            envId:  null ,
+            region:  null ,
+            urls: [
+                finalUrl,
+            ],
+            includeReply: false 
+        }).then(function (res) {
+            let count = res[0].count
+            const obj = document.getElementById("comment_count");
+            obj.innerText = count
+            
+            
+            
+        }).catch(function (err) {
+            
+            console.error(err);
+        });
+    </script>
+    &nbsp;| 评论: &nbsp; <span id="comment_count"></span>
+
+</div>
+  </header> <aside id="toc-container" class="toc-container wide">
+    <div class="toc">
+        <details  open>
+            <summary accesskey="c" title="(Alt + C)">
+                <span class="details">目录</span>
+            </summary>
+
+            <div class="inner"><ul>
+                    <li>
+                        <a href="#%e6%95%b0%e6%8d%ae%e7%bc%96%e7%a0%81%e4%b8%8e%e6%bc%94%e5%8c%96" aria-label="数据编码与演化">数据编码与演化</a><ul>
+                            
+                    <li>
+                        <a href="#%e7%bc%96%e7%a0%81%e6%95%b0%e6%8d%ae%e7%9a%84%e6%a0%bc%e5%bc%8f" aria-label="编码数据的格式">编码数据的格式</a><ul>
+                            
+                    <li>
+                        <a href="#%e8%af%ad%e8%a8%80%e7%89%b9%e5%ae%9a%e7%9a%84%e6%a0%bc%e5%bc%8f" aria-label="语言特定的格式">语言特定的格式</a></li>
+                    <li>
+                        <a href="#jsonxml%e5%92%8c%e4%ba%8c%e8%bf%9b%e5%88%b6%e5%8f%98%e4%bd%93" aria-label="JSON，XML和二进制变体">JSON，XML和二进制变体</a><ul>
+                            
+                    <li>
+                        <a href="#%e4%ba%8c%e8%bf%9b%e5%88%b6%e7%bc%96%e7%a0%81" aria-label="二进制编码">二进制编码</a></li></ul>
+                    </li>
+                    <li>
+                        <a href="#thrift%e4%b8%8eprotocol-buffers" aria-label="Thrift与Protocol Buffers">Thrift与Protocol Buffers</a><ul>
+                            
+                    <li>
+                        <a href="#%e5%ad%97%e6%ae%b5%e6%a0%87%e7%ad%be%e5%92%8c%e6%a8%a1%e5%bc%8f%e6%bc%94%e5%8f%98" aria-label="字段标签和模式演变">字段标签和模式演变</a></li>
+                    <li>
+                        <a href="#%e6%95%b0%e6%8d%ae%e7%b1%bb%e5%9e%8b%e5%92%8c%e6%a8%a1%e5%bc%8f%e6%bc%94%e5%8f%98" aria-label="数据类型和模式演变">数据类型和模式演变</a>
+                    </li>
+                </ul>
+                </li>
+                </ul>
+                </li>
+                </ul>
+                </li>
+                </ul>
+            </div>
+        </details>
+    </div>
+</aside>
+<script>
+    let activeElement;
+    let elements;
+    window.addEventListener('DOMContentLoaded', function (event) {
+        checkTocPosition();
+
+        elements = document.querySelectorAll('h1[id],h2[id],h3[id],h4[id],h5[id],h6[id]');
+         
+         activeElement = elements[0];
+         const id = encodeURI(activeElement.getAttribute('id')).toLowerCase();
+         document.querySelector(`.inner ul li a[href="#${id}"]`).classList.add('active');
+     }, false);
+
+    window.addEventListener('resize', function(event) {
+        checkTocPosition();
+    }, false);
+
+    window.addEventListener('scroll', () => {
+        
+        activeElement = Array.from(elements).find((element) => {
+            if ((getOffsetTop(element) - window.pageYOffset) > 0 && 
+                (getOffsetTop(element) - window.pageYOffset) < window.innerHeight/2) {
+                return element;
+            }
+        }) || activeElement
+
+        elements.forEach(element => {
+             const id = encodeURI(element.getAttribute('id')).toLowerCase();
+             if (element === activeElement){
+                 document.querySelector(`.inner ul li a[href="#${id}"]`).classList.add('active');
+             } else {
+                 document.querySelector(`.inner ul li a[href="#${id}"]`).classList.remove('active');
+             }
+         })
+     }, false);
+
+    const main = parseInt(getComputedStyle(document.body).getPropertyValue('--article-width'), 10);
+    const toc = parseInt(getComputedStyle(document.body).getPropertyValue('--toc-width'), 10);
+    const gap = parseInt(getComputedStyle(document.body).getPropertyValue('--gap'), 10);
+
+    function checkTocPosition() {
+        const width = document.body.scrollWidth;
+
+        if (width - main - (toc * 2) - (gap * 4) > 0) {
+            document.getElementById("toc-container").classList.add("wide");
+        } else {
+            document.getElementById("toc-container").classList.remove("wide");
+        }
+    }
+
+    function getOffsetTop(element) {
+        if (!element.getClientRects().length) {
+            return 0;
+        }
+        let rect = element.getBoundingClientRect();
+        let win = element.ownerDocument.defaultView;
+        return rect.top + win.pageYOffset;   
+    }
+</script>
+  <div class="post-content"><h1 id="数据编码与演化">数据编码与演化<a hidden class="anchor" aria-hidden="true" href="#数据编码与演化">#</a></h1>
+<p>应用程序总是增增改改。
+修改程序大多数情况下也在修改存储的数据。</p>
+<li>关系数据库通常假定数据库中的所有数据都遵循一个模式：尽管可以更改该模式（通过模式迁移，即ALTER语句），但是在任何时间点都有且仅有一个正确的模式。</li>
+<li>读时模式（schema-on-read）（或 无模式（schemaless））数据库不会强制一个模式，因此数据库可以包含在不同时间写入的新老数据格式的混合。</li>
+<p>当数据格式发生改变时，需要代码更改：</p>
+<li>服务端应用程序，会灰度发布；</li>
+<li>客户端应用程序，看用户心情。</li>
+<p>新旧版本的代码和数据，可能同时共处。
+系统需要双向兼容：</p>
+<li>向后兼容：新代码可以读旧数据。容易。</li>
+<li>向前兼容：旧代码可以读新数据。难。</li>
+<h2 id="编码数据的格式">编码数据的格式<a hidden class="anchor" aria-hidden="true" href="#编码数据的格式">#</a></h2>
+<p>程序通常（至少）使用两种形式的数据：</p>
+<ol> 
+<li>在内存中，数据保存在对象，结构体，列表，数组，哈希表，树等中。 这些数据结构针对CPU的高效访问和操作进行了优化（通常使用指针）。</li>
+<li>如果要将数据写入文件，或通过网络发送，则必须将其 编码（encode） 为某种自包含的字节序列（例如，JSON文档）。 由于每个进程都有自己独立的地址空间，一个进程中的指针对任何其他进程都没有意义，所以这个字节序列表示会与通常在内存中使用的数据结构完全不同。</li>
+</ol>
+<p>所以，需要在两种表示之间进行某种类型的翻译。</p>
+<li>从内存中表示到字节序列的转换称为 编码（Encoding） （也称为序列化（serialization） 或编组（marshalling））；</li>
+<li>反过来称为解码（Decoding）ii（解析（Parsing），反序列化（deserialization），反编组( unmarshalling））译i。</li>
+<h3 id="语言特定的格式">语言特定的格式<a hidden class="anchor" aria-hidden="true" href="#语言特定的格式">#</a></h3>
+<p>许多编程语言都内建了将内存对象编码为字节序列的支持。例如，Java有java.io.Serializable ，Ruby有Marshal，Python有pickle .</p>
+<p>这些库很方便，但是有深层次问题：</p>
+<li>与特定的编程语言绑定。</li>
+<li>为了恢复相同对象类型的数据，解码过程需要实例化任意类的能力，这是安全问题的来源。</li>
+<li>数据版本控制不方便。</li>
+<li>效率也不高。</li>
+<p>只适合临时使用。</p>
+<h3 id="jsonxml和二进制变体">JSON，XML和二进制变体<a hidden class="anchor" aria-hidden="true" href="#jsonxml和二进制变体">#</a></h3>
+<p>跨语言的编码：JSON，XML和CSV，属于文本格式，因此具有人类可读性。
+除了语法问题外，还有问题：</p>
+<li>数值编码有歧义：XML 和 CSV 不能区分数字和字符串。JSON 不能区分整数和浮点数。</li>
+<li>处理大数值困难。</li>
+<li>JSON 和 XML 对 unicode（人类可读的文本）有很好的支持，但是不支持二进制。通过 base64 绕过这个限制。</li>
+<li>XML 和 JSON 都有可选的模式支持。</li>
+<li>CSV 没有模式，行列的含义完全由应用程序指定。格式模糊。</li>
+<p>虽然问题多，但是大家对这些达成了意见一致。</p>
+<h4 id="二进制编码">二进制编码<a hidden class="anchor" aria-hidden="true" href="#二进制编码">#</a></h4>
+<p>当数据很多的时候，数据格式的选择会有很大影响。
+JSON比XML简洁，但与二进制格式相比还是太占空间。现在有很多二进制格式的 JSON（MessagePack，BSON，BJSON，UBJSON，BISON和Smile等）。
+JSON 字符串是：</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">6
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#0ff;font-weight:bold">&#34;userName&#34;</span>: <span style="color:#0ff;font-weight:bold">&#34;Martin&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#0ff;font-weight:bold">&#34;favoriteNumber&#34;</span>: 1337,
+</span></span><span style="display:flex;"><span>    <span style="color:#0ff;font-weight:bold">&#34;interests&#34;</span>: [<span style="color:#0ff;font-weight:bold">&#34;daydreaming&#34;</span>, <span style="color:#0ff;font-weight:bold">&#34;hacking&#34;</span>]
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>二进制编码长度为66个字节，仅略小于文本JSON编码所取的81个字节（删除了空白）。</p>
+<h3 id="thrift与protocol-buffers">Thrift与Protocol Buffers<a hidden class="anchor" aria-hidden="true" href="#thrift与protocol-buffers">#</a></h3>
+<li>Protocol Buffers最初是在Google开发的，Thrift最初是在Facebook开发的，并且在2007~2008年都是开源的，都是二进制编码库。</li>
+<li>Thrift和Protocol Buffers都需要一个模式来编码任何数据。</li>
+<p>接口定义语言（IDL） 来描述模式。</p>
+<li>Thrift 比如：</li>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">struct</span> Person {
+</span></span><span style="display:flex;"><span>    <span style="color:#ff0;font-weight:bold">1</span>: required string       userName,
+</span></span><span style="display:flex;"><span>    <span style="color:#ff0;font-weight:bold">2</span>: optional i64          favoriteNumber,
+</span></span><span style="display:flex;"><span>    <span style="color:#ff0;font-weight:bold">3</span>: optional list&lt;string&gt; interests
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><li>Protocol Buffers的等效模式定义看起来非常相似：</li>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Protobuf" data-lang="Protobuf"><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">message</span> Person {<span style="color:#f00">
+</span></span></span><span style="display:flex;"><span><span style="color:#f00"></span>    <span style="color:#fff;font-weight:bold">required</span> <span style="color:#fff;font-weight:bold">string</span> user_name       = <span style="color:#ff0;font-weight:bold">1</span>;<span style="color:#f00">
+</span></span></span><span style="display:flex;"><span><span style="color:#f00"></span>    <span style="color:#fff;font-weight:bold">optional</span> <span style="color:#fff;font-weight:bold">int64</span>  favorite_number = <span style="color:#ff0;font-weight:bold">2</span>;<span style="color:#f00">
+</span></span></span><span style="display:flex;"><span><span style="color:#f00"></span>    <span style="color:#fff;font-weight:bold">repeated</span> <span style="color:#fff;font-weight:bold">string</span> interests       = <span style="color:#ff0;font-weight:bold">3</span>;<span style="color:#f00">
+</span></span></span><span style="display:flex;"><span><span style="color:#f00"></span>}<span style="color:#f00">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><li>Thrift和Protocol Buffers每一个都带有一个代码生成工具，可以调用此代码对模式进行编码和解码。</li>
+<p>Thrift 编码格式</p>
+<li>Thrift 有两种不同的二进制编码格式，分别称为 BinaryProtocol 和 CompactProtocol</li>
+<p>BinaryProtocol</p>
+<p>&ndash; 对上面的信息编码只需要59个字节</p>
+<li>每个字段都有一个类型注释（用于指示它是一个字符串，整数，列表等），还可以根据需要指定长度（字符串的长度，列表中的项目数） 。</li>
+<li>最大的区别是没有字段名，而只有字段标签，即数字 1，2，3，就像别名。</li>
+<p>CompactProtocol</p>
+<li>语义上等同于BinaryProtocol</li>
+<li>将字段类型和标签号打包到单个字节中，并使用可变长度整数来实现</li>
+<li>相同的信息打包成只有 34 个字节</li>
+<li>将数字 1337 编码成为 2 个字节，每个字节的最高位标识是否还有更多的字节。</li>
+<p>Protocol Buffers</p>
+<li>只有一种二进制编码格式，与Thrift的CompactProtocol非常相似。</li>
+<li>同样的记录塞进了33个字节中。</li>
+<p>字段是否为必须？</p>
+<li>如果字段没有设置值，则从编码记录中省略。</li>
+<li>模式中每个字段标记为是否为必须，但对编码无影响。</li>
+<li>区别在于，如果字段设置为必须，但是未设置，那么运行时检查会失败。</li>
+<h4 id="字段标签和模式演变">字段标签和模式演变<a hidden class="anchor" aria-hidden="true" href="#字段标签和模式演变">#</a></h4>
+<li>字段标记很重要！可以改字段的名字，但是不能改字段标记。</li>
+<li>向前兼容：可以添加新字段，只要有一个新的标记号码。</li>
+<li>向后兼容：在模式初始部署之后，添加的每个字段必须是可选的或具有默认值。否则之前的代码会检查失败。</li>
+<li>删除字段：只能删除可选字段；不能再次使用相同的标签号码。</li>
+<h4 id="数据类型和模式演变">数据类型和模式演变<a hidden class="anchor" aria-hidden="true" href="#数据类型和模式演变">#</a></h4>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+      <li><a href="https://csqread.top/tags/%E6%95%B0%E6%8D%AE%E5%AF%86%E9%9B%86%E5%9E%8B%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/">数据密集型系统设计</a></li>
+    </ul>
+<nav class="paginav">
+  <a class="prev" href="https://csqread.top/posts/tech/%E5%8F%88%E4%B8%80%E6%AC%A1%E7%9A%84%E5%88%B7%E6%9C%BA%E4%B9%8B%E6%97%85/">
+    <span class="title">« 上一页</span>
+    <br>
+    <span>又一次的刷机之旅</span>
+  </a>
+  <a class="next" href="https://csqread.top/posts/read/%E5%8D%95%E5%90%91%E5%BA%A6%E7%9A%84%E4%BA%BA/">
+    <span class="title">下一页 »</span>
+    <br>
+    <span>单向度的人</span>
+  </a>
+</nav>
+
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+    <span>&copy; 2023 <a href="https://csqread.top">Qian&#39;s Blog</a></span>
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerHTML = '复制';
+
+        function copyingDone() {
+            copybutton.innerHTML = '已复制！';
+            setTimeout(() => {
+                copybutton.innerHTML = '复制';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) { };
+            selection.removeRange(range);
+        });
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+        }
+    });
+</script>
+</body>
+
+</html>
