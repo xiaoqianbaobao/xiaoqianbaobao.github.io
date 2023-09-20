@@ -425,8 +425,7 @@
     }
 </script>
   <div class="post-content"><h1 id="第二章数据模型与查询语言">第二章：数据模型与查询语言<a hidden class="anchor" aria-hidden="true" href="#第二章数据模型与查询语言">#</a></h1>
-<p><img loading="lazy" src="DDIA%e7%ac%ac%e4%ba%8c%e7%ab%a0/1.png" alt=""  />
-</p>
+<p><a href="https://sm.ms/image/SVsJnXYRDqxfHC2" target="_blank"><img src="https://s2.loli.net/2023/09/20/SVsJnXYRDqxfHC2.png" ></a></p>
 <p>数据模型可能是软件开发中最重要的部分了，因为它们的影响如此深远：不仅仅影响着软件的编写方式，而且影响着我们的解题思路。
 一个复杂的应用程序可能会有更多的中间层次，比如基于API的API，不过基本思想仍然是一样的：每个层都通过提供一个明确的数据模型来隐藏更低层次中的复杂性。这些抽象允许不同的人群有效地协作。</p>
 <h2 id="关系模型与文档模型">关系模型与文档模型<a hidden class="anchor" aria-hidden="true" href="#关系模型与文档模型">#</a></h2>
@@ -447,10 +446,10 @@
 <li>Hibernate这样的 对象关系映射（ORM object-relational mapping） 框架可以减少这个转换层所需的样板代码的数量，但是它们不能完全隐藏这两个模型之间的差异。</li>
 <li>对于一份简历而言，关系型模型需要一对多（比如工作经历）。</li>
 </ol>
-<p><img loading="lazy" src="DDIA%e7%ac%ac%e4%ba%8c%e7%ab%a0/2.png" alt=""  />
+<p><img loading="lazy" src="https://s2.loli.net/2023/09/20/zeACEKq5cGH3lJa.png" alt="2.png"  />
 </p>
 <p>而表述这样的简历，使用 JSON 是非常合适的。JSON 比多表模式有更好的局部性，可以一次查询出一个用户的所有信息。JSON 其实是一棵树。
-<img loading="lazy" src="DDIA%e7%ac%ac%e4%ba%8c%e7%ab%a0/3.png" alt=""  />
+<img loading="lazy" src="https://s2.loli.net/2023/09/20/HPGL6IBMuZVTgYl.png" alt="3.png"  />
 </p>
 <h3 id="多对一和多对多的关系">多对一和多对多的关系<a hidden class="anchor" aria-hidden="true" href="#多对一和多对多的关系">#</a></h3>
 <ol>
@@ -464,11 +463,11 @@
 <ol>
 <li>组织和学校作为实体：假如组织和学校有主页</li>
 </ol>
-<p><img loading="lazy" src="DDIA%e7%ac%ac%e4%ba%8c%e7%ab%a0/4.png" alt=""  />
+<p><img loading="lazy" src="https://s2.loli.net/2023/09/20/1LlWkBacwhQ8OnF.png" alt="4.png"  />
 </p>
 <ol start="2">
 <li>推荐：给别人做推荐，当别人的信息更改的时候，所有地方要同步更新。
-<img loading="lazy" src="DDIA%e7%ac%ac%e4%ba%8c%e7%ab%a0/5.png" alt=""  />
+<img loading="lazy" src="https://s2.loli.net/2023/09/20/QMdqI7LSrz9N41O.png" alt="5.png"  />
 </li>
 </ol>
 <h3 id="文档数据库是否在重蹈覆辙">文档数据库是否在重蹈覆辙？<a hidden class="anchor" aria-hidden="true" href="#文档数据库是否在重蹈覆辙">#</a></h3>
@@ -566,7 +565,7 @@ b. 边（edges）（ 也称为关系（relationships）或弧 （arcs） ）。<
 </li>
 <li>
 <p>图数据结构示例（以社交网络为例）<br><br>
-<img loading="lazy" src="DDIA%e7%ac%ac%e4%ba%8c%e7%ab%a0/6.png" alt=""  />
+<img loading="lazy" src="https://s2.loli.net/2023/09/20/wa9Hg2hTVG37KqZ.png" alt="6.png"  />
 </p>
 </li>
 <li>
