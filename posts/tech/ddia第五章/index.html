@@ -5,13 +5,15 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="robots" content="index, follow">
-<title>数据密集型系统设计 | Qian&#39;s Blog</title>
-<meta name="keywords" content="">
-<meta name="description" content="">
+<title>DDIA第五章 | Qian&#39;s Blog</title>
+<meta name="keywords" content="标签1, 标签2">
+<meta name="description" content="DDIA第五章 - Qian&#39;s Blog">
 <meta name="author" content="
 作者:&nbsp;ShengQian">
-<link rel="canonical" href="https://csqread.top/tags/%E6%95%B0%E6%8D%AE%E5%AF%86%E9%9B%86%E5%9E%8B%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/">
+<link rel="canonical" href="https://csqread.top/posts/tech/ddia%E7%AC%AC%E4%BA%94%E7%AB%A0/">
 <link crossorigin="anonymous" href="/assets/css/stylesheet.d056c2d8b86c8da0db95897f49066a3a22d796d21ff6173ef98b613234e402fe.css" integrity="" rel="preload stylesheet" as="style">
+<script defer crossorigin="anonymous" src="/assets/js/highlight.acb54fd32bbc1982428b8850317e45d076b95012730a5936667e6bc21777692a.js" integrity=""
+    onload="hljs.initHighlightingOnLoad();"></script>
 <link rel="icon" href="https://csqread.top/img/Q.gif">
 <link rel="icon" type="image/png" sizes="16x16" href="https://csqread.top/img/%21.jpg">
 <link rel="icon" type="image/png" sizes="32x32" href="https://csqread.top/img/%21.jpg">
@@ -19,7 +21,6 @@
 <link rel="mask-icon" href="https://csqread.top/%21.jpg">
 <meta name="theme-color" content="#2e2e33">
 <meta name="msapplication-TileColor" content="#2e2e33">
-<link rel="alternate" type="application/rss+xml" href="https://csqread.top/tags/%E6%95%B0%E6%8D%AE%E5%AF%86%E9%9B%86%E5%9E%8B%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/index.xml">
 <noscript>
     <style>
         #theme-toggle,
@@ -56,18 +57,80 @@
         }
 
     </style>
-</noscript><meta property="og:title" content="数据密集型系统设计" />
+</noscript><meta property="og:title" content="DDIA第五章" />
 <meta property="og:description" content="" />
-<meta property="og:type" content="website" />
-<meta property="og:url" content="https://csqread.top/tags/%E6%95%B0%E6%8D%AE%E5%AF%86%E9%9B%86%E5%9E%8B%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://csqread.top/posts/tech/ddia%E7%AC%AC%E4%BA%94%E7%AB%A0/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2023-09-20T21:18:15+08:00" />
+<meta property="article:modified_time" content="2023-09-20T21:18:15+08:00" />
 
 <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="数据密集型系统设计"/>
+<meta name="twitter:title" content="DDIA第五章"/>
 <meta name="twitter:description" content=""/>
 
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "Posts",
+      "item": "https://csqread.top/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  3 ,
+      "name": "技术",
+      "item": "https://csqread.top/posts/tech/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  4 ,
+      "name": "DDIA第五章",
+      "item": "https://csqread.top/posts/tech/ddia%E7%AC%AC%E4%BA%94%E7%AB%A0/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "DDIA第五章",
+  "name": "DDIA第五章",
+  "description": "",
+  "keywords": [
+    "标签1", "标签2"
+  ],
+  "articleBody": "",
+  "wordCount" : "0",
+  "inLanguage": "zh",
+  "datePublished": "2023-09-20T21:18:15+08:00",
+  "dateModified": "2023-09-20T21:18:15+08:00",
+  "author":[{
+    "@type": "Person",
+    "name": "ShengQian"
+  }],
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://csqread.top/posts/tech/ddia%E7%AC%AC%E4%BA%94%E7%AB%A0/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Qian's Blog",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://csqread.top/img/Q.gif"
+    }
+  }
+}
+</script>
 </head>
 
-<body class="list" id="top">
+<body class="" id="top">
 <script>
     if (localStorage.getItem("pref-theme") === "dark") {
         document.body.classList.add('dark');
@@ -147,22 +210,15 @@
         </ul>
     </nav>
 </header>
-<main class="main"> 
-<header class="page-header"><div class="breadcrumbs"><a href="https://csqread.top">主页</a>&nbsp;»&nbsp;<a href="https://csqread.top/tags/">Tags</a></div>
-  <h1>
-    数据密集型系统设计
-  </h1>
-</header>
+<main class="main">
 
-<article class="post-entry tag-entry"> 
-  <header class="entry-header">
-    <h2>DDIA第四章
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>数据编码与演化 应用程序总是增增改改。 修改程序大多数情况下也在修改存储的数据。 关系数据库通常假定数据库中的所有数据都遵循一个模式：尽管可以更改...</p>
-  </div>
-  <footer class="entry-footer">
+<article class="post-single">
+  <header class="post-header">
+    <div class="breadcrumbs"><a href="https://csqread.top">主页</a>&nbsp;»&nbsp;<a href="https://csqread.top/posts/">Posts</a>&nbsp;»&nbsp;<a href="https://csqread.top/posts/tech/">技术</a></div>
+    <h1 class="post-title">
+      DDIA第五章
+    </h1>
+    <div class="post-meta">
 
 
 
@@ -173,81 +229,83 @@
 
 
 
-创建:&nbsp;<span title='2023-08-28 22:07:57 +0800 CST'>2023-08-28</span>&nbsp;|&nbsp;更新:&nbsp;2023-08-28&nbsp;|&nbsp;字数:&nbsp;7480字&nbsp;|&nbsp;时长: 15分钟&nbsp;|&nbsp;
-作者:&nbsp;ShengQian</footer>
-  <a class="entry-link" aria-label="post link to DDIA第四章" href="https://csqread.top/posts/tech/ddia%E7%AC%AC%E5%9B%9B%E7%AB%A0/"></a>
-</article>
-
-<article class="post-entry tag-entry"> 
-  <header class="entry-header">
-    <h2>DDIA第三章
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>第三章：存储与检索 本章介绍了传统关系型数据库与“NoSQL”数据库的存储引擎。 我们会研究两大类存储引擎：日志结构（log-structure...</p>
-  </div>
-  <footer class="entry-footer">
+创建:&nbsp;<span title='2023-09-20 21:18:15 +0800 CST'>2023-09-20</span>&nbsp;|&nbsp;更新:&nbsp;2023-09-20&nbsp;|&nbsp;字数:&nbsp;0字&nbsp;|&nbsp;时长: 0分钟&nbsp;|&nbsp;
+作者:&nbsp;ShengQian
 
 
+    &nbsp;|&nbsp;标签: &nbsp;
+    <ul class="post-tags-meta">
+        <a href="https://csqread.top/tags/%E6%A0%87%E7%AD%BE1/">标签1</a>
+        <a href="https://csqread.top/tags/%E6%A0%87%E7%AD%BE2/">、标签2</a>
+    </ul>
 
+    
+    
+    
+    
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span id="busuanzi_container_page_pv">
+        &nbsp;| 访问: <span id="busuanzi_value_page_pv"></span>
+    </span>
 
+    
+    
+    
+    
+    <script src="https://cdn.staticfile.org/twikoo/1.4.11/twikoo.all.min.js">
+    </script>
+    <script>
+        let url = document.documentURI
+        
+        let dnsUrl = "https://csqread.top"
+        let urlSplit = url.split(dnsUrl)
+        let finalUrl = urlSplit[1]
+        if (finalUrl[0] !== '/') {
+            finalUrl = '/'+finalUrl
+        }
+        twikoo.getCommentsCount({
+            envId:  null ,
+            region:  null ,
+            urls: [
+                finalUrl,
+            ],
+            includeReply: false 
+        }).then(function (res) {
+            let count = res[0].count
+            const obj = document.getElementById("comment_count");
+            obj.innerText = count
+            
+            
+            
+        }).catch(function (err) {
+            
+            console.error(err);
+        });
+    </script>
+    &nbsp;| 评论: &nbsp; <span id="comment_count"></span>
 
+</div>
+  </header> 
 
+  <footer class="post-footer">
+    <ul class="post-tags">
+      <li><a href="https://csqread.top/tags/%E6%A0%87%E7%AD%BE1/">标签1</a></li>
+      <li><a href="https://csqread.top/tags/%E6%A0%87%E7%AD%BE2/">标签2</a></li>
+    </ul>
+<nav class="paginav">
+  <a class="prev" href="https://csqread.top/posts/blog/hugo%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/">
+    <span class="title">« 上一页</span>
+    <br>
+    <span>Hugo博客搭建</span>
+  </a>
+  <a class="next" href="https://csqread.top/posts/tech/%E5%8F%88%E4%B8%80%E6%AC%A1%E7%9A%84%E5%88%B7%E6%9C%BA%E4%B9%8B%E6%97%85/">
+    <span class="title">下一页 »</span>
+    <br>
+    <span>又一次的刷机之旅</span>
+  </a>
+</nav>
 
-
-
-
-创建:&nbsp;<span title='2023-08-15 21:26:51 +0800 CST'>2023-08-15</span>&nbsp;|&nbsp;更新:&nbsp;2023-08-15&nbsp;|&nbsp;字数:&nbsp;10548字&nbsp;|&nbsp;时长: 22分钟&nbsp;|&nbsp;
-作者:&nbsp;ShengQian</footer>
-  <a class="entry-link" aria-label="post link to DDIA第三章" href="https://csqread.top/posts/tech/ddia%E7%AC%AC%E4%B8%89%E7%AB%A0/"></a>
-</article>
-
-<article class="post-entry tag-entry"> 
-  <header class="entry-header">
-    <h2>DDIA第二章
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>第二章：数据模型与查询语言 数据模型可能是软件开发中最重要的部分了，因为它们的影响如此深远：不仅仅影响着软件的编写方式，而且影响着我们的解题思...</p>
-  </div>
-  <footer class="entry-footer">
-
-
-
-
-
-
-
-
-
-
-创建:&nbsp;<span title='2023-08-08 22:06:41 +0800 CST'>2023-08-08</span>&nbsp;|&nbsp;更新:&nbsp;2023-08-08&nbsp;|&nbsp;字数:&nbsp;5705字&nbsp;|&nbsp;时长: 12分钟&nbsp;|&nbsp;
-作者:&nbsp;ShengQian</footer>
-  <a class="entry-link" aria-label="post link to DDIA第二章" href="https://csqread.top/posts/tech/ddia%E7%AC%AC%E4%BA%8C%E7%AB%A0/"></a>
-</article>
-
-<article class="post-entry tag-entry"> 
-  <header class="entry-header">
-    <h2>DDIA第一章
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>第一章：可靠性，可扩展性，可维护性 关于数据系统的思考 单个工具已经不能满足应用系统的需求，总体工作被拆分成一系列能被单个工具高效完成的任务，并...</p>
-  </div>
-  <footer class="entry-footer">
-
-
-
-
-
-
-
-
-
-
-创建:&nbsp;<span title='2023-08-04 08:39:31 +0800 CST'>2023-08-04</span>&nbsp;|&nbsp;更新:&nbsp;2023-08-04&nbsp;|&nbsp;字数:&nbsp;1710字&nbsp;|&nbsp;时长: 4分钟&nbsp;|&nbsp;
-作者:&nbsp;ShengQian</footer>
-  <a class="entry-link" aria-label="post link to DDIA第一章" href="https://csqread.top/posts/tech/ddia%E7%AC%AC%E4%B8%80%E7%AB%A0/"></a>
+  </footer>
 </article>
     </main>
     
@@ -318,6 +376,53 @@
         }
     })
 
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerHTML = '复制';
+
+        function copyingDone() {
+            copybutton.innerHTML = '已复制！';
+            setTimeout(() => {
+                copybutton.innerHTML = '复制';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) { };
+            selection.removeRange(range);
+        });
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+        }
+    });
 </script>
 </body>
 
