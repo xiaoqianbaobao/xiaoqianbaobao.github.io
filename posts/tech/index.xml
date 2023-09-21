@@ -13,7 +13,7 @@
       <pubDate>Wed, 20 Sep 2023 21:18:15 +0800</pubDate>
       
       <guid>https://csqread.top/posts/tech/ddia%E7%AC%AC%E4%BA%94%E7%AB%A0/</guid>
-      <description></description>
+      <description>第五章：数据复制 复制的目的： ● 使得数据与用户在地理上接近（从而减少延迟） ● 即使系统的一部分出现故障，系统也能继续工作（从而提高可用性） ● 伸缩</description>
     </item>
     
     <item>
