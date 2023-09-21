@@ -5,12 +5,12 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="robots" content="index, follow">
-<title>Hugo博客搭建 | Qian&#39;s Blog</title>
-<meta name="keywords" content="博客搭建, 折腾">
-<meta name="description" content="Hugo博客搭建过程及遇到的问题">
+<title>深入理解Java虚拟机系列读书笔记计划 | Qian&#39;s Blog</title>
+<meta name="keywords" content="JVM">
+<meta name="description" content="这是一个计划 其实这本书我已经看了两遍了，只能说第二次比第一次收获更多，可能是第二次读的时候是已经工作了一段时间，读起来再也不是纸上谈兵，而是">
 <meta name="author" content="
 作者:&nbsp;ShengQian">
-<link rel="canonical" href="https://csqread.top/posts/blog/hugo%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/">
+<link rel="canonical" href="https://csqread.top/posts/tech/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3java%E8%99%9A%E6%8B%9F%E6%9C%BA%E7%B3%BB%E5%88%97%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%E8%AE%A1%E5%88%92/">
 <link crossorigin="anonymous" href="/assets/css/stylesheet.d056c2d8b86c8da0db95897f49066a3a22d796d21ff6173ef98b613234e402fe.css" integrity="" rel="preload stylesheet" as="style">
 <script defer crossorigin="anonymous" src="/assets/js/highlight.acb54fd32bbc1982428b8850317e45d076b95012730a5936667e6bc21777692a.js" integrity=""
     onload="hljs.initHighlightingOnLoad();"></script>
@@ -57,16 +57,16 @@
         }
 
     </style>
-</noscript><meta property="og:title" content="Hugo博客搭建" />
-<meta property="og:description" content="Hugo博客搭建过程及遇到的问题" />
+</noscript><meta property="og:title" content="深入理解Java虚拟机系列读书笔记计划" />
+<meta property="og:description" content="这是一个计划 其实这本书我已经看了两遍了，只能说第二次比第一次收获更多，可能是第二次读的时候是已经工作了一段时间，读起来再也不是纸上谈兵，而是" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://csqread.top/posts/blog/hugo%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/" /><meta property="article:section" content="posts" />
-<meta property="article:published_time" content="2023-03-05T12:47:51+08:00" />
-<meta property="article:modified_time" content="2023-03-05T12:47:51+08:00" />
+<meta property="og:url" content="https://csqread.top/posts/tech/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3java%E8%99%9A%E6%8B%9F%E6%9C%BA%E7%B3%BB%E5%88%97%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%E8%AE%A1%E5%88%92/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2023-09-21T18:53:11+08:00" />
+<meta property="article:modified_time" content="2023-09-21T18:53:11+08:00" />
 
 <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="Hugo博客搭建"/>
-<meta name="twitter:description" content="Hugo博客搭建过程及遇到的问题"/>
+<meta name="twitter:title" content="深入理解Java虚拟机系列读书笔记计划"/>
+<meta name="twitter:description" content="这是一个计划 其实这本书我已经看了两遍了，只能说第二次比第一次收获更多，可能是第二次读的时候是已经工作了一段时间，读起来再也不是纸上谈兵，而是"/>
 
 
 <script type="application/ld+json">
@@ -83,14 +83,14 @@
     {
       "@type": "ListItem",
       "position":  3 ,
-      "name": "建站",
-      "item": "https://csqread.top/posts/blog/"
+      "name": "技术",
+      "item": "https://csqread.top/posts/tech/"
     }, 
     {
       "@type": "ListItem",
       "position":  4 ,
-      "name": "Hugo博客搭建",
-      "item": "https://csqread.top/posts/blog/hugo%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/"
+      "name": "深入理解Java虚拟机系列读书笔记计划",
+      "item": "https://csqread.top/posts/tech/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3java%E8%99%9A%E6%8B%9F%E6%9C%BA%E7%B3%BB%E5%88%97%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%E8%AE%A1%E5%88%92/"
     }
   ]
 }
@@ -99,24 +99,24 @@
 {
   "@context": "https://schema.org",
   "@type": "BlogPosting",
-  "headline": "Hugo博客搭建",
-  "name": "Hugo博客搭建",
-  "description": "Hugo博客搭建过程及遇到的问题",
+  "headline": "深入理解Java虚拟机系列读书笔记计划",
+  "name": "深入理解Java虚拟机系列读书笔记计划",
+  "description": "这是一个计划 其实这本书我已经看了两遍了，只能说第二次比第一次收获更多，可能是第二次读的时候是已经工作了一段时间，读起来再也不是纸上谈兵，而是",
   "keywords": [
-    "博客搭建", "折腾"
+    "JVM"
   ],
-  "articleBody": "这篇文章主要记录我搭建hugo博客的过程，包括搭建过程中遇到的问题及解决方法\n1、新建github仓库 新建respository, Respository的名称为 “你的github名称.github.io”.\n2、下载并安装对应版本的hugo 下载链接: 点击选择hugo版本下载\n3、创建hugo网站 进入想要存放网站的文件夹，输入以下命令:\n1 hugo new site demo-blog 4、选择主题 输入命令下载主题:\n1 git clone https://github.com/adityatelange/hugo-PaperMod.git 使用该主题的方法就是在站点文件夹下的配置文件里输入主题的名字:\n然后把主题文件夹里面的一些静态文件和配置文件复制到站点目录下，目的是为了可以自定义博客的样式，而不会改动主题文件夹里的样式，这样主题要更新的时候，直接在主题目录下git pull就可以，站点目录的修改会优先覆盖主题里的配置，所以可以实现平滑更新\n",
-  "wordCount" : "353",
+  "articleBody": "这是一个计划 其实这本书我已经看了两遍了，只能说第二次比第一次收获更多，可能是第二次读的时候是已经工作了一段时间，读起来再也不是纸上谈兵，而是能够联系到工作上的实际场景，脑子中有了图像。但是这本案牍之书，读两遍肯定是远远不够的。因此最近我想开始读第三遍，这个时候边读边做一个读书笔记以此来鞭策自己，能够真的深入理解JVM。\n但是在开始这个计划之前，我需要把DDIA的篇幅弄完。虽然DDIA后续也会进行二刷。感觉最近我工作之后的工作量有点大。还有一个小小的比赛要参加。\n计划是在10月份读完深入理解Java虚拟机，边做完读书笔记，因为有个国庆小长假，我可以在家里宅着看看。所以也会在10月份结束做完这本书的读书笔记。\n",
+  "wordCount" : "304",
   "inLanguage": "zh",
-  "datePublished": "2023-03-05T12:47:51+08:00",
-  "dateModified": "2023-03-05T12:47:51+08:00",
+  "datePublished": "2023-09-21T18:53:11+08:00",
+  "dateModified": "2023-09-21T18:53:11+08:00",
   "author":[{
     "@type": "Person",
     "name": "ShengQian"
   }],
   "mainEntityOfPage": {
     "@type": "WebPage",
-    "@id": "https://csqread.top/posts/blog/hugo%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/"
+    "@id": "https://csqread.top/posts/tech/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3java%E8%99%9A%E6%8B%9F%E6%9C%BA%E7%B3%BB%E5%88%97%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%E8%AE%A1%E5%88%92/"
   },
   "publisher": {
     "@type": "Organization",
@@ -214,13 +214,10 @@
 
 <article class="post-single">
   <header class="post-header">
-    <div class="breadcrumbs"><a href="https://csqread.top">主页</a>&nbsp;»&nbsp;<a href="https://csqread.top/posts/">Posts</a>&nbsp;»&nbsp;<a href="https://csqread.top/posts/blog/">建站</a></div>
+    <div class="breadcrumbs"><a href="https://csqread.top">主页</a>&nbsp;»&nbsp;<a href="https://csqread.top/posts/">Posts</a>&nbsp;»&nbsp;<a href="https://csqread.top/posts/tech/">技术</a></div>
     <h1 class="post-title">
-      Hugo博客搭建
+      深入理解Java虚拟机系列读书笔记计划
     </h1>
-    <div class="post-description">
-      Hugo博客搭建过程及遇到的问题
-    </div>
     <div class="post-meta">
 
 
@@ -232,14 +229,13 @@
 
 
 
-创建:&nbsp;<span title='2023-03-05 12:47:51 +0800 CST'>2023-03-05</span>&nbsp;|&nbsp;更新:&nbsp;2023-03-05&nbsp;|&nbsp;字数:&nbsp;353字&nbsp;|&nbsp;时长: 1分钟&nbsp;|&nbsp;
+创建:&nbsp;<span title='2023-09-21 18:53:11 +0800 CST'>2023-09-21</span>&nbsp;|&nbsp;更新:&nbsp;2023-09-21&nbsp;|&nbsp;字数:&nbsp;304字&nbsp;|&nbsp;时长: 1分钟&nbsp;|&nbsp;
 作者:&nbsp;ShengQian
 
 
     &nbsp;|&nbsp;标签: &nbsp;
     <ul class="post-tags-meta">
-        <a href="https://csqread.top/tags/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/">博客搭建</a>
-        <a href="https://csqread.top/tags/%E6%8A%98%E8%85%BE/">、折腾</a>
+        <a href="https://csqread.top/tags/jvm/">JVM</a>
     </ul>
 
     
@@ -297,13 +293,7 @@
 
             <div class="inner"><ul>
                     <li>
-                        <a href="#1%e6%96%b0%e5%bb%bagithub%e4%bb%93%e5%ba%93" aria-label="1、新建github仓库">1、新建github仓库</a></li>
-                    <li>
-                        <a href="#2%e4%b8%8b%e8%bd%bd%e5%b9%b6%e5%ae%89%e8%a3%85%e5%af%b9%e5%ba%94%e7%89%88%e6%9c%ac%e7%9a%84hugo" aria-label="2、下载并安装对应版本的hugo">2、下载并安装对应版本的hugo</a></li>
-                    <li>
-                        <a href="#3%e5%88%9b%e5%bb%bahugo%e7%bd%91%e7%ab%99" aria-label="3、创建hugo网站">3、创建hugo网站</a></li>
-                    <li>
-                        <a href="#4%e9%80%89%e6%8b%a9%e4%b8%bb%e9%a2%98" aria-label="4、选择主题">4、选择主题</a>
+                        <a href="#%e8%bf%99%e6%98%af%e4%b8%80%e4%b8%aa%e8%ae%a1%e5%88%92" aria-label="这是一个计划">这是一个计划</a>
                     </li>
                 </ul>
             </div>
@@ -369,47 +359,30 @@
         return rect.top + win.pageYOffset;   
     }
 </script>
-  <div class="post-content"><p>这篇文章主要记录我搭建hugo博客的过程，包括搭建过程中遇到的问题及解决方法</p>
-<h1 id="1新建github仓库">1、新建github仓库<a hidden class="anchor" aria-hidden="true" href="#1新建github仓库">#</a></h1>
-<p>新建respository, Respository的名称为 &ldquo;你的github名称.github.io&rdquo;.</p>
-<h1 id="2下载并安装对应版本的hugo">2、下载并安装对应版本的hugo<a hidden class="anchor" aria-hidden="true" href="#2下载并安装对应版本的hugo">#</a></h1>
-<p>下载链接: <a href = "https://github.com/gohugoio/hugo/releases">点击选择hugo版本下载</a></p>
-<h1 id="3创建hugo网站">3、创建hugo网站<a hidden class="anchor" aria-hidden="true" href="#3创建hugo网站">#</a></h1>
-<p>进入想要存放网站的文件夹，输入以下命令:</p>
-<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>hugo new site demo-blog
-</span></span></code></pre></td></tr></table>
-</div>
-</div><h1 id="4选择主题">4、选择主题<a hidden class="anchor" aria-hidden="true" href="#4选择主题">#</a></h1>
-<p>输入命令下载主题:</p>
-<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>git clone https://github.com/adityatelange/hugo-PaperMod.git
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>使用该主题的方法就是在站点文件夹下的配置文件里输入主题的名字:</p>
-<p>然后把主题文件夹里面的一些静态文件和配置文件复制到站点目录下，目的是为了可以自定义博客的样式，而不会改动主题文件夹里的样式，这样主题要更新的时候，直接在主题目录下git pull就可以，站点目录的修改会优先覆盖主题里的配置，所以可以实现平滑更新</p>
+  <div class="post-content"><h1 id="这是一个计划">这是一个计划<a hidden class="anchor" aria-hidden="true" href="#这是一个计划">#</a></h1>
+<p><img loading="lazy" src="https://s2.loli.net/2023/09/21/AeaXorjYy8dtSQs.png" alt="plan1.png"  />
+</p>
+<p>其实这本书我已经看了两遍了，只能说第二次比第一次收获更多，可能是第二次读的时候是已经工作了一段时间，读起来再也不是纸上谈兵，而是能够联系到工作上的实际场景，脑子中有了图像。但是这本案牍之书，读两遍肯定是远远不够的。因此最近我想开始读第三遍，这个时候边读边做一个读书笔记以此来鞭策自己，能够真的深入理解JVM。</p>
+<p>但是在开始这个计划之前，我需要把DDIA的篇幅弄完。虽然DDIA后续也会进行二刷。感觉最近我工作之后的工作量有点大。还有一个小小的比赛要参加。</p>
+<p>计划是在10月份读完深入理解Java虚拟机，边做完读书笔记，因为有个国庆小长假，我可以在家里宅着看看。所以也会在10月份结束做完这本书的读书笔记。</p>
 
 
   </div>
 
   <footer class="post-footer">
     <ul class="post-tags">
-      <li><a href="https://csqread.top/tags/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/">博客搭建</a></li>
-      <li><a href="https://csqread.top/tags/%E6%8A%98%E8%85%BE/">折腾</a></li>
+      <li><a href="https://csqread.top/tags/jvm/">JVM</a></li>
     </ul>
 <nav class="paginav">
-  <a class="next" href="https://csqread.top/posts/tech/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3java%E8%99%9A%E6%8B%9F%E6%9C%BA%E7%B3%BB%E5%88%97%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%E8%AE%A1%E5%88%92/">
+  <a class="prev" href="https://csqread.top/posts/blog/hugo%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/">
+    <span class="title">« 上一页</span>
+    <br>
+    <span>Hugo博客搭建</span>
+  </a>
+  <a class="next" href="https://csqread.top/posts/tech/ddia%E7%AC%AC%E4%BA%94%E7%AB%A0/">
     <span class="title">下一页 »</span>
     <br>
-    <span>深入理解Java虚拟机系列读书笔记计划</span>
+    <span>DDIA第五章</span>
   </a>
 </nav>
 
