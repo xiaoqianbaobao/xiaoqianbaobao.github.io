@@ -6,7 +6,16 @@
     <description>Recent content in 数据密集型系统设计 on Qian&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Wed, 20 Sep 2023 21:18:15 +0800</lastBuildDate><atom:link href="https://csqread.top/tags/%E6%95%B0%E6%8D%AE%E5%AF%86%E9%9B%86%E5%9E%8B%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 25 Oct 2023 22:01:54 +0800</lastBuildDate><atom:link href="https://csqread.top/tags/%E6%95%B0%E6%8D%AE%E5%AF%86%E9%9B%86%E5%9E%8B%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>DDIA第六章</title>
+      <link>https://csqread.top/posts/tech/ddia%E7%AC%AC%E5%85%AD%E7%AB%A0/</link>
+      <pubDate>Wed, 25 Oct 2023 22:01:54 +0800</pubDate>
+      
+      <guid>https://csqread.top/posts/tech/ddia%E7%AC%AC%E5%85%AD%E7%AB%A0/</guid>
+      <description>第六章: 分区 什么是分区？ ● 对于非常大的数据集，或非常高的吞吐量，仅仅进行复制是不够的：我们需要将数据进行分区（partitions），也称为</description>
+    </item>
+    
     <item>
       <title>DDIA第五章</title>
       <link>https://csqread.top/posts/tech/ddia%E7%AC%AC%E4%BA%94%E7%AB%A0/</link>
