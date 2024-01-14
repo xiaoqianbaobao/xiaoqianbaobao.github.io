@@ -6,7 +6,16 @@
     <description>Recent content in Java on Qian&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Tue, 06 Jun 2023 23:04:43 +0800</lastBuildDate><atom:link href="https://csqread.top/categories/java/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 14 Jan 2024 10:51:28 +0800</lastBuildDate><atom:link href="https://csqread.top/categories/java/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>关于Java String如何提升性能</title>
+      <link>https://csqread.top/posts/tech/%E5%85%B3%E4%BA%8Ejava-string%E5%A6%82%E4%BD%95%E6%8F%90%E5%8D%87%E6%80%A7%E8%83%BD/</link>
+      <pubDate>Sun, 14 Jan 2024 10:51:28 +0800</pubDate>
+      
+      <guid>https://csqread.top/posts/tech/%E5%85%B3%E4%BA%8Ejava-string%E5%A6%82%E4%BD%95%E6%8F%90%E5%8D%87%E6%80%A7%E8%83%BD/</guid>
+      <description>关于Java String的一些细节</description>
+    </item>
+    
     <item>
       <title>重构之管道替换循环</title>
       <link>https://csqread.top/posts/tech/%E9%87%8D%E6%9E%84%E4%B9%8B%E7%AE%A1%E9%81%93%E6%9B%BF%E6%8D%A2%E5%BE%AA%E7%8E%AF/</link>
