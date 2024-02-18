@@ -5,12 +5,12 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="robots" content="index, follow">
-<title>Hugo博客搭建 | Qian&#39;s Blog</title>
-<meta name="keywords" content="博客搭建, 折腾">
-<meta name="description" content="Hugo博客搭建过程及遇到的问题">
+<title>DDIA第九章 | Qian&#39;s Blog</title>
+<meta name="keywords" content="数据密集型系统设计">
+<meta name="description" content="第九章：一致性与共识 构建容错系统的最好方法，是找到一些带有实用保证的通用抽象，实现一次，然后让应用依赖这些保证。比如事务。 我们需要了解系统能">
 <meta name="author" content="
 作者:&nbsp;ShengQian">
-<link rel="canonical" href="https://csqread.top/posts/blog/hugo%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/">
+<link rel="canonical" href="https://csqread.top/posts/tech/ddia%E7%AC%AC%E4%B9%9D%E7%AB%A0/">
 <link crossorigin="anonymous" href="/assets/css/stylesheet.d056c2d8b86c8da0db95897f49066a3a22d796d21ff6173ef98b613234e402fe.css" integrity="" rel="preload stylesheet" as="style">
 <script defer crossorigin="anonymous" src="/assets/js/highlight.acb54fd32bbc1982428b8850317e45d076b95012730a5936667e6bc21777692a.js" integrity=""
     onload="hljs.initHighlightingOnLoad();"></script>
@@ -57,16 +57,16 @@
         }
 
     </style>
-</noscript><meta property="og:title" content="Hugo博客搭建" />
-<meta property="og:description" content="Hugo博客搭建过程及遇到的问题" />
+</noscript><meta property="og:title" content="DDIA第九章" />
+<meta property="og:description" content="第九章：一致性与共识 构建容错系统的最好方法，是找到一些带有实用保证的通用抽象，实现一次，然后让应用依赖这些保证。比如事务。 我们需要了解系统能" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://csqread.top/posts/blog/hugo%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/" /><meta property="article:section" content="posts" />
-<meta property="article:published_time" content="2023-03-05T12:47:51+08:00" />
-<meta property="article:modified_time" content="2023-03-05T12:47:51+08:00" />
+<meta property="og:url" content="https://csqread.top/posts/tech/ddia%E7%AC%AC%E4%B9%9D%E7%AB%A0/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2024-02-03T23:07:22+08:00" />
+<meta property="article:modified_time" content="2024-02-03T23:07:22+08:00" />
 
 <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="Hugo博客搭建"/>
-<meta name="twitter:description" content="Hugo博客搭建过程及遇到的问题"/>
+<meta name="twitter:title" content="DDIA第九章"/>
+<meta name="twitter:description" content="第九章：一致性与共识 构建容错系统的最好方法，是找到一些带有实用保证的通用抽象，实现一次，然后让应用依赖这些保证。比如事务。 我们需要了解系统能"/>
 
 
 <script type="application/ld+json">
@@ -83,14 +83,14 @@
     {
       "@type": "ListItem",
       "position":  3 ,
-      "name": "建站",
-      "item": "https://csqread.top/posts/blog/"
+      "name": "技术",
+      "item": "https://csqread.top/posts/tech/"
     }, 
     {
       "@type": "ListItem",
       "position":  4 ,
-      "name": "Hugo博客搭建",
-      "item": "https://csqread.top/posts/blog/hugo%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/"
+      "name": "DDIA第九章",
+      "item": "https://csqread.top/posts/tech/ddia%E7%AC%AC%E4%B9%9D%E7%AB%A0/"
     }
   ]
 }
@@ -99,24 +99,24 @@
 {
   "@context": "https://schema.org",
   "@type": "BlogPosting",
-  "headline": "Hugo博客搭建",
-  "name": "Hugo博客搭建",
-  "description": "Hugo博客搭建过程及遇到的问题",
+  "headline": "DDIA第九章",
+  "name": "DDIA第九章",
+  "description": "第九章：一致性与共识 构建容错系统的最好方法，是找到一些带有实用保证的通用抽象，实现一次，然后让应用依赖这些保证。比如事务。 我们需要了解系统能",
   "keywords": [
-    "博客搭建", "折腾"
+    "数据密集型系统设计"
   ],
-  "articleBody": "这篇文章主要记录我搭建hugo博客的过程，包括搭建过程中遇到的问题及解决方法\n1、新建github仓库 新建respository, Respository的名称为 “你的github名称.github.io”.\n2、下载并安装对应版本的hugo 下载链接: 点击选择hugo版本下载\n3、创建hugo网站 进入想要存放网站的文件夹，输入以下命令:\n1 hugo new site demo-blog 4、选择主题 输入命令下载主题:\n1 git clone https://github.com/adityatelange/hugo-PaperMod.git 使用该主题的方法就是在站点文件夹下的配置文件里输入主题的名字:\n然后把主题文件夹里面的一些静态文件和配置文件复制到站点目录下，目的是为了可以自定义博客的样式，而不会改动主题文件夹里的样式，这样主题要更新的时候，直接在主题目录下git pull就可以，站点目录的修改会优先覆盖主题里的配置，所以可以实现平滑更新\n",
-  "wordCount" : "353",
+  "articleBody": "第九章：一致性与共识 构建容错系统的最好方法，是找到一些带有实用保证的通用抽象，实现一次，然后让应用依赖这些保证。比如事务。 我们需要了解系统能力的边界：哪些可行，哪些不可行。\n一致性保证 分布式系统的时序问题：\n在同一时刻查看两个数据库节点，则可能在两个节点上看到不同的数据，因为写请求在不同的时间到达不同的节点。 无论数据库使用何种复制方法（单主复制，多主复制或无主复制），都会出现这些不一致情况。 大多数复制的数据库至少提供了最终一致性，这意味着如果你停止向数据库写入数据并等待一段不确定的时间，那么最终所有的读取请求都会返回相同的值。 换句话说，不一致性是暂时的，最终会自行解决（假设网络中的任何故障最终都会被修复）。最终一致性的一个更好的名字可能是收敛（convergence），因为我们预计所有的副本最终会收敛到相同的值。 最终一致性是非常弱的保证——没有说什么时候会收敛。 在与只提供弱保证的数据库打交道时，你需要始终意识到它的局限性，而不是意外地作出太多假设。（始终不信任它） 除了最终一致性，有没有更强的一致性模型？\n分布式一致性模型 分布式一致性模型和我们之前讨论的事务隔离级别的层次结构有一些相似之处。 不同：事务隔离主要是为了避免由于同时执行事务而导致的竞争状态，而分布式一致性主要关于在面对延迟和故障时如何协调副本间的状态。 线性一致性 线性一致性的想法？\n数据库可以提供只有一个副本的假象（即，只有一个数据副本），那么每个客户端都会有相同的数据视图，且不必担心复制滞后了。 线性一致性（linearizability），也称为原子一致性（atomic consistency），强一致性（strong consistency），立即一致性（immediate consistency） 或外部一致性（external consistency ）。 线性一致性提供了什么保证？\n只要一个客户端成功完成写操作，所有客户端从数据库中读取数据必须能够看到刚刚写入的值。 系统应保障读到的值是最近的、最新的，而不是来自陈旧的缓存或副本。 线性一致性是一个新鲜度保证（recency guarantee）。 图9-1 这个系统是非线性一致的，导致了球迷的困惑 如何使得系统线性一致？ ",
+  "wordCount" : "907",
   "inLanguage": "zh",
-  "datePublished": "2023-03-05T12:47:51+08:00",
-  "dateModified": "2023-03-05T12:47:51+08:00",
+  "datePublished": "2024-02-03T23:07:22+08:00",
+  "dateModified": "2024-02-03T23:07:22+08:00",
   "author":[{
     "@type": "Person",
     "name": "ShengQian"
   }],
   "mainEntityOfPage": {
     "@type": "WebPage",
-    "@id": "https://csqread.top/posts/blog/hugo%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/"
+    "@id": "https://csqread.top/posts/tech/ddia%E7%AC%AC%E4%B9%9D%E7%AB%A0/"
   },
   "publisher": {
     "@type": "Organization",
@@ -214,13 +214,10 @@
 
 <article class="post-single">
   <header class="post-header">
-    <div class="breadcrumbs"><a href="https://csqread.top">主页</a>&nbsp;»&nbsp;<a href="https://csqread.top/posts/">Posts</a>&nbsp;»&nbsp;<a href="https://csqread.top/posts/blog/">建站</a></div>
+    <div class="breadcrumbs"><a href="https://csqread.top">主页</a>&nbsp;»&nbsp;<a href="https://csqread.top/posts/">Posts</a>&nbsp;»&nbsp;<a href="https://csqread.top/posts/tech/">技术</a></div>
     <h1 class="post-title">
-      Hugo博客搭建
+      DDIA第九章
     </h1>
-    <div class="post-description">
-      Hugo博客搭建过程及遇到的问题
-    </div>
     <div class="post-meta">
 
 
@@ -232,14 +229,13 @@
 
 
 
-创建:&nbsp;<span title='2023-03-05 12:47:51 +0800 CST'>2023-03-05</span>&nbsp;|&nbsp;更新:&nbsp;2023-03-05&nbsp;|&nbsp;字数:&nbsp;353字&nbsp;|&nbsp;时长: 1分钟&nbsp;|&nbsp;
+创建:&nbsp;<span title='2024-02-03 23:07:22 +0800 CST'>2024-02-03</span>&nbsp;|&nbsp;更新:&nbsp;2024-02-03&nbsp;|&nbsp;字数:&nbsp;907字&nbsp;|&nbsp;时长: 2分钟&nbsp;|&nbsp;
 作者:&nbsp;ShengQian
 
 
     &nbsp;|&nbsp;标签: &nbsp;
     <ul class="post-tags-meta">
-        <a href="https://csqread.top/tags/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/">博客搭建</a>
-        <a href="https://csqread.top/tags/%E6%8A%98%E8%85%BE/">、折腾</a>
+        <a href="https://csqread.top/tags/%E6%95%B0%E6%8D%AE%E5%AF%86%E9%9B%86%E5%9E%8B%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/">数据密集型系统设计</a>
     </ul>
 
     
@@ -297,14 +293,20 @@
 
             <div class="inner"><ul>
                     <li>
-                        <a href="#1%e6%96%b0%e5%bb%bagithub%e4%bb%93%e5%ba%93" aria-label="1、新建github仓库">1、新建github仓库</a></li>
+                        <a href="#%e7%ac%ac%e4%b9%9d%e7%ab%a0%e4%b8%80%e8%87%b4%e6%80%a7%e4%b8%8e%e5%85%b1%e8%af%86" aria-label="第九章：一致性与共识">第九章：一致性与共识</a><ul>
+                            
                     <li>
-                        <a href="#2%e4%b8%8b%e8%bd%bd%e5%b9%b6%e5%ae%89%e8%a3%85%e5%af%b9%e5%ba%94%e7%89%88%e6%9c%ac%e7%9a%84hugo" aria-label="2、下载并安装对应版本的hugo">2、下载并安装对应版本的hugo</a></li>
+                        <a href="#%e4%b8%80%e8%87%b4%e6%80%a7%e4%bf%9d%e8%af%81" aria-label="一致性保证">一致性保证</a></li>
                     <li>
-                        <a href="#3%e5%88%9b%e5%bb%bahugo%e7%bd%91%e7%ab%99" aria-label="3、创建hugo网站">3、创建hugo网站</a></li>
+                        <a href="#%e7%ba%bf%e6%80%a7%e4%b8%80%e8%87%b4%e6%80%a7" aria-label="线性一致性">线性一致性</a><ul>
+                            
                     <li>
-                        <a href="#4%e9%80%89%e6%8b%a9%e4%b8%bb%e9%a2%98" aria-label="4、选择主题">4、选择主题</a>
+                        <a href="#%e5%a6%82%e4%bd%95%e4%bd%bf%e5%be%97%e7%b3%bb%e7%bb%9f%e7%ba%bf%e6%80%a7%e4%b8%80%e8%87%b4" aria-label="如何使得系统线性一致？">如何使得系统线性一致？</a>
                     </li>
+                </ul>
+                </li>
+                </ul>
+                </li>
                 </ul>
             </div>
         </details>
@@ -369,47 +371,53 @@
         return rect.top + win.pageYOffset;   
     }
 </script>
-  <div class="post-content"><p>这篇文章主要记录我搭建hugo博客的过程，包括搭建过程中遇到的问题及解决方法</p>
-<h1 id="1新建github仓库">1、新建github仓库<a hidden class="anchor" aria-hidden="true" href="#1新建github仓库">#</a></h1>
-<p>新建respository, Respository的名称为 &ldquo;你的github名称.github.io&rdquo;.</p>
-<h1 id="2下载并安装对应版本的hugo">2、下载并安装对应版本的hugo<a hidden class="anchor" aria-hidden="true" href="#2下载并安装对应版本的hugo">#</a></h1>
-<p>下载链接: <a href = "https://github.com/gohugoio/hugo/releases">点击选择hugo版本下载</a></p>
-<h1 id="3创建hugo网站">3、创建hugo网站<a hidden class="anchor" aria-hidden="true" href="#3创建hugo网站">#</a></h1>
-<p>进入想要存放网站的文件夹，输入以下命令:</p>
-<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>hugo new site demo-blog
-</span></span></code></pre></td></tr></table>
-</div>
-</div><h1 id="4选择主题">4、选择主题<a hidden class="anchor" aria-hidden="true" href="#4选择主题">#</a></h1>
-<p>输入命令下载主题:</p>
-<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>git clone https://github.com/adityatelange/hugo-PaperMod.git
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>使用该主题的方法就是在站点文件夹下的配置文件里输入主题的名字:</p>
-<p>然后把主题文件夹里面的一些静态文件和配置文件复制到站点目录下，目的是为了可以自定义博客的样式，而不会改动主题文件夹里的样式，这样主题要更新的时候，直接在主题目录下git pull就可以，站点目录的修改会优先覆盖主题里的配置，所以可以实现平滑更新</p>
+  <div class="post-content"><h1 id="第九章一致性与共识">第九章：一致性与共识<a hidden class="anchor" aria-hidden="true" href="#第九章一致性与共识">#</a></h1>
+<p><img loading="lazy" src="https://s2.loli.net/2024/02/03/exWsZoIEf5DNKYa.png" alt="DDIA9-1.png"  />
+</p>
+<p>构建容错系统的最好方法，是找到一些带有实用保证的通用抽象，实现一次，然后让应用依赖这些保证。比如事务。
+我们需要了解系统能力的边界：哪些可行，哪些不可行。</p>
+<h2 id="一致性保证">一致性保证<a hidden class="anchor" aria-hidden="true" href="#一致性保证">#</a></h2>
+<p>分布式系统的时序问题：</p>
+<li>在同一时刻查看两个数据库节点，则可能在两个节点上看到不同的数据，因为写请求在不同的时间到达不同的节点。</li>
+<li>无论数据库使用何种复制方法（单主复制，多主复制或无主复制），都会出现这些不一致情况。</li>
+<li>大多数复制的数据库至少提供了最终一致性，这意味着如果你停止向数据库写入数据并等待一段不确定的时间，那么最终所有的读取请求都会返回相同的值。</li>
+<li>换句话说，不一致性是暂时的，最终会自行解决（假设网络中的任何故障最终都会被修复）。最终一致性的一个更好的名字可能是收敛（convergence），因为我们预计所有的副本最终会收敛到相同的值。</li>
+<li>最终一致性是非常弱的保证——没有说什么时候会收敛。</li>
+<li>在与只提供弱保证的数据库打交道时，你需要始终意识到它的局限性，而不是意外地作出太多假设。（始终不信任它）</li>
+<p>除了最终一致性，有没有更强的一致性模型？</p>
+<li>分布式一致性模型</li>
+<li>分布式一致性模型和我们之前讨论的事务隔离级别的层次结构有一些相似之处。</li>
+<li>不同：事务隔离主要是为了避免由于同时执行事务而导致的竞争状态，而分布式一致性主要关于在面对延迟和故障时如何协调副本间的状态。</li>
+<h2 id="线性一致性">线性一致性<a hidden class="anchor" aria-hidden="true" href="#线性一致性">#</a></h2>
+<p>线性一致性的想法？</p>
+<li>数据库可以提供只有一个副本的假象（即，只有一个数据副本），那么每个客户端都会有相同的数据视图，且不必担心复制滞后了。</li>
+<li>线性一致性（linearizability），也称为原子一致性（atomic consistency），强一致性（strong consistency），立即一致性（immediate consistency） 或外部一致性（external consistency ）。</li>
+<p>线性一致性提供了什么保证？</p>
+<li>只要一个客户端成功完成写操作，所有客户端从数据库中读取数据必须能够看到刚刚写入的值。</li>
+<li>系统应保障读到的值是最近的、最新的，而不是来自陈旧的缓存或副本。</li>
+<li>线性一致性是一个新鲜度保证（recency guarantee）。</li>
+<p>图9-1 这个系统是非线性一致的，导致了球迷的困惑
+<img loading="lazy" src="https://s2.loli.net/2024/02/03/NW3ILVzvlTBAGp6.png" alt="DDIA9-2.png"  />
+</p>
+<h3 id="如何使得系统线性一致">如何使得系统线性一致？<a hidden class="anchor" aria-hidden="true" href="#如何使得系统线性一致">#</a></h3>
 
 
   </div>
 
   <footer class="post-footer">
     <ul class="post-tags">
-      <li><a href="https://csqread.top/tags/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/">博客搭建</a></li>
-      <li><a href="https://csqread.top/tags/%E6%8A%98%E8%85%BE/">折腾</a></li>
+      <li><a href="https://csqread.top/tags/%E6%95%B0%E6%8D%AE%E5%AF%86%E9%9B%86%E5%9E%8B%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/">数据密集型系统设计</a></li>
     </ul>
 <nav class="paginav">
-  <a class="next" href="https://csqread.top/posts/tech/%E5%9F%BA%E4%BA%8E%E6%A0%91%E8%8E%93%E6%B4%BE-piwigo%E7%9A%84%E5%AE%B6%E5%BA%AD%E4%BA%91%E7%9B%B8%E5%86%8C/">
-    <span class="title">下一页 »</span>
+  <a class="prev" href="https://csqread.top/posts/tech/%E5%9F%BA%E4%BA%8E%E6%A0%91%E8%8E%93%E6%B4%BE-piwigo%E7%9A%84%E5%AE%B6%E5%BA%AD%E4%BA%91%E7%9B%B8%E5%86%8C/">
+    <span class="title">« 上一页</span>
     <br>
     <span>基于树莓派 Piwigo的家庭云相册</span>
+  </a>
+  <a class="next" href="https://csqread.top/posts/tech/ddia%E7%AC%AC%E5%85%AB%E7%AB%A0/">
+    <span class="title">下一页 »</span>
+    <br>
+    <span>DDIA第八章</span>
   </a>
 </nav>
 

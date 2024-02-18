@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>树莓派 on Qian&#39;s Blog</title>
+    <link>https://csqread.top/categories/%E6%A0%91%E8%8E%93%E6%B4%BE/</link>
+    <description>Recent content in 树莓派 on Qian&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Sun, 18 Feb 2024 21:46:29 +0800</lastBuildDate><atom:link href="https://csqread.top/categories/%E6%A0%91%E8%8E%93%E6%B4%BE/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>基于树莓派 Piwigo的家庭云相册</title>
+      <link>https://csqread.top/posts/tech/%E5%9F%BA%E4%BA%8E%E6%A0%91%E8%8E%93%E6%B4%BE-piwigo%E7%9A%84%E5%AE%B6%E5%BA%AD%E4%BA%91%E7%9B%B8%E5%86%8C/</link>
+      <pubDate>Sun, 18 Feb 2024 21:46:29 +0800</pubDate>
+      
+      <guid>https://csqread.top/posts/tech/%E5%9F%BA%E4%BA%8E%E6%A0%91%E8%8E%93%E6%B4%BE-piwigo%E7%9A%84%E5%AE%B6%E5%BA%AD%E4%BA%91%E7%9B%B8%E5%86%8C/</guid>
+      <description>基于树莓派-piwigo/apache2 的家庭云相册搭建 背景 近期由于拍摄了很多我和胡小蕊在一起的照片，包括生活照片和出去游玩的照片，所以想搞</description>
+    </item>
+    
+  </channel>
+</rss>

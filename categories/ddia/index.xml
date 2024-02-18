@@ -6,7 +6,16 @@
     <description>Recent content in DDIA on Qian&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Fri, 19 Jan 2024 20:34:59 +0800</lastBuildDate><atom:link href="https://csqread.top/categories/ddia/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 03 Feb 2024 23:07:22 +0800</lastBuildDate><atom:link href="https://csqread.top/categories/ddia/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>DDIA第九章</title>
+      <link>https://csqread.top/posts/tech/ddia%E7%AC%AC%E4%B9%9D%E7%AB%A0/</link>
+      <pubDate>Sat, 03 Feb 2024 23:07:22 +0800</pubDate>
+      
+      <guid>https://csqread.top/posts/tech/ddia%E7%AC%AC%E4%B9%9D%E7%AB%A0/</guid>
+      <description>第九章：一致性与共识 构建容错系统的最好方法，是找到一些带有实用保证的通用抽象，实现一次，然后让应用依赖这些保证。比如事务。 我们需要了解系统能</description>
+    </item>
+    
     <item>
       <title>DDIA第八章</title>
       <link>https://csqread.top/posts/tech/ddia%E7%AC%AC%E5%85%AB%E7%AB%A0/</link>
