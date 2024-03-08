@@ -6,7 +6,7 @@
     <description>Recent content on Qian&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Wed, 21 Feb 2024 23:35:31 +0800</lastBuildDate><atom:link href="https://csqread.top/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 08 Mar 2024 18:03:04 +0800</lastBuildDate><atom:link href="https://csqread.top/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Hugo博客搭建</title>
       <link>https://csqread.top/posts/blog/hugo%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/</link>
@@ -14,6 +14,15 @@
       
       <guid>https://csqread.top/posts/blog/hugo%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/</guid>
       <description>Hugo博客搭建过程及遇到的问题</description>
+    </item>
+    
+    <item>
+      <title>DDIA</title>
+      <link>https://csqread.top/posts/tech/ddia/</link>
+      <pubDate>Fri, 08 Mar 2024 18:03:04 +0800</pubDate>
+      
+      <guid>https://csqread.top/posts/tech/ddia/</guid>
+      <description>第一章：可靠性，可扩展性，可维护性 关于数据系统的思考 单个工具已经不能满足应用系统的需求，总体工作被拆分成一系列能被单个工具高效完成的任务，并</description>
     </item>
     
     <item>
@@ -157,7 +166,7 @@
       <pubDate>Mon, 28 Aug 2023 22:07:57 +0800</pubDate>
       
       <guid>https://csqread.top/posts/tech/ddia%E7%AC%AC%E5%9B%9B%E7%AB%A0/</guid>
-      <description>数据编码与演化 应用程序总是增增改改。 修改程序大多数情况下也在修改存储的数据。 关系数据库通常假定数据库中的所有数据都遵循一个模式：尽管可以更改</description>
+      <description>第四章：数据编码与演化 应用程序总是增增改改。 修改程序大多数情况下也在修改存储的数据。 关系数据库通常假定数据库中的所有数据都遵循一个模式：尽管</description>
     </item>
     
     <item>
