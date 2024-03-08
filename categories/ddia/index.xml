@@ -13,7 +13,7 @@
       <pubDate>Fri, 08 Mar 2024 18:03:04 +0800</pubDate>
       
       <guid>https://csqread.top/posts/tech/ddia/</guid>
-      <description>第一章：可靠性，可扩展性，可维护性 关于数据系统的思考 单个工具已经不能满足应用系统的需求，总体工作被拆分成一系列能被单个工具高效完成的任务，并</description>
+      <description>第一章：可靠性，可扩展性，可维护性 1.1 关于数据系统的思考 单个工具已经不能满足应用系统的需求，总体工作被拆分成一系列能被单个工具高效完成的任务，</description>
     </item>
     
     <item>
