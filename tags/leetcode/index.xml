@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>leetcode on Qian&#39;s Blog</title>
+    <link>https://csqread.top/tags/leetcode/</link>
+    <description>Recent content in leetcode on Qian&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Mon, 25 Mar 2024 00:06:09 +0800</lastBuildDate><atom:link href="https://csqread.top/tags/leetcode/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>20240304力扣周赛</title>
+      <link>https://csqread.top/posts/tech/20240304%E5%8A%9B%E6%89%A3%E5%91%A8%E8%B5%9B/</link>
+      <pubDate>Mon, 25 Mar 2024 00:06:09 +0800</pubDate>
+      
+      <guid>https://csqread.top/posts/tech/20240304%E5%8A%9B%E6%89%A3%E5%91%A8%E8%B5%9B/</guid>
+      <description>这周有点拉跨啊，就搞出来2题。 记录一下吧: 每个字符最多出现两次的最长子字符串 给你一个字符串 s ，请找出满足每个字符最多出现两次的最长子字符串，</description>
+    </item>
+    
+  </channel>
+</rss>

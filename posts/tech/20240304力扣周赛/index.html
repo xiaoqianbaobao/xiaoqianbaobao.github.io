@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<html lang="zh" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>20240304力扣周赛 | Qian&#39;s Blog</title>
+<meta name="keywords" content="leetcode">
+<meta name="description" content="这周有点拉跨啊，就搞出来2题。 记录一下吧: 每个字符最多出现两次的最长子字符串 给你一个字符串 s ，请找出满足每个字符最多出现两次的最长子字符串，">
+<meta name="author" content="
+作者:&nbsp;ShengQian">
+<link rel="canonical" href="https://csqread.top/posts/tech/20240304%E5%8A%9B%E6%89%A3%E5%91%A8%E8%B5%9B/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.d056c2d8b86c8da0db95897f49066a3a22d796d21ff6173ef98b613234e402fe.css" integrity="" rel="preload stylesheet" as="style">
+<script defer crossorigin="anonymous" src="/assets/js/highlight.acb54fd32bbc1982428b8850317e45d076b95012730a5936667e6bc21777692a.js" integrity=""
+    onload="hljs.initHighlightingOnLoad();"></script>
+<link rel="icon" href="https://csqread.top/img/Q.gif">
+<link rel="icon" type="image/png" sizes="16x16" href="https://csqread.top/img/%21.jpg">
+<link rel="icon" type="image/png" sizes="32x32" href="https://csqread.top/img/%21.jpg">
+<link rel="apple-touch-icon" href="https://csqread.top/%21.jpg">
+<link rel="mask-icon" href="https://csqread.top/%21.jpg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --hljs-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript><meta property="og:title" content="20240304力扣周赛" />
+<meta property="og:description" content="这周有点拉跨啊，就搞出来2题。 记录一下吧: 每个字符最多出现两次的最长子字符串 给你一个字符串 s ，请找出满足每个字符最多出现两次的最长子字符串，" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://csqread.top/posts/tech/20240304%E5%8A%9B%E6%89%A3%E5%91%A8%E8%B5%9B/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2024-03-25T00:06:09+08:00" />
+<meta property="article:modified_time" content="2024-03-25T00:06:09+08:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="20240304力扣周赛"/>
+<meta name="twitter:description" content="这周有点拉跨啊，就搞出来2题。 记录一下吧: 每个字符最多出现两次的最长子字符串 给你一个字符串 s ，请找出满足每个字符最多出现两次的最长子字符串，"/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "Posts",
+      "item": "https://csqread.top/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  3 ,
+      "name": "技术",
+      "item": "https://csqread.top/posts/tech/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  4 ,
+      "name": "20240304力扣周赛",
+      "item": "https://csqread.top/posts/tech/20240304%E5%8A%9B%E6%89%A3%E5%91%A8%E8%B5%9B/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "20240304力扣周赛",
+  "name": "20240304力扣周赛",
+  "description": "这周有点拉跨啊，就搞出来2题。 记录一下吧: 每个字符最多出现两次的最长子字符串 给你一个字符串 s ，请找出满足每个字符最多出现两次的最长子字符串，",
+  "keywords": [
+    "leetcode"
+  ],
+  "articleBody": "这周有点拉跨啊，就搞出来2题。\n记录一下吧:\n每个字符最多出现两次的最长子字符串 给你一个字符串 s ，请找出满足每个字符最多出现两次的最长子字符串，并返回该子字符串的最大长度。\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 class Solution { public int maximumLengthSubstring(String S) { char[] s = S.toCharArray(); int ans = 0; int left = 0; int[] cnt = new int[26]; for (int i = 0; i \u003c s.length; i++) { int b = s[i] - 'a'; cnt[b]++; while (cnt[b] \u003e 2) { cnt[s[left++] - 'a']--; } ans = Math.max(ans, i - left + 1); } return ans; } } 最高频率的 ID 你需要在一个集合里动态记录 ID 的出现频率。给你两个长度都为 n 的整数数组 nums 和 freq ，nums 中每一个元素表示一个 ID ，对应的 freq 中的元素表示这个 ID 在集合中此次操作后需要增加或者减少的数目。\n增加 ID 的数目：如果 freq[i] 是正数，那么 freq[i] 个 ID 为 nums[i] 的元素在第 i 步操作后会添加到集合中。 减少 ID 的数目：如果 freq[i] 是负数，那么 -freq[i] 个 ID 为 nums[i] 的元素在第 i 步操作后会从集合中删除。 请你返回一个长度为 n 的数组 ans ，其中 ans[i] 表示第 i 步操作后出现频率最高的 ID 数目 ，如果在某次操作后集合为空，那么 ans[i] 为 0 。\n示例 1：\n输入：nums = [2,3,2,1], freq = [3,2,-3,1]\n输出：[3,3,2,2]\n解释：\n第 0 步操作后，有 3 个 ID 为 2 的元素，所以 ans[0] = 3 。 第 1 步操作后，有 3 个 ID 为 2 的元素和 2 个 ID 为 3 的元素，所以 ans[1] = 3 。 第 2 步操作后，有 2 个 ID 为 3 的元素，所以 ans[2] = 2 。 第 3 步操作后，有 2 个 ID 为 3 的元素和 1 个 ID 为 1 的元素，所以 ans[3] = 2 。\n方法一：哈希表 + 有序集合 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 class Solution { public long[] mostFrequentIDs(int[] nums, int[] freq) { Map cnt = new HashMap\u003c\u003e(); TreeMap m = new TreeMap\u003c\u003e(); int n = nums.length; long[] ans = new long[n]; for (int i = 0; i \u003c n; i++) { int x = nums[i]; if (cnt.containsKey(x) \u0026\u0026 m.containsKey(cnt.get(x)) \u0026\u0026 m.merge(cnt.get(x), -1, Integer::sum) == 0) { // --m[cnt[x]] == 0 m.remove(cnt.get(x)); } long c = cnt.merge(x, (long) freq[i], Long::sum); // cnt[x] += freq[i] m.merge(c, 1, Integer::sum); // ++m[cnt[x]] ans[i] = m.lastKey(); } return ans; } } 方法二：哈希表 + 懒删除堆 也可以不用有序集合，而是用一个最大堆保存数对 (cnt[x],x)(\\textit{cnt}[x], x)(cnt[x],x)。\n在堆中查询 cnt[x]\\textit{cnt}[x]cnt[x] 的最大值时，如果堆顶保存的数据并不是目前实际的 cnt[x]\\textit{cnt}[x]cnt[x]，那么就弹出堆顶。\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 class Solution { public long[] mostFrequentIDs(int[] nums, int[] freq) { int n = nums.length; long[] ans = new long[n]; Map cnt = new HashMap\u003c\u003e(); PriorityQueue",
+  "wordCount" : "1898",
+  "inLanguage": "zh",
+  "datePublished": "2024-03-25T00:06:09+08:00",
+  "dateModified": "2024-03-25T00:06:09+08:00",
+  "author":[{
+    "@type": "Person",
+    "name": "ShengQian"
+  }],
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://csqread.top/posts/tech/20240304%E5%8A%9B%E6%89%A3%E5%91%A8%E8%B5%9B/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Qian's Blog",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://csqread.top/img/Q.gif"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://csqread.top" accesskey="h" title="Qian&#39;s Blog (Alt + H)">
+                <img src="https://csqread.top/img/%21.jpg" alt="" aria-label="logo"
+                    height="35">Qian&#39;s Blog</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="https://csqread.top/search" title="🔍搜索">
+                    <span>🔍搜索</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://csqread.top/" title="🏠主页">
+                    <span>🏠主页</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://csqread.top/posts" title="📚文章">
+                    <span>📚文章</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://csqread.top/archives/" title="⏱时间轴">
+                    <span>⏱时间轴</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://csqread.top/tags" title="🔖标签">
+                    <span>🔖标签</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://csqread.top/about" title="🙋🏻‍♂️关于">
+                    <span>🙋🏻‍♂️关于</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://csqread.top/links" title="🤝友链">
+                    <span>🤝友链</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    <div class="breadcrumbs"><a href="https://csqread.top">主页</a>&nbsp;»&nbsp;<a href="https://csqread.top/posts/">Posts</a>&nbsp;»&nbsp;<a href="https://csqread.top/posts/tech/">技术</a></div>
+    <h1 class="post-title">
+      20240304力扣周赛
+    </h1>
+    <div class="post-meta">
+
+
+
+
+
+
+
+
+
+
+创建:&nbsp;<span title='2024-03-25 00:06:09 +0800 CST'>2024-03-25</span>&nbsp;|&nbsp;更新:&nbsp;2024-03-25&nbsp;|&nbsp;字数:&nbsp;1898字&nbsp;|&nbsp;时长: 4分钟&nbsp;|&nbsp;
+作者:&nbsp;ShengQian
+
+
+    &nbsp;|&nbsp;标签: &nbsp;
+    <ul class="post-tags-meta">
+        <a href="https://csqread.top/tags/leetcode/">leetcode</a>
+    </ul>
+
+    
+    
+    
+    
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span id="busuanzi_container_page_pv">
+        &nbsp;| 访问: <span id="busuanzi_value_page_pv"></span>
+    </span>
+
+    
+    
+    
+    
+    <script src="https://cdn.staticfile.org/twikoo/1.4.11/twikoo.all.min.js">
+    </script>
+    <script>
+        let url = document.documentURI
+        
+        let dnsUrl = "https://csqread.top"
+        let urlSplit = url.split(dnsUrl)
+        let finalUrl = urlSplit[1]
+        if (finalUrl[0] !== '/') {
+            finalUrl = '/'+finalUrl
+        }
+        twikoo.getCommentsCount({
+            envId:  null ,
+            region:  null ,
+            urls: [
+                finalUrl,
+            ],
+            includeReply: false 
+        }).then(function (res) {
+            let count = res[0].count
+            const obj = document.getElementById("comment_count");
+            obj.innerText = count
+            
+            
+            
+        }).catch(function (err) {
+            
+            console.error(err);
+        });
+    </script>
+    &nbsp;| 评论: &nbsp; <span id="comment_count"></span>
+
+</div>
+  </header> <aside id="toc-container" class="toc-container wide">
+    <div class="toc">
+        <details  open>
+            <summary accesskey="c" title="(Alt + C)">
+                <span class="details">目录</span>
+            </summary>
+
+            <div class="inner"><ul>
+                    <li>
+                        <a href="#%e6%af%8f%e4%b8%aa%e5%ad%97%e7%ac%a6%e6%9c%80%e5%a4%9a%e5%87%ba%e7%8e%b0%e4%b8%a4%e6%ac%a1%e7%9a%84%e6%9c%80%e9%95%bf%e5%ad%90%e5%ad%97%e7%ac%a6%e4%b8%b2" aria-label="每个字符最多出现两次的最长子字符串">每个字符最多出现两次的最长子字符串</a></li>
+                    <li>
+                        <a href="#%e6%9c%80%e9%ab%98%e9%a2%91%e7%8e%87%e7%9a%84-id" aria-label="最高频率的 ID">最高频率的 ID</a><ul>
+                            
+                    <li>
+                        <a href="#%e6%96%b9%e6%b3%95%e4%b8%80%e5%93%88%e5%b8%8c%e8%a1%a8--%e6%9c%89%e5%ba%8f%e9%9b%86%e5%90%88" aria-label="方法一：哈希表 &#43; 有序集合">方法一：哈希表 + 有序集合</a></li>
+                    <li>
+                        <a href="#%e6%96%b9%e6%b3%95%e4%ba%8c%e5%93%88%e5%b8%8c%e8%a1%a8--%e6%87%92%e5%88%a0%e9%99%a4%e5%a0%86" aria-label="方法二：哈希表 &#43; 懒删除堆">方法二：哈希表 + 懒删除堆</a></li></ul>
+                    </li>
+                    <li>
+                        <a href="#%e6%9c%80%e9%95%bf%e5%85%ac%e5%85%b1%e5%90%8e%e7%bc%80%e6%9f%a5%e8%af%a2" aria-label="最长公共后缀查询">最长公共后缀查询</a>
+                    </li>
+                </ul>
+            </div>
+        </details>
+    </div>
+</aside>
+<script>
+    let activeElement;
+    let elements;
+    window.addEventListener('DOMContentLoaded', function (event) {
+        checkTocPosition();
+
+        elements = document.querySelectorAll('h1[id],h2[id],h3[id],h4[id],h5[id],h6[id]');
+         
+         activeElement = elements[0];
+         const id = encodeURI(activeElement.getAttribute('id')).toLowerCase();
+         document.querySelector(`.inner ul li a[href="#${id}"]`).classList.add('active');
+     }, false);
+
+    window.addEventListener('resize', function(event) {
+        checkTocPosition();
+    }, false);
+
+    window.addEventListener('scroll', () => {
+        
+        activeElement = Array.from(elements).find((element) => {
+            if ((getOffsetTop(element) - window.pageYOffset) > 0 && 
+                (getOffsetTop(element) - window.pageYOffset) < window.innerHeight/2) {
+                return element;
+            }
+        }) || activeElement
+
+        elements.forEach(element => {
+             const id = encodeURI(element.getAttribute('id')).toLowerCase();
+             if (element === activeElement){
+                 document.querySelector(`.inner ul li a[href="#${id}"]`).classList.add('active');
+             } else {
+                 document.querySelector(`.inner ul li a[href="#${id}"]`).classList.remove('active');
+             }
+         })
+     }, false);
+
+    const main = parseInt(getComputedStyle(document.body).getPropertyValue('--article-width'), 10);
+    const toc = parseInt(getComputedStyle(document.body).getPropertyValue('--toc-width'), 10);
+    const gap = parseInt(getComputedStyle(document.body).getPropertyValue('--gap'), 10);
+
+    function checkTocPosition() {
+        const width = document.body.scrollWidth;
+
+        if (width - main - (toc * 2) - (gap * 4) > 0) {
+            document.getElementById("toc-container").classList.add("wide");
+        } else {
+            document.getElementById("toc-container").classList.remove("wide");
+        }
+    }
+
+    function getOffsetTop(element) {
+        if (!element.getClientRects().length) {
+            return 0;
+        }
+        let rect = element.getBoundingClientRect();
+        let win = element.ownerDocument.defaultView;
+        return rect.top + win.pageYOffset;   
+    }
+</script>
+  <div class="post-content"><p>这周有点拉跨啊，就搞出来2题。</p>
+<p>记录一下吧:</p>
+<h2 id="每个字符最多出现两次的最长子字符串">每个字符最多出现两次的最长子字符串<a hidden class="anchor" aria-hidden="true" href="#每个字符最多出现两次的最长子字符串">#</a></h2>
+<p>给你一个字符串 s ，请找出满足每个字符最多出现两次的最长子字符串，并返回该子字符串的最大长度。</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">12
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">13
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">14
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">15
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">16
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">17
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">class</span> Solution {
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">public</span> <span style="color:#fff;font-weight:bold">int</span> maximumLengthSubstring(String S) {
+</span></span><span style="display:flex;"><span>        <span style="color:#fff;font-weight:bold">char</span>[] s = S.<span style="color:#007f7f">toCharArray</span>();
+</span></span><span style="display:flex;"><span>        <span style="color:#fff;font-weight:bold">int</span> ans = <span style="color:#ff0;font-weight:bold">0</span>;
+</span></span><span style="display:flex;"><span>        <span style="color:#fff;font-weight:bold">int</span> left = <span style="color:#ff0;font-weight:bold">0</span>;
+</span></span><span style="display:flex;"><span>        <span style="color:#fff;font-weight:bold">int</span>[] cnt = <span style="color:#fff;font-weight:bold">new</span> <span style="color:#fff;font-weight:bold">int</span>[<span style="color:#ff0;font-weight:bold">26</span>];
+</span></span><span style="display:flex;"><span>        <span style="color:#fff;font-weight:bold">for</span> (<span style="color:#fff;font-weight:bold">int</span> i = <span style="color:#ff0;font-weight:bold">0</span>; i &lt; s.<span style="color:#007f7f">length</span>; i++) {
+</span></span><span style="display:flex;"><span>            <span style="color:#fff;font-weight:bold">int</span> b = s[i] - <span style="color:#0ff;font-weight:bold">&#39;a&#39;</span>;
+</span></span><span style="display:flex;"><span>            cnt[b]++;
+</span></span><span style="display:flex;"><span>            <span style="color:#fff;font-weight:bold">while</span> (cnt[b] &gt; <span style="color:#ff0;font-weight:bold">2</span>) {
+</span></span><span style="display:flex;"><span>                cnt[s[left++] - <span style="color:#0ff;font-weight:bold">&#39;a&#39;</span>]--;
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>            ans = Math.<span style="color:#007f7f">max</span>(ans, i - left + <span style="color:#ff0;font-weight:bold">1</span>);
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        <span style="color:#fff;font-weight:bold">return</span> ans;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="最高频率的-id">最高频率的 ID<a hidden class="anchor" aria-hidden="true" href="#最高频率的-id">#</a></h2>
+<p>你需要在一个集合里动态记录 ID 的出现频率。给你两个长度都为 n 的整数数组 nums 和 freq ，nums 中每一个元素表示一个 ID ，对应的 freq 中的元素表示这个 ID 在集合中此次操作后需要增加或者减少的数目。</p>
+<p>增加 ID 的数目：如果 freq[i] 是正数，那么 freq[i] 个 ID 为 nums[i] 的元素在第 i 步操作后会添加到集合中。
+减少 ID 的数目：如果 freq[i] 是负数，那么 -freq[i] 个 ID 为 nums[i] 的元素在第 i 步操作后会从集合中删除。
+请你返回一个长度为 n 的数组 ans ，其中 ans[i] 表示第 i 步操作后出现频率最高的 ID 数目 ，如果在某次操作后集合为空，那么 ans[i] 为 0 。</p>
+<p>示例 1：</p>
+<p>输入：nums = [2,3,2,1], freq = [3,2,-3,1]</p>
+<p>输出：[3,3,2,2]</p>
+<p>解释：</p>
+<p>第 0 步操作后，有 3 个 ID 为 2 的元素，所以 ans[0] = 3 。
+第 1 步操作后，有 3 个 ID 为 2 的元素和 2 个 ID 为 3 的元素，所以 ans[1] = 3 。
+第 2 步操作后，有 2 个 ID 为 3 的元素，所以 ans[2] = 2 。
+第 3 步操作后，有 2 个 ID 为 3 的元素和 1 个 ID 为 1 的元素，所以 ans[3] = 2 。</p>
+<h3 id="方法一哈希表--有序集合">方法一：哈希表 + 有序集合<a hidden class="anchor" aria-hidden="true" href="#方法一哈希表--有序集合">#</a></h3>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">12
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">13
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">14
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">15
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">16
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">17
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">18
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">class</span> Solution {
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">public</span> <span style="color:#fff;font-weight:bold">long</span>[] mostFrequentIDs(<span style="color:#fff;font-weight:bold">int</span>[] nums, <span style="color:#fff;font-weight:bold">int</span>[] freq) {
+</span></span><span style="display:flex;"><span>        Map&lt;Integer, Long&gt; cnt = <span style="color:#fff;font-weight:bold">new</span> HashMap&lt;&gt;();
+</span></span><span style="display:flex;"><span>        TreeMap&lt;Long, Integer&gt; m = <span style="color:#fff;font-weight:bold">new</span> TreeMap&lt;&gt;();
+</span></span><span style="display:flex;"><span>        <span style="color:#fff;font-weight:bold">int</span> n = nums.<span style="color:#007f7f">length</span>;
+</span></span><span style="display:flex;"><span>        <span style="color:#fff;font-weight:bold">long</span>[] ans = <span style="color:#fff;font-weight:bold">new</span> <span style="color:#fff;font-weight:bold">long</span>[n];
+</span></span><span style="display:flex;"><span>        <span style="color:#fff;font-weight:bold">for</span> (<span style="color:#fff;font-weight:bold">int</span> i = <span style="color:#ff0;font-weight:bold">0</span>; i &lt; n; i++) {
+</span></span><span style="display:flex;"><span>            <span style="color:#fff;font-weight:bold">int</span> x = nums[i];
+</span></span><span style="display:flex;"><span>            <span style="color:#fff;font-weight:bold">if</span> (cnt.<span style="color:#007f7f">containsKey</span>(x) &amp;&amp; m.<span style="color:#007f7f">containsKey</span>(cnt.<span style="color:#007f7f">get</span>(x)) &amp;&amp; m.<span style="color:#007f7f">merge</span>(cnt.<span style="color:#007f7f">get</span>(x), -<span style="color:#ff0;font-weight:bold">1</span>, Integer::sum) == <span style="color:#ff0;font-weight:bold">0</span>) { <span style="color:#007f7f">// --m[cnt[x]] == 0
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>                m.<span style="color:#007f7f">remove</span>(cnt.<span style="color:#007f7f">get</span>(x));
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>            <span style="color:#fff;font-weight:bold">long</span> c = cnt.<span style="color:#007f7f">merge</span>(x, (<span style="color:#fff;font-weight:bold">long</span>) freq[i], Long::sum); <span style="color:#007f7f">// cnt[x] += freq[i]
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>            m.<span style="color:#007f7f">merge</span>(c, <span style="color:#ff0;font-weight:bold">1</span>, Integer::sum); <span style="color:#007f7f">// ++m[cnt[x]]
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>            ans[i] = m.<span style="color:#007f7f">lastKey</span>();
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        <span style="color:#fff;font-weight:bold">return</span> ans;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="方法二哈希表--懒删除堆">方法二：哈希表 + 懒删除堆<a hidden class="anchor" aria-hidden="true" href="#方法二哈希表--懒删除堆">#</a></h3>
+<p>也可以不用有序集合，而是用一个最大堆保存数对 (cnt[x],x)(\textit{cnt}[x], x)(cnt[x],x)。</p>
+<p>在堆中查询 cnt[x]\textit{cnt}[x]cnt[x] 的最大值时，如果堆顶保存的数据并不是目前实际的 cnt[x]\textit{cnt}[x]cnt[x]，那么就弹出堆顶。</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">12
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">13
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">14
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">15
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">16
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">17
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">18
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">19
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">class</span> Solution {
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">public</span> <span style="color:#fff;font-weight:bold">long</span>[] mostFrequentIDs(<span style="color:#fff;font-weight:bold">int</span>[] nums, <span style="color:#fff;font-weight:bold">int</span>[] freq) {
+</span></span><span style="display:flex;"><span>        <span style="color:#fff;font-weight:bold">int</span> n = nums.<span style="color:#007f7f">length</span>;
+</span></span><span style="display:flex;"><span>        <span style="color:#fff;font-weight:bold">long</span>[] ans = <span style="color:#fff;font-weight:bold">new</span> <span style="color:#fff;font-weight:bold">long</span>[n];
+</span></span><span style="display:flex;"><span>        Map&lt;Integer, Long&gt; cnt = <span style="color:#fff;font-weight:bold">new</span> HashMap&lt;&gt;();
+</span></span><span style="display:flex;"><span>        PriorityQueue&lt;Pair&lt;Long, Integer&gt;&gt; pq = <span style="color:#fff;font-weight:bold">new</span> PriorityQueue&lt;&gt;((a, b) -&gt; Long.<span style="color:#007f7f">compare</span>(b.<span style="color:#007f7f">getKey</span>(), a.<span style="color:#007f7f">getKey</span>()));
+</span></span><span style="display:flex;"><span>        <span style="color:#fff;font-weight:bold">for</span> (<span style="color:#fff;font-weight:bold">int</span> i = <span style="color:#ff0;font-weight:bold">0</span>; i &lt; n; i++) {
+</span></span><span style="display:flex;"><span>            <span style="color:#fff;font-weight:bold">int</span> x = nums[i];
+</span></span><span style="display:flex;"><span>            <span style="color:#fff;font-weight:bold">long</span> c = cnt.<span style="color:#007f7f">merge</span>(x, (<span style="color:#fff;font-weight:bold">long</span>) freq[i], Long::sum);
+</span></span><span style="display:flex;"><span>            pq.<span style="color:#007f7f">add</span>(<span style="color:#fff;font-weight:bold">new</span> Pair&lt;&gt;(c, x));
+</span></span><span style="display:flex;"><span>            <span style="color:#fff;font-weight:bold">while</span> (!pq.<span style="color:#007f7f">peek</span>().<span style="color:#007f7f">getKey</span>().<span style="color:#007f7f">equals</span>(cnt.<span style="color:#007f7f">get</span>(pq.<span style="color:#007f7f">peek</span>().<span style="color:#007f7f">getValue</span>()))) { <span style="color:#007f7f">// 堆顶保存的数据已经发生变化
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>                pq.<span style="color:#007f7f">poll</span>(); <span style="color:#007f7f">// 删除
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>            }
+</span></span><span style="display:flex;"><span>            ans[i] = pq.<span style="color:#007f7f">peek</span>().<span style="color:#007f7f">getKey</span>();
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        <span style="color:#fff;font-weight:bold">return</span> ans;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="最长公共后缀查询">最长公共后缀查询<a hidden class="anchor" aria-hidden="true" href="#最长公共后缀查询">#</a></h2>
+<p>给你两个字符串数组 wordsContainer 和 wordsQuery 。</p>
+<p>对于每个 wordsQuery[i] ，你需要从 wordsContainer 中找到一个与 wordsQuery[i] 有 最长公共后缀 的字符串。如果 wordsContainer 中有两个或者更多字符串有最长公共后缀，那么答案为长度 最短 的。如果有超过两个字符串有 相同 最短长度，那么答案为它们在 wordsContainer 中出现 更早 的一个。</p>
+<p>请你返回一个整数数组 ans ，其中 ans[i]是 wordsContainer中与 wordsQuery[i] 有 最长公共后缀 字符串的下标。</p>
+<p>示例 1：</p>
+<p>输入：wordsContainer = [&ldquo;abcd&rdquo;,&ldquo;bcd&rdquo;,&ldquo;xbcd&rdquo;], wordsQuery = [&ldquo;cd&rdquo;,&ldquo;bcd&rdquo;,&ldquo;xyz&rdquo;]</p>
+<p>输出：[1,1,1]</p>
+<p>解释：</p>
+<p>我们分别来看每一个 wordsQuery[i] ：</p>
+<p>对于 wordsQuery[0] = &ldquo;cd&rdquo; ，wordsContainer 中有最长公共后缀 &ldquo;cd&rdquo; 的字符串下标分别为 0 ，1 和 2 。这些字符串中，答案是下标为 1 的字符串，因为它的长度为 3 ，是最短的字符串。
+对于 wordsQuery[1] = &ldquo;bcd&rdquo; ，wordsContainer 中有最长公共后缀 &ldquo;bcd&rdquo; 的字符串下标分别为 0 ，1 和 2 。这些字符串中，答案是下标为 1 的字符串，因为它的长度为 3 ，是最短的字符串。
+对于 wordsQuery[2] = &ldquo;xyz&rdquo; ，wordsContainer 中没有字符串跟它有公共后缀，所以最长公共后缀为 &quot;&quot; ，下标为 0 ，1 和 2 的字符串都得到这一公共后缀。这些字符串中， 答案是下标为 1 的字符串，因为它的长度为 3 ，是最短的字符串。
+示例 2：</p>
+<p>输入：wordsContainer = [&ldquo;abcdefgh&rdquo;,&ldquo;poiuygh&rdquo;,&ldquo;ghghgh&rdquo;], wordsQuery = [&ldquo;gh&rdquo;,&ldquo;acbfgh&rdquo;,&ldquo;acbfegh&rdquo;]</p>
+<p>输出：[2,0,2]</p>
+<p>解释：</p>
+<p>我们分别来看每一个 wordsQuery[i] ：</p>
+<p>对于 wordsQuery[0] = &ldquo;gh&rdquo; ，wordsContainer 中有最长公共后缀 &ldquo;gh&rdquo; 的字符串下标分别为 0 ，1 和 2 。这些字符串中，答案是下标为 2 的字符串，因为它的长度为 6 ，是最短的字符串。
+对于 wordsQuery[1] = &ldquo;acbfgh&rdquo; ，只有下标为 0 的字符串有最长公共后缀 &ldquo;fgh&rdquo; 。所以尽管下标为 2 的字符串是最短的字符串，但答案是 0 。
+对于 wordsQuery[2] = &ldquo;acbfegh&rdquo; ，wordsContainer 中有最长公共后缀 &ldquo;gh&rdquo; 的字符串下标分别为 0 ，1 和 2 。这些字符串中，答案是下标为 2 的字符串，因为它的长度为 6 ，是最短的字符串。</p>
+<p>提示：</p>
+<p>1 &lt;= wordsContainer.length, wordsQuery.length &lt;= 104
+1 &lt;= wordsContainer[i].length &lt;= 5 * 103
+1 &lt;= wordsQuery[i].length &lt;= 5 * 103
+wordsContainer[i] 只包含小写英文字母。
+wordsQuery[i] 只包含小写英文字母。
+wordsContainer[i].length 的和至多为 5 * 105 。
+wordsQuery[i].length 的和至多为 5 * 105 。</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">12
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">13
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">14
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">15
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">16
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">17
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">18
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">19
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">20
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">21
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">22
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">23
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">24
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">25
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">26
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">27
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">28
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">29
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">30
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">31
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">32
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">33
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">34
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">35
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">36
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">37
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">38
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">39
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">40
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">41
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">42
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">class</span> Node {
+</span></span><span style="display:flex;"><span>    Node[] son = <span style="color:#fff;font-weight:bold">new</span> Node[<span style="color:#ff0;font-weight:bold">26</span>];
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">int</span> minL = Integer.<span style="color:#007f7f">MAX_VALUE</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">int</span> i;
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">class</span> Solution {
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">public</span> <span style="color:#fff;font-weight:bold">int</span>[] stringIndices(String[] wordsContainer, String[] wordsQuery) {
+</span></span><span style="display:flex;"><span>        Node root = <span style="color:#fff;font-weight:bold">new</span> Node();
+</span></span><span style="display:flex;"><span>        <span style="color:#fff;font-weight:bold">for</span> (<span style="color:#fff;font-weight:bold">int</span> idx = <span style="color:#ff0;font-weight:bold">0</span>; idx &lt; wordsContainer.<span style="color:#007f7f">length</span>; ++idx) {
+</span></span><span style="display:flex;"><span>            <span style="color:#fff;font-weight:bold">char</span>[] s = wordsContainer[idx].<span style="color:#007f7f">toCharArray</span>();
+</span></span><span style="display:flex;"><span>            <span style="color:#fff;font-weight:bold">int</span> l = s.<span style="color:#007f7f">length</span>;
+</span></span><span style="display:flex;"><span>            Node cur = root;
+</span></span><span style="display:flex;"><span>            <span style="color:#fff;font-weight:bold">if</span> (l &lt; cur.<span style="color:#007f7f">minL</span>) {
+</span></span><span style="display:flex;"><span>                cur.<span style="color:#007f7f">minL</span> = l;
+</span></span><span style="display:flex;"><span>                cur.<span style="color:#007f7f">i</span> = idx;
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>            <span style="color:#fff;font-weight:bold">for</span> (<span style="color:#fff;font-weight:bold">int</span> i = s.<span style="color:#007f7f">length</span> - <span style="color:#ff0;font-weight:bold">1</span>; i &gt;= <span style="color:#ff0;font-weight:bold">0</span>; i--) {
+</span></span><span style="display:flex;"><span>                <span style="color:#fff;font-weight:bold">int</span> b = s[i] - <span style="color:#0ff;font-weight:bold">&#39;a&#39;</span>;
+</span></span><span style="display:flex;"><span>                <span style="color:#fff;font-weight:bold">if</span> (cur.<span style="color:#007f7f">son</span>[b] == <span style="color:#fff;font-weight:bold">null</span>) {
+</span></span><span style="display:flex;"><span>                    cur.<span style="color:#007f7f">son</span>[b] = <span style="color:#fff;font-weight:bold">new</span> Node();
+</span></span><span style="display:flex;"><span>                }
+</span></span><span style="display:flex;"><span>                cur = cur.<span style="color:#007f7f">son</span>[b];
+</span></span><span style="display:flex;"><span>                <span style="color:#fff;font-weight:bold">if</span> (l &lt; cur.<span style="color:#007f7f">minL</span>) {
+</span></span><span style="display:flex;"><span>                    cur.<span style="color:#007f7f">minL</span> = l;
+</span></span><span style="display:flex;"><span>                    cur.<span style="color:#007f7f">i</span> = idx;
+</span></span><span style="display:flex;"><span>                }
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#fff;font-weight:bold">int</span>[] ans = <span style="color:#fff;font-weight:bold">new</span> <span style="color:#fff;font-weight:bold">int</span>[wordsQuery.<span style="color:#007f7f">length</span>];
+</span></span><span style="display:flex;"><span>        <span style="color:#fff;font-weight:bold">for</span> (<span style="color:#fff;font-weight:bold">int</span> idx = <span style="color:#ff0;font-weight:bold">0</span>; idx &lt; wordsQuery.<span style="color:#007f7f">length</span>; idx++) {
+</span></span><span style="display:flex;"><span>            <span style="color:#fff;font-weight:bold">char</span>[] s = wordsQuery[idx].<span style="color:#007f7f">toCharArray</span>();
+</span></span><span style="display:flex;"><span>            Node cur = root;
+</span></span><span style="display:flex;"><span>            <span style="color:#fff;font-weight:bold">for</span> (<span style="color:#fff;font-weight:bold">int</span> i = s.<span style="color:#007f7f">length</span> - <span style="color:#ff0;font-weight:bold">1</span>; i &gt;= <span style="color:#ff0;font-weight:bold">0</span> &amp;&amp; cur.<span style="color:#007f7f">son</span>[s[i] - <span style="color:#0ff;font-weight:bold">&#39;a&#39;</span>] != <span style="color:#fff;font-weight:bold">null</span>; i--) {
+</span></span><span style="display:flex;"><span>                cur = cur.<span style="color:#007f7f">son</span>[s[i] - <span style="color:#0ff;font-weight:bold">&#39;a&#39;</span>];
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>            ans[idx] = cur.<span style="color:#007f7f">i</span>;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        <span style="color:#fff;font-weight:bold">return</span> ans;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>代码参考自灵茶山艾府</p>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+      <li><a href="https://csqread.top/tags/leetcode/">leetcode</a></li>
+    </ul>
+<nav class="paginav">
+  <a class="prev" href="https://csqread.top/posts/blog/hugo%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/">
+    <span class="title">« 上一页</span>
+    <br>
+    <span>Hugo博客搭建</span>
+  </a>
+  <a class="next" href="https://csqread.top/posts/read/%E8%AF%BB%E6%94%BF%E6%B2%BB%E7%A7%A9%E5%BA%8F%E7%9A%84%E8%B5%B7%E6%BA%90-%E4%BB%8E%E5%89%8D%E4%BA%BA%E7%B1%BB%E6%97%B6%E4%BB%A3%E5%88%B0%E6%B3%95%E5%9B%BD%E5%A4%A7%E9%9D%A9%E5%91%BD%E6%9C%89%E6%84%9F/">
+    <span class="title">下一页 »</span>
+    <br>
+    <span>读《政治秩序的起源 从前人类时代到法国大革命》有感</span>
+  </a>
+</nav>
+
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+    <span>&copy; 2024 <a href="https://csqread.top">Qian&#39;s Blog</a></span>
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerHTML = '复制';
+
+        function copyingDone() {
+            copybutton.innerHTML = '已复制！';
+            setTimeout(() => {
+                copybutton.innerHTML = '复制';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) { };
+            selection.removeRange(range);
+        });
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+        }
+    });
+</script>
+</body>
+
+</html>

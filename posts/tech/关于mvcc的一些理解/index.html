@@ -5,12 +5,12 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="robots" content="index, follow">
-<title>Hugo博客搭建 | Qian&#39;s Blog</title>
-<meta name="keywords" content="博客搭建, 折腾">
-<meta name="description" content="Hugo博客搭建过程及遇到的问题">
+<title>关于MVCC的一些理解 | Qian&#39;s Blog</title>
+<meta name="keywords" content="mysql">
+<meta name="description" content="Mysql MVCC机制我的一些理解 什么是MVCC? MVCC 全称是 Multi-Version Concurrency Control, 即多版本并发控制。MVCC 在Mysql的 InnoDB中的实现主要是为了提高数据库并发">
 <meta name="author" content="
 作者:&nbsp;ShengQian">
-<link rel="canonical" href="https://csqread.top/posts/blog/hugo%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/">
+<link rel="canonical" href="https://csqread.top/posts/tech/%E5%85%B3%E4%BA%8Emvcc%E7%9A%84%E4%B8%80%E4%BA%9B%E7%90%86%E8%A7%A3/">
 <link crossorigin="anonymous" href="/assets/css/stylesheet.d056c2d8b86c8da0db95897f49066a3a22d796d21ff6173ef98b613234e402fe.css" integrity="" rel="preload stylesheet" as="style">
 <script defer crossorigin="anonymous" src="/assets/js/highlight.acb54fd32bbc1982428b8850317e45d076b95012730a5936667e6bc21777692a.js" integrity=""
     onload="hljs.initHighlightingOnLoad();"></script>
@@ -57,16 +57,16 @@
         }
 
     </style>
-</noscript><meta property="og:title" content="Hugo博客搭建" />
-<meta property="og:description" content="Hugo博客搭建过程及遇到的问题" />
+</noscript><meta property="og:title" content="关于MVCC的一些理解" />
+<meta property="og:description" content="Mysql MVCC机制我的一些理解 什么是MVCC? MVCC 全称是 Multi-Version Concurrency Control, 即多版本并发控制。MVCC 在Mysql的 InnoDB中的实现主要是为了提高数据库并发" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://csqread.top/posts/blog/hugo%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/" /><meta property="article:section" content="posts" />
-<meta property="article:published_time" content="2023-03-05T12:47:51+08:00" />
-<meta property="article:modified_time" content="2023-03-05T12:47:51+08:00" />
+<meta property="og:url" content="https://csqread.top/posts/tech/%E5%85%B3%E4%BA%8Emvcc%E7%9A%84%E4%B8%80%E4%BA%9B%E7%90%86%E8%A7%A3/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2024-03-25T00:01:28+08:00" />
+<meta property="article:modified_time" content="2024-03-25T00:01:28+08:00" />
 
 <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="Hugo博客搭建"/>
-<meta name="twitter:description" content="Hugo博客搭建过程及遇到的问题"/>
+<meta name="twitter:title" content="关于MVCC的一些理解"/>
+<meta name="twitter:description" content="Mysql MVCC机制我的一些理解 什么是MVCC? MVCC 全称是 Multi-Version Concurrency Control, 即多版本并发控制。MVCC 在Mysql的 InnoDB中的实现主要是为了提高数据库并发"/>
 
 
 <script type="application/ld+json">
@@ -83,14 +83,14 @@
     {
       "@type": "ListItem",
       "position":  3 ,
-      "name": "建站",
-      "item": "https://csqread.top/posts/blog/"
+      "name": "技术",
+      "item": "https://csqread.top/posts/tech/"
     }, 
     {
       "@type": "ListItem",
       "position":  4 ,
-      "name": "Hugo博客搭建",
-      "item": "https://csqread.top/posts/blog/hugo%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/"
+      "name": "关于MVCC的一些理解",
+      "item": "https://csqread.top/posts/tech/%E5%85%B3%E4%BA%8Emvcc%E7%9A%84%E4%B8%80%E4%BA%9B%E7%90%86%E8%A7%A3/"
     }
   ]
 }
@@ -99,24 +99,24 @@
 {
   "@context": "https://schema.org",
   "@type": "BlogPosting",
-  "headline": "Hugo博客搭建",
-  "name": "Hugo博客搭建",
-  "description": "Hugo博客搭建过程及遇到的问题",
+  "headline": "关于MVCC的一些理解",
+  "name": "关于MVCC的一些理解",
+  "description": "Mysql MVCC机制我的一些理解 什么是MVCC? MVCC 全称是 Multi-Version Concurrency Control, 即多版本并发控制。MVCC 在Mysql的 InnoDB中的实现主要是为了提高数据库并发",
   "keywords": [
-    "博客搭建", "折腾"
+    "mysql"
   ],
-  "articleBody": "这篇文章主要记录我搭建hugo博客的过程，包括搭建过程中遇到的问题及解决方法\n1、新建github仓库 新建respository, Respository的名称为 “你的github名称.github.io”.\n2、下载并安装对应版本的hugo 下载链接: 点击选择hugo版本下载\n3、创建hugo网站 进入想要存放网站的文件夹，输入以下命令:\n1 hugo new site demo-blog 4、选择主题 输入命令下载主题:\n1 git clone https://github.com/adityatelange/hugo-PaperMod.git 使用该主题的方法就是在站点文件夹下的配置文件里输入主题的名字:\n然后把主题文件夹里面的一些静态文件和配置文件复制到站点目录下，目的是为了可以自定义博客的样式，而不会改动主题文件夹里的样式，这样主题要更新的时候，直接在主题目录下git pull就可以，站点目录的修改会优先覆盖主题里的配置，所以可以实现平滑更新\n",
-  "wordCount" : "353",
+  "articleBody": "Mysql MVCC机制我的一些理解 什么是MVCC? MVCC 全称是 Multi-Version Concurrency Control, 即多版本并发控制。MVCC 在Mysql的 InnoDB中的实现主要是为了提高数据库并发性能，用更好的方式去处理读-写冲突，做到即使有读写冲突时，也能做到不加锁，非阻塞并发读.\n其实我在之前读了很多篇关于MVCC的文章，大多讲的比较模糊，最近在看《Mysql是怎样运行的-从根儿上理解Mysql》这本书讲的非常好。让我理解了MVCC。其实就最简单来讲，用READ COMMIT和 REPERATED COMMIT这两个隔离机制讲解就非常清楚了。\n首先是 读已提交这种隔离级别，这种不能防止脏读，为什么呢？因为它的READ VIEW在每次SELECT的时候会生成一次。比如我一个事务中，第一次查询该记录的时候，生成了一次READ VIEW ，然后这笔记录被另一个事务修改并且提交了，那么当前事务再进行查询的时候，结果会是另一个事务提交后的结果，所以就产生了脏读，同一个事务读取了不同的结果。\n如果是可重复度这种隔离级别呢？这种是可以防止脏读的出现的。顾名思义，可重复读，在同一个事务里，是可以重复读取同一笔记录的并且结果不会变。咋实现的呢？原因就在这个READ VIEW，在该笔事务开始查询之前，也就是SELECT之前，就会生成一个READ VIEW，并且在这笔事务结束之前不会变，一直是这个READ VIEW，所以，不论其他事务对这个记录做任何改动并且提交，它读到的一直会是这笔记录在该事务开始的时候的记录。因此不会产生脏读。\n但是读已提交是没办法阻止幻读的出现的。因为幻读的话，是查询一系列数据，是一个结果集，并不是一个结果，所以其他事务可能会对这个结果集进行插入操作，导致该事务查询的前后结果集数量不一样，就像产生了幻觉一样。那么如何解决幻读呢？其实就是后面所讲的，加NEXT-KEY LOCK和 RECORD LOCK，就是把这个范围内记录的最大值加上间隙锁和记录锁，这样对这个记录内所有记录的修改和插入都无法进行，因为其他事务无法获取到这个区间内记录的锁，所以无法进行修改\n",
+  "wordCount" : "833",
   "inLanguage": "zh",
-  "datePublished": "2023-03-05T12:47:51+08:00",
-  "dateModified": "2023-03-05T12:47:51+08:00",
+  "datePublished": "2024-03-25T00:01:28+08:00",
+  "dateModified": "2024-03-25T00:01:28+08:00",
   "author":[{
     "@type": "Person",
     "name": "ShengQian"
   }],
   "mainEntityOfPage": {
     "@type": "WebPage",
-    "@id": "https://csqread.top/posts/blog/hugo%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/"
+    "@id": "https://csqread.top/posts/tech/%E5%85%B3%E4%BA%8Emvcc%E7%9A%84%E4%B8%80%E4%BA%9B%E7%90%86%E8%A7%A3/"
   },
   "publisher": {
     "@type": "Organization",
@@ -214,13 +214,10 @@
 
 <article class="post-single">
   <header class="post-header">
-    <div class="breadcrumbs"><a href="https://csqread.top">主页</a>&nbsp;»&nbsp;<a href="https://csqread.top/posts/">Posts</a>&nbsp;»&nbsp;<a href="https://csqread.top/posts/blog/">建站</a></div>
+    <div class="breadcrumbs"><a href="https://csqread.top">主页</a>&nbsp;»&nbsp;<a href="https://csqread.top/posts/">Posts</a>&nbsp;»&nbsp;<a href="https://csqread.top/posts/tech/">技术</a></div>
     <h1 class="post-title">
-      Hugo博客搭建
+      关于MVCC的一些理解
     </h1>
-    <div class="post-description">
-      Hugo博客搭建过程及遇到的问题
-    </div>
     <div class="post-meta">
 
 
@@ -232,14 +229,13 @@
 
 
 
-创建:&nbsp;<span title='2023-03-05 12:47:51 +0800 CST'>2023-03-05</span>&nbsp;|&nbsp;更新:&nbsp;2023-03-05&nbsp;|&nbsp;字数:&nbsp;353字&nbsp;|&nbsp;时长: 1分钟&nbsp;|&nbsp;
+创建:&nbsp;<span title='2024-03-25 00:01:28 +0800 CST'>2024-03-25</span>&nbsp;|&nbsp;更新:&nbsp;2024-03-25&nbsp;|&nbsp;字数:&nbsp;833字&nbsp;|&nbsp;时长: 2分钟&nbsp;|&nbsp;
 作者:&nbsp;ShengQian
 
 
     &nbsp;|&nbsp;标签: &nbsp;
     <ul class="post-tags-meta">
-        <a href="https://csqread.top/tags/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/">博客搭建</a>
-        <a href="https://csqread.top/tags/%E6%8A%98%E8%85%BE/">、折腾</a>
+        <a href="https://csqread.top/tags/mysql/">mysql</a>
     </ul>
 
     
@@ -297,14 +293,13 @@
 
             <div class="inner"><ul>
                     <li>
-                        <a href="#1%e6%96%b0%e5%bb%bagithub%e4%bb%93%e5%ba%93" aria-label="1、新建github仓库">1、新建github仓库</a></li>
+                        <a href="#mysql-mvcc%e6%9c%ba%e5%88%b6%e6%88%91%e7%9a%84%e4%b8%80%e4%ba%9b%e7%90%86%e8%a7%a3" aria-label="Mysql MVCC机制我的一些理解">Mysql MVCC机制我的一些理解</a><ul>
+                            
                     <li>
-                        <a href="#2%e4%b8%8b%e8%bd%bd%e5%b9%b6%e5%ae%89%e8%a3%85%e5%af%b9%e5%ba%94%e7%89%88%e6%9c%ac%e7%9a%84hugo" aria-label="2、下载并安装对应版本的hugo">2、下载并安装对应版本的hugo</a></li>
-                    <li>
-                        <a href="#3%e5%88%9b%e5%bb%bahugo%e7%bd%91%e7%ab%99" aria-label="3、创建hugo网站">3、创建hugo网站</a></li>
-                    <li>
-                        <a href="#4%e9%80%89%e6%8b%a9%e4%b8%bb%e9%a2%98" aria-label="4、选择主题">4、选择主题</a>
+                        <a href="#%e4%bb%80%e4%b9%88%e6%98%afmvcc" aria-label="什么是MVCC?">什么是MVCC?</a>
                     </li>
+                </ul>
+                </li>
                 </ul>
             </div>
         </details>
@@ -369,47 +364,31 @@
         return rect.top + win.pageYOffset;   
     }
 </script>
-  <div class="post-content"><p>这篇文章主要记录我搭建hugo博客的过程，包括搭建过程中遇到的问题及解决方法</p>
-<h1 id="1新建github仓库">1、新建github仓库<a hidden class="anchor" aria-hidden="true" href="#1新建github仓库">#</a></h1>
-<p>新建respository, Respository的名称为 &ldquo;你的github名称.github.io&rdquo;.</p>
-<h1 id="2下载并安装对应版本的hugo">2、下载并安装对应版本的hugo<a hidden class="anchor" aria-hidden="true" href="#2下载并安装对应版本的hugo">#</a></h1>
-<p>下载链接: <a href = "https://github.com/gohugoio/hugo/releases">点击选择hugo版本下载</a></p>
-<h1 id="3创建hugo网站">3、创建hugo网站<a hidden class="anchor" aria-hidden="true" href="#3创建hugo网站">#</a></h1>
-<p>进入想要存放网站的文件夹，输入以下命令:</p>
-<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>hugo new site demo-blog
-</span></span></code></pre></td></tr></table>
-</div>
-</div><h1 id="4选择主题">4、选择主题<a hidden class="anchor" aria-hidden="true" href="#4选择主题">#</a></h1>
-<p>输入命令下载主题:</p>
-<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>git clone https://github.com/adityatelange/hugo-PaperMod.git
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>使用该主题的方法就是在站点文件夹下的配置文件里输入主题的名字:</p>
-<p>然后把主题文件夹里面的一些静态文件和配置文件复制到站点目录下，目的是为了可以自定义博客的样式，而不会改动主题文件夹里的样式，这样主题要更新的时候，直接在主题目录下git pull就可以，站点目录的修改会优先覆盖主题里的配置，所以可以实现平滑更新</p>
+  <div class="post-content"><h1 id="mysql-mvcc机制我的一些理解">Mysql MVCC机制我的一些理解<a hidden class="anchor" aria-hidden="true" href="#mysql-mvcc机制我的一些理解">#</a></h1>
+<h2 id="什么是mvcc">什么是MVCC?<a hidden class="anchor" aria-hidden="true" href="#什么是mvcc">#</a></h2>
+<p>MVCC 全称是 Multi-Version Concurrency Control, 即多版本并发控制。MVCC 在Mysql的 InnoDB中的实现主要是为了提高数据库并发性能，用更好的方式去处理读-写冲突，做到即使有读写冲突时，也能做到不加锁，非阻塞并发读.</p>
+<p>其实我在之前读了很多篇关于MVCC的文章，大多讲的比较模糊，最近在看《Mysql是怎样运行的-从根儿上理解Mysql》这本书讲的非常好。让我理解了MVCC。其实就最简单来讲，用READ COMMIT和 REPERATED COMMIT这两个隔离机制讲解就非常清楚了。</p>
+<p>首先是 读已提交这种隔离级别，这种不能防止脏读，为什么呢？因为它的READ VIEW在每次SELECT的时候会生成一次。比如我一个事务中，第一次查询该记录的时候，生成了一次READ VIEW ，然后这笔记录被另一个事务修改并且提交了，那么当前事务再进行查询的时候，结果会是另一个事务提交后的结果，所以就产生了脏读，同一个事务读取了不同的结果。</p>
+<p>如果是可重复度这种隔离级别呢？这种是可以防止脏读的出现的。顾名思义，可重复读，在同一个事务里，是可以重复读取同一笔记录的并且结果不会变。咋实现的呢？原因就在这个READ VIEW，在该笔事务开始查询之前，也就是SELECT之前，就会生成一个READ VIEW，并且在这笔事务结束之前不会变，一直是这个READ VIEW，所以，不论其他事务对这个记录做任何改动并且提交，它读到的一直会是这笔记录在该事务开始的时候的记录。因此不会产生脏读。</p>
+<p>但是读已提交是没办法阻止幻读的出现的。因为幻读的话，是查询一系列数据，是一个结果集，并不是一个结果，所以其他事务可能会对这个结果集进行插入操作，导致该事务查询的前后结果集数量不一样，就像产生了幻觉一样。那么如何解决幻读呢？其实就是后面所讲的，加NEXT-KEY LOCK和 RECORD LOCK，就是把这个范围内记录的最大值加上间隙锁和记录锁，这样对这个记录内所有记录的修改和插入都无法进行，因为其他事务无法获取到这个区间内记录的锁，所以无法进行修改</p>
 
 
   </div>
 
   <footer class="post-footer">
     <ul class="post-tags">
-      <li><a href="https://csqread.top/tags/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/">博客搭建</a></li>
-      <li><a href="https://csqread.top/tags/%E6%8A%98%E8%85%BE/">折腾</a></li>
+      <li><a href="https://csqread.top/tags/mysql/">mysql</a></li>
     </ul>
 <nav class="paginav">
-  <a class="next" href="https://csqread.top/posts/tech/20240304%E5%8A%9B%E6%89%A3%E5%91%A8%E8%B5%9B/">
+  <a class="prev" href="https://csqread.top/posts/read/%E8%AF%BB%E6%94%BF%E6%B2%BB%E7%A7%A9%E5%BA%8F%E7%9A%84%E8%B5%B7%E6%BA%90-%E4%BB%8E%E5%89%8D%E4%BA%BA%E7%B1%BB%E6%97%B6%E4%BB%A3%E5%88%B0%E6%B3%95%E5%9B%BD%E5%A4%A7%E9%9D%A9%E5%91%BD%E6%9C%89%E6%84%9F/">
+    <span class="title">« 上一页</span>
+    <br>
+    <span>读《政治秩序的起源 从前人类时代到法国大革命》有感</span>
+  </a>
+  <a class="next" href="https://csqread.top/posts/tech/ddia/">
     <span class="title">下一页 »</span>
     <br>
-    <span>20240304力扣周赛</span>
+    <span>DDIA</span>
   </a>
 </nav>
 
