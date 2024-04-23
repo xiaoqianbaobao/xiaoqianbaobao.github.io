@@ -6,7 +6,16 @@
     <description>Recent content in 技术 on Qian&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Sat, 20 Apr 2024 22:07:49 +0800</lastBuildDate><atom:link href="https://csqread.top/posts/tech/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 23 Apr 2024 22:25:58 +0800</lastBuildDate><atom:link href="https://csqread.top/posts/tech/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>零拷贝实现</title>
+      <link>https://csqread.top/posts/tech/%E9%9B%B6%E6%8B%B7%E8%B4%9D%E5%AE%9E%E7%8E%B0/</link>
+      <pubDate>Tue, 23 Apr 2024 22:25:58 +0800</pubDate>
+      
+      <guid>https://csqread.top/posts/tech/%E9%9B%B6%E6%8B%B7%E8%B4%9D%E5%AE%9E%E7%8E%B0/</guid>
+      <description>Linux中的零拷贝 1. 数据拷贝基础过程 在Linux系统内部缓存和内存容量都是有限的，更多的数据都是存储在磁盘中。对于Web服务器来说，经常需</description>
+    </item>
+    
     <item>
       <title>NIO详解</title>
       <link>https://csqread.top/posts/tech/nio%E8%AF%A6%E8%A7%A3/</link>
