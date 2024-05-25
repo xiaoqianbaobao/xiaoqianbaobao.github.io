@@ -22,7 +22,7 @@
       <pubDate>Sun, 19 May 2024 21:10:37 +0800</pubDate>
       
       <guid>https://csqread.top/posts/tech/aqs%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB%E5%88%86%E6%9E%90/</guid>
-      <description>AbstractQueuedSynchronizer简介 AQS是一个用来构建和同步器的框架，使用AQS能简单且高效地构造出应用广泛的大量的同</description>
+      <description>AQS是一个用来构建和同步器的框架，使用AQS能简单且高效地构造出应用广泛的大量的同步器，比如我们提到的RenntrantLock,Semaphore，其他的诸如ReentrantReadWriteLock,SynchronousQueue,FutureTask等等皆是基于AQS的。当然，我们自己也能利用AQS非常轻松的构造出符合我们自己需求的同步器。</description>
     </item>
     
     <item>

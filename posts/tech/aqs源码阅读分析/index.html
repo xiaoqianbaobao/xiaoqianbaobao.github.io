@@ -7,7 +7,7 @@
 <meta name="robots" content="index, follow">
 <title>AQS源码阅读分析 | Qian&#39;s Blog</title>
 <meta name="keywords" content="AQS">
-<meta name="description" content="AbstractQueuedSynchronizer简介 AQS是一个用来构建和同步器的框架，使用AQS能简单且高效地构造出应用广泛的大量的同">
+<meta name="description" content="AQS是一个用来构建和同步器的框架，使用AQS能简单且高效地构造出应用广泛的大量的同步器，比如我们提到的RenntrantLock,Semaphore，其他的诸如ReentrantReadWriteLock,SynchronousQueue,FutureTask等等皆是基于AQS的。当然，我们自己也能利用AQS非常轻松的构造出符合我们自己需求的同步器。">
 <meta name="author" content="
 作者:&nbsp;ShengQian">
 <link rel="canonical" href="https://csqread.top/posts/tech/aqs%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB%E5%88%86%E6%9E%90/">
@@ -58,7 +58,7 @@
 
     </style>
 </noscript><meta property="og:title" content="AQS源码阅读分析" />
-<meta property="og:description" content="AbstractQueuedSynchronizer简介 AQS是一个用来构建和同步器的框架，使用AQS能简单且高效地构造出应用广泛的大量的同" />
+<meta property="og:description" content="AQS是一个用来构建和同步器的框架，使用AQS能简单且高效地构造出应用广泛的大量的同步器，比如我们提到的RenntrantLock,Semaphore，其他的诸如ReentrantReadWriteLock,SynchronousQueue,FutureTask等等皆是基于AQS的。当然，我们自己也能利用AQS非常轻松的构造出符合我们自己需求的同步器。" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://csqread.top/posts/tech/aqs%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB%E5%88%86%E6%9E%90/" />
 <meta property="og:image" content="https://csqread.top/posts/tech/AQS%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB%E5%88%86%E6%9E%90/1.png" /><meta property="article:section" content="posts" />
@@ -68,7 +68,7 @@
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:image" content="https://csqread.top/posts/tech/AQS%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB%E5%88%86%E6%9E%90/1.png" />
 <meta name="twitter:title" content="AQS源码阅读分析"/>
-<meta name="twitter:description" content="AbstractQueuedSynchronizer简介 AQS是一个用来构建和同步器的框架，使用AQS能简单且高效地构造出应用广泛的大量的同"/>
+<meta name="twitter:description" content="AQS是一个用来构建和同步器的框架，使用AQS能简单且高效地构造出应用广泛的大量的同步器，比如我们提到的RenntrantLock,Semaphore，其他的诸如ReentrantReadWriteLock,SynchronousQueue,FutureTask等等皆是基于AQS的。当然，我们自己也能利用AQS非常轻松的构造出符合我们自己需求的同步器。"/>
 
 
 <script type="application/ld+json">
@@ -103,7 +103,7 @@
   "@type": "BlogPosting",
   "headline": "AQS源码阅读分析",
   "name": "AQS源码阅读分析",
-  "description": "AbstractQueuedSynchronizer简介 AQS是一个用来构建和同步器的框架，使用AQS能简单且高效地构造出应用广泛的大量的同",
+  "description": "AQS是一个用来构建和同步器的框架，使用AQS能简单且高效地构造出应用广泛的大量的同步器，比如我们提到的RenntrantLock,Semaphore，其他的诸如ReentrantReadWriteLock,SynchronousQueue,FutureTask等等皆是基于AQS的。当然，我们自己也能利用AQS非常轻松的构造出符合我们自己需求的同步器。",
   "keywords": [
     "AQS"
   ],
@@ -220,6 +220,9 @@
     <h1 class="post-title">
       AQS源码阅读分析
     </h1>
+    <div class="post-description">
+      AQS是一个用来构建和同步器的框架，使用AQS能简单且高效地构造出应用广泛的大量的同步器，比如我们提到的RenntrantLock,Semaphore，其他的诸如ReentrantReadWriteLock,SynchronousQueue,FutureTask等等皆是基于AQS的。当然，我们自己也能利用AQS非常轻松的构造出符合我们自己需求的同步器。
+    </div>
     <div class="post-meta">
 
 
