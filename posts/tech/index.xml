@@ -13,7 +13,7 @@
       <pubDate>Sun, 26 May 2024 18:56:15 +0800</pubDate>
       
       <guid>https://csqread.top/posts/tech/reentrantlock%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/</guid>
-      <description></description>
+      <description>ReentrantLock实现了Lock接口，Lock接口定义了lock与unlock相关操作，并且还存在newCondition方法，表示生成一个条件。</description>
     </item>
     
     <item>
