@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="robots" content="index, follow">
-<title>ReentrantLock源码解析 | Qian&#39;s Blog</title>
+<title>reentrantlock源码解析 | Qian&#39;s Blog</title>
 <meta name="keywords" content="Java">
 <meta name="description" content="ReentrantLock实现了Lock接口，Lock接口定义了lock与unlock相关操作，并且还存在newCondition方法，表示生成一个条件">
 <meta name="author" content="
@@ -57,17 +57,17 @@
         }
 
     </style>
-</noscript><meta property="og:title" content="ReentrantLock源码解析" />
+</noscript><meta property="og:title" content="reentrantlock源码解析" />
 <meta property="og:description" content="ReentrantLock实现了Lock接口，Lock接口定义了lock与unlock相关操作，并且还存在newCondition方法，表示生成一个条件" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://csqread.top/posts/tech/reentrantlock%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/" />
-<meta property="og:image" content="https://csqread.top/posts/tech/ReentrantLock%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/3.png" /><meta property="article:section" content="posts" />
+<meta property="og:image" content="https://csqread.top/posts/tech/reentrantlock%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/3.png" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2024-05-26T17:29:15+08:00" />
 <meta property="article:modified_time" content="2024-05-26T17:29:15+08:00" />
 
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:image" content="https://csqread.top/posts/tech/ReentrantLock%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/3.png" />
-<meta name="twitter:title" content="ReentrantLock源码解析"/>
+<meta name="twitter:image" content="https://csqread.top/posts/tech/reentrantlock%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/3.png" />
+<meta name="twitter:title" content="reentrantlock源码解析"/>
 <meta name="twitter:description" content="ReentrantLock实现了Lock接口，Lock接口定义了lock与unlock相关操作，并且还存在newCondition方法，表示生成一个条件"/>
 
 
@@ -91,7 +91,7 @@
     {
       "@type": "ListItem",
       "position":  4 ,
-      "name": "ReentrantLock源码解析",
+      "name": "reentrantlock源码解析",
       "item": "https://csqread.top/posts/tech/reentrantlock%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/"
     }
   ]
@@ -101,8 +101,8 @@
 {
   "@context": "https://schema.org",
   "@type": "BlogPosting",
-  "headline": "ReentrantLock源码解析",
-  "name": "ReentrantLock源码解析",
+  "headline": "reentrantlock源码解析",
+  "name": "reentrantlock源码解析",
   "description": "ReentrantLock实现了Lock接口，Lock接口定义了lock与unlock相关操作，并且还存在newCondition方法，表示生成一个条件",
   "keywords": [
     "Java"
@@ -110,7 +110,7 @@
   "articleBody": "ReentrantLock源码分析 类的继承关系 ReentrantLock实现了Lock接口，Lock接口定义了lock与unlock相关操作，并且还存在newCondition方法，表示生成一个条件。\n1 public class ReentrantLock implements Lock, java.io.Serializable 类的内部类 ReentrantLock总共有三个内部类i，并且三个内部类是紧密相关的，下面先看三个类的关系。\n说明：ReentrantLock类内部总共存在Sync、NonfairSync、FairSync三个类，NonfairSync与FairSync类继承自Sync类，Sync类继承自AbstractQueuedSynchronizer抽象类。\nSync类 Sync类的源码如下:\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72 73 74 75 76 77 78 79 80 81 82 83 84 85 86 87 88 89 90 91 92 93 94 95 96 97 98 99 100 101 102 abstract static class Sync extends AbstractQueuedSynchronizer { //序列号 private static final long serialVersionUID = -5179523762034025860L; /** * Performs non-fair tryLock. */ @ReservedStackAccess final boolean tryLock() { Thread current = Thread.currentThread(); int c = getState(); if (c == 0) { if (compareAndSetState(0, 1)) { setExclusiveOwnerThread(current); return true; } } else if (getExclusiveOwnerThread() == current) { if (++c \u003c 0) // overflow throw new Error(\"Maximum lock count exceeded\"); setState(c); return true; } return false; } /** * Checks for reentrancy and acquires if lock immediately * available under fair vs nonfair rules. Locking methods * perform initialTryLock check before relaying to * corresponding AQS acquire methods. */ abstract boolean initialTryLock(); @ReservedStackAccess final void lock() { if (!initialTryLock()) acquire(1); } @ReservedStackAccess final void lockInterruptibly() throws InterruptedException { if (Thread.interrupted()) throw new InterruptedException(); if (!initialTryLock()) acquireInterruptibly(1); } @ReservedStackAccess final boolean tryLockNanos(long nanos) throws InterruptedException { if (Thread.interrupted()) throw new InterruptedException(); return initialTryLock() || tryAcquireNanos(1, nanos); } //试图在共享模式下获取对象状态，此方法应该是查询是否允许它在共享模式下获取对象状态，如果允许，则获取它 @ReservedStackAccess protected final boolean tryRelease(int releases) { int c = getState() - releases; if (getExclusiveOwnerThread() != Thread.currentThread()) //当前线程不为独占线程 throw new IllegalMonitorStateException();//抛出异常 boolean free = (c == 0);//释放标识 if (free) setExclusiveOwnerThread(null); setState(c); return free; } //判断资源是否被当前线程占有 protected final boolean isHeldExclusively() { // While we must in general read state before owner, // we don't need to do so to check if current thread is owner return getExclusiveOwnerThread() == Thread.currentThread(); } //新生一个条件 final ConditionObject newCondition() { return new ConditionObject(); } // Methods relayed from outer class //返回资源的占用线程 final Thread getOwner() { return getState() == 0 ? null : getExclusiveOwnerThread(); } //返回状态 final int getHoldCount() { return isHeldExclusively() ? getState() : 0; } //资源是否被占用 final boolean isLocked() { return getState() != 0; } /** * Reconstitutes the instance from a stream (that is, deserializes it). */ //自定义反序列化逻辑 private void readObject(java.io.ObjectInputStream s) throws java.io.IOException, ClassNotFoundException { s.defaultReadObject(); setState(0); // reset to unlocked state } } Sync类存在如下方法和作用如下:\n方法 作用 lock 锁定，并为实现，留给具体子类实现 nonfairTryAcquire 非公平方式获取 tryRelease 试图在共享模式下获取对象状态，此方法应该是查询是否允许它在共享模式下获取对象状态，如果允许，则获取它。 isHeldExclusively 判断资源是否被当前线程占有 newCondition 新生一个条件 getOwner 返回占有资源的线程 getHoldCount 返回状态 isLocked 资源是否被占用 readObject 自定义反序列化逻辑 NonfairSync类 NonfairSync类继承了Sync类，表示采用非公平策略获取锁，其实现了Sync类中抽象的lock方法，源码如下:\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 // 非公平锁 static final class NonfairSync extends Sync { // 版本号 private static final long serialVersionUID = 7316153563782823691L; // 获得锁 final void lock() { if (compareAndSetState(0, 1)) // 比较并设置状态成功，状态0表示锁没有被占用 // 把当前线程设置独占了锁 setExclusiveOwnerThread(Thread.currentThread()); else // 锁已经被占用，或者set失败 // 以独占模式获取对象，忽略中断 acquire(1); } protected final boolean tryAcquire(int acquires) { return nonfairTryAcquire(acquires); } } 说明:从lock方法的源码可知，每一次都尝试获取锁，而并不会按照公平等待原则进行等待，让等待时间最久的线程获得锁。\nFairSyn类 FairSync也继承了Sync类，表示采用公平策略获取锁，其实现了Sync类中的抽象lock方法，源码如下:\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 // 公平锁 static final class FairSync extends Sync { // 版本序列化 private static final long serialVersionUID = -3000897897090466540L; final void lock() { // 以独占模式获取对象，忽略中断 acquire(1); } /** * Fair version of tryAcquire. Don't grant access unless * recursive call or no waiters or is first. */ // 尝试公平获取锁 protected final boolean tryAcquire(int acquires) { // 获取当前线程 final Thread current = Thread.currentThread(); // 获取状态 int c = getState(); if (c == 0) { // 状态为0 if (!hasQueuedPredecessors() \u0026\u0026 compareAndSetState(0, acquires)) { // 不存在已经等待更久的线程并且比较并且设置状态成功 // 设置当前线程独占 setExclusiveOwnerThread(current); return true; } } else if (current == getExclusiveOwnerThread()) { // 状态不为0，即资源已经被线程占据 // 下一个状态 int nextc = c + acquires; if (nextc \u003c 0) // 超过了int的表示范围 throw new Error(\"Maximum lock count exceeded\"); // 设置状态 setState(nextc); return true; } return false; } } 说明:跟踪lock方法的源码可知，当资源空闲时，它总是会先判断sync队列是否有等待时间更长的线程，如果存在，则将该线程加入到等待队列的尾部，实现了公平获取原则。其中，FairSync类的lock的方法调用如下，只给出了主要方法。\n说明:可以看出只要资源被其他线程占用，该线程就会添加到sync queue中的尾部，而不会先尝试获取资源。这也是和Nonfair最大的区别，NonFair每一次都会尝试去获取资源，如果此时资源恰好被释放，则会被当前线程获取，这就造成了不公平的现象，当获取不成功，再加入队列尾部。\n类的属性 ReentrantLock类的sync非常重要，对ReentrantLock类的操作大部分都直接转化为对Sync和AbstractQueuedSynchronizer类的操作。\n1 2 3 4 5 6 public class ReentrantLock implements Lock, java.io.Serializable { // 序列号 private static final long serialVersionUID = 7373984872572414699L; // 同步队列 private final Sync sync; } 类的构造函数 ReentrantLock()型构造函数 默认采用的是非公平锁策略获取锁\n1 2 3 4 public ReentrantLock() { // 默认非公平策略 sync = new NonfairSync(); } ReentrantLock(boolean)型构造函数 可以传递参数确定采用公平策略或者是非公平策略，参数为true表示公平策略，否则，采用非公平策略:\n1 2 3 public ReentrantLock(boolean fair) { sync = fair ? new FairSync() : new NonfairSync(); } 核心函数分析 通过分析ReentrantLock的源码，可知对其操作都转化为对Sync对象的操作，由于Sync继承了AQS，所以基本上都可以转化为对AQS的操作。如将ReentrantLock的lock函数转化为对Sync的lock函数调用，而具体会根据采用的策略的不同调用到Sync的不同子类。\n所以可知，在ReentrantLock的背后，是AQS对其服务提供了支持，由于之前我们分析AQS的核心源码，就不再说了。\n",
   "wordCount" : "2344",
   "inLanguage": "zh",
-  "image":"https://csqread.top/posts/tech/ReentrantLock%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/3.png","datePublished": "2024-05-26T17:29:15+08:00",
+  "image":"https://csqread.top/posts/tech/reentrantlock%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/3.png","datePublished": "2024-05-26T17:29:15+08:00",
   "dateModified": "2024-05-26T17:29:15+08:00",
   "author":[{
     "@type": "Person",
@@ -218,7 +218,7 @@
   <header class="post-header">
     <div class="breadcrumbs"><a href="https://csqread.top">主页</a>&nbsp;»&nbsp;<a href="https://csqread.top/posts/">Posts</a>&nbsp;»&nbsp;<a href="https://csqread.top/posts/tech/">技术</a></div>
     <h1 class="post-title">
-      ReentrantLock源码解析
+      reentrantlock源码解析
     </h1>
     <div class="post-description">
       ReentrantLock实现了Lock接口，Lock接口定义了lock与unlock相关操作，并且还存在newCondition方法，表示生成一个条件
@@ -290,7 +290,7 @@
 
 </div>
   </header> 
-<figure class="entry-cover1"><img style="zoom:;" loading="lazy" src="https://csqread.top/posts/tech/ReentrantLock%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/3.png" alt="">
+<figure class="entry-cover1"><img style="zoom:;" loading="lazy" src="https://csqread.top/posts/tech/reentrantlock%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/3.png" alt="">
     
 </figure><aside id="toc-container" class="toc-container wide">
     <div class="toc">
