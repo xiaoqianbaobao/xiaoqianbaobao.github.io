@@ -6,7 +6,16 @@
     <description>Recent content in 技术 on Qian&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Sun, 19 May 2024 21:10:37 +0800</lastBuildDate><atom:link href="https://csqread.top/posts/tech/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 26 May 2024 16:26:29 +0800</lastBuildDate><atom:link href="https://csqread.top/posts/tech/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>ReentrantLock源码分析</title>
+      <link>https://csqread.top/posts/tech/reentrantlock%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/</link>
+      <pubDate>Sun, 26 May 2024 16:26:29 +0800</pubDate>
+      
+      <guid>https://csqread.top/posts/tech/reentrantlock%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/</guid>
+      <description>ReentrantLock实现了Lock接口，Lock接口定义了lock与unlock相关操作，并且还存在newCondition方法，表示生成一个条件。</description>
+    </item>
+    
     <item>
       <title>AQS源码阅读分析</title>
       <link>https://csqread.top/posts/tech/aqs%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB%E5%88%86%E6%9E%90/</link>
