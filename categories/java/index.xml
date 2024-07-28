@@ -6,7 +6,16 @@
     <description>Recent content in Java on Qian&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Sun, 26 May 2024 18:56:15 +0800</lastBuildDate><atom:link href="https://csqread.top/categories/java/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 28 Jul 2024 12:51:40 +0800</lastBuildDate><atom:link href="https://csqread.top/categories/java/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>聊聊接口和抽象类</title>
+      <link>https://csqread.top/posts/tech/%E8%81%8A%E8%81%8A%E6%8E%A5%E5%8F%A3%E5%92%8C%E6%8A%BD%E8%B1%A1%E7%B1%BB/</link>
+      <pubDate>Sun, 28 Jul 2024 12:51:40 +0800</pubDate>
+      
+      <guid>https://csqread.top/posts/tech/%E8%81%8A%E8%81%8A%E6%8E%A5%E5%8F%A3%E5%92%8C%E6%8A%BD%E8%B1%A1%E7%B1%BB/</guid>
+      <description>什么是抽象类和接口？区别在哪里？</description>
+    </item>
+    
     <item>
       <title>Reentrantlock源码解析</title>
       <link>https://csqread.top/posts/tech/reentrantlock%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/</link>
