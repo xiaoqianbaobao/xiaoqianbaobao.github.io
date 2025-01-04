@@ -6,7 +6,16 @@
     <description>Recent content in 技术 on Qian&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Sun, 28 Jul 2024 12:51:40 +0800</lastBuildDate><atom:link href="https://csqread.top/posts/tech/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 30 Dec 2024 18:36:05 +0800</lastBuildDate><atom:link href="https://csqread.top/posts/tech/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>高并发之限流</title>
+      <link>https://csqread.top/posts/tech/%E9%AB%98%E5%B9%B6%E5%8F%91%E4%B9%8B%E9%99%90%E6%B5%81/</link>
+      <pubDate>Mon, 30 Dec 2024 18:36:05 +0800</pubDate>
+      
+      <guid>https://csqread.top/posts/tech/%E9%AB%98%E5%B9%B6%E5%8F%91%E4%B9%8B%E9%99%90%E6%B5%81/</guid>
+      <description>每个系统都有服务的上线，所以当流量超过服务极限能力时，系统可能会出现卡死、崩溃的情况，所以就有了降级和限流。限流其实就是：当高并发或者瞬时高并发时，为了保证系统的稳定性、可用性，系统以牺牲部分请求为代价或者延迟处理请求为代价，保证系统整体服务可用。</description>
+    </item>
+    
     <item>
       <title>聊聊接口和抽象类</title>
       <link>https://csqread.top/posts/tech/%E8%81%8A%E8%81%8A%E6%8E%A5%E5%8F%A3%E5%92%8C%E6%8A%BD%E8%B1%A1%E7%B1%BB/</link>
