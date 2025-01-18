@@ -17,24 +17,6 @@
     </item>
     
     <item>
-      <title>生活</title>
-      <link>https://csqread.top/categories/%E7%94%9F%E6%B4%BB/</link>
-      <pubDate>Mon, 30 Dec 2024 18:33:49 +0800</pubDate>
-      
-      <guid>https://csqread.top/categories/%E7%94%9F%E6%B4%BB/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>生活小记</title>
-      <link>https://csqread.top/categories/%E7%94%9F%E6%B4%BB%E5%B0%8F%E8%AE%B0/</link>
-      <pubDate>Sun, 24 Nov 2024 19:44:55 +0800</pubDate>
-      
-      <guid>https://csqread.top/categories/%E7%94%9F%E6%B4%BB%E5%B0%8F%E8%AE%B0/</guid>
-      <description></description>
-    </item>
-    
-    <item>
       <title>Java</title>
       <link>https://csqread.top/categories/java/</link>
       <pubDate>Sun, 28 Jul 2024 12:51:40 +0800</pubDate>
@@ -94,6 +76,15 @@
       <pubDate>Sun, 18 Feb 2024 21:46:29 +0800</pubDate>
       
       <guid>https://csqread.top/categories/%E6%A0%91%E8%8E%93%E6%B4%BE/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>生活</title>
+      <link>https://csqread.top/categories/%E7%94%9F%E6%B4%BB/</link>
+      <pubDate>Sun, 14 Jan 2024 12:45:08 +0800</pubDate>
+      
+      <guid>https://csqread.top/categories/%E7%94%9F%E6%B4%BB/</guid>
       <description></description>
     </item>
     
