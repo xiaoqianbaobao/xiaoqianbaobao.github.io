@@ -26,15 +26,6 @@
     </item>
     
     <item>
-      <title>简单工厂模式</title>
-      <link>https://csqread.top/posts/tech/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/</link>
-      <pubDate>Sun, 25 May 2025 23:02:42 +0800</pubDate>
-      
-      <guid>https://csqread.top/posts/tech/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/</guid>
-      <description>1. 简单工厂模式( Simple Factory Pattern ) 1.1 模式动机 考虑一个简单的软件应用场景，一个软件系统可以提供多个外观不同的按钮（如圆形按钮、矩形按钮、菱形按钮等）， 这</description>
-    </item>
-    
-    <item>
       <title>高并发之限流</title>
       <link>https://csqread.top/posts/tech/%E9%AB%98%E5%B9%B6%E5%8F%91%E4%B9%8B%E9%99%90%E6%B5%81/</link>
       <pubDate>Mon, 30 Dec 2024 18:36:05 +0800</pubDate>
