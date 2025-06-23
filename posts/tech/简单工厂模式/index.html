@@ -7,7 +7,7 @@
 <meta name="robots" content="index, follow">
 <title>简单工厂模式 | Qian&#39;s Blog</title>
 <meta name="keywords" content="设计模式">
-<meta name="description" content="1. 简单工厂模式( Simple Factory Pattern ) 1.1 模式动机 考虑一个简单的软件应用场景，一个软件系统可以提供多个外观不同的按钮（如圆形按钮、矩形按钮、菱形按钮等）， 这">
+<meta name="description" content="考虑一个简单的软件应用场景，一个软件系统可以提供多个外观不同的按钮（如圆形按钮、矩形按钮、菱形按钮等）， 这些按钮都源自同一个基类，不过在继承基类后不同的子类修改了部分属性从而使得它们可以呈现不同的外观，如果我们希望在使用这些按钮时，不需要知道这些具体按钮类的名字，只需要知道表示该按钮类的一个参数，并提供一个调用方便的方法，把该参数传入方法即可返回一个相应的按钮对象，此时，就可以使用简单工厂模式。">
 <meta name="author" content="
 作者:&nbsp;ShengQian">
 <link rel="canonical" href="https://csqread.top/posts/tech/%E7%AE%80%E5%8D%95%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F/">
@@ -58,7 +58,7 @@
 
     </style>
 </noscript><meta property="og:title" content="简单工厂模式" />
-<meta property="og:description" content="1. 简单工厂模式( Simple Factory Pattern ) 1.1 模式动机 考虑一个简单的软件应用场景，一个软件系统可以提供多个外观不同的按钮（如圆形按钮、矩形按钮、菱形按钮等）， 这" />
+<meta property="og:description" content="考虑一个简单的软件应用场景，一个软件系统可以提供多个外观不同的按钮（如圆形按钮、矩形按钮、菱形按钮等）， 这些按钮都源自同一个基类，不过在继承基类后不同的子类修改了部分属性从而使得它们可以呈现不同的外观，如果我们希望在使用这些按钮时，不需要知道这些具体按钮类的名字，只需要知道表示该按钮类的一个参数，并提供一个调用方便的方法，把该参数传入方法即可返回一个相应的按钮对象，此时，就可以使用简单工厂模式。" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://csqread.top/posts/tech/%E7%AE%80%E5%8D%95%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F/" />
 <meta property="og:image" content="https://csqread.top/posts/tech/%E7%AE%80%E5%8D%95%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F/5.png" /><meta property="article:section" content="posts" />
@@ -68,7 +68,7 @@
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:image" content="https://csqread.top/posts/tech/%E7%AE%80%E5%8D%95%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F/5.png" />
 <meta name="twitter:title" content="简单工厂模式"/>
-<meta name="twitter:description" content="1. 简单工厂模式( Simple Factory Pattern ) 1.1 模式动机 考虑一个简单的软件应用场景，一个软件系统可以提供多个外观不同的按钮（如圆形按钮、矩形按钮、菱形按钮等）， 这"/>
+<meta name="twitter:description" content="考虑一个简单的软件应用场景，一个软件系统可以提供多个外观不同的按钮（如圆形按钮、矩形按钮、菱形按钮等）， 这些按钮都源自同一个基类，不过在继承基类后不同的子类修改了部分属性从而使得它们可以呈现不同的外观，如果我们希望在使用这些按钮时，不需要知道这些具体按钮类的名字，只需要知道表示该按钮类的一个参数，并提供一个调用方便的方法，把该参数传入方法即可返回一个相应的按钮对象，此时，就可以使用简单工厂模式。"/>
 
 
 <script type="application/ld+json">
@@ -103,7 +103,7 @@
   "@type": "BlogPosting",
   "headline": "简单工厂模式",
   "name": "简单工厂模式",
-  "description": "1. 简单工厂模式( Simple Factory Pattern ) 1.1 模式动机 考虑一个简单的软件应用场景，一个软件系统可以提供多个外观不同的按钮（如圆形按钮、矩形按钮、菱形按钮等）， 这",
+  "description": "考虑一个简单的软件应用场景，一个软件系统可以提供多个外观不同的按钮（如圆形按钮、矩形按钮、菱形按钮等）， 这些按钮都源自同一个基类，不过在继承基类后不同的子类修改了部分属性从而使得它们可以呈现不同的外观，如果我们希望在使用这些按钮时，不需要知道这些具体按钮类的名字，只需要知道表示该按钮类的一个参数，并提供一个调用方便的方法，把该参数传入方法即可返回一个相应的按钮对象，此时，就可以使用简单工厂模式。",
   "keywords": [
     "设计模式"
   ],
@@ -220,6 +220,9 @@
     <h1 class="post-title">
       简单工厂模式
     </h1>
+    <div class="post-description">
+      考虑一个简单的软件应用场景，一个软件系统可以提供多个外观不同的按钮（如圆形按钮、矩形按钮、菱形按钮等）， 这些按钮都源自同一个基类，不过在继承基类后不同的子类修改了部分属性从而使得它们可以呈现不同的外观，如果我们希望在使用这些按钮时，不需要知道这些具体按钮类的名字，只需要知道表示该按钮类的一个参数，并提供一个调用方便的方法，把该参数传入方法即可返回一个相应的按钮对象，此时，就可以使用简单工厂模式。
+    </div>
     <div class="post-meta">
 
 
