@@ -6,7 +6,16 @@
     <description>Recent content in Categories on Qian&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Mon, 23 Jun 2025 21:52:50 +0800</lastBuildDate><atom:link href="https://csqread.top/categories/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 13 Nov 2025 21:37:30 +0800</lastBuildDate><atom:link href="https://csqread.top/categories/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>DDIA</title>
+      <link>https://csqread.top/categories/ddia/</link>
+      <pubDate>Thu, 13 Nov 2025 21:37:30 +0800</pubDate>
+      
+      <guid>https://csqread.top/categories/ddia/</guid>
+      <description></description>
+    </item>
+    
     <item>
       <title>设计模式</title>
       <link>https://csqread.top/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/</link>
@@ -67,15 +76,6 @@
       <pubDate>Mon, 25 Mar 2024 00:01:28 +0800</pubDate>
       
       <guid>https://csqread.top/categories/mysql/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>DDIA</title>
-      <link>https://csqread.top/categories/ddia/</link>
-      <pubDate>Fri, 08 Mar 2024 18:03:04 +0800</pubDate>
-      
-      <guid>https://csqread.top/categories/ddia/</guid>
       <description></description>
     </item>
     

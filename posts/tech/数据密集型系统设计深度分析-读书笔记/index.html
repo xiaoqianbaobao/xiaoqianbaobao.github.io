@@ -1,0 +1,1848 @@
+<!DOCTYPE html>
+<html lang="zh" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>数据密集型系统设计深度分析 读书笔记 | Qian&#39;s Blog</title>
+<meta name="keywords" content="DDIA">
+<meta name="description" content="数据密集型系统设计深度分析">
+<meta name="author" content="
+作者:&nbsp;ShengQian">
+<link rel="canonical" href="https://csqread.top/posts/tech/%E6%95%B0%E6%8D%AE%E5%AF%86%E9%9B%86%E5%9E%8B%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1%E6%B7%B1%E5%BA%A6%E5%88%86%E6%9E%90-%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.1304ba2a97d1ed976f43dcc4aec65464735b44589d091030cdd2873f2234b886.css" integrity="" rel="preload stylesheet" as="style">
+<script defer crossorigin="anonymous" src="/assets/js/highlight.acb54fd32bbc1982428b8850317e45d076b95012730a5936667e6bc21777692a.js" integrity=""
+    onload="hljs.initHighlightingOnLoad();"></script>
+<link rel="icon" href="https://csqread.top/img/Q.gif">
+<link rel="icon" type="image/png" sizes="16x16" href="https://csqread.top/img/%21.jpg">
+<link rel="icon" type="image/png" sizes="32x32" href="https://csqread.top/img/%21.jpg">
+<link rel="apple-touch-icon" href="https://csqread.top/%21.jpg">
+<link rel="mask-icon" href="https://csqread.top/%21.jpg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --hljs-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript><meta property="og:title" content="数据密集型系统设计深度分析 读书笔记" />
+<meta property="og:description" content="数据密集型系统设计深度分析" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://csqread.top/posts/tech/%E6%95%B0%E6%8D%AE%E5%AF%86%E9%9B%86%E5%9E%8B%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1%E6%B7%B1%E5%BA%A6%E5%88%86%E6%9E%90-%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" />
+<meta property="og:image" content="https://csqread.top/posts/tech/%E6%95%B0%E6%8D%AE%E5%AF%86%E9%9B%86%E5%9E%8B%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1%E6%B7%B1%E5%BA%A6%E5%88%86%E6%9E%90-%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/ch1.png" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2025-11-13T21:37:30+08:00" />
+<meta property="article:modified_time" content="2025-11-13T21:37:30+08:00" />
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="https://csqread.top/posts/tech/%E6%95%B0%E6%8D%AE%E5%AF%86%E9%9B%86%E5%9E%8B%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1%E6%B7%B1%E5%BA%A6%E5%88%86%E6%9E%90-%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/ch1.png" />
+<meta name="twitter:title" content="数据密集型系统设计深度分析 读书笔记"/>
+<meta name="twitter:description" content="数据密集型系统设计深度分析"/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "Posts",
+      "item": "https://csqread.top/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  3 ,
+      "name": "技术",
+      "item": "https://csqread.top/posts/tech/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  4 ,
+      "name": "数据密集型系统设计深度分析 读书笔记",
+      "item": "https://csqread.top/posts/tech/%E6%95%B0%E6%8D%AE%E5%AF%86%E9%9B%86%E5%9E%8B%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1%E6%B7%B1%E5%BA%A6%E5%88%86%E6%9E%90-%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "数据密集型系统设计深度分析 读书笔记",
+  "name": "数据密集型系统设计深度分析 读书笔记",
+  "description": "数据密集型系统设计深度分析",
+  "keywords": [
+    "DDIA"
+  ],
+  "articleBody": "《数据密集型应用系统设计》(DDIA) 深度学习笔记 作者: Martin Kleppmann\n学习目标: 系统掌握数据密集型应用设计原理\n📋 一、SCQA框架分析 S (Situation - 情境) 现状描述:\n当今互联网时代,大多数应用都是数据密集型而非计算密集型 数据的主要挑战在于:数据量、数据复杂度、数据变化速度 技术生态百花齐放: NoSQL、大数据、Web-Scale、分片、最终一致性、ACID、CAP定理、云服务、MapReduce等 核心定位:\n“不懂数据库的全栈工程师不是好架构师” —— 译者 Vonng\nC (Complication - 冲突) 面临的核心挑战:\n技术选型困境\n单一工具无法满足所有需求 需要组合多种数据系统(数据库、缓存、消息队列、索引) 各种技术的优缺点和适用场景不明确 系统设计难题\n如何确保数据的正确性和完整性? 如何在系统退化时提供稳定性能? 如何应对负载增长? 什么样的API才是好的API? 知识碎片化\n概念繁多,缺乏系统性框架 理论与实践脱节 历史演进脉络不清晰 Q (Question - 问题) 本书要回答的核心问题:\n如何设计可靠、可扩展、可维护的数据系统? 不同数据模型的本质区别和适用场景是什么? 数据存储与检索的底层原理是什么? 分布式系统中如何处理数据复制、分区、一致性? 如何处理批量数据和实时数据流? A (Answer - 答案) 本书的核心解决方案:\n本书通过三大部分、12章内容,构建了完整的数据系统设计框架:\n基础: 数据系统的基石(可靠性、数据模型、存储、编码) 分布式: 分布式数据处理(复制、分区、事务、一致性) 衍生: 批处理与流处理 🗺️ 二、系统思维:全书知识地图 2.1 整体架构(三大部分) 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 数据密集型应用系统设计 │ ├─ 第一部分:数据系统的基石 (单机视角) │ ├─ Ch1: 可靠性、可扩展性、可维护性 [设计目标] │ ├─ Ch2: 数据模型与查询语言 [数据表达] │ ├─ Ch3: 存储与检索 [物理实现] │ └─ Ch4: 编码与演化 [数据格式] │ ├─ 第二部分:分布式数据 (多机视角) │ ├─ Ch5: 复制 [数据冗余] │ ├─ Ch6: 分区 [数据分布] │ ├─ Ch7: 事务 [一致性保证] │ ├─ Ch8: 分布式系统的挑战 [问题识别] │ └─ Ch9: 一致性与共识 [问题解决] │ └─ 第三部分:衍生数据 (数据流视角) ├─ Ch10: 批处理 [离线计算] ├─ Ch11: 流处理 [实时计算] └─ Ch12: 数据系统的未来 [展望] 2.2 系统思维核心连接 因果循环链:\n1 2 3 应用需求 → 数据模型选择 → 存储引擎设计 → 性能特征 → 扩展策略 → 分布式架构 → 一致性权衡 → 系统复杂度 → 维护成本 ↻ 关键反馈机制:\n正向反馈: 数据量增长 → 需要分区 → 复杂度上升 → 需要更好的设计 负向反馈: 系统监控 → 发现问题 → 容错机制 → 系统稳定 📚 三、分章节深度解析 第一部分:数据系统的基石 Ch1: 可靠性、可扩展性、可维护性 三大核心设计目标:\n可靠性 (Reliability)\n定义: 系统在困境中仍能正常工作\n故障类型:\n硬件故障:随机且不相关(磁盘、内存、网络) 软件错误:系统性bug,难以预测(级联故障、资源耗尽) 人为错误:不可避免的操作失误 容错策略:\n1 2 3 硬件层面: 冗余 + 快速恢复 软件层面: 测试 + 进程隔离 + 降级 人为层面: 良好设计 + 沙箱环境 + 快速回滚 可扩展性 (Scalability)\n核心问题: “如果系统以特定方式增长,有什么选项可以应对?”\n负载参数 (案例:Twitter):\n方案1: 查询时join(读压力大) 方案2: 写入时扇出(写压力大) 最终方案: 混合策略(大V用方案1,普通用户用方案2) 性能指标:\n吞吐量 (throughput): 批处理系统关注 响应时间 (response time): 在线系统关注 使用百分位数 (p50, p99, p999) 而非平均值 扩展方式:\n纵向扩展 (scale up): 升级硬件 横向扩展 (scale out): 增加机器 可维护性 (Maintainability)\n可操作性: 让运维团队轻松工作 简单性: 通过抽象管理复杂度 可演化性: 拥抱变化,适应新场景 关键洞察:\n这三个目标不是相互独立的,而是相互影响的系统。可靠性是基础,可扩展性确保未来,可维护性决定长期成本。\nCh2: 数据模型与查询语言 数据模型的层次结构:\n1 2 3 4 5 6 7 现实世界 ↓ (建模) 应用层对象/数据结构 ↓ (持久化) 通用数据模型 (JSON/XML/表/图) ↓ (存储) 字节流 (内存/磁盘/网络) 三大数据模型对比:\n维度 关系模型 文档模型 图模型 数据结构 二维表(行列) JSON/XML树 顶点+边 关系类型 规范化多表 嵌套层次 任意连接 Schema 写时约束(强) 读时解析(弱) 灵活 查询语言 SQL(声明式) MongoDB查询 Cypher/SPARQL 优势场景 多对多关系 一对多关系 高度关联数据 典型应用 MySQL/PostgreSQL MongoDB/CouchDB Neo4j/JanusGraph 局部性 差(需join) 好(树状) 中等 关系模型 vs 文档模型:\n1 2 3 4 5 6 7 8 9 10 11 12 13 关系模型优势: ✓ 多对多关系处理强大 ✓ Join支持完善 ✓ Schema严格,数据一致性好 ✗ 对象关系阻抗不匹配 ✗ 需要多次查询或复杂join 文档模型优势: ✓ Schema灵活,易于演化 ✓ 局部性好(一次读取完整文档) ✓ 更接近应用层数据结构 ✗ 多对多关系表达弱 ✗ 缺乏join,需在应用层处理 查询语言对比:\n声明式 (SQL)\n描述\"想要什么\"而非\"如何获取\" 数据库自动优化执行计划 易于并行化 命令式 (传统代码)\n逐步告诉计算机如何操作 优化依赖程序员 难以优化 图数据模型:\n属性图: 顶点+边,都可以有属性 三元组存储: (主语, 谓语, 宾语) 适用场景: 社交网络、推荐系统、知识图谱 关键洞察:\n数据模型不是选择题,而是工具箱。关系模型、文档模型、图模型各有千秋,未来趋势是融合(Multi-Model Database)。\nCh3: 存储与检索 核心问题: 数据库如何高效存储和检索数据?\n两大存储引擎家族:\n日志结构存储引擎 (LSM-Tree)\n核心思想: 将随机写转换为顺序写\nLSM-Tree架构:\n1 2 3 4 5 6 7 写入流程: 数据 → MemTable(内存) → SSTable(磁盘L0) ↓ (Compaction) SSTable(L1...Ln) 读取流程: 查询 → MemTable → BloomFilter → SSTable(L0→Ln) 优势:\n写入性能极佳(顺序写) 压缩效率高 适合写多读少场景 劣势:\n读放大(需查询多层) Compaction占用资源 代表: LevelDB, RocksDB, Cassandra, HBase\n页面导向存储引擎 (B-Tree)\n核心思想: 原地更新固定大小的页面\nB-Tree结构:\n1 2 3 4 5 6 Root Page ├── Internal Page │ ├── Leaf Page (实际数据) │ └── Leaf Page └── Internal Page └── ... 特性:\n页大小通常4KB 原地更新 使用WAL(预写日志)保证崩溃恢复 优势:\n读性能稳定 每个key只存在一处 成熟稳定 代表: MySQL InnoDB, PostgreSQL\nLSM-Tree vs B-Tree:\n维度 LSM-Tree B-Tree 写入性能 优秀 中等 读取性能 中等 优秀 空间放大 较大(多版本) 较小 写放大 高(Compaction) 中(WAL) 适用场景 写密集 读密集 OLTP vs OLAP:\n1 2 3 4 5 6 7 8 9 OLTP (事务处理): - 特点: 高并发、低延迟、小数据量查询 - 存储: 行存储 - 索引: B-Tree OLAP (分析处理): - 特点: 批量、高吞吐、大数据量聚合 - 存储: 列存储 - 压缩: 高效(相同列数据相似) 列存储优势:\n1 2 3 4 5 6 7 行存储: [id, name, age, city, ...] ← 读取整行 列存储: [所有id][所有name][所有age]... ← 只读需要的列 优势: 1. 只读需要的列,减少IO 2. 相同类型数据压缩效率高 3. 向量化处理(SIMD) Ch4: 编码与演化 核心问题: 数据格式如何支持系统演化?\n编码格式对比:\n格式 优点 缺点 适用场景 JSON 人类可读,广泛支持 体积大,无schema API,配置 XML 复杂结构表达 冗长,解析慢 企业集成 CSV 简单,通用 无类型,列名不明确 数据导出 Protocol Buffers 紧凑,schema演化 二进制不可读 RPC,存储 Thrift 灵活类型系统 生态较小 Hadoop生态 Avro schema演化强,压缩好 学习成本 Kafka,HDFS 数据流的三种类型:\n通过数据库\n写入者编码,读取者解码 需要考虑schema演化 通过服务调用\nREST: 基于HTTP,使用JSON RPC: 类似本地函数调用(gRPC, Thrift) 通过异步消息传递\n消息队列: RabbitMQ, Kafka 解耦生产者和消费者 Schema演化原则:\n1 2 3 4 5 6 7 8 9 10 向后兼容 (Backward Compatibility): 新代码可以读取旧数据 向前兼容 (Forward Compatibility): 旧代码可以读取新数据 实现方式: - 字段添加默认值 - 字段ID而非名称 - 可选字段 第二部分:分布式数据 Ch5: 复制 (Replication) 复制的三个目的:\n高可用性:节点故障时系统继续工作 低延迟:数据靠近用户 高吞吐:分散读取负载 三种复制架构:\n单主复制 (Single-Leader)\n1 2 3 4 Leader (接受写) ├── Follower 1 (复制) ├── Follower 2 (复制) └── Follower 3 (复制) 复制方式:\n同步复制:强一致,慢 异步复制:快,可能丢数据 半同步:折中方案 复制延迟问题:\n读自己的写: 写入后立即读取不到 解决:从主节点读用户自己的数据 单调读: 时光倒流现象 解决:同一用户总是从同一副本读 一致前缀读: 因果关系颠倒 解决:相关写入同一分区 多主复制 (Multi-Leader)\n适用场景:多数据中心、离线客户端 写入冲突:需要冲突解决策略 最后写入胜出 (LWW) 版本向量 自定义逻辑 无主复制 (Leaderless)\n代表:Dynamo, Cassandra 仲裁机制:W + R \u003e N W:写入成功的副本数 R:读取的副本数 N:总副本数 Ch6: 分区 (Partitioning) 分区目的: 将大数据集分散到多个节点\n分区策略:\n基于键范围分区\n1 2 3 分区1: [A-D] 分区2: [E-M] 分区3: [N-Z] 优点:范围查询高效 缺点:可能倾斜 基于键哈希分区\n1 hash(key) % N → 分区号 优点:负载均衡 缺点:失去范围查询能力 一致性哈希\n解决节点增减时的数据迁移问题 次级索引的分区:\n基于文档分区: 每个分区维护自己的次级索引 基于词条分区: 全局索引,按词条分区 分区再平衡:\n固定数量分区 动态分区 按节点比例分区 Ch7-9: 事务、分布式挑战、一致性与共识 事务的ACID:\n1 2 3 4 Atomicity (原子性): 全部成功或全部失败 Consistency (一致性): 满足约束条件 Isolation (隔离性): 并发事务互不干扰 Durability (持久性): 已提交不会丢失 隔离级别:\n读未提交 读已提交 可重复读 串行化 分布式系统的挑战:\n网络不可靠 时钟不可靠 进程可能暂停 一致性模型:\n1 2 3 4 5 6 7 强一致性 (Linearizability) ↓ 顺序一致性 ↓ 因果一致性 ↓ 最终一致性 共识算法:\nPaxos Raft ZAB (Zookeeper) 第三部分:衍生数据 Ch10-11: 批处理与流处理 批处理 (MapReduce):\n1 Input → Map → Shuffle → Reduce → Output 适用:离线大数据分析 代表:Hadoop, Spark 流处理:\n1 Event Stream → Processing → Output Stream 适用:实时分析、监控 代表:Kafka Streams, Flink, Storm Lambda架构:\n1 2 3 批处理层 (历史数据) ↘ → 合并 → 查询 流处理层 (实时数据) ↗ Kappa架构:\n1 只用流处理,批处理用重放流实现 🔗 四、跨源比较分析 4.1 与其他经典书籍对比 书籍 DDIA 《大规模分布式存储系统》 《数据库系统内幕》 侧重点 全栈数据系统 存储系统 数据库内核 深度 广而深 深 极深 实践性 强(大量案例) 中 偏理论 适合人群 架构师/后端 存储工程师 数据库内核开发 4.2 与在线课程对比 MIT 6.824 (分布式系统):\nDDIA:理论+实践,更全面 6.824:侧重分布式理论和Lab CMU 15-721 (数据库系统):\nDDIA:更广,覆盖NoSQL和大数据 15-721:更深,聚焦数据库内核 4.3 技术演进对比 从单机到分布式的演进:\n1 2 3 4 5 6 7 8 9 1970s: 关系数据库诞生 (单机时代) ↓ 1980s-1990s: 商业数据库成熟 (Oracle, DB2) ↓ 2000s: NoSQL运动 (Google Bigtable, Amazon Dynamo) ↓ 2010s: NewSQL出现 (融合SQL和NoSQL优点) ↓ 2020s: 云原生数据库 (Serverless, 分离计算存储) DDIA在技术演进中的定位:\n不追逐时髦词汇,而是揭示底层原理和权衡(Trade-offs)\n⚡ 五、核心概念速查表 5.1 CAP定理 1 2 3 4 5 6 7 8 9 Consistency (一致性) Availability (可用性) Partition Tolerance (分区容错) 只能同时满足两个! CA系统: 单机数据库 CP系统: HBase, MongoDB AP系统: Dynamo, Cassandra 5.2 BASE理论 1 2 3 4 5 Basically Available (基本可用) Soft state (软状态) Eventually consistent (最终一致性) → NoSQL的理论基础 5.3 常见权衡(Trade-offs) 维度 选项A 选项B 一致性 vs 可用性 强一致 高可用 延迟 vs 吞吐量 低延迟 高吞吐 读优化 vs 写优化 B-Tree LSM-Tree 规范化 vs 反规范化 多表join 数据冗余 同步 vs 异步 数据安全 高性能 🎯 六、学习路径建议 6.1 基础阶段 (1-4章) 目标: 掌握单机数据系统原理\n学习重点:\n三大设计目标的内涵 数据模型的选择标准 LSM-Tree vs B-Tree Schema演化策略 实践项目:\n实现一个简单的KV存储引擎 对比MySQL和MongoDB的使用场景 6.2 进阶阶段 (5-9章) 目标: 理解分布式系统核心问题\n学习重点:\n复制延迟及解决方案 分区策略选择 事务隔离级别 一致性模型 实践项目:\n使用Raft实现分布式KV 分析Redis Cluster的分区方案 6.3 高级阶段 (10-12章) 目标: 掌握数据流处理\n学习重点:\nMapReduce工作原理 流处理vs批处理 Lambda/Kappa架构 实践项目:\n使用Kafka Streams构建实时管道 实现一个小型流处理框架 💡 七、关键洞察与启发 7.1 设计哲学 1. 没有银弹\n每种技术都有其适用场景和限制,关键是理解权衡(Trade-offs)\n2. 简单性至关重要\n复杂度是系统的最大敌人,应通过抽象管理复杂度\n3. 数据系统是演化的\n系统必须支持演化,包括Schema演化、版本兼容\n7.2 实践智慧 架构设计清单:\n1 2 3 4 5 6 7 □ 是否理解负载特征?(读/写比例、数据量、查询模式) □ 是否选择了合适的数据模型? □ 是否考虑了故障场景? □ 是否需要分布式?(过早分布式是万恶之源) □ 一致性要求是什么?(不要盲目追求强一致) □ 如何监控和调试? □ 如何演化和迁移? 常见反模式:\n❌ 过早优化 ❌ 盲目追随流行技术 ❌ 忽视运维和监控 ❌ 没有考虑演化路径 7.3 未来趋势 根据本书和技术发展,数据系统的未来方向:\nServerless数据库\n按需扩展 分离计算和存储 代表:Aurora Serverless, Neon 多模型数据库\n融合关系、文档、图 代表:ArangoDB, OrientDB AI驱动优化\n自动索引推荐 自动参数调优 隐私增强技术\n同态加密 联邦学习 📖 八、延伸阅读建议 8.1 论文推荐 每章末尾都有高质量引用,特别推荐:\n基础论文:\nBigtable: A Distributed Storage System Dynamo: Amazon’s Highly Available Key-value Store MapReduce: Simplified Data Processing 共识算法:\nPaxos Made Simple In Search of an Understandable Consensus Algorithm (Raft) 8.2 开源项目学习 理解LSM-Tree: LevelDB源码 理解B-Tree: SQLite源码 理解分布式: etcd(使用Raft), TiDB 理解流处理: Kafka源码\n8.3 实践环境 本地环境:\nDocker搭建各种数据库 使用Vagrant模拟分布式环境 云环境:\nAWS: DynamoDB, Aurora GCP: Bigtable, Spanner 🔥 九、速记卡片 数据系统设计的核心铁律 1 2 3 4 5 6 7 ✅ 可靠性第一,不要牺牲正确性 ✅ 理解负载特征再做决策 ✅ 测量,不要猜测 ✅ 简单优于复杂 ✅ 为演化而设计 ✅ 权衡是不可避免的,关键是有意识地权衡 ✅ 没有完美的系统,只有合适的系统 技术选型决策树 1 2 3 4 5 6 7 需要ACID事务? ├─ 是 → 单机数据量? │ ├─ 小 → MySQL/PostgreSQL │ └─ 大 → TiDB/CockroachDB └─ 否 → 数据模型? ├─ 文档 → MongoDB ",
+  "wordCount" : "5541",
+  "inLanguage": "zh",
+  "image":"https://csqread.top/posts/tech/%E6%95%B0%E6%8D%AE%E5%AF%86%E9%9B%86%E5%9E%8B%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1%E6%B7%B1%E5%BA%A6%E5%88%86%E6%9E%90-%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/ch1.png","datePublished": "2025-11-13T21:37:30+08:00",
+  "dateModified": "2025-11-13T21:37:30+08:00",
+  "author":[{
+    "@type": "Person",
+    "name": "ShengQian"
+  }],
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://csqread.top/posts/tech/%E6%95%B0%E6%8D%AE%E5%AF%86%E9%9B%86%E5%9E%8B%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1%E6%B7%B1%E5%BA%A6%E5%88%86%E6%9E%90-%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Qian's Blog",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://csqread.top/img/Q.gif"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://csqread.top" accesskey="h" title="Qian&#39;s Blog (Alt + H)">
+                <img src="https://csqread.top/img/%21.jpg" alt="" aria-label="logo"
+                    height="35">Qian&#39;s Blog</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="https://csqread.top/search" title="🔍搜索">
+                    <span>🔍搜索</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://csqread.top/" title="🏠主页">
+                    <span>🏠主页</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://csqread.top/posts" title="📚文章">
+                    <span>📚文章</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://csqread.top/archives/" title="⏱时间轴">
+                    <span>⏱时间轴</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://csqread.top/tags" title="🔖标签">
+                    <span>🔖标签</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://csqread.top/about" title="🙋🏻‍♂️关于">
+                    <span>🙋🏻‍♂️关于</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://csqread.top/links" title="🤝友链">
+                    <span>🤝友链</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    <div class="breadcrumbs"><a href="https://csqread.top">主页</a>&nbsp;»&nbsp;<a href="https://csqread.top/posts/">Posts</a>&nbsp;»&nbsp;<a href="https://csqread.top/posts/tech/">技术</a></div>
+    <h1 class="post-title">
+      数据密集型系统设计深度分析 读书笔记
+    </h1>
+    <div class="post-description">
+      数据密集型系统设计深度分析
+    </div>
+    <div class="post-meta">
+
+
+
+
+
+
+
+
+
+
+创建:&nbsp;<span title='2025-11-13 21:37:30 +0800 CST'>2025-11-13</span>&nbsp;|&nbsp;更新:&nbsp;2025-11-13&nbsp;|&nbsp;字数:&nbsp;5541字&nbsp;|&nbsp;时长: 12分钟&nbsp;|&nbsp;
+作者:&nbsp;ShengQian
+
+
+    &nbsp;|&nbsp;标签: &nbsp;
+    <ul class="post-tags-meta">
+        <a href="https://csqread.top/tags/ddia/">DDIA</a>
+    </ul>
+
+    
+    
+    
+    
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span id="busuanzi_container_page_pv">
+        &nbsp;| 访问: <span id="busuanzi_value_page_pv"></span>
+    </span>
+
+    
+    
+    
+    
+    <script src="https://cdn.staticfile.org/twikoo/1.4.11/twikoo.all.min.js">
+    </script>
+    <script>
+        let url = document.documentURI
+        
+        let dnsUrl = "https://csqread.top"
+        let urlSplit = url.split(dnsUrl)
+        let finalUrl = urlSplit[1]
+        if (finalUrl[0] !== '/') {
+            finalUrl = '/'+finalUrl
+        }
+        twikoo.getCommentsCount({
+            envId:  null ,
+            region:  null ,
+            urls: [
+                finalUrl,
+            ],
+            includeReply: false 
+        }).then(function (res) {
+            let count = res[0].count
+            const obj = document.getElementById("comment_count");
+            obj.innerText = count
+            
+            
+            
+        }).catch(function (err) {
+            
+            console.error(err);
+        });
+    </script>
+    &nbsp;| 评论: &nbsp; <span id="comment_count"></span>
+
+</div>
+  </header> 
+<figure class="entry-cover1"><img style="zoom:;" loading="lazy" src="https://csqread.top/posts/tech/%E6%95%B0%E6%8D%AE%E5%AF%86%E9%9B%86%E5%9E%8B%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1%E6%B7%B1%E5%BA%A6%E5%88%86%E6%9E%90-%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/ch1.png" alt="">
+    
+</figure><aside id="toc-container" class="toc-container wide">
+    <div class="toc">
+        <details  open>
+            <summary accesskey="c" title="(Alt + C)">
+                <span class="details">目录</span>
+            </summary>
+
+            <div class="inner"><ul>
+                    <li>
+                        <a href="#%e6%95%b0%e6%8d%ae%e5%af%86%e9%9b%86%e5%9e%8b%e5%ba%94%e7%94%a8%e7%b3%bb%e7%bb%9f%e8%ae%be%e8%ae%a1ddia-%e6%b7%b1%e5%ba%a6%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0" aria-label="《数据密集型应用系统设计》(DDIA) 深度学习笔记">《数据密集型应用系统设计》(DDIA) 深度学习笔记</a><ul>
+                            
+                    <li>
+                        <a href="#-%e4%b8%80scqa%e6%a1%86%e6%9e%b6%e5%88%86%e6%9e%90" aria-label="📋 一、SCQA框架分析">📋 一、SCQA框架分析</a><ul>
+                            
+                    <li>
+                        <a href="#s-situation---%e6%83%85%e5%a2%83" aria-label="S (Situation - 情境)">S (Situation - 情境)</a></li>
+                    <li>
+                        <a href="#c-complication---%e5%86%b2%e7%aa%81" aria-label="C (Complication - 冲突)">C (Complication - 冲突)</a></li>
+                    <li>
+                        <a href="#q-question---%e9%97%ae%e9%a2%98" aria-label="Q (Question - 问题)">Q (Question - 问题)</a></li>
+                    <li>
+                        <a href="#a-answer---%e7%ad%94%e6%a1%88" aria-label="A (Answer - 答案)">A (Answer - 答案)</a></li></ul>
+                    </li>
+                    <li>
+                        <a href="#-%e4%ba%8c%e7%b3%bb%e7%bb%9f%e6%80%9d%e7%bb%b4%e5%85%a8%e4%b9%a6%e7%9f%a5%e8%af%86%e5%9c%b0%e5%9b%be" aria-label="🗺️ 二、系统思维:全书知识地图">🗺️ 二、系统思维:全书知识地图</a><ul>
+                            
+                    <li>
+                        <a href="#21-%e6%95%b4%e4%bd%93%e6%9e%b6%e6%9e%84%e4%b8%89%e5%a4%a7%e9%83%a8%e5%88%86" aria-label="2.1 整体架构(三大部分)">2.1 整体架构(三大部分)</a></li>
+                    <li>
+                        <a href="#22-%e7%b3%bb%e7%bb%9f%e6%80%9d%e7%bb%b4%e6%a0%b8%e5%bf%83%e8%bf%9e%e6%8e%a5" aria-label="2.2 系统思维核心连接">2.2 系统思维核心连接</a></li></ul>
+                    </li>
+                    <li>
+                        <a href="#-%e4%b8%89%e5%88%86%e7%ab%a0%e8%8a%82%e6%b7%b1%e5%ba%a6%e8%a7%a3%e6%9e%90" aria-label="📚 三、分章节深度解析">📚 三、分章节深度解析</a><ul>
+                            
+                    <li>
+                        <a href="#%e7%ac%ac%e4%b8%80%e9%83%a8%e5%88%86%e6%95%b0%e6%8d%ae%e7%b3%bb%e7%bb%9f%e7%9a%84%e5%9f%ba%e7%9f%b3" aria-label="第一部分:数据系统的基石">第一部分:数据系统的基石</a><ul>
+                            
+                    <li>
+                        <a href="#ch1-%e5%8f%af%e9%9d%a0%e6%80%a7%e5%8f%af%e6%89%a9%e5%b1%95%e6%80%a7%e5%8f%af%e7%bb%b4%e6%8a%a4%e6%80%a7" aria-label="Ch1: 可靠性、可扩展性、可维护性">Ch1: 可靠性、可扩展性、可维护性</a></li>
+                    <li>
+                        <a href="#ch2-%e6%95%b0%e6%8d%ae%e6%a8%a1%e5%9e%8b%e4%b8%8e%e6%9f%a5%e8%af%a2%e8%af%ad%e8%a8%80" aria-label="Ch2: 数据模型与查询语言">Ch2: 数据模型与查询语言</a></li>
+                    <li>
+                        <a href="#ch3-%e5%ad%98%e5%82%a8%e4%b8%8e%e6%a3%80%e7%b4%a2" aria-label="Ch3: 存储与检索">Ch3: 存储与检索</a></li>
+                    <li>
+                        <a href="#ch4-%e7%bc%96%e7%a0%81%e4%b8%8e%e6%bc%94%e5%8c%96" aria-label="Ch4: 编码与演化">Ch4: 编码与演化</a></li></ul>
+                    </li>
+                    <li>
+                        <a href="#%e7%ac%ac%e4%ba%8c%e9%83%a8%e5%88%86%e5%88%86%e5%b8%83%e5%bc%8f%e6%95%b0%e6%8d%ae" aria-label="第二部分:分布式数据">第二部分:分布式数据</a><ul>
+                            
+                    <li>
+                        <a href="#ch5-%e5%a4%8d%e5%88%b6-replication" aria-label="Ch5: 复制 (Replication)">Ch5: 复制 (Replication)</a></li>
+                    <li>
+                        <a href="#ch6-%e5%88%86%e5%8c%ba-partitioning" aria-label="Ch6: 分区 (Partitioning)">Ch6: 分区 (Partitioning)</a></li>
+                    <li>
+                        <a href="#ch7-9-%e4%ba%8b%e5%8a%a1%e5%88%86%e5%b8%83%e5%bc%8f%e6%8c%91%e6%88%98%e4%b8%80%e8%87%b4%e6%80%a7%e4%b8%8e%e5%85%b1%e8%af%86" aria-label="Ch7-9: 事务、分布式挑战、一致性与共识">Ch7-9: 事务、分布式挑战、一致性与共识</a></li></ul>
+                    </li>
+                    <li>
+                        <a href="#%e7%ac%ac%e4%b8%89%e9%83%a8%e5%88%86%e8%a1%8d%e7%94%9f%e6%95%b0%e6%8d%ae" aria-label="第三部分:衍生数据">第三部分:衍生数据</a><ul>
+                            
+                    <li>
+                        <a href="#ch10-11-%e6%89%b9%e5%a4%84%e7%90%86%e4%b8%8e%e6%b5%81%e5%a4%84%e7%90%86" aria-label="Ch10-11: 批处理与流处理">Ch10-11: 批处理与流处理</a></li></ul>
+                    </li></ul>
+                    </li>
+                    <li>
+                        <a href="#-%e5%9b%9b%e8%b7%a8%e6%ba%90%e6%af%94%e8%be%83%e5%88%86%e6%9e%90" aria-label="🔗 四、跨源比较分析">🔗 四、跨源比较分析</a><ul>
+                            
+                    <li>
+                        <a href="#41-%e4%b8%8e%e5%85%b6%e4%bb%96%e7%bb%8f%e5%85%b8%e4%b9%a6%e7%b1%8d%e5%af%b9%e6%af%94" aria-label="4.1 与其他经典书籍对比">4.1 与其他经典书籍对比</a></li>
+                    <li>
+                        <a href="#42-%e4%b8%8e%e5%9c%a8%e7%ba%bf%e8%af%be%e7%a8%8b%e5%af%b9%e6%af%94" aria-label="4.2 与在线课程对比">4.2 与在线课程对比</a></li>
+                    <li>
+                        <a href="#43-%e6%8a%80%e6%9c%af%e6%bc%94%e8%bf%9b%e5%af%b9%e6%af%94" aria-label="4.3 技术演进对比">4.3 技术演进对比</a></li></ul>
+                    </li>
+                    <li>
+                        <a href="#-%e4%ba%94%e6%a0%b8%e5%bf%83%e6%a6%82%e5%bf%b5%e9%80%9f%e6%9f%a5%e8%a1%a8" aria-label="⚡ 五、核心概念速查表">⚡ 五、核心概念速查表</a><ul>
+                            
+                    <li>
+                        <a href="#51-cap%e5%ae%9a%e7%90%86" aria-label="5.1 CAP定理">5.1 CAP定理</a></li>
+                    <li>
+                        <a href="#52-base%e7%90%86%e8%ae%ba" aria-label="5.2 BASE理论">5.2 BASE理论</a></li>
+                    <li>
+                        <a href="#53-%e5%b8%b8%e8%a7%81%e6%9d%83%e8%a1%a1trade-offs" aria-label="5.3 常见权衡(Trade-offs)">5.3 常见权衡(Trade-offs)</a></li></ul>
+                    </li>
+                    <li>
+                        <a href="#-%e5%85%ad%e5%ad%a6%e4%b9%a0%e8%b7%af%e5%be%84%e5%bb%ba%e8%ae%ae" aria-label="🎯 六、学习路径建议">🎯 六、学习路径建议</a><ul>
+                            
+                    <li>
+                        <a href="#61-%e5%9f%ba%e7%a1%80%e9%98%b6%e6%ae%b5-1-4%e7%ab%a0" aria-label="6.1 基础阶段 (1-4章)">6.1 基础阶段 (1-4章)</a></li>
+                    <li>
+                        <a href="#62-%e8%bf%9b%e9%98%b6%e9%98%b6%e6%ae%b5-5-9%e7%ab%a0" aria-label="6.2 进阶阶段 (5-9章)">6.2 进阶阶段 (5-9章)</a></li>
+                    <li>
+                        <a href="#63-%e9%ab%98%e7%ba%a7%e9%98%b6%e6%ae%b5-10-12%e7%ab%a0" aria-label="6.3 高级阶段 (10-12章)">6.3 高级阶段 (10-12章)</a></li></ul>
+                    </li>
+                    <li>
+                        <a href="#-%e4%b8%83%e5%85%b3%e9%94%ae%e6%b4%9e%e5%af%9f%e4%b8%8e%e5%90%af%e5%8f%91" aria-label="💡 七、关键洞察与启发">💡 七、关键洞察与启发</a><ul>
+                            
+                    <li>
+                        <a href="#71-%e8%ae%be%e8%ae%a1%e5%93%b2%e5%ad%a6" aria-label="7.1 设计哲学">7.1 设计哲学</a></li>
+                    <li>
+                        <a href="#72-%e5%ae%9e%e8%b7%b5%e6%99%ba%e6%85%a7" aria-label="7.2 实践智慧">7.2 实践智慧</a></li>
+                    <li>
+                        <a href="#73-%e6%9c%aa%e6%9d%a5%e8%b6%8b%e5%8a%bf" aria-label="7.3 未来趋势">7.3 未来趋势</a></li></ul>
+                    </li>
+                    <li>
+                        <a href="#-%e5%85%ab%e5%bb%b6%e4%bc%b8%e9%98%85%e8%af%bb%e5%bb%ba%e8%ae%ae" aria-label="📖 八、延伸阅读建议">📖 八、延伸阅读建议</a><ul>
+                            
+                    <li>
+                        <a href="#81-%e8%ae%ba%e6%96%87%e6%8e%a8%e8%8d%90" aria-label="8.1 论文推荐">8.1 论文推荐</a></li>
+                    <li>
+                        <a href="#82-%e5%bc%80%e6%ba%90%e9%a1%b9%e7%9b%ae%e5%ad%a6%e4%b9%a0" aria-label="8.2 开源项目学习">8.2 开源项目学习</a></li>
+                    <li>
+                        <a href="#83-%e5%ae%9e%e8%b7%b5%e7%8e%af%e5%a2%83" aria-label="8.3 实践环境">8.3 实践环境</a></li></ul>
+                    </li>
+                    <li>
+                        <a href="#-%e4%b9%9d%e9%80%9f%e8%ae%b0%e5%8d%a1%e7%89%87" aria-label="🔥 九、速记卡片">🔥 九、速记卡片</a><ul>
+                            
+                    <li>
+                        <a href="#%e6%95%b0%e6%8d%ae%e7%b3%bb%e7%bb%9f%e8%ae%be%e8%ae%a1%e7%9a%84%e6%a0%b8%e5%bf%83%e9%93%81%e5%be%8b" aria-label="数据系统设计的核心铁律">数据系统设计的核心铁律</a></li>
+                    <li>
+                        <a href="#%e6%8a%80%e6%9c%af%e9%80%89%e5%9e%8b%e5%86%b3%e7%ad%96%e6%a0%91" aria-label="技术选型决策树">技术选型决策树</a>
+                    </li>
+                </ul>
+                </li>
+                </ul>
+                </li>
+                </ul>
+            </div>
+        </details>
+    </div>
+</aside>
+<script>
+    let activeElement;
+    let elements;
+    window.addEventListener('DOMContentLoaded', function (event) {
+        checkTocPosition();
+
+        elements = document.querySelectorAll('h1[id],h2[id],h3[id],h4[id],h5[id],h6[id]');
+         
+         activeElement = elements[0];
+         const id = encodeURI(activeElement.getAttribute('id')).toLowerCase();
+         document.querySelector(`.inner ul li a[href="#${id}"]`).classList.add('active');
+     }, false);
+
+    window.addEventListener('resize', function(event) {
+        checkTocPosition();
+    }, false);
+
+    window.addEventListener('scroll', () => {
+        
+        activeElement = Array.from(elements).find((element) => {
+            if ((getOffsetTop(element) - window.pageYOffset) > 0 && 
+                (getOffsetTop(element) - window.pageYOffset) < window.innerHeight/2) {
+                return element;
+            }
+        }) || activeElement
+
+        elements.forEach(element => {
+             const id = encodeURI(element.getAttribute('id')).toLowerCase();
+             if (element === activeElement){
+                 document.querySelector(`.inner ul li a[href="#${id}"]`).classList.add('active');
+             } else {
+                 document.querySelector(`.inner ul li a[href="#${id}"]`).classList.remove('active');
+             }
+         })
+     }, false);
+
+    const main = parseInt(getComputedStyle(document.body).getPropertyValue('--article-width'), 10);
+    const toc = parseInt(getComputedStyle(document.body).getPropertyValue('--toc-width'), 10);
+    const gap = parseInt(getComputedStyle(document.body).getPropertyValue('--gap'), 10);
+
+    function checkTocPosition() {
+        const width = document.body.scrollWidth;
+
+        if (width - main - (toc * 2) - (gap * 4) > 0) {
+            document.getElementById("toc-container").classList.add("wide");
+        } else {
+            document.getElementById("toc-container").classList.remove("wide");
+        }
+    }
+
+    function getOffsetTop(element) {
+        if (!element.getClientRects().length) {
+            return 0;
+        }
+        let rect = element.getBoundingClientRect();
+        let win = element.ownerDocument.defaultView;
+        return rect.top + win.pageYOffset;   
+    }
+</script>
+  <div class="post-content"><h1 id="数据密集型应用系统设计ddia-深度学习笔记">《数据密集型应用系统设计》(DDIA) 深度学习笔记<a hidden class="anchor" aria-hidden="true" href="#数据密集型应用系统设计ddia-深度学习笔记">#</a></h1>
+<blockquote>
+<p><strong>作者</strong>: Martin Kleppmann<br>
+<strong>学习目标</strong>: 系统掌握数据密集型应用设计原理</p>
+</blockquote>
+<hr>
+<h2 id="-一scqa框架分析">📋 一、SCQA框架分析<a hidden class="anchor" aria-hidden="true" href="#-一scqa框架分析">#</a></h2>
+<h3 id="s-situation---情境">S (Situation - 情境)<a hidden class="anchor" aria-hidden="true" href="#s-situation---情境">#</a></h3>
+<p><strong>现状描述</strong>:</p>
+<ul>
+<li>当今互联网时代,大多数应用都是<strong>数据密集型</strong>而非计算密集型</li>
+<li>数据的主要挑战在于:数据量、数据复杂度、数据变化速度</li>
+<li>技术生态百花齐放: NoSQL、大数据、Web-Scale、分片、最终一致性、ACID、CAP定理、云服务、MapReduce等</li>
+</ul>
+<p><strong>核心定位</strong>:</p>
+<blockquote>
+<p>&ldquo;不懂数据库的全栈工程师不是好架构师&rdquo; —— 译者 Vonng</p>
+</blockquote>
+<h3 id="c-complication---冲突">C (Complication - 冲突)<a hidden class="anchor" aria-hidden="true" href="#c-complication---冲突">#</a></h3>
+<p><strong>面临的核心挑战</strong>:</p>
+<ol>
+<li>
+<p><strong>技术选型困境</strong></p>
+<ul>
+<li>单一工具无法满足所有需求</li>
+<li>需要组合多种数据系统(数据库、缓存、消息队列、索引)</li>
+<li>各种技术的优缺点和适用场景不明确</li>
+</ul>
+</li>
+<li>
+<p><strong>系统设计难题</strong></p>
+<ul>
+<li>如何确保数据的正确性和完整性?</li>
+<li>如何在系统退化时提供稳定性能?</li>
+<li>如何应对负载增长?</li>
+<li>什么样的API才是好的API?</li>
+</ul>
+</li>
+<li>
+<p><strong>知识碎片化</strong></p>
+<ul>
+<li>概念繁多,缺乏系统性框架</li>
+<li>理论与实践脱节</li>
+<li>历史演进脉络不清晰</li>
+</ul>
+</li>
+</ol>
+<h3 id="q-question---问题">Q (Question - 问题)<a hidden class="anchor" aria-hidden="true" href="#q-question---问题">#</a></h3>
+<p><strong>本书要回答的核心问题</strong>:</p>
+<ol>
+<li>如何设计<strong>可靠、可扩展、可维护</strong>的数据系统?</li>
+<li>不同数据模型的本质区别和适用场景是什么?</li>
+<li>数据存储与检索的底层原理是什么?</li>
+<li>分布式系统中如何处理数据复制、分区、一致性?</li>
+<li>如何处理批量数据和实时数据流?</li>
+</ol>
+<h3 id="a-answer---答案">A (Answer - 答案)<a hidden class="anchor" aria-hidden="true" href="#a-answer---答案">#</a></h3>
+<p><strong>本书的核心解决方案</strong>:</p>
+<p>本书通过<strong>三大部分、12章内容</strong>,构建了完整的数据系统设计框架:</p>
+<ul>
+<li><strong>基础</strong>: 数据系统的基石(可靠性、数据模型、存储、编码)</li>
+<li><strong>分布式</strong>: 分布式数据处理(复制、分区、事务、一致性)</li>
+<li><strong>衍生</strong>: 批处理与流处理</li>
+</ul>
+<hr>
+<h2 id="-二系统思维全书知识地图">🗺️ 二、系统思维:全书知识地图<a hidden class="anchor" aria-hidden="true" href="#-二系统思维全书知识地图">#</a></h2>
+<h3 id="21-整体架构三大部分">2.1 整体架构(三大部分)<a hidden class="anchor" aria-hidden="true" href="#21-整体架构三大部分">#</a></h3>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">12
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">13
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">14
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">15
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">16
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">17
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">18
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">19
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>数据密集型应用系统设计
+</span></span><span style="display:flex;"><span>│
+</span></span><span style="display:flex;"><span>├─ 第一部分:数据系统的基石 (单机视角)
+</span></span><span style="display:flex;"><span>│  ├─ Ch1: 可靠性、可扩展性、可维护性 [设计目标]
+</span></span><span style="display:flex;"><span>│  ├─ Ch2: 数据模型与查询语言 [数据表达]
+</span></span><span style="display:flex;"><span>│  ├─ Ch3: 存储与检索 [物理实现]
+</span></span><span style="display:flex;"><span>│  └─ Ch4: 编码与演化 [数据格式]
+</span></span><span style="display:flex;"><span>│
+</span></span><span style="display:flex;"><span>├─ 第二部分:分布式数据 (多机视角)
+</span></span><span style="display:flex;"><span>│  ├─ Ch5: 复制 [数据冗余]
+</span></span><span style="display:flex;"><span>│  ├─ Ch6: 分区 [数据分布]
+</span></span><span style="display:flex;"><span>│  ├─ Ch7: 事务 [一致性保证]
+</span></span><span style="display:flex;"><span>│  ├─ Ch8: 分布式系统的挑战 [问题识别]
+</span></span><span style="display:flex;"><span>│  └─ Ch9: 一致性与共识 [问题解决]
+</span></span><span style="display:flex;"><span>│
+</span></span><span style="display:flex;"><span>└─ 第三部分:衍生数据 (数据流视角)
+</span></span><span style="display:flex;"><span>   ├─ Ch10: 批处理 [离线计算]
+</span></span><span style="display:flex;"><span>   ├─ Ch11: 流处理 [实时计算]
+</span></span><span style="display:flex;"><span>   └─ Ch12: 数据系统的未来 [展望]
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="22-系统思维核心连接">2.2 系统思维核心连接<a hidden class="anchor" aria-hidden="true" href="#22-系统思维核心连接">#</a></h3>
+<p><strong>因果循环链</strong>:</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>应用需求 → 数据模型选择 → 存储引擎设计 → 
+</span></span><span style="display:flex;"><span>性能特征 → 扩展策略 → 分布式架构 → 
+</span></span><span style="display:flex;"><span>一致性权衡 → 系统复杂度 → 维护成本 ↻
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><strong>关键反馈机制</strong>:</p>
+<ul>
+<li><strong>正向反馈</strong>: 数据量增长 → 需要分区 → 复杂度上升 → 需要更好的设计</li>
+<li><strong>负向反馈</strong>: 系统监控 → 发现问题 → 容错机制 → 系统稳定</li>
+</ul>
+<hr>
+<h2 id="-三分章节深度解析">📚 三、分章节深度解析<a hidden class="anchor" aria-hidden="true" href="#-三分章节深度解析">#</a></h2>
+<h3 id="第一部分数据系统的基石">第一部分:数据系统的基石<a hidden class="anchor" aria-hidden="true" href="#第一部分数据系统的基石">#</a></h3>
+<h4 id="ch1-可靠性可扩展性可维护性">Ch1: 可靠性、可扩展性、可维护性<a hidden class="anchor" aria-hidden="true" href="#ch1-可靠性可扩展性可维护性">#</a></h4>
+<p><strong>三大核心设计目标</strong>:</p>
+<ol>
+<li>
+<p><strong>可靠性 (Reliability)</strong></p>
+<ul>
+<li>
+<p><strong>定义</strong>: 系统在困境中仍能正常工作</p>
+</li>
+<li>
+<p><strong>故障类型</strong>:</p>
+<ul>
+<li>硬件故障:随机且不相关(磁盘、内存、网络)</li>
+<li>软件错误:系统性bug,难以预测(级联故障、资源耗尽)</li>
+<li>人为错误:不可避免的操作失误</li>
+</ul>
+</li>
+<li>
+<p><strong>容错策略</strong>:</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>硬件层面: 冗余 + 快速恢复
+</span></span><span style="display:flex;"><span>软件层面: 测试 + 进程隔离 + 降级
+</span></span><span style="display:flex;"><span>人为层面: 良好设计 + 沙箱环境 + 快速回滚
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+</li>
+<li>
+<p><strong>可扩展性 (Scalability)</strong></p>
+<ul>
+<li>
+<p><strong>核心问题</strong>: &ldquo;如果系统以特定方式增长,有什么选项可以应对?&rdquo;</p>
+</li>
+<li>
+<p><strong>负载参数</strong> (案例:Twitter):</p>
+<ul>
+<li>方案1: 查询时join(读压力大)</li>
+<li>方案2: 写入时扇出(写压力大)</li>
+<li>最终方案: 混合策略(大V用方案1,普通用户用方案2)</li>
+</ul>
+</li>
+<li>
+<p><strong>性能指标</strong>:</p>
+<ul>
+<li>吞吐量 (throughput): 批处理系统关注</li>
+<li>响应时间 (response time): 在线系统关注</li>
+<li>使用百分位数 (p50, p99, p999) 而非平均值</li>
+</ul>
+</li>
+<li>
+<p><strong>扩展方式</strong>:</p>
+<ul>
+<li>纵向扩展 (scale up): 升级硬件</li>
+<li>横向扩展 (scale out): 增加机器</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>可维护性 (Maintainability)</strong></p>
+<ul>
+<li><strong>可操作性</strong>: 让运维团队轻松工作</li>
+<li><strong>简单性</strong>: 通过抽象管理复杂度</li>
+<li><strong>可演化性</strong>: 拥抱变化,适应新场景</li>
+</ul>
+</li>
+</ol>
+<p><strong>关键洞察</strong>:</p>
+<blockquote>
+<p>这三个目标不是相互独立的,而是相互影响的系统。可靠性是基础,可扩展性确保未来,可维护性决定长期成本。</p>
+</blockquote>
+<hr>
+<h4 id="ch2-数据模型与查询语言">Ch2: 数据模型与查询语言<a hidden class="anchor" aria-hidden="true" href="#ch2-数据模型与查询语言">#</a></h4>
+<p><strong>数据模型的层次结构</strong>:</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">7
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>现实世界
+</span></span><span style="display:flex;"><span>  ↓ (建模)
+</span></span><span style="display:flex;"><span>应用层对象/数据结构
+</span></span><span style="display:flex;"><span>  ↓ (持久化)
+</span></span><span style="display:flex;"><span>通用数据模型 (JSON/XML/表/图)
+</span></span><span style="display:flex;"><span>  ↓ (存储)
+</span></span><span style="display:flex;"><span>字节流 (内存/磁盘/网络)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><strong>三大数据模型对比</strong>:</p>
+<table>
+<thead>
+<tr>
+<th>维度</th>
+<th>关系模型</th>
+<th>文档模型</th>
+<th>图模型</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>数据结构</strong></td>
+<td>二维表(行列)</td>
+<td>JSON/XML树</td>
+<td>顶点+边</td>
+</tr>
+<tr>
+<td><strong>关系类型</strong></td>
+<td>规范化多表</td>
+<td>嵌套层次</td>
+<td>任意连接</td>
+</tr>
+<tr>
+<td><strong>Schema</strong></td>
+<td>写时约束(强)</td>
+<td>读时解析(弱)</td>
+<td>灵活</td>
+</tr>
+<tr>
+<td><strong>查询语言</strong></td>
+<td>SQL(声明式)</td>
+<td>MongoDB查询</td>
+<td>Cypher/SPARQL</td>
+</tr>
+<tr>
+<td><strong>优势场景</strong></td>
+<td>多对多关系</td>
+<td>一对多关系</td>
+<td>高度关联数据</td>
+</tr>
+<tr>
+<td><strong>典型应用</strong></td>
+<td>MySQL/PostgreSQL</td>
+<td>MongoDB/CouchDB</td>
+<td>Neo4j/JanusGraph</td>
+</tr>
+<tr>
+<td><strong>局部性</strong></td>
+<td>差(需join)</td>
+<td>好(树状)</td>
+<td>中等</td>
+</tr>
+</tbody>
+</table>
+<p><strong>关系模型 vs 文档模型</strong>:</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">12
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">13
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>关系模型优势:
+</span></span><span style="display:flex;"><span>✓ 多对多关系处理强大
+</span></span><span style="display:flex;"><span>✓ Join支持完善
+</span></span><span style="display:flex;"><span>✓ Schema严格,数据一致性好
+</span></span><span style="display:flex;"><span>✗ 对象关系阻抗不匹配
+</span></span><span style="display:flex;"><span>✗ 需要多次查询或复杂join
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>文档模型优势:
+</span></span><span style="display:flex;"><span>✓ Schema灵活,易于演化
+</span></span><span style="display:flex;"><span>✓ 局部性好(一次读取完整文档)
+</span></span><span style="display:flex;"><span>✓ 更接近应用层数据结构
+</span></span><span style="display:flex;"><span>✗ 多对多关系表达弱
+</span></span><span style="display:flex;"><span>✗ 缺乏join,需在应用层处理
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><strong>查询语言对比</strong>:</p>
+<ol>
+<li>
+<p><strong>声明式 (SQL)</strong></p>
+<ul>
+<li>描述&quot;想要什么&quot;而非&quot;如何获取&quot;</li>
+<li>数据库自动优化执行计划</li>
+<li>易于并行化</li>
+</ul>
+</li>
+<li>
+<p><strong>命令式 (传统代码)</strong></p>
+<ul>
+<li>逐步告诉计算机如何操作</li>
+<li>优化依赖程序员</li>
+<li>难以优化</li>
+</ul>
+</li>
+</ol>
+<p><strong>图数据模型</strong>:</p>
+<ul>
+<li><strong>属性图</strong>: 顶点+边,都可以有属性</li>
+<li><strong>三元组存储</strong>: (主语, 谓语, 宾语)</li>
+<li><strong>适用场景</strong>: 社交网络、推荐系统、知识图谱</li>
+</ul>
+<p><strong>关键洞察</strong>:</p>
+<blockquote>
+<p>数据模型不是选择题,而是工具箱。关系模型、文档模型、图模型各有千秋,未来趋势是融合(Multi-Model Database)。</p>
+</blockquote>
+<hr>
+<h4 id="ch3-存储与检索">Ch3: 存储与检索<a hidden class="anchor" aria-hidden="true" href="#ch3-存储与检索">#</a></h4>
+<p><strong>核心问题</strong>: 数据库如何高效存储和检索数据?</p>
+<p><strong>两大存储引擎家族</strong>:</p>
+<ol>
+<li>
+<p><strong>日志结构存储引擎 (LSM-Tree)</strong></p>
+<p><strong>核心思想</strong>: 将随机写转换为顺序写</p>
+<p><strong>LSM-Tree架构</strong>:</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">7
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>写入流程:
+</span></span><span style="display:flex;"><span>数据 → MemTable(内存) → SSTable(磁盘L0)
+</span></span><span style="display:flex;"><span>                     ↓ (Compaction)
+</span></span><span style="display:flex;"><span>                   SSTable(L1...Ln)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>读取流程:
+</span></span><span style="display:flex;"><span>查询 → MemTable → BloomFilter → SSTable(L0→Ln)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><strong>优势</strong>:</p>
+<ul>
+<li>写入性能极佳(顺序写)</li>
+<li>压缩效率高</li>
+<li>适合写多读少场景</li>
+</ul>
+<p><strong>劣势</strong>:</p>
+<ul>
+<li>读放大(需查询多层)</li>
+<li>Compaction占用资源</li>
+</ul>
+<p><strong>代表</strong>: LevelDB, RocksDB, Cassandra, HBase</p>
+</li>
+<li>
+<p><strong>页面导向存储引擎 (B-Tree)</strong></p>
+<p><strong>核心思想</strong>: 原地更新固定大小的页面</p>
+<p><strong>B-Tree结构</strong>:</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">6
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>Root Page
+</span></span><span style="display:flex;"><span>├── Internal Page
+</span></span><span style="display:flex;"><span>│   ├── Leaf Page (实际数据)
+</span></span><span style="display:flex;"><span>│   └── Leaf Page
+</span></span><span style="display:flex;"><span>└── Internal Page
+</span></span><span style="display:flex;"><span>    └── ...
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><strong>特性</strong>:</p>
+<ul>
+<li>页大小通常4KB</li>
+<li>原地更新</li>
+<li>使用WAL(预写日志)保证崩溃恢复</li>
+</ul>
+<p><strong>优势</strong>:</p>
+<ul>
+<li>读性能稳定</li>
+<li>每个key只存在一处</li>
+<li>成熟稳定</li>
+</ul>
+<p><strong>代表</strong>: MySQL InnoDB, PostgreSQL</p>
+</li>
+</ol>
+<p><strong>LSM-Tree vs B-Tree</strong>:</p>
+<table>
+<thead>
+<tr>
+<th>维度</th>
+<th>LSM-Tree</th>
+<th>B-Tree</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>写入性能</td>
+<td>优秀</td>
+<td>中等</td>
+</tr>
+<tr>
+<td>读取性能</td>
+<td>中等</td>
+<td>优秀</td>
+</tr>
+<tr>
+<td>空间放大</td>
+<td>较大(多版本)</td>
+<td>较小</td>
+</tr>
+<tr>
+<td>写放大</td>
+<td>高(Compaction)</td>
+<td>中(WAL)</td>
+</tr>
+<tr>
+<td>适用场景</td>
+<td>写密集</td>
+<td>读密集</td>
+</tr>
+</tbody>
+</table>
+<p><strong>OLTP vs OLAP</strong>:</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">9
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>OLTP (事务处理):
+</span></span><span style="display:flex;"><span>- 特点: 高并发、低延迟、小数据量查询
+</span></span><span style="display:flex;"><span>- 存储: 行存储
+</span></span><span style="display:flex;"><span>- 索引: B-Tree
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>OLAP (分析处理):
+</span></span><span style="display:flex;"><span>- 特点: 批量、高吞吐、大数据量聚合
+</span></span><span style="display:flex;"><span>- 存储: 列存储
+</span></span><span style="display:flex;"><span>- 压缩: 高效(相同列数据相似)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><strong>列存储优势</strong>:</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">7
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>行存储: [id, name, age, city, ...]  ← 读取整行
+</span></span><span style="display:flex;"><span>列存储: [所有id][所有name][所有age]... ← 只读需要的列
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>优势:
+</span></span><span style="display:flex;"><span>1. 只读需要的列,减少IO
+</span></span><span style="display:flex;"><span>2. 相同类型数据压缩效率高
+</span></span><span style="display:flex;"><span>3. 向量化处理(SIMD)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><hr>
+<h4 id="ch4-编码与演化">Ch4: 编码与演化<a hidden class="anchor" aria-hidden="true" href="#ch4-编码与演化">#</a></h4>
+<p><strong>核心问题</strong>: 数据格式如何支持系统演化?</p>
+<p><strong>编码格式对比</strong>:</p>
+<table>
+<thead>
+<tr>
+<th>格式</th>
+<th>优点</th>
+<th>缺点</th>
+<th>适用场景</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>JSON</td>
+<td>人类可读,广泛支持</td>
+<td>体积大,无schema</td>
+<td>API,配置</td>
+</tr>
+<tr>
+<td>XML</td>
+<td>复杂结构表达</td>
+<td>冗长,解析慢</td>
+<td>企业集成</td>
+</tr>
+<tr>
+<td>CSV</td>
+<td>简单,通用</td>
+<td>无类型,列名不明确</td>
+<td>数据导出</td>
+</tr>
+<tr>
+<td>Protocol Buffers</td>
+<td>紧凑,schema演化</td>
+<td>二进制不可读</td>
+<td>RPC,存储</td>
+</tr>
+<tr>
+<td>Thrift</td>
+<td>灵活类型系统</td>
+<td>生态较小</td>
+<td>Hadoop生态</td>
+</tr>
+<tr>
+<td>Avro</td>
+<td>schema演化强,压缩好</td>
+<td>学习成本</td>
+<td>Kafka,HDFS</td>
+</tr>
+</tbody>
+</table>
+<p><strong>数据流的三种类型</strong>:</p>
+<ol>
+<li>
+<p><strong>通过数据库</strong></p>
+<ul>
+<li>写入者编码,读取者解码</li>
+<li>需要考虑schema演化</li>
+</ul>
+</li>
+<li>
+<p><strong>通过服务调用</strong></p>
+<ul>
+<li>REST: 基于HTTP,使用JSON</li>
+<li>RPC: 类似本地函数调用(gRPC, Thrift)</li>
+</ul>
+</li>
+<li>
+<p><strong>通过异步消息传递</strong></p>
+<ul>
+<li>消息队列: RabbitMQ, Kafka</li>
+<li>解耦生产者和消费者</li>
+</ul>
+</li>
+</ol>
+<p><strong>Schema演化原则</strong>:</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">10
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>向后兼容 (Backward Compatibility):
+</span></span><span style="display:flex;"><span>新代码可以读取旧数据
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>向前兼容 (Forward Compatibility):
+</span></span><span style="display:flex;"><span>旧代码可以读取新数据
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>实现方式:
+</span></span><span style="display:flex;"><span>- 字段添加默认值
+</span></span><span style="display:flex;"><span>- 字段ID而非名称
+</span></span><span style="display:flex;"><span>- 可选字段
+</span></span></code></pre></td></tr></table>
+</div>
+</div><hr>
+<h3 id="第二部分分布式数据">第二部分:分布式数据<a hidden class="anchor" aria-hidden="true" href="#第二部分分布式数据">#</a></h3>
+<h4 id="ch5-复制-replication">Ch5: 复制 (Replication)<a hidden class="anchor" aria-hidden="true" href="#ch5-复制-replication">#</a></h4>
+<p><strong>复制的三个目的</strong>:</p>
+<ol>
+<li>高可用性:节点故障时系统继续工作</li>
+<li>低延迟:数据靠近用户</li>
+<li>高吞吐:分散读取负载</li>
+</ol>
+<p><strong>三种复制架构</strong>:</p>
+<ol>
+<li>
+<p><strong>单主复制 (Single-Leader)</strong></p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>Leader (接受写)
+</span></span><span style="display:flex;"><span>├── Follower 1 (复制)
+</span></span><span style="display:flex;"><span>├── Follower 2 (复制)
+</span></span><span style="display:flex;"><span>└── Follower 3 (复制)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><strong>复制方式</strong>:</p>
+<ul>
+<li>同步复制:强一致,慢</li>
+<li>异步复制:快,可能丢数据</li>
+<li>半同步:折中方案</li>
+</ul>
+<p><strong>复制延迟问题</strong>:</p>
+<ul>
+<li><strong>读自己的写</strong>: 写入后立即读取不到
+<ul>
+<li>解决:从主节点读用户自己的数据</li>
+</ul>
+</li>
+<li><strong>单调读</strong>: 时光倒流现象
+<ul>
+<li>解决:同一用户总是从同一副本读</li>
+</ul>
+</li>
+<li><strong>一致前缀读</strong>: 因果关系颠倒
+<ul>
+<li>解决:相关写入同一分区</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>多主复制 (Multi-Leader)</strong></p>
+<ul>
+<li>适用场景:多数据中心、离线客户端</li>
+<li>写入冲突:需要冲突解决策略
+<ul>
+<li>最后写入胜出 (LWW)</li>
+<li>版本向量</li>
+<li>自定义逻辑</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>无主复制 (Leaderless)</strong></p>
+<ul>
+<li>代表:Dynamo, Cassandra</li>
+<li>仲裁机制:W + R &gt; N
+<ul>
+<li>W:写入成功的副本数</li>
+<li>R:读取的副本数</li>
+<li>N:总副本数</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h4 id="ch6-分区-partitioning">Ch6: 分区 (Partitioning)<a hidden class="anchor" aria-hidden="true" href="#ch6-分区-partitioning">#</a></h4>
+<p><strong>分区目的</strong>: 将大数据集分散到多个节点</p>
+<p><strong>分区策略</strong>:</p>
+<ol>
+<li>
+<p><strong>基于键范围分区</strong></p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>分区1: [A-D]
+</span></span><span style="display:flex;"><span>分区2: [E-M]
+</span></span><span style="display:flex;"><span>分区3: [N-Z]
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>优点:范围查询高效</li>
+<li>缺点:可能倾斜</li>
+</ul>
+</li>
+<li>
+<p><strong>基于键哈希分区</strong></p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>hash(key) % N → 分区号
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>优点:负载均衡</li>
+<li>缺点:失去范围查询能力</li>
+</ul>
+</li>
+<li>
+<p><strong>一致性哈希</strong></p>
+<ul>
+<li>解决节点增减时的数据迁移问题</li>
+</ul>
+</li>
+</ol>
+<p><strong>次级索引的分区</strong>:</p>
+<ul>
+<li><strong>基于文档分区</strong>: 每个分区维护自己的次级索引</li>
+<li><strong>基于词条分区</strong>: 全局索引,按词条分区</li>
+</ul>
+<p><strong>分区再平衡</strong>:</p>
+<ul>
+<li>固定数量分区</li>
+<li>动态分区</li>
+<li>按节点比例分区</li>
+</ul>
+<hr>
+<h4 id="ch7-9-事务分布式挑战一致性与共识">Ch7-9: 事务、分布式挑战、一致性与共识<a hidden class="anchor" aria-hidden="true" href="#ch7-9-事务分布式挑战一致性与共识">#</a></h4>
+<p><strong>事务的ACID</strong>:</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>Atomicity (原子性): 全部成功或全部失败
+</span></span><span style="display:flex;"><span>Consistency (一致性): 满足约束条件
+</span></span><span style="display:flex;"><span>Isolation (隔离性): 并发事务互不干扰
+</span></span><span style="display:flex;"><span>Durability (持久性): 已提交不会丢失
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><strong>隔离级别</strong>:</p>
+<ol>
+<li>读未提交</li>
+<li>读已提交</li>
+<li>可重复读</li>
+<li>串行化</li>
+</ol>
+<p><strong>分布式系统的挑战</strong>:</p>
+<ul>
+<li>网络不可靠</li>
+<li>时钟不可靠</li>
+<li>进程可能暂停</li>
+</ul>
+<p><strong>一致性模型</strong>:</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">7
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>强一致性 (Linearizability)
+</span></span><span style="display:flex;"><span>    ↓
+</span></span><span style="display:flex;"><span>顺序一致性
+</span></span><span style="display:flex;"><span>    ↓
+</span></span><span style="display:flex;"><span>因果一致性
+</span></span><span style="display:flex;"><span>    ↓
+</span></span><span style="display:flex;"><span>最终一致性
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><strong>共识算法</strong>:</p>
+<ul>
+<li>Paxos</li>
+<li>Raft</li>
+<li>ZAB (Zookeeper)</li>
+</ul>
+<hr>
+<h3 id="第三部分衍生数据">第三部分:衍生数据<a hidden class="anchor" aria-hidden="true" href="#第三部分衍生数据">#</a></h3>
+<h4 id="ch10-11-批处理与流处理">Ch10-11: 批处理与流处理<a hidden class="anchor" aria-hidden="true" href="#ch10-11-批处理与流处理">#</a></h4>
+<p><strong>批处理 (MapReduce)</strong>:</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>Input → Map → Shuffle → Reduce → Output
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>适用:离线大数据分析</li>
+<li>代表:Hadoop, Spark</li>
+</ul>
+<p><strong>流处理</strong>:</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>Event Stream → Processing → Output Stream
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>适用:实时分析、监控</li>
+<li>代表:Kafka Streams, Flink, Storm</li>
+</ul>
+<p><strong>Lambda架构</strong>:</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>批处理层 (历史数据) ↘
+</span></span><span style="display:flex;"><span>                    → 合并 → 查询
+</span></span><span style="display:flex;"><span>流处理层 (实时数据) ↗
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><strong>Kappa架构</strong>:</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>只用流处理,批处理用重放流实现
+</span></span></code></pre></td></tr></table>
+</div>
+</div><hr>
+<h2 id="-四跨源比较分析">🔗 四、跨源比较分析<a hidden class="anchor" aria-hidden="true" href="#-四跨源比较分析">#</a></h2>
+<h3 id="41-与其他经典书籍对比">4.1 与其他经典书籍对比<a hidden class="anchor" aria-hidden="true" href="#41-与其他经典书籍对比">#</a></h3>
+<table>
+<thead>
+<tr>
+<th>书籍</th>
+<th>DDIA</th>
+<th>《大规模分布式存储系统》</th>
+<th>《数据库系统内幕》</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>侧重点</strong></td>
+<td>全栈数据系统</td>
+<td>存储系统</td>
+<td>数据库内核</td>
+</tr>
+<tr>
+<td><strong>深度</strong></td>
+<td>广而深</td>
+<td>深</td>
+<td>极深</td>
+</tr>
+<tr>
+<td><strong>实践性</strong></td>
+<td>强(大量案例)</td>
+<td>中</td>
+<td>偏理论</td>
+</tr>
+<tr>
+<td><strong>适合人群</strong></td>
+<td>架构师/后端</td>
+<td>存储工程师</td>
+<td>数据库内核开发</td>
+</tr>
+</tbody>
+</table>
+<h3 id="42-与在线课程对比">4.2 与在线课程对比<a hidden class="anchor" aria-hidden="true" href="#42-与在线课程对比">#</a></h3>
+<p><strong>MIT 6.824 (分布式系统)</strong>:</p>
+<ul>
+<li>DDIA:理论+实践,更全面</li>
+<li>6.824:侧重分布式理论和Lab</li>
+</ul>
+<p><strong>CMU 15-721 (数据库系统)</strong>:</p>
+<ul>
+<li>DDIA:更广,覆盖NoSQL和大数据</li>
+<li>15-721:更深,聚焦数据库内核</li>
+</ul>
+<h3 id="43-技术演进对比">4.3 技术演进对比<a hidden class="anchor" aria-hidden="true" href="#43-技术演进对比">#</a></h3>
+<p><strong>从单机到分布式的演进</strong>:</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">9
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>1970s: 关系数据库诞生 (单机时代)
+</span></span><span style="display:flex;"><span>        ↓
+</span></span><span style="display:flex;"><span>1980s-1990s: 商业数据库成熟 (Oracle, DB2)
+</span></span><span style="display:flex;"><span>        ↓
+</span></span><span style="display:flex;"><span>2000s: NoSQL运动 (Google Bigtable, Amazon Dynamo)
+</span></span><span style="display:flex;"><span>        ↓
+</span></span><span style="display:flex;"><span>2010s: NewSQL出现 (融合SQL和NoSQL优点)
+</span></span><span style="display:flex;"><span>        ↓
+</span></span><span style="display:flex;"><span>2020s: 云原生数据库 (Serverless, 分离计算存储)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><strong>DDIA在技术演进中的定位</strong>:</p>
+<blockquote>
+<p>不追逐时髦词汇,而是揭示底层原理和权衡(Trade-offs)</p>
+</blockquote>
+<hr>
+<h2 id="-五核心概念速查表">⚡ 五、核心概念速查表<a hidden class="anchor" aria-hidden="true" href="#-五核心概念速查表">#</a></h2>
+<h3 id="51-cap定理">5.1 CAP定理<a hidden class="anchor" aria-hidden="true" href="#51-cap定理">#</a></h3>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">9
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>Consistency (一致性)
+</span></span><span style="display:flex;"><span>Availability (可用性)
+</span></span><span style="display:flex;"><span>Partition Tolerance (分区容错)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>只能同时满足两个!
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>CA系统: 单机数据库
+</span></span><span style="display:flex;"><span>CP系统: HBase, MongoDB
+</span></span><span style="display:flex;"><span>AP系统: Dynamo, Cassandra
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="52-base理论">5.2 BASE理论<a hidden class="anchor" aria-hidden="true" href="#52-base理论">#</a></h3>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>Basically Available (基本可用)
+</span></span><span style="display:flex;"><span>Soft state (软状态)
+</span></span><span style="display:flex;"><span>Eventually consistent (最终一致性)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>→ NoSQL的理论基础
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="53-常见权衡trade-offs">5.3 常见权衡(Trade-offs)<a hidden class="anchor" aria-hidden="true" href="#53-常见权衡trade-offs">#</a></h3>
+<table>
+<thead>
+<tr>
+<th>维度</th>
+<th>选项A</th>
+<th>选项B</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>一致性 vs 可用性</td>
+<td>强一致</td>
+<td>高可用</td>
+</tr>
+<tr>
+<td>延迟 vs 吞吐量</td>
+<td>低延迟</td>
+<td>高吞吐</td>
+</tr>
+<tr>
+<td>读优化 vs 写优化</td>
+<td>B-Tree</td>
+<td>LSM-Tree</td>
+</tr>
+<tr>
+<td>规范化 vs 反规范化</td>
+<td>多表join</td>
+<td>数据冗余</td>
+</tr>
+<tr>
+<td>同步 vs 异步</td>
+<td>数据安全</td>
+<td>高性能</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="-六学习路径建议">🎯 六、学习路径建议<a hidden class="anchor" aria-hidden="true" href="#-六学习路径建议">#</a></h2>
+<h3 id="61-基础阶段-1-4章">6.1 基础阶段 (1-4章)<a hidden class="anchor" aria-hidden="true" href="#61-基础阶段-1-4章">#</a></h3>
+<p><strong>目标</strong>: 掌握单机数据系统原理</p>
+<p><strong>学习重点</strong>:</p>
+<ol>
+<li>三大设计目标的内涵</li>
+<li>数据模型的选择标准</li>
+<li>LSM-Tree vs B-Tree</li>
+<li>Schema演化策略</li>
+</ol>
+<p><strong>实践项目</strong>:</p>
+<ul>
+<li>实现一个简单的KV存储引擎</li>
+<li>对比MySQL和MongoDB的使用场景</li>
+</ul>
+<h3 id="62-进阶阶段-5-9章">6.2 进阶阶段 (5-9章)<a hidden class="anchor" aria-hidden="true" href="#62-进阶阶段-5-9章">#</a></h3>
+<p><strong>目标</strong>: 理解分布式系统核心问题</p>
+<p><strong>学习重点</strong>:</p>
+<ol>
+<li>复制延迟及解决方案</li>
+<li>分区策略选择</li>
+<li>事务隔离级别</li>
+<li>一致性模型</li>
+</ol>
+<p><strong>实践项目</strong>:</p>
+<ul>
+<li>使用Raft实现分布式KV</li>
+<li>分析Redis Cluster的分区方案</li>
+</ul>
+<h3 id="63-高级阶段-10-12章">6.3 高级阶段 (10-12章)<a hidden class="anchor" aria-hidden="true" href="#63-高级阶段-10-12章">#</a></h3>
+<p><strong>目标</strong>: 掌握数据流处理</p>
+<p><strong>学习重点</strong>:</p>
+<ol>
+<li>MapReduce工作原理</li>
+<li>流处理vs批处理</li>
+<li>Lambda/Kappa架构</li>
+</ol>
+<p><strong>实践项目</strong>:</p>
+<ul>
+<li>使用Kafka Streams构建实时管道</li>
+<li>实现一个小型流处理框架</li>
+</ul>
+<hr>
+<h2 id="-七关键洞察与启发">💡 七、关键洞察与启发<a hidden class="anchor" aria-hidden="true" href="#-七关键洞察与启发">#</a></h2>
+<h3 id="71-设计哲学">7.1 设计哲学<a hidden class="anchor" aria-hidden="true" href="#71-设计哲学">#</a></h3>
+<p><strong>1. 没有银弹</strong></p>
+<blockquote>
+<p>每种技术都有其适用场景和限制,关键是理解权衡(Trade-offs)</p>
+</blockquote>
+<p><strong>2. 简单性至关重要</strong></p>
+<blockquote>
+<p>复杂度是系统的最大敌人,应通过抽象管理复杂度</p>
+</blockquote>
+<p><strong>3. 数据系统是演化的</strong></p>
+<blockquote>
+<p>系统必须支持演化,包括Schema演化、版本兼容</p>
+</blockquote>
+<h3 id="72-实践智慧">7.2 实践智慧<a hidden class="anchor" aria-hidden="true" href="#72-实践智慧">#</a></h3>
+<p><strong>架构设计清单</strong>:</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">7
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>□ 是否理解负载特征?(读/写比例、数据量、查询模式)
+</span></span><span style="display:flex;"><span>□ 是否选择了合适的数据模型?
+</span></span><span style="display:flex;"><span>□ 是否考虑了故障场景?
+</span></span><span style="display:flex;"><span>□ 是否需要分布式?(过早分布式是万恶之源)
+</span></span><span style="display:flex;"><span>□ 一致性要求是什么?(不要盲目追求强一致)
+</span></span><span style="display:flex;"><span>□ 如何监控和调试?
+</span></span><span style="display:flex;"><span>□ 如何演化和迁移?
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><strong>常见反模式</strong>:</p>
+<ol>
+<li>❌ 过早优化</li>
+<li>❌ 盲目追随流行技术</li>
+<li>❌ 忽视运维和监控</li>
+<li>❌ 没有考虑演化路径</li>
+</ol>
+<h3 id="73-未来趋势">7.3 未来趋势<a hidden class="anchor" aria-hidden="true" href="#73-未来趋势">#</a></h3>
+<p>根据本书和技术发展,数据系统的未来方向:</p>
+<ol>
+<li>
+<p><strong>Serverless数据库</strong></p>
+<ul>
+<li>按需扩展</li>
+<li>分离计算和存储</li>
+<li>代表:Aurora Serverless, Neon</li>
+</ul>
+</li>
+<li>
+<p><strong>多模型数据库</strong></p>
+<ul>
+<li>融合关系、文档、图</li>
+<li>代表:ArangoDB, OrientDB</li>
+</ul>
+</li>
+<li>
+<p><strong>AI驱动优化</strong></p>
+<ul>
+<li>自动索引推荐</li>
+<li>自动参数调优</li>
+</ul>
+</li>
+<li>
+<p><strong>隐私增强技术</strong></p>
+<ul>
+<li>同态加密</li>
+<li>联邦学习</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h2 id="-八延伸阅读建议">📖 八、延伸阅读建议<a hidden class="anchor" aria-hidden="true" href="#-八延伸阅读建议">#</a></h2>
+<h3 id="81-论文推荐">8.1 论文推荐<a hidden class="anchor" aria-hidden="true" href="#81-论文推荐">#</a></h3>
+<p>每章末尾都有高质量引用,特别推荐:</p>
+<p><strong>基础论文</strong>:</p>
+<ul>
+<li>Bigtable: A Distributed Storage System</li>
+<li>Dynamo: Amazon&rsquo;s Highly Available Key-value Store</li>
+<li>MapReduce: Simplified Data Processing</li>
+</ul>
+<p><strong>共识算法</strong>:</p>
+<ul>
+<li>Paxos Made Simple</li>
+<li>In Search of an Understandable Consensus Algorithm (Raft)</li>
+</ul>
+<h3 id="82-开源项目学习">8.2 开源项目学习<a hidden class="anchor" aria-hidden="true" href="#82-开源项目学习">#</a></h3>
+<p><strong>理解LSM-Tree</strong>: LevelDB源码
+<strong>理解B-Tree</strong>: SQLite源码
+<strong>理解分布式</strong>: etcd(使用Raft), TiDB
+<strong>理解流处理</strong>: Kafka源码</p>
+<h3 id="83-实践环境">8.3 实践环境<a hidden class="anchor" aria-hidden="true" href="#83-实践环境">#</a></h3>
+<ol>
+<li>
+<p><strong>本地环境</strong>:</p>
+<ul>
+<li>Docker搭建各种数据库</li>
+<li>使用Vagrant模拟分布式环境</li>
+</ul>
+</li>
+<li>
+<p><strong>云环境</strong>:</p>
+<ul>
+<li>AWS: DynamoDB, Aurora</li>
+<li>GCP: Bigtable, Spanner</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h2 id="-九速记卡片">🔥 九、速记卡片<a hidden class="anchor" aria-hidden="true" href="#-九速记卡片">#</a></h2>
+<h3 id="数据系统设计的核心铁律">数据系统设计的核心铁律<a hidden class="anchor" aria-hidden="true" href="#数据系统设计的核心铁律">#</a></h3>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">7
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>✅ 可靠性第一,不要牺牲正确性
+</span></span><span style="display:flex;"><span>✅ 理解负载特征再做决策
+</span></span><span style="display:flex;"><span>✅ 测量,不要猜测
+</span></span><span style="display:flex;"><span>✅ 简单优于复杂
+</span></span><span style="display:flex;"><span>✅ 为演化而设计
+</span></span><span style="display:flex;"><span>✅ 权衡是不可避免的,关键是有意识地权衡
+</span></span><span style="display:flex;"><span>✅ 没有完美的系统,只有合适的系统
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="技术选型决策树">技术选型决策树<a hidden class="anchor" aria-hidden="true" href="#技术选型决策树">#</a></h3>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">7
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>需要ACID事务? 
+</span></span><span style="display:flex;"><span>├─ 是 → 单机数据量?
+</span></span><span style="display:flex;"><span>│        ├─ 小 → MySQL/PostgreSQL
+</span></span><span style="display:flex;"><span>│        └─ 大 → TiDB/CockroachDB
+</span></span><span style="display:flex;"><span>└─ 否 → 数据模型?
+</span></span><span style="display:flex;"><span>         ├─ 文档 → MongoDB
+</span></span><span style="display:flex;"><span>         
+</span></span></code></pre></td></tr></table>
+</div>
+</div>
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+      <li><a href="https://csqread.top/tags/ddia/">DDIA</a></li>
+    </ul>
+<nav class="paginav">
+  <a class="prev" href="https://csqread.top/posts/blog/hugo%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/">
+    <span class="title">« 上一页</span>
+    <br>
+    <span>Hugo博客搭建</span>
+  </a>
+  <a class="next" href="https://csqread.top/posts/tech/%E5%B7%A5%E5%8E%82%E6%96%B9%E6%B3%95%E6%A8%A1%E5%BC%8F/">
+    <span class="title">下一页 »</span>
+    <br>
+    <span>工厂方法模式</span>
+  </a>
+</nav>
+
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+    <span>&copy; 2025 <a href="https://csqread.top">Qian&#39;s Blog</a></span>
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerHTML = '复制';
+
+        function copyingDone() {
+            copybutton.innerHTML = '已复制！';
+            setTimeout(() => {
+                copybutton.innerHTML = '复制';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) { };
+            selection.removeRange(range);
+        });
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+        }
+    });
+</script>
+</body>
+
+</html>
