@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>编程 on Qian&#39;s Blog</title>
+    <link>https://csqread.top/categories/%E7%BC%96%E7%A8%8B/</link>
+    <description>Recent content in 编程 on Qian&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Sun, 16 Nov 2025 22:26:54 +0800</lastBuildDate><atom:link href="https://csqread.top/categories/%E7%BC%96%E7%A8%8B/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>用数学思考,用代码实现</title>
+      <link>https://csqread.top/posts/tech/%E7%94%A8%E6%95%B0%E5%AD%A6%E6%80%9D%E8%80%83%E7%94%A8%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0/</link>
+      <pubDate>Sun, 16 Nov 2025 22:26:54 +0800</pubDate>
+      
+      <guid>https://csqread.top/posts/tech/%E7%94%A8%E6%95%B0%E5%AD%A6%E6%80%9D%E8%80%83%E7%94%A8%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0/</guid>
+      <description>很多程序员习惯“边写边想”，结果写出来的代码混乱、低效，甚至解决了错误的问题。真正高效的做法是：先用数学把问题想清楚，再用代码精准实现。</description>
+    </item>
+    
+  </channel>
+</rss>
