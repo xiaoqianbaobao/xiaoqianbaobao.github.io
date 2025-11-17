@@ -6,7 +6,16 @@
     <description>Recent content in 设计模式 on Qian&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Mon, 23 Jun 2025 21:52:50 +0800</lastBuildDate><atom:link href="https://csqread.top/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 17 Nov 2025 23:19:58 +0800</lastBuildDate><atom:link href="https://csqread.top/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>抽象工厂模式</title>
+      <link>https://csqread.top/posts/tech/%E6%8A%BD%E8%B1%A1%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F/</link>
+      <pubDate>Mon, 17 Nov 2025 23:19:58 +0800</pubDate>
+      
+      <guid>https://csqread.top/posts/tech/%E6%8A%BD%E8%B1%A1%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F/</guid>
+      <description>抽象工厂（Abstract Factory）——“成套生娃”一条龙(抽象工厂模式)</description>
+    </item>
+    
     <item>
       <title>工厂方法模式</title>
       <link>https://csqread.top/posts/tech/%E5%B7%A5%E5%8E%82%E6%96%B9%E6%B3%95%E6%A8%A1%E5%BC%8F/</link>
