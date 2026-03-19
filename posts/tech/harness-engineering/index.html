@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html lang="zh" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>Harness Engineering | Qian&#39;s Blog</title>
+<meta name="keywords" content="AI">
+<meta name="description" content="Harness Engineering：2026 年，写代码的人正在被&quot;驾驭层&quot;取代 当你凌晨三点还在和 Claude Code 死磕一个 PR，改了半天 CLAUDE.md 规则，">
+<meta name="author" content="
+作者:&nbsp;ShengQian">
+<link rel="canonical" href="https://csqread.top/posts/tech/harness-engineering/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.1304ba2a97d1ed976f43dcc4aec65464735b44589d091030cdd2873f2234b886.css" integrity="" rel="preload stylesheet" as="style">
+<script defer crossorigin="anonymous" src="/assets/js/highlight.acb54fd32bbc1982428b8850317e45d076b95012730a5936667e6bc21777692a.js" integrity=""
+    onload="hljs.initHighlightingOnLoad();"></script>
+<link rel="icon" href="https://csqread.top/img/Q.gif">
+<link rel="icon" type="image/png" sizes="16x16" href="https://csqread.top/img/%21.jpg">
+<link rel="icon" type="image/png" sizes="32x32" href="https://csqread.top/img/%21.jpg">
+<link rel="apple-touch-icon" href="https://csqread.top/%21.jpg">
+<link rel="mask-icon" href="https://csqread.top/%21.jpg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --hljs-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript><meta property="og:title" content="Harness Engineering" />
+<meta property="og:description" content="Harness Engineering：2026 年，写代码的人正在被&quot;驾驭层&quot;取代 当你凌晨三点还在和 Claude Code 死磕一个 PR，改了半天 CLAUDE.md 规则，" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://csqread.top/posts/tech/harness-engineering/" />
+<meta property="og:image" content="https://csqread.top/posts/tech/Harness-Engineering/1.png" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2026-03-19T21:32:15+08:00" />
+<meta property="article:modified_time" content="2026-03-19T21:32:15+08:00" />
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="https://csqread.top/posts/tech/Harness-Engineering/1.png" />
+<meta name="twitter:title" content="Harness Engineering"/>
+<meta name="twitter:description" content="Harness Engineering：2026 年，写代码的人正在被&quot;驾驭层&quot;取代 当你凌晨三点还在和 Claude Code 死磕一个 PR，改了半天 CLAUDE.md 规则，"/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "Posts",
+      "item": "https://csqread.top/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  3 ,
+      "name": "技术",
+      "item": "https://csqread.top/posts/tech/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  4 ,
+      "name": "Harness Engineering",
+      "item": "https://csqread.top/posts/tech/harness-engineering/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Harness Engineering",
+  "name": "Harness Engineering",
+  "description": "Harness Engineering：2026 年，写代码的人正在被\u0026quot;驾驭层\u0026quot;取代 当你凌晨三点还在和 Claude Code 死磕一个 PR，改了半天 CLAUDE.md 规则，",
+  "keywords": [
+    "AI"
+  ],
+  "articleBody": "Harness Engineering：2026 年，写代码的人正在被\"驾驭层\"取代 当你凌晨三点还在和 Claude Code 死磕一个 PR，改了半天 CLAUDE.md 规则， 却发现它还是会偷偷在 main.go 里加上一行 fmt.Println(\"debug\")……\n你有没有突然觉得：“我到底是在写代码，还是在写一个让 AI 能正确写代码的系统？”\n2026 年初，OpenAI 的一篇低调但炸裂的文章《Harness Engineering: Leveraging Codex in an Agent-First World》把这个答案直接甩在了所有人脸上：\n真正的高价值工作已经不是写代码，而是设计 Harness——那个让 Agent 能长期稳定、高质量产出的\"控制外壳\"。\n今天我们就来系统拆一拆这条正在发生的代际跃迁，看看 Harness 到底是什么、为什么它比模型升级更重要，以及你现在该怎么立刻在项目里用起来。\n一、先说痛点：为什么 2025 年的你用 AI 写代码越写越累？ 几乎所有深度使用 Cursor / Claude Code / Windsurf / Devin 的开发者，都踩过这三个相同的深坑：\n🔴 痛点一：上下文永远不够，Agent 像失忆的新人 你明明在 README 里写了\"本项目禁止使用 global variables\"，它下一秒就在 service layer 里 new 一个全局 cache。\n🔴 痛点二：改提示词比写业务逻辑还花时间 CLAUDE.md / AGENTS.md 动辄几千行，迭代一次规则就要重跑几十个 PR，人类成了\"提示词农民工\"。\n🔴 痛点三：没有闭环，Agent 以机器的速度重复犯错 生成 → review → 骂街 → 改提示 → 再生成…… 无限循环，生产力不但没提升，反而被拖进地狱。\n💡 一句话总结 2025 年的 AI 辅助编程：模型能力已经很强，但缺少一个像样的\"工厂流水线\"。\n二、Harness Engineering 的核心跃迁 从\"写代码\" → “设计让 AI 写代码的系统” OpenAI 用 3 个工程师、5 个月、从零开始，产出了 \u003e100 万行代码、1500+ PR，全部 AI 生成，没有一行手写。\n他们早期为什么失败？不是模型不够聪明，而是缺少 Harness。\nHarness 到底是什么？ 用最直白的话说：\nHarness = 一套可持续让 Agent 正确工作的完整运行环境\n它包括：\n✅ 架构规则编码化 ✅ 约束机械化执行 ✅ 地图式精简知识 ✅ 独立试错空间 ✅ 秒级反馈闭环 ✅ 可观测性 📊 代际变化对比表 维度 传统 Prompt / Context Engineering Harness Engineering (2026 主流) 核心工作 写好提示词、喂足上下文 设计规则、约束、验证、试错环境的完整闭环 反馈延迟 分钟 ~ 小时（人工 review） 秒级（Linter / CI / 自测自动打回） Agent 角色 能力很强的实习生 受严格约束的资深员工 生产力提升 1.5–3×（视项目） 5–20×（OpenAI 实验级数据） 长期可维护性 差（提示词漂移、上下文遗忘） 强（规则写进 repo，随 git 版本控制） 🎯 一句话概括：Agent = Model + Harness。Model 是引擎，Harness 是整辆车。没有车，再好的引擎也只能原地空转。\n三、Harness 的 6 大经典设计模式（直接抄作业） OpenAI + Stripe + Cursor 等一线玩家的真实做法，总结成这几条最有复用价值的模式：\n1️⃣ 渐进式信息披露 不要一次把整个仓库文档塞给 Agent，按需加载：\n先给架构图 → 再给当前 package 规范 → 最后给相关历史 PR 2️⃣ 独立 git worktree / sandbox 每个 Agent task 都开一个干净的 worktree，坏了直接 rm -rf，不会污染主分支。\n3️⃣ Repo as Single Source of Truth 所有约束、规范、禁忌、架构决策 → 全部写进仓库的 md / yaml 文件，随代码一起 review \u0026 版本控制，而不是散落在 Slack / Notion。\n4️⃣ 机械化约束执行 “禁止使用全局变量” “接口必须加 OpenTelemetry” “错误必须 wrap” 全部用 linter / CI 硬卡，死不了就过不了流水线。\n5️⃣ 把验证嵌入循环 生成 → 跑单元测试 / e2e / lint → 不通过自动让 Agent 再修\n反馈延迟从 小时 → 秒。\n6️⃣ 本地可观测性 给 Agent 提供 DevTools，让它自己截图看 UI、对齐日志、验证指标，而不是靠人类描述\"不对劲\"。\n📈 实测数据：这些模式组合后，即使相同模型，SWE-agent / LangChain 任务成功率可提升 20–60%。\n四、历史视角：Harness 是控制论的第三次降临 作者把 Harness 放到了更大的时间尺度上看，**控制论（Cybernetics）**其实已经出现了三次：\n次数 时代 核心变革 人的角色跃迁 第一次 瓦特蒸汽机 离心调速器（物理反馈闭环） 工人从烧火工 → 设计调速器的人 第二次 Kubernetes 声明式 + 控制器 运维从手动重启 pod → 写 spec 让系统自己对齐 第三次 Harness Engineering Agent 约束、验证、执行闭环 工程师从手写每一行 → 设计 Agent 的\"掌舵者\" 🔑 共同规律：当传感器 + 执行器足够强，反馈回路能在更高抽象层闭合时，人的角色就上移到\"掌舵\"。\n五、两派之争：厚 Harness vs 薄 Harness 目前业界明显分成两派：\n🏗️ Build Heavy Harness 派 代表：OpenAI、Stripe、Cursor、LangChain 等\n用大量工程把 Agent 生产力拉满 市场用估值投票 🤖 Trust the Model 派 代表：Anthropic 主推\n模型足够强后，很多 Harness 工作会被自动吃掉 倾向薄包装 作者判断 Harness 不会消失，但厚度会动态演化。\n就像 Makefile → CI/CD → GitOps，验证和约束的需求永恒，只是实现形式一直在变。\n六、现在就能落地的 3 个小行动（从今天开始） ✅ Action 1：固化你的\"AI 错题本\" 把你现在最头疼的 **5 条\"AI 老是犯的错\"**写进项目根目录的 AGENTS.md 或 CLAUDE.md，用 markdown 表格格式：\n1 2 3 4 | 场景 | 禁止行为 | 推荐做法 | |:---|:---|:---| | 数据库连接 | 禁止直接 `new DB connection` | 使用连接池管理 | | 错误处理 | 禁止裸 `return err` | 必须 `wrap` 并加上下文 | ✅ Action 2：硬编码架构约束 给项目加一个 pre-commit hook + CI lint，硬编码至少 3 条架构约束：\n禁止直接 new DB connection 禁止全局变量 接口必须加 tracing ✅ Action 3：隔离试错空间 下次让 Agent 改代码时，先强制它开一个新的 git worktree，别直接在当前分支上搞。\n💪 做完这三件事，你会明显感觉到：骂 AI 的次数少了，真正能合并的 PR 变多了。\n写在最后 2026 年的代码工厂里，人类工程师正在完成一次身份升级：\n1 码农 → 系统设计师 → Agent 驯兽师 写代码这件事，正在被彻底重新定义。\n真正拉开差距的，已经不是你会不会 prompt，而是你会不会设计 Harness。\n🎤 你现在是在继续手动修 AI 的 bug，还是已经在悄悄建自己的\"驾驭层\"了？\n欢迎留言区分享你当前的 CLAUDE.md / AGENTS.md 有多长，或者你踩过的最离谱的 Agent 黑历史，我们下篇可以一起继续深挖生产级 Harness 工程实践。\n祝我们都能赶上这条从\"写代码\"到\"设计代码工厂\"的红利。 🚀\n本文基于 OpenAI《Harness Engineering: Leveraging Codex in an Agent-First World》及行业实践整理\n",
+  "wordCount" : "2611",
+  "inLanguage": "zh",
+  "image":"https://csqread.top/posts/tech/Harness-Engineering/1.png","datePublished": "2026-03-19T21:32:15+08:00",
+  "dateModified": "2026-03-19T21:32:15+08:00",
+  "author":[{
+    "@type": "Person",
+    "name": "ShengQian"
+  }],
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://csqread.top/posts/tech/harness-engineering/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Qian's Blog",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://csqread.top/img/Q.gif"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://csqread.top" accesskey="h" title="Qian&#39;s Blog (Alt + H)">
+                <img src="https://csqread.top/img/%21.jpg" alt="" aria-label="logo"
+                    height="35">Qian&#39;s Blog</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="https://csqread.top/search" title="🔍搜索">
+                    <span>🔍搜索</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://csqread.top/" title="🏠主页">
+                    <span>🏠主页</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://csqread.top/posts" title="📚文章">
+                    <span>📚文章</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://csqread.top/archives/" title="⏱时间轴">
+                    <span>⏱时间轴</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://csqread.top/tags" title="🔖标签">
+                    <span>🔖标签</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://csqread.top/about" title="🙋🏻‍♂️关于">
+                    <span>🙋🏻‍♂️关于</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://csqread.top/links" title="🤝友链">
+                    <span>🤝友链</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    <div class="breadcrumbs"><a href="https://csqread.top">主页</a>&nbsp;»&nbsp;<a href="https://csqread.top/posts/">Posts</a>&nbsp;»&nbsp;<a href="https://csqread.top/posts/tech/">技术</a></div>
+    <h1 class="post-title">
+      Harness Engineering
+    </h1>
+    <div class="post-meta">
+
+
+
+
+
+
+
+
+
+
+创建:&nbsp;<span title='2026-03-19 21:32:15 +0800 CST'>2026-03-19</span>&nbsp;|&nbsp;更新:&nbsp;2026-03-19&nbsp;|&nbsp;字数:&nbsp;2611字&nbsp;|&nbsp;时长: 6分钟&nbsp;|&nbsp;
+作者:&nbsp;ShengQian
+
+
+    &nbsp;|&nbsp;标签: &nbsp;
+    <ul class="post-tags-meta">
+        <a href="https://csqread.top/tags/ai/">AI</a>
+    </ul>
+
+    
+    
+    
+    
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span id="busuanzi_container_page_pv">
+        &nbsp;| 访问: <span id="busuanzi_value_page_pv"></span>
+    </span>
+
+    
+    
+    
+    
+    <script src="https://cdn.staticfile.org/twikoo/1.4.11/twikoo.all.min.js">
+    </script>
+    <script>
+        let url = document.documentURI
+        
+        let dnsUrl = "https://csqread.top"
+        let urlSplit = url.split(dnsUrl)
+        let finalUrl = urlSplit[1]
+        if (finalUrl[0] !== '/') {
+            finalUrl = '/'+finalUrl
+        }
+        twikoo.getCommentsCount({
+            envId:  null ,
+            region:  null ,
+            urls: [
+                finalUrl,
+            ],
+            includeReply: false 
+        }).then(function (res) {
+            let count = res[0].count
+            const obj = document.getElementById("comment_count");
+            obj.innerText = count
+            
+            
+            
+        }).catch(function (err) {
+            
+            console.error(err);
+        });
+    </script>
+    &nbsp;| 评论: &nbsp; <span id="comment_count"></span>
+
+</div>
+  </header> 
+<figure class="entry-cover1"><img style="zoom:;" loading="lazy" src="https://csqread.top/posts/tech/Harness-Engineering/1.png" alt="">
+    
+</figure><aside id="toc-container" class="toc-container wide">
+    <div class="toc">
+        <details  open>
+            <summary accesskey="c" title="(Alt + C)">
+                <span class="details">目录</span>
+            </summary>
+
+            <div class="inner"><ul>
+                    <li>
+                        <a href="#harness-engineering2026-%e5%b9%b4%e5%86%99%e4%bb%a3%e7%a0%81%e7%9a%84%e4%ba%ba%e6%ad%a3%e5%9c%a8%e8%a2%ab%e9%a9%be%e9%a9%ad%e5%b1%82%e5%8f%96%e4%bb%a3" aria-label="Harness Engineering：2026 年，写代码的人正在被&amp;quot;驾驭层&amp;quot;取代">Harness Engineering：2026 年，写代码的人正在被&quot;驾驭层&quot;取代</a><ul>
+                            
+                    <li>
+                        <a href="#%e4%b8%80%e5%85%88%e8%af%b4%e7%97%9b%e7%82%b9%e4%b8%ba%e4%bb%80%e4%b9%88-2025-%e5%b9%b4%e7%9a%84%e4%bd%a0%e7%94%a8-ai-%e5%86%99%e4%bb%a3%e7%a0%81%e8%b6%8a%e5%86%99%e8%b6%8a%e7%b4%af" aria-label="一、先说痛点：为什么 2025 年的你用 AI 写代码越写越累？">一、先说痛点：为什么 2025 年的你用 AI 写代码越写越累？</a><ul>
+                            
+                    <li>
+                        <a href="#-%e7%97%9b%e7%82%b9%e4%b8%80%e4%b8%8a%e4%b8%8b%e6%96%87%e6%b0%b8%e8%bf%9c%e4%b8%8d%e5%a4%9fagent-%e5%83%8f%e5%a4%b1%e5%bf%86%e7%9a%84%e6%96%b0%e4%ba%ba" aria-label="🔴 痛点一：上下文永远不够，Agent 像失忆的新人">🔴 痛点一：上下文永远不够，Agent 像失忆的新人</a></li>
+                    <li>
+                        <a href="#-%e7%97%9b%e7%82%b9%e4%ba%8c%e6%94%b9%e6%8f%90%e7%a4%ba%e8%af%8d%e6%af%94%e5%86%99%e4%b8%9a%e5%8a%a1%e9%80%bb%e8%be%91%e8%bf%98%e8%8a%b1%e6%97%b6%e9%97%b4" aria-label="🔴 痛点二：改提示词比写业务逻辑还花时间">🔴 痛点二：改提示词比写业务逻辑还花时间</a></li>
+                    <li>
+                        <a href="#-%e7%97%9b%e7%82%b9%e4%b8%89%e6%b2%a1%e6%9c%89%e9%97%ad%e7%8e%afagent-%e4%bb%a5%e6%9c%ba%e5%99%a8%e7%9a%84%e9%80%9f%e5%ba%a6%e9%87%8d%e5%a4%8d%e7%8a%af%e9%94%99" aria-label="🔴 痛点三：没有闭环，Agent 以机器的速度重复犯错">🔴 痛点三：没有闭环，Agent 以机器的速度重复犯错</a></li></ul>
+                    </li>
+                    <li>
+                        <a href="#%e4%ba%8charness-engineering-%e7%9a%84%e6%a0%b8%e5%bf%83%e8%b7%83%e8%bf%81" aria-label="二、Harness Engineering 的核心跃迁">二、Harness Engineering 的核心跃迁</a><ul>
+                            
+                    <li>
+                        <a href="#%e4%bb%8e%e5%86%99%e4%bb%a3%e7%a0%81--%e8%ae%be%e8%ae%a1%e8%ae%a9-ai-%e5%86%99%e4%bb%a3%e7%a0%81%e7%9a%84%e7%b3%bb%e7%bb%9f" aria-label="从&amp;quot;写代码&amp;quot; → &amp;ldquo;设计让 AI 写代码的系统&amp;rdquo;">从&quot;写代码&quot; → &ldquo;设计让 AI 写代码的系统&rdquo;</a></li>
+                    <li>
+                        <a href="#harness-%e5%88%b0%e5%ba%95%e6%98%af%e4%bb%80%e4%b9%88" aria-label="Harness 到底是什么？">Harness 到底是什么？</a></li>
+                    <li>
+                        <a href="#-%e4%bb%a3%e9%99%85%e5%8f%98%e5%8c%96%e5%af%b9%e6%af%94%e8%a1%a8" aria-label="📊 代际变化对比表">📊 代际变化对比表</a></li></ul>
+                    </li>
+                    <li>
+                        <a href="#%e4%b8%89harness-%e7%9a%84-6-%e5%a4%a7%e7%bb%8f%e5%85%b8%e8%ae%be%e8%ae%a1%e6%a8%a1%e5%bc%8f%e7%9b%b4%e6%8e%a5%e6%8a%84%e4%bd%9c%e4%b8%9a" aria-label="三、Harness 的 6 大经典设计模式（直接抄作业）">三、Harness 的 6 大经典设计模式（直接抄作业）</a><ul>
+                            
+                    <li>
+                        <a href="#1-%e6%b8%90%e8%bf%9b%e5%bc%8f%e4%bf%a1%e6%81%af%e6%8a%ab%e9%9c%b2" aria-label="1️⃣ 渐进式信息披露">1️⃣ 渐进式信息披露</a></li>
+                    <li>
+                        <a href="#2-%e7%8b%ac%e7%ab%8b-git-worktree--sandbox" aria-label="2️⃣ 独立 git worktree / sandbox">2️⃣ 独立 git worktree / sandbox</a></li>
+                    <li>
+                        <a href="#3-repo-as-single-source-of-truth" aria-label="3️⃣ Repo as Single Source of Truth">3️⃣ Repo as Single Source of Truth</a></li>
+                    <li>
+                        <a href="#4-%e6%9c%ba%e6%a2%b0%e5%8c%96%e7%ba%a6%e6%9d%9f%e6%89%a7%e8%a1%8c" aria-label="4️⃣ 机械化约束执行">4️⃣ 机械化约束执行</a></li>
+                    <li>
+                        <a href="#5-%e6%8a%8a%e9%aa%8c%e8%af%81%e5%b5%8c%e5%85%a5%e5%be%aa%e7%8e%af" aria-label="5️⃣ 把验证嵌入循环">5️⃣ 把验证嵌入循环</a></li>
+                    <li>
+                        <a href="#6-%e6%9c%ac%e5%9c%b0%e5%8f%af%e8%a7%82%e6%b5%8b%e6%80%a7" aria-label="6️⃣ 本地可观测性">6️⃣ 本地可观测性</a></li></ul>
+                    </li>
+                    <li>
+                        <a href="#%e5%9b%9b%e5%8e%86%e5%8f%b2%e8%a7%86%e8%a7%92harness-%e6%98%af%e6%8e%a7%e5%88%b6%e8%ae%ba%e7%9a%84%e7%ac%ac%e4%b8%89%e6%ac%a1%e9%99%8d%e4%b8%b4" aria-label="四、历史视角：Harness 是控制论的第三次降临">四、历史视角：Harness 是控制论的第三次降临</a></li>
+                    <li>
+                        <a href="#%e4%ba%94%e4%b8%a4%e6%b4%be%e4%b9%8b%e4%ba%89%e5%8e%9a-harness-vs-%e8%96%84-harness" aria-label="五、两派之争：厚 Harness vs 薄 Harness">五、两派之争：厚 Harness vs 薄 Harness</a><ul>
+                            
+                    <li>
+                        <a href="#-build-heavy-harness-%e6%b4%be" aria-label="🏗️ Build Heavy Harness 派">🏗️ Build Heavy Harness 派</a></li>
+                    <li>
+                        <a href="#-trust-the-model-%e6%b4%be" aria-label="🤖 Trust the Model 派">🤖 Trust the Model 派</a></li>
+                    <li>
+                        <a href="#%e4%bd%9c%e8%80%85%e5%88%a4%e6%96%ad" aria-label="作者判断">作者判断</a></li></ul>
+                    </li>
+                    <li>
+                        <a href="#%e5%85%ad%e7%8e%b0%e5%9c%a8%e5%b0%b1%e8%83%bd%e8%90%bd%e5%9c%b0%e7%9a%84-3-%e4%b8%aa%e5%b0%8f%e8%a1%8c%e5%8a%a8%e4%bb%8e%e4%bb%8a%e5%a4%a9%e5%bc%80%e5%a7%8b" aria-label="六、现在就能落地的 3 个小行动（从今天开始）">六、现在就能落地的 3 个小行动（从今天开始）</a><ul>
+                            
+                    <li>
+                        <a href="#-action-1%e5%9b%ba%e5%8c%96%e4%bd%a0%e7%9a%84ai-%e9%94%99%e9%a2%98%e6%9c%ac" aria-label="✅ Action 1：固化你的&amp;quot;AI 错题本&amp;quot;">✅ Action 1：固化你的&quot;AI 错题本&quot;</a></li>
+                    <li>
+                        <a href="#-action-2%e7%a1%ac%e7%bc%96%e7%a0%81%e6%9e%b6%e6%9e%84%e7%ba%a6%e6%9d%9f" aria-label="✅ Action 2：硬编码架构约束">✅ Action 2：硬编码架构约束</a></li>
+                    <li>
+                        <a href="#-action-3%e9%9a%94%e7%a6%bb%e8%af%95%e9%94%99%e7%a9%ba%e9%97%b4" aria-label="✅ Action 3：隔离试错空间">✅ Action 3：隔离试错空间</a></li></ul>
+                    </li>
+                    <li>
+                        <a href="#%e5%86%99%e5%9c%a8%e6%9c%80%e5%90%8e" aria-label="写在最后">写在最后</a>
+                    </li>
+                </ul>
+                </li>
+                </ul>
+            </div>
+        </details>
+    </div>
+</aside>
+<script>
+    let activeElement;
+    let elements;
+    window.addEventListener('DOMContentLoaded', function (event) {
+        checkTocPosition();
+
+        elements = document.querySelectorAll('h1[id],h2[id],h3[id],h4[id],h5[id],h6[id]');
+         
+         activeElement = elements[0];
+         const id = encodeURI(activeElement.getAttribute('id')).toLowerCase();
+         document.querySelector(`.inner ul li a[href="#${id}"]`).classList.add('active');
+     }, false);
+
+    window.addEventListener('resize', function(event) {
+        checkTocPosition();
+    }, false);
+
+    window.addEventListener('scroll', () => {
+        
+        activeElement = Array.from(elements).find((element) => {
+            if ((getOffsetTop(element) - window.pageYOffset) > 0 && 
+                (getOffsetTop(element) - window.pageYOffset) < window.innerHeight/2) {
+                return element;
+            }
+        }) || activeElement
+
+        elements.forEach(element => {
+             const id = encodeURI(element.getAttribute('id')).toLowerCase();
+             if (element === activeElement){
+                 document.querySelector(`.inner ul li a[href="#${id}"]`).classList.add('active');
+             } else {
+                 document.querySelector(`.inner ul li a[href="#${id}"]`).classList.remove('active');
+             }
+         })
+     }, false);
+
+    const main = parseInt(getComputedStyle(document.body).getPropertyValue('--article-width'), 10);
+    const toc = parseInt(getComputedStyle(document.body).getPropertyValue('--toc-width'), 10);
+    const gap = parseInt(getComputedStyle(document.body).getPropertyValue('--gap'), 10);
+
+    function checkTocPosition() {
+        const width = document.body.scrollWidth;
+
+        if (width - main - (toc * 2) - (gap * 4) > 0) {
+            document.getElementById("toc-container").classList.add("wide");
+        } else {
+            document.getElementById("toc-container").classList.remove("wide");
+        }
+    }
+
+    function getOffsetTop(element) {
+        if (!element.getClientRects().length) {
+            return 0;
+        }
+        let rect = element.getBoundingClientRect();
+        let win = element.ownerDocument.defaultView;
+        return rect.top + win.pageYOffset;   
+    }
+</script>
+  <div class="post-content"><h1 id="harness-engineering2026-年写代码的人正在被驾驭层取代">Harness Engineering：2026 年，写代码的人正在被&quot;驾驭层&quot;取代<a hidden class="anchor" aria-hidden="true" href="#harness-engineering2026-年写代码的人正在被驾驭层取代">#</a></h1>
+<blockquote>
+<p>当你凌晨三点还在和 Claude Code 死磕一个 PR，改了半天 CLAUDE.md 规则，
+却发现它还是会偷偷在 <code>main.go</code> 里加上一行 <code>fmt.Println(&quot;debug&quot;)</code>……</p>
+<p>你有没有突然觉得：<strong>&ldquo;我到底是在写代码，还是在写一个让 AI 能正确写代码的系统？&rdquo;</strong></p>
+</blockquote>
+<hr>
+<p>2026 年初，OpenAI 的一篇低调但炸裂的文章《<strong>Harness Engineering: Leveraging Codex in an Agent-First World</strong>》把这个答案直接甩在了所有人脸上：</p>
+<p><strong>真正的高价值工作已经不是写代码，而是设计 Harness</strong>——那个让 Agent 能长期稳定、高质量产出的&quot;控制外壳&quot;。</p>
+<p>今天我们就来系统拆一拆这条正在发生的代际跃迁，看看 Harness 到底是什么、为什么它比模型升级更重要，以及你现在该怎么立刻在项目里用起来。</p>
+<hr>
+<h2 id="一先说痛点为什么-2025-年的你用-ai-写代码越写越累">一、先说痛点：为什么 2025 年的你用 AI 写代码越写越累？<a hidden class="anchor" aria-hidden="true" href="#一先说痛点为什么-2025-年的你用-ai-写代码越写越累">#</a></h2>
+<p>几乎所有深度使用 <code>Cursor</code> / <code>Claude Code</code> / <code>Windsurf</code> / <code>Devin</code> 的开发者，都踩过这三个相同的深坑：</p>
+<h3 id="-痛点一上下文永远不够agent-像失忆的新人">🔴 痛点一：上下文永远不够，Agent 像失忆的新人<a hidden class="anchor" aria-hidden="true" href="#-痛点一上下文永远不够agent-像失忆的新人">#</a></h3>
+<p>你明明在 README 里写了&quot;本项目禁止使用 global variables&quot;，它下一秒就在 service layer 里 <code>new</code> 一个全局 cache。</p>
+<h3 id="-痛点二改提示词比写业务逻辑还花时间">🔴 痛点二：改提示词比写业务逻辑还花时间<a hidden class="anchor" aria-hidden="true" href="#-痛点二改提示词比写业务逻辑还花时间">#</a></h3>
+<p><code>CLAUDE.md</code> / <code>AGENTS.md</code> 动辄几千行，迭代一次规则就要重跑几十个 PR，<strong>人类成了&quot;提示词农民工&quot;</strong>。</p>
+<h3 id="-痛点三没有闭环agent-以机器的速度重复犯错">🔴 痛点三：没有闭环，Agent 以机器的速度重复犯错<a hidden class="anchor" aria-hidden="true" href="#-痛点三没有闭环agent-以机器的速度重复犯错">#</a></h3>
+<p><code>生成 → review → 骂街 → 改提示 → 再生成……</code> 无限循环，生产力不但没提升，反而被拖进地狱。</p>
+<blockquote>
+<p>💡 <strong>一句话总结 2025 年的 AI 辅助编程</strong>：模型能力已经很强，但缺少一个像样的&quot;工厂流水线&quot;。</p>
+</blockquote>
+<hr>
+<h2 id="二harness-engineering-的核心跃迁">二、Harness Engineering 的核心跃迁<a hidden class="anchor" aria-hidden="true" href="#二harness-engineering-的核心跃迁">#</a></h2>
+<h3 id="从写代码--设计让-ai-写代码的系统">从&quot;写代码&quot; → &ldquo;设计让 AI 写代码的系统&rdquo;<a hidden class="anchor" aria-hidden="true" href="#从写代码--设计让-ai-写代码的系统">#</a></h3>
+<p>OpenAI 用 <strong>3 个工程师、5 个月、从零开始</strong>，产出了 <strong>&gt;100 万行代码、1500+ PR</strong>，全部 AI 生成，没有一行手写。</p>
+<p>他们早期为什么失败？<strong>不是模型不够聪明，而是缺少 Harness。</strong></p>
+<h3 id="harness-到底是什么">Harness 到底是什么？<a hidden class="anchor" aria-hidden="true" href="#harness-到底是什么">#</a></h3>
+<p>用最直白的话说：</p>
+<blockquote>
+<p><strong>Harness = 一套可持续让 Agent 正确工作的完整运行环境</strong></p>
+</blockquote>
+<p>它包括：</p>
+<ul>
+<li>✅ 架构规则编码化</li>
+<li>✅ 约束机械化执行</li>
+<li>✅ 地图式精简知识</li>
+<li>✅ 独立试错空间</li>
+<li>✅ 秒级反馈闭环</li>
+<li>✅ 可观测性</li>
+</ul>
+<hr>
+<h3 id="-代际变化对比表">📊 代际变化对比表<a hidden class="anchor" aria-hidden="true" href="#-代际变化对比表">#</a></h3>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">维度</th>
+<th style="text-align:left">传统 Prompt / Context Engineering</th>
+<th style="text-align:left">Harness Engineering (2026 主流)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"><strong>核心工作</strong></td>
+<td style="text-align:left">写好提示词、喂足上下文</td>
+<td style="text-align:left">设计规则、约束、验证、试错环境的完整闭环</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>反馈延迟</strong></td>
+<td style="text-align:left">分钟 ~ 小时（人工 review）</td>
+<td style="text-align:left"><strong>秒级</strong>（Linter / CI / 自测自动打回）</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>Agent 角色</strong></td>
+<td style="text-align:left">能力很强的实习生</td>
+<td style="text-align:left">受严格约束的资深员工</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>生产力提升</strong></td>
+<td style="text-align:left">1.5–3×（视项目）</td>
+<td style="text-align:left"><strong>5–20×</strong>（OpenAI 实验级数据）</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>长期可维护性</strong></td>
+<td style="text-align:left">差（提示词漂移、上下文遗忘）</td>
+<td style="text-align:left"><strong>强</strong>（规则写进 repo，随 git 版本控制）</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>🎯 <strong>一句话概括</strong>：Agent = Model + Harness。Model 是引擎，Harness 是整辆车。<strong>没有车，再好的引擎也只能原地空转。</strong></p>
+</blockquote>
+<hr>
+<h2 id="三harness-的-6-大经典设计模式直接抄作业">三、Harness 的 6 大经典设计模式（直接抄作业）<a hidden class="anchor" aria-hidden="true" href="#三harness-的-6-大经典设计模式直接抄作业">#</a></h2>
+<p>OpenAI + Stripe + Cursor 等一线玩家的真实做法，总结成这几条最有复用价值的模式：</p>
+<h3 id="1-渐进式信息披露">1️⃣ 渐进式信息披露<a hidden class="anchor" aria-hidden="true" href="#1-渐进式信息披露">#</a></h3>
+<p>不要一次把整个仓库文档塞给 Agent，<strong>按需加载</strong>：</p>
+<ul>
+<li>先给架构图 →</li>
+<li>再给当前 package 规范 →</li>
+<li>最后给相关历史 PR</li>
+</ul>
+<h3 id="2-独立-git-worktree--sandbox">2️⃣ 独立 git worktree / sandbox<a hidden class="anchor" aria-hidden="true" href="#2-独立-git-worktree--sandbox">#</a></h3>
+<p>每个 Agent task 都开一个干净的 worktree，坏了直接 <code>rm -rf</code>，<strong>不会污染主分支</strong>。</p>
+<h3 id="3-repo-as-single-source-of-truth">3️⃣ Repo as Single Source of Truth<a hidden class="anchor" aria-hidden="true" href="#3-repo-as-single-source-of-truth">#</a></h3>
+<p>所有约束、规范、禁忌、架构决策 → <strong>全部写进仓库的 md / yaml 文件</strong>，随代码一起 review &amp; 版本控制，而不是散落在 Slack / Notion。</p>
+<h3 id="4-机械化约束执行">4️⃣ 机械化约束执行<a hidden class="anchor" aria-hidden="true" href="#4-机械化约束执行">#</a></h3>
+<ul>
+<li>&ldquo;禁止使用全局变量&rdquo;</li>
+<li>&ldquo;接口必须加 OpenTelemetry&rdquo;</li>
+<li>&ldquo;错误必须 wrap&rdquo;</li>
+</ul>
+<p><strong>全部用 linter / CI 硬卡</strong>，死不了就过不了流水线。</p>
+<h3 id="5-把验证嵌入循环">5️⃣ 把验证嵌入循环<a hidden class="anchor" aria-hidden="true" href="#5-把验证嵌入循环">#</a></h3>
+<p><code>生成 → 跑单元测试 / e2e / lint → 不通过自动让 Agent 再修</code></p>
+<p>反馈延迟从 <strong>小时 → 秒</strong>。</p>
+<h3 id="6-本地可观测性">6️⃣ 本地可观测性<a hidden class="anchor" aria-hidden="true" href="#6-本地可观测性">#</a></h3>
+<p>给 Agent 提供 DevTools，让它自己截图看 UI、对齐日志、验证指标，<strong>而不是靠人类描述&quot;不对劲&quot;</strong>。</p>
+<blockquote>
+<p>📈 <strong>实测数据</strong>：这些模式组合后，即使相同模型，SWE-agent / LangChain 任务成功率可提升 <strong>20–60%</strong>。</p>
+</blockquote>
+<hr>
+<h2 id="四历史视角harness-是控制论的第三次降临">四、历史视角：Harness 是控制论的第三次降临<a hidden class="anchor" aria-hidden="true" href="#四历史视角harness-是控制论的第三次降临">#</a></h2>
+<p>作者把 Harness 放到了更大的时间尺度上看，**控制论（Cybernetics）**其实已经出现了三次：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">次数</th>
+<th style="text-align:left">时代</th>
+<th style="text-align:left">核心变革</th>
+<th style="text-align:left">人的角色跃迁</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"><strong>第一次</strong></td>
+<td style="text-align:left">瓦特蒸汽机</td>
+<td style="text-align:left">离心调速器（物理反馈闭环）</td>
+<td style="text-align:left">工人从烧火工 → 设计调速器的人</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>第二次</strong></td>
+<td style="text-align:left">Kubernetes</td>
+<td style="text-align:left">声明式 + 控制器</td>
+<td style="text-align:left">运维从手动重启 pod → 写 spec 让系统自己对齐</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>第三次</strong></td>
+<td style="text-align:left"><strong>Harness Engineering</strong></td>
+<td style="text-align:left">Agent 约束、验证、执行闭环</td>
+<td style="text-align:left">工程师从手写每一行 → 设计 Agent 的&quot;掌舵者&quot;</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>🔑 <strong>共同规律</strong>：当传感器 + 执行器足够强，反馈回路能在更高抽象层闭合时，<strong>人的角色就上移到&quot;掌舵&quot;</strong>。</p>
+</blockquote>
+<hr>
+<h2 id="五两派之争厚-harness-vs-薄-harness">五、两派之争：厚 Harness vs 薄 Harness<a hidden class="anchor" aria-hidden="true" href="#五两派之争厚-harness-vs-薄-harness">#</a></h2>
+<p>目前业界明显分成两派：</p>
+<h3 id="-build-heavy-harness-派">🏗️ Build Heavy Harness 派<a hidden class="anchor" aria-hidden="true" href="#-build-heavy-harness-派">#</a></h3>
+<p><strong>代表</strong>：OpenAI、Stripe、Cursor、LangChain 等</p>
+<ul>
+<li>用大量工程把 Agent 生产力拉满</li>
+<li>市场用估值投票</li>
+</ul>
+<h3 id="-trust-the-model-派">🤖 Trust the Model 派<a hidden class="anchor" aria-hidden="true" href="#-trust-the-model-派">#</a></h3>
+<p><strong>代表</strong>：Anthropic 主推</p>
+<ul>
+<li>模型足够强后，很多 Harness 工作会被自动吃掉</li>
+<li>倾向薄包装</li>
+</ul>
+<h3 id="作者判断">作者判断<a hidden class="anchor" aria-hidden="true" href="#作者判断">#</a></h3>
+<blockquote>
+<p>Harness 不会消失，但厚度会动态演化。</p>
+</blockquote>
+<p>就像 <code>Makefile → CI/CD → GitOps</code>，验证和约束的需求永恒，只是实现形式一直在变。</p>
+<hr>
+<h2 id="六现在就能落地的-3-个小行动从今天开始">六、现在就能落地的 3 个小行动（从今天开始）<a hidden class="anchor" aria-hidden="true" href="#六现在就能落地的-3-个小行动从今天开始">#</a></h2>
+<h3 id="-action-1固化你的ai-错题本">✅ Action 1：固化你的&quot;AI 错题本&quot;<a hidden class="anchor" aria-hidden="true" href="#-action-1固化你的ai-错题本">#</a></h3>
+<p>把你现在最头疼的 **5 条&quot;AI 老是犯的错&quot;**写进项目根目录的 <code>AGENTS.md</code> 或 <code>CLAUDE.md</code>，用 markdown 表格格式：</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-markdown" data-lang="markdown"><span style="display:flex;"><span>| 场景 | 禁止行为 | 推荐做法 |
+</span></span><span style="display:flex;"><span>|:---|:---|:---|
+</span></span><span style="display:flex;"><span>| 数据库连接 | 禁止直接 <span style="color:#0ff;font-weight:bold">`new DB connection`</span> | 使用连接池管理 |
+</span></span><span style="display:flex;"><span>| 错误处理 | 禁止裸 <span style="color:#0ff;font-weight:bold">`return err`</span> | 必须 <span style="color:#0ff;font-weight:bold">`wrap`</span> 并加上下文 |
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="-action-2硬编码架构约束">✅ Action 2：硬编码架构约束<a hidden class="anchor" aria-hidden="true" href="#-action-2硬编码架构约束">#</a></h3>
+<p>给项目加一个 <code>pre-commit hook</code> + CI lint，<strong>硬编码至少 3 条架构约束</strong>：</p>
+<ul>
+<li>禁止直接 new DB connection</li>
+<li>禁止全局变量</li>
+<li>接口必须加 tracing</li>
+</ul>
+<h3 id="-action-3隔离试错空间">✅ Action 3：隔离试错空间<a hidden class="anchor" aria-hidden="true" href="#-action-3隔离试错空间">#</a></h3>
+<p>下次让 Agent 改代码时，<strong>先强制它开一个新的 git worktree</strong>，别直接在当前分支上搞。</p>
+<blockquote>
+<p>💪 <strong>做完这三件事</strong>，你会明显感觉到：骂 AI 的次数少了，真正能合并的 PR 变多了。</p>
+</blockquote>
+<hr>
+<h2 id="写在最后">写在最后<a hidden class="anchor" aria-hidden="true" href="#写在最后">#</a></h2>
+<p>2026 年的代码工厂里，人类工程师正在完成一次身份升级：</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>码农 → 系统设计师 → Agent 驯兽师
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>写代码这件事，正在被彻底重新定义。</p>
+<p><strong>真正拉开差距的，已经不是你会不会 prompt，而是你会不会设计 Harness。</strong></p>
+<hr>
+<blockquote>
+<p>🎤 <strong>你现在是在继续手动修 AI 的 bug，还是已经在悄悄建自己的&quot;驾驭层&quot;了？</strong></p>
+<p>欢迎留言区分享你当前的 <code>CLAUDE.md</code> / <code>AGENTS.md</code> 有多长，或者你踩过的最离谱的 Agent 黑历史，我们下篇可以一起继续深挖生产级 Harness 工程实践。</p>
+</blockquote>
+<hr>
+<p><strong>祝我们都能赶上这条从&quot;写代码&quot;到&quot;设计代码工厂&quot;的红利。</strong> 🚀</p>
+<hr>
+<p><em>本文基于 OpenAI《Harness Engineering: Leveraging Codex in an Agent-First World》及行业实践整理</em></p>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+      <li><a href="https://csqread.top/tags/ai/">AI</a></li>
+    </ul>
+<nav class="paginav">
+  <a class="prev" href="https://csqread.top/posts/blog/hugo%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/">
+    <span class="title">« 上一页</span>
+    <br>
+    <span>Hugo博客搭建</span>
+  </a>
+  <a class="next" href="https://csqread.top/posts/tech/%E6%8A%BD%E8%B1%A1%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F/">
+    <span class="title">下一页 »</span>
+    <br>
+    <span>抽象工厂模式</span>
+  </a>
+</nav>
+
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+    <span>&copy; 2026 <a href="https://csqread.top">Qian&#39;s Blog</a></span>
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerHTML = '复制';
+
+        function copyingDone() {
+            copybutton.innerHTML = '已复制！';
+            setTimeout(() => {
+                copybutton.innerHTML = '复制';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) { };
+            selection.removeRange(range);
+        });
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+        }
+    });
+</script>
+</body>
+
+</html>

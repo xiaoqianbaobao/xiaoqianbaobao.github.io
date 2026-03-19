@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>AI on Qian&#39;s Blog</title>
+    <link>https://csqread.top/tags/ai/</link>
+    <description>Recent content in AI on Qian&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Thu, 19 Mar 2026 21:32:15 +0800</lastBuildDate><atom:link href="https://csqread.top/tags/ai/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Harness Engineering</title>
+      <link>https://csqread.top/posts/tech/harness-engineering/</link>
+      <pubDate>Thu, 19 Mar 2026 21:32:15 +0800</pubDate>
+      
+      <guid>https://csqread.top/posts/tech/harness-engineering/</guid>
+      <description>Harness Engineering：2026 年，写代码的人正在被&amp;quot;驾驭层&amp;quot;取代 当你凌晨三点还在和 Claude Code 死磕一个 PR，改了半天 CLAUDE.md 规则，</description>
+    </item>
+    
+  </channel>
+</rss>
