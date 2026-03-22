@@ -556,5 +556,32 @@
       <description>一直以来，我在想做一个qq机器人，能够实现qq消息的转发，因为对于失物招领工作，其他的都挺满意的，但每天发那么多消息确实很浪费时间，所以就想</description>
     </item>
     
+    <item>
+      <title>关于</title>
+      <link>https://csqread.top/about/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://csqread.top/about/</guid>
+      <description>关于我 你好，我是 ShengQian，这是我的个人博客。 博客内容 技术分享 读书笔记 生活记录 AI 相关内容 联系方式 GitHub Twitter Email: chenshengqian2020@gmail.com</description>
+    </item>
+    
+    <item>
+      <title>搜索</title>
+      <link>https://csqread.top/search/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://csqread.top/search/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>友链</title>
+      <link>https://csqread.top/links/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://csqread.top/links/</guid>
+      <description>友情链接 GitHub - 代码托管平台 Google - 搜索引擎 Hugo - 静态站点生成器 AI Guide - 人工智能工程实践知识体系 申请友链 如果您想添加友链，请通过以下邮箱联系我： 邮箱： chenshengqian2020@gmail.com</description>
+    </item>
+    
   </channel>
 </rss>
