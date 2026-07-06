@@ -5,9 +5,9 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="robots" content="index, follow">
-<title>我为什么要做一个清结算垂直领域的代码评审skill | Qian&#39;s Blog</title>
-<meta name="keywords" content="">
-<meta name="description" content="背景 在AI越来越发达的今天，我们传统业务开发不得不面临的一个问题是，面对越来越膨胀的AI写的代码，我们该如何review? 不同的业务场景AI">
+<title>我为什么要做一个清结算垂直领域的代码评审 Skill | Qian&#39;s Blog</title>
+<meta name="keywords" content="代码评审, 支付结算, AI, Skill, 工程实践, Code Review">
+<meta name="description" content="在 AI 写代码越来越普遍的今天，如何保证 AI 生成的代码在支付结算这样的核心金融领域不出错？我花了一年时间，从零搭建了一个垂直领域的 AI 代码评审系统。">
 <meta name="author" content="">
 <link rel="canonical" href="https://csqread.top/posts/tech/%E6%88%91%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E5%81%9A%E4%B8%80%E4%B8%AA%E6%B8%85%E7%BB%93%E7%AE%97%E5%9E%82%E7%9B%B4%E9%A2%86%E5%9F%9F%E7%9A%84%E4%BB%A3%E7%A0%81%E8%AF%84%E5%AE%A1skill/">
 <link crossorigin="anonymous" href="/assets/css/stylesheet.cd9298b33628769aa1bc1acebbbfd7aa11ce81dfe03484d479e1907760249a1d.css" integrity="sha256-zZKYszYodpqhvBrOu7/XqhHOgd/gNITUeeGQd2Akmh0=" rel="preload stylesheet" as="style">
@@ -66,17 +66,23 @@
 
 </script><meta property="og:url" content="https://csqread.top/posts/tech/%E6%88%91%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E5%81%9A%E4%B8%80%E4%B8%AA%E6%B8%85%E7%BB%93%E7%AE%97%E5%9E%82%E7%9B%B4%E9%A2%86%E5%9F%9F%E7%9A%84%E4%BB%A3%E7%A0%81%E8%AF%84%E5%AE%A1skill/">
   <meta property="og:site_name" content="Qian&#39;s Blog">
-  <meta property="og:title" content="我为什么要做一个清结算垂直领域的代码评审skill">
-  <meta property="og:description" content="背景 在AI越来越发达的今天，我们传统业务开发不得不面临的一个问题是，面对越来越膨胀的AI写的代码，我们该如何review? 不同的业务场景AI">
+  <meta property="og:title" content="我为什么要做一个清结算垂直领域的代码评审 Skill">
+  <meta property="og:description" content="在 AI 写代码越来越普遍的今天，如何保证 AI 生成的代码在支付结算这样的核心金融领域不出错？我花了一年时间，从零搭建了一个垂直领域的 AI 代码评审系统。">
   <meta property="og:locale" content="zh_cn">
   <meta property="og:type" content="article">
     <meta property="article:section" content="posts">
     <meta property="article:published_time" content="2026-04-28T20:05:32+08:00">
     <meta property="article:modified_time" content="2026-04-28T20:05:32+08:00">
+    <meta property="article:tag" content="代码评审">
+    <meta property="article:tag" content="支付结算">
+    <meta property="article:tag" content="AI">
+    <meta property="article:tag" content="Skill">
+    <meta property="article:tag" content="工程实践">
+    <meta property="article:tag" content="Code Review">
 
   <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="我为什么要做一个清结算垂直领域的代码评审skill">
-  <meta name="twitter:description" content="背景 在AI越来越发达的今天，我们传统业务开发不得不面临的一个问题是，面对越来越膨胀的AI写的代码，我们该如何review? 不同的业务场景AI">
+  <meta name="twitter:title" content="我为什么要做一个清结算垂直领域的代码评审 Skill">
+  <meta name="twitter:description" content="在 AI 写代码越来越普遍的今天，如何保证 AI 生成的代码在支付结算这样的核心金融领域不出错？我花了一年时间，从零搭建了一个垂直领域的 AI 代码评审系统。">
 
 
 <script type="application/ld+json">
@@ -99,7 +105,7 @@
     {
       "@type": "ListItem",
       "position":  3 ,
-      "name": "我为什么要做一个清结算垂直领域的代码评审skill",
+      "name": "我为什么要做一个清结算垂直领域的代码评审 Skill",
       "item": "https://csqread.top/posts/tech/%E6%88%91%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E5%81%9A%E4%B8%80%E4%B8%AA%E6%B8%85%E7%BB%93%E7%AE%97%E5%9E%82%E7%9B%B4%E9%A2%86%E5%9F%9F%E7%9A%84%E4%BB%A3%E7%A0%81%E8%AF%84%E5%AE%A1skill/"
     }
   ]
@@ -109,14 +115,14 @@
 {
   "@context": "https://schema.org",
   "@type": "BlogPosting",
-  "headline": "我为什么要做一个清结算垂直领域的代码评审skill",
-  "name": "我为什么要做一个清结算垂直领域的代码评审skill",
-  "description": "背景 在AI越来越发达的今天，我们传统业务开发不得不面临的一个问题是，面对越来越膨胀的AI写的代码，我们该如何review? 不同的业务场景AI",
+  "headline": "我为什么要做一个清结算垂直领域的代码评审 Skill",
+  "name": "我为什么要做一个清结算垂直领域的代码评审 Skill",
+  "description": "在 AI 写代码越来越普遍的今天，如何保证 AI 生成的代码在支付结算这样的核心金融领域不出错？我花了一年时间，从零搭建了一个垂直领域的 AI 代码评审系统。",
   "keywords": [
-    
+    "代码评审", "支付结算", "AI", "Skill", "工程实践", "Code Review"
   ],
-  "articleBody": "背景 在AI越来越发达的今天，我们传统业务开发不得不面临的一个问题是，面对越来越膨胀的AI写的代码，我们该如何review? 不同的业务场景AI能够介入的效果不同。有些业务AI能够轻松介入，比如智慧客服，智能OA等等。但是在C端，支付结算领域，从来没有说过有智能支付，智能交易，智能结算。AI是不可控的，因此随之有了harness工程来约束模型。但是即使这样，我们也不敢让AI在生产上去代替交易系统，支付系统，结算系统去对实时资金流产生影响。在这些背景下，我觉得从某个领域进行单点突破还是可行的。比如在代码上线前进行的代码评审，做好事前评审，可以防范一些因为对业务的不理解和AI写的代码人没有理解的情况下，避免产生一些不好的影响。因此我们做了AI代码评审。\n这件事是从2025年中开始做的，那个时候skill还没有那么火，我只是进行了初步尝试，利用大模型的基础训练的能力和我写的promot以及配合一些工具对项目代码进行拉取，diff等，进行AI代码评审。这个时候已经搭建了一个完整的工作流。主要是通过工具先把本次业务代码分支上的改动全部拉下来，然后分成几种情况，比如只diff某几个提交，或者diff这个分支的和master分支之间的差异。我甚至为了这盘醋包了一个饺子，为此我搭建了一个agent以及整个平台。只为了代码评审能够更好的工作。这个平台包含了一些操作，比如能够配置仓库，配置定时任务执行的时间，配置分支，配置钉钉群webhook以进行实时提交的评审通知等等。并且以代码评审为一个角度，切入了需求分析-\u003e产品文档-\u003e代码编写-\u003e代码评审-\u003e测试案例生成的整个工作流。当然我仅仅实现了代码评审这一个模块，其他模块还是比较初步的阶段。\n",
-  "wordCount" : "730",
+  "articleBody": "背景 在 AI 越来越发达的今天，我们传统业务开发不得不面临的一个问题是：面对越来越膨胀的 AI 写的代码，我们该如何 Review？\n不同的业务场景 AI 能够介入的效果不同。有些业务 AI 能够轻松介入，比如智慧客服、智能 OA 等等。但在 C 端支付结算领域，从来没有说过有\"智能支付\"、“智能交易”、“智能结算”。\nAI 是不可控的。它有时会写出完全正确、优雅的代码，有时也会编造不存在的 API、生成有资金风险的逻辑，甚至自信地告诉你一段危险的变更\"没有问题\"。\n因此我们做了 AI 代码评审。 不是让 AI 直接写代码上线，而是在代码上线前，让 AI 做第一道防线——做好事前评审，防范因对业务的不理解和 AI 写的代码没有被充分理解而产生的风险。\n这件事是从 2025 年中开始做的。那个时候 Skill 还没有那么火，我只是进行了初步尝试，利用大模型的基础能力加上我写的 Prompt，配合一些工具对项目代码进行拉取、Diff 等，做 AI 代码评审。我甚至为了这盘醋包了一个饺子，搭建了一个完整 Agent 平台，只为了让代码评审能够更好地工作。\n这篇文章就来讲讲这个 Skill 的完整架构和设计思路。\n核心思路：为什么选清结算垂直领域？ 做一个通用的代码评审工具不难，但要做得好，必须垂直。理由有三：\n通用评审太浅 — 通用模型只能检查代码风格、空指针、SQL 注入这些通用问题，但支付结算领域的核心风险它看不到：资金方向错了怎么办？分布式锁没加上怎么办？日切回滚没覆盖怎么办？\nAI 代码膨胀后的现实问题 — 在清结算这样资金密集的领域，AI 写的代码越来越多，但 Review 的人往往对 AI 生成的代码心存顾虑，不知道它\"写的对不对\"。\n单点突破可行 — 与其做一个大而全的评审工具，不如聚焦一个具体的垂直领域，把领域知识沉淀到规则引擎中，把评审做深做透。\n架构全景 这个 Skill 的核心是一个 9 步执行流水线，从初始化到最终通知，每一步都有明确的产物和质量门禁。\n保存后继续：执行流概览 Step 1: Init → 初始化仓库、配置 Step 2: Explore → 探索仓库结构与分支 Step 3: Log → 获取提交历史 Step 4: Diff → 获取代码变更 Step 5: Review → LLM 初步评审 Step 6: Trace → 深度溯源（强制！） Step 7: Report → 生成最终报告 Step 8: Fix Plan → 生成修复方案 Step 9: Notify → 发送通知 全局执行纪律 无论任何单步脚本是否失败，都必须继续执行下一步。每步结束后生成 stepN-status.json（success/degraded/failed）。Step 6 溯源为强制步骤，禁止因为\"没有 H 级问题\"而跳过。\n违反后果：如果跳过 Step 6 溯源，可能导致大量误报被标记为高风险，浪费开发团队排查问题的时间！\n评审深度配置 级别 说明 适用场景 fast 仅检查高危模式（SQL 注入、空指针、事务、硬编码密钥） 紧急热修复 standard 检查安全、正确性、性能、可维护性 常规迭代 deep 额外检查架构、并发安全、业务一致性、数据流追踪 核心资金类变更 payment 专项深度检查（分库分表、分布式锁、日切、幂等、脱敏等） 支付结算域变更 六步核心流水线详解 Step 1: Init — 收集配置与初始化 这一步直接使用原生 Git 命令克隆仓库，创建 meta.json：\ngit clone \"https://{username}@{repo_host}/{repo_path}.git\" /workspace/settle-center git fetch origin \"{target_branch}\" git checkout \"{target_branch}\" 异常处理链：git clone 失败 → 检查凭据 → 分支不存在 → 列出可用分支 → 仍失败 → 询问用户是否手动提供 diff。\nStep 2: Explore — 探索仓库与分支 解析业务文档（如用户提供附件），提取业务线、模块、功能点、资金方向。获取分支列表展示给用户选择。\n必须等待用户回复，禁止自动选择！\nStep 3: Log — 探索提交历史 git log \"{selected_branch}\" --max-count=50 \\ --date=iso --pretty=format:\"%H|%an|%ad|%s\" 展示提交历史后，等待用户选择 commit 或范围。Commit 数量 \u003e 20 时提示预警。\nStep 4: Diff — 获取代码变更 # 单个 commit git show --no-color \"{commit_hash}\" \u003e evidence.diff # 分支间比较 git diff --no-color \"{branch1}...{branch2}\" \u003e evidence.diff 验证步骤：\n检查 diff 是否包含错误 → 报错则停止 检查 diff 是否为空 → 为空则生成空报告 文件数 \u003e 50 → 仅评审前 50 个（按风险权重排序） diff 行数 \u003e 5000 → 截断处理 Step 5: Reviewer — 初步评审 评审检查项分类：\n类别 检查项 适用深度 安全 SQL 注入、XSS、权限绕过、敏感信息泄露、硬编码密钥 all 正确性 空指针、事务边界、并发安全、金额精度、时区处理 all 性能 N+1 查询、资源未关闭、循环嵌套 standard+ 可维护性 重复代码、过长方法、魔法数字 standard+ 架构 循环依赖、分层违规、设计模式滥用 deep+ 业务一致性 与需求文档对齐、资金方向正确、状态机合规 deep+ 领域专项 分库分表、分布式锁、日切、幂等、脱敏 payment 支付结算域专项检测规则 这是整个 Skill 最有价值的部分——它不仅仅是检查代码规范，而是理解支付结算业务：\n分库分表 — 检查分片键是否合理、跨分片事务是否正确处理 分布式锁 — 检查资金操作是否有分布式锁保护，锁的粒度和超时设置是否合理 日切机制 — 检查日切回滚逻辑是否完整，T+1 清算数据是否一致 退款幂等 — 检查退款请求是否有幂等保障，防止重复退款 日志脱敏 — 检查关键字段（身份证、银行卡号）是否正确脱敏 资金流追踪 — 检查资金流向是否正确，借贷方向是否匹配 事务边界 — 检查事务范围是否合理，长事务是否有拆分策略 并发安全 — 检查并发场景下的数据竞争和状态不一致问题 假阳性过滤（三层规则引擎） 这是保证评审质量的关键——没有假阳性过滤的评审工具，开发团队不会用。\nL1: 语法模式匹配 — 防御性判空、try-with-resources、Optional 包装等 L2: 领域模式匹配 — 支付结算域专用（金额比较、分布式锁、幂等注解、日切、脱敏等） L3: 上下文模式匹配 — 基于上下文的降级判断（如基础框架类代码降级检查标准） Step 6: 风险溯源（强制步骤，不可跳过） 这是整个 Skill 设计中最重要的一步——不溯源的评审只是在重复 LLM 的第一印象。\n六个维度的溯源 上游调用链 — 哪些方法调用了目标方法？调用链路是否存在风险？ 下游调用链 — 目标方法调用了哪些方法？是否引入了不安全的依赖？ 数据流溯源 — 敏感字段和资金字段如何流转？是否存在泄露风险？ 事务链溯源 — 事务边界在哪里？是否存在事务过长或不合理嵌套？ 并发链溯源 — 是否存在并发安全问题？锁机制是否正确？ 配置溯源 — @Value 和 @ConfigurationProperties 的值从哪来？ 溯源命令示例 python review.py context-trace \\ --repo-dir \"${repo_dir}\" --target-class \"${TARGET_CLASS}\" \\ --target-method \"${TARGET_METHOD}\" --direction upstream python review.py dataflow-trace \\ --repo-dir \"${repo_dir}\" --target-class \"${TARGET_CLASS}\" \\ --target-fields \"sensitiveFields,moneyFields\" 风险重新评估 根据溯源结果动态调整等级：\n上游已做防护 → 降级 下游有补偿机制 → 保持或降级 完全没有防护 → 保持 H 风险叠加 → 升级为 H 数据已脱敏 → 降级或移除 Step 7-9: 报告、修复与通知 报告结构 最终报告遵循严格的结构，必须包含：\n执行摘要 — 评分雷达图、关键风险清单 变更统计 — 表格 + Mermaid 饼图、风险热力图 风险明细清单 — 按 H/M/L/INFO 分组，含证据和溯源结果 修复建议汇总 — 按优先级排序，预估工时 附录 — 假阳性过滤记录、溯源工具调用日志 修复方案类型 类型 适用场景 说明 auto_patch 规范类、简单安全类 自动生成代码补丁 test_template 缺陷类、并发类 生成单元测试模板 checklist 架构类、业务一致性 生成检查清单 质量门禁 只有所有步骤都 success 才能发正式钉钉通知（gate = full_pass）。如果存在降级步骤，通知中必须包含\"执行完整性说明\"。\n钉钉通知集成 python review.py notify \\ --webhook-url \"{webhook_url}\" \\ --title \"代码评审完成\" \\ --text \"发现了 N 个问题（H:N, M:N, L:N）\" 防幻觉机制 LLM 在代码评审场景中特别喜欢\"编造\"，为此我设计了一套严格的约束：\n禁止项 说明 伪造 commit hash 必须使用 Step 3 返回的 hash 凭空编造代码 所有 evidence 必须来自真实 diff 猜测行号 行号必须与 diff 一致 忽略空 diff diff 为空时必须停止 跳过假阳性过滤 必须应用三层规则引擎 自动选择分支 必须等待用户选择 伪造溯源结果 工具失败时必须标注 绕过 notify 禁止用 bash/curl 直接发通知 与 Harness 的关系 这个 Skill 在运行时同样依赖于之前那篇文章中提到的 Harness 架构：\n控制平面 — Skill 的执行纪律和约束规则 Query Loop — 9 步流水线的迭代执行 权限门 — 每一步的产物校验和质量门禁 上下文治理 — diff 内容的分段处理和预算控制 错误恢复 — 单步失败不阻塞整体流程 这也印证了我在 Harness Engineering 中提到的观点：今天模型之间的差距，远小于系统设计好坏带来的差距。\n总结 从 2025 年中开始，我用一年时间做了一个垂直领域的代码评审 Skill。它的核心价值不在于\"AI 能不能评审代码\"，而在于：\n垂直化 — 只有深入支付结算领域，才能发现真正有意义的代码风险 流水线化 — 9 步执行流水线保证评审质量和可追溯性 可溯源 — 每一个 H 级问题都有 6 个维度的溯源证据 防幻觉 — 严格约束 LLM 的输出，防止编造 可落地 — 通过钉钉集成和自动修复方案，真正融入开发流程 这个 Skill 最终以这个平台为切入点，我规划了需求分析 → 产品文档 → 代码编写 → 代码评审 → 测试案例生成的完整工作流。目前代码评审模块已经相对成熟，其他模块还在初步阶段。\n但正如我做这件事的初衷：在 AI 越来越强的今天，我们要做的不是阻止 AI 写代码，而是确保 AI 写的代码在进生产之前，被充分理解、充分评审。\n",
+  "wordCount" : "3433",
   "inLanguage": "en",
   "datePublished": "2026-04-28T20:05:32+08:00",
   "dateModified": "2026-04-28T20:05:32+08:00",
@@ -208,10 +214,10 @@
   <header class="post-header">
     
     <h1 class="post-title entry-hint-parent">
-      我为什么要做一个清结算垂直领域的代码评审skill
+      我为什么要做一个清结算垂直领域的代码评审 Skill
     </h1>
     <div class="post-description">
-      背景 在AI越来越发达的今天，我们传统业务开发不得不面临的一个问题是，面对越来越膨胀的AI写的代码，我们该如何review? 不同的业务场景AI
+      在 AI 写代码越来越普遍的今天，如何保证 AI 生成的代码在支付结算这样的核心金融领域不出错？我花了一年时间，从零搭建了一个垂直领域的 AI 代码评审系统。
     </div>
     <div class="post-meta">
 
@@ -219,15 +225,325 @@
 
 </div>
   </header> 
-  <div class="post-content md-content"><p>背景
-在AI越来越发达的今天，我们传统业务开发不得不面临的一个问题是，面对越来越膨胀的AI写的代码，我们该如何review? 不同的业务场景AI能够介入的效果不同。有些业务AI能够轻松介入，比如智慧客服，智能OA等等。但是在C端，支付结算领域，从来没有说过有智能支付，智能交易，智能结算。AI是不可控的，因此随之有了harness工程来约束模型。但是即使这样，我们也不敢让AI在生产上去代替交易系统，支付系统，结算系统去对实时资金流产生影响。在这些背景下，我觉得从某个领域进行单点突破还是可行的。比如在代码上线前进行的代码评审，做好事前评审，可以防范一些因为对业务的不理解和AI写的代码人没有理解的情况下，避免产生一些不好的影响。因此我们做了AI代码评审。</p>
-<p>这件事是从2025年中开始做的，那个时候skill还没有那么火，我只是进行了初步尝试，利用大模型的基础训练的能力和我写的promot以及配合一些工具对项目代码进行拉取，diff等，进行AI代码评审。这个时候已经搭建了一个完整的工作流。主要是通过工具先把本次业务代码分支上的改动全部拉下来，然后分成几种情况，比如只diff某几个提交，或者diff这个分支的和master分支之间的差异。我甚至为了这盘醋包了一个饺子，为此我搭建了一个agent以及整个平台。只为了代码评审能够更好的工作。这个平台包含了一些操作，比如能够配置仓库，配置定时任务执行的时间，配置分支，配置钉钉群webhook以进行实时提交的评审通知等等。并且以代码评审为一个角度，切入了需求分析-&gt;产品文档-&gt;代码编写-&gt;代码评审-&gt;测试案例生成的整个工作流。当然我仅仅实现了代码评审这一个模块，其他模块还是比较初步的阶段。</p>
+  <div class="post-content md-content"><h2 id="背景">背景<a hidden class="anchor" aria-hidden="true" href="#背景">#</a></h2>
+<p>在 AI 越来越发达的今天，我们传统业务开发不得不面临的一个问题是：<strong>面对越来越膨胀的 AI 写的代码，我们该如何 Review？</strong></p>
+<p>不同的业务场景 AI 能够介入的效果不同。有些业务 AI 能够轻松介入，比如智慧客服、智能 OA 等等。但在 C 端支付结算领域，从来没有说过有&quot;智能支付&quot;、&ldquo;智能交易&rdquo;、&ldquo;智能结算&rdquo;。</p>
+<p>AI 是不可控的。它有时会写出完全正确、优雅的代码，有时也会编造不存在的 API、生成有资金风险的逻辑，甚至自信地告诉你一段危险的变更&quot;没有问题&quot;。</p>
+<p><strong>因此我们做了 AI 代码评审。</strong> 不是让 AI 直接写代码上线，而是在代码上线前，让 AI 做第一道防线——做好事前评审，防范因对业务的不理解和 AI 写的代码没有被充分理解而产生的风险。</p>
+<p>这件事是从 2025 年中开始做的。那个时候 Skill 还没有那么火，我只是进行了初步尝试，利用大模型的基础能力加上我写的 Prompt，配合一些工具对项目代码进行拉取、Diff 等，做 AI 代码评审。我甚至为了这盘醋包了一个饺子，搭建了一个完整 Agent 平台，只为了让代码评审能够更好地工作。</p>
+<p>这篇文章就来讲讲这个 Skill 的完整架构和设计思路。</p>
+<hr>
+<h2 id="核心思路为什么选清结算垂直领域">核心思路：为什么选清结算垂直领域？<a hidden class="anchor" aria-hidden="true" href="#核心思路为什么选清结算垂直领域">#</a></h2>
+<p>做一个通用的代码评审工具不难，但要做得好，必须<strong>垂直</strong>。理由有三：</p>
+<ol>
+<li>
+<p><strong>通用评审太浅</strong> — 通用模型只能检查代码风格、空指针、SQL 注入这些通用问题，但支付结算领域的核心风险它看不到：资金方向错了怎么办？分布式锁没加上怎么办？日切回滚没覆盖怎么办？</p>
+</li>
+<li>
+<p><strong>AI 代码膨胀后的现实问题</strong> — 在清结算这样资金密集的领域，AI 写的代码越来越多，但 Review 的人往往对 AI 生成的代码心存顾虑，不知道它&quot;写的对不对&quot;。</p>
+</li>
+<li>
+<p><strong>单点突破可行</strong> — 与其做一个大而全的评审工具，不如聚焦一个具体的垂直领域，把领域知识沉淀到规则引擎中，把评审做深做透。</p>
+</li>
+</ol>
+<hr>
+<h2 id="架构全景">架构全景<a hidden class="anchor" aria-hidden="true" href="#架构全景">#</a></h2>
+<p>这个 Skill 的核心是一个 <strong>9 步执行流水线</strong>，从初始化到最终通知，每一步都有明确的产物和质量门禁。</p>
+<h3 id="保存后继续执行流概览">保存后继续：执行流概览<a hidden class="anchor" aria-hidden="true" href="#保存后继续执行流概览">#</a></h3>
+<pre tabindex="0"><code>Step 1: Init       → 初始化仓库、配置
+Step 2: Explore    → 探索仓库结构与分支
+Step 3: Log        → 获取提交历史
+Step 4: Diff       → 获取代码变更
+Step 5: Review     → LLM 初步评审
+Step 6: Trace      → 深度溯源（强制！）
+Step 7: Report     → 生成最终报告
+Step 8: Fix Plan   → 生成修复方案
+Step 9: Notify     → 发送通知
+</code></pre><h3 id="全局执行纪律">全局执行纪律<a hidden class="anchor" aria-hidden="true" href="#全局执行纪律">#</a></h3>
+<p>无论任何单步脚本是否失败，都必须继续执行下一步。每步结束后生成 <code>stepN-status.json</code>（success/degraded/failed）。Step 6 溯源为<strong>强制步骤</strong>，禁止因为&quot;没有 H 级问题&quot;而跳过。</p>
+<p><strong>违反后果</strong>：如果跳过 Step 6 溯源，可能导致大量误报被标记为高风险，浪费开发团队排查问题的时间！</p>
+<hr>
+<h2 id="评审深度配置">评审深度配置<a hidden class="anchor" aria-hidden="true" href="#评审深度配置">#</a></h2>
+<table>
+	<thead>
+			<tr>
+					<th style="text-align: left">级别</th>
+					<th style="text-align: left">说明</th>
+					<th style="text-align: left">适用场景</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td style="text-align: left"><code>fast</code></td>
+					<td style="text-align: left">仅检查高危模式（SQL 注入、空指针、事务、硬编码密钥）</td>
+					<td style="text-align: left">紧急热修复</td>
+			</tr>
+			<tr>
+					<td style="text-align: left"><code>standard</code></td>
+					<td style="text-align: left">检查安全、正确性、性能、可维护性</td>
+					<td style="text-align: left">常规迭代</td>
+			</tr>
+			<tr>
+					<td style="text-align: left"><code>deep</code></td>
+					<td style="text-align: left">额外检查架构、并发安全、业务一致性、数据流追踪</td>
+					<td style="text-align: left">核心资金类变更</td>
+			</tr>
+			<tr>
+					<td style="text-align: left"><code>payment</code></td>
+					<td style="text-align: left">专项深度检查（分库分表、分布式锁、日切、幂等、脱敏等）</td>
+					<td style="text-align: left">支付结算域变更</td>
+			</tr>
+	</tbody>
+</table>
+<hr>
+<h2 id="六步核心流水线详解">六步核心流水线详解<a hidden class="anchor" aria-hidden="true" href="#六步核心流水线详解">#</a></h2>
+<h3 id="step-1-init--收集配置与初始化">Step 1: Init — 收集配置与初始化<a hidden class="anchor" aria-hidden="true" href="#step-1-init--收集配置与初始化">#</a></h3>
+<p>这一步直接使用原生 Git 命令克隆仓库，创建 <code>meta.json</code>：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>git clone <span style="color:#e6db74">&#34;https://{username}@{repo_host}/{repo_path}.git&#34;</span> /workspace/settle-center
+</span></span><span style="display:flex;"><span>git fetch origin <span style="color:#e6db74">&#34;{target_branch}&#34;</span>
+</span></span><span style="display:flex;"><span>git checkout <span style="color:#e6db74">&#34;{target_branch}&#34;</span>
+</span></span></code></pre></div><p>异常处理链：git clone 失败 → 检查凭据 → 分支不存在 → 列出可用分支 → 仍失败 → 询问用户是否手动提供 diff。</p>
+<h3 id="step-2-explore--探索仓库与分支">Step 2: Explore — 探索仓库与分支<a hidden class="anchor" aria-hidden="true" href="#step-2-explore--探索仓库与分支">#</a></h3>
+<p>解析业务文档（如用户提供附件），提取业务线、模块、功能点、资金方向。获取分支列表展示给用户选择。</p>
+<p><strong>必须等待用户回复，禁止自动选择！</strong></p>
+<h3 id="step-3-log--探索提交历史">Step 3: Log — 探索提交历史<a hidden class="anchor" aria-hidden="true" href="#step-3-log--探索提交历史">#</a></h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>git log <span style="color:#e6db74">&#34;{selected_branch}&#34;</span> --max-count<span style="color:#f92672">=</span><span style="color:#ae81ff">50</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span>  --date<span style="color:#f92672">=</span>iso --pretty<span style="color:#f92672">=</span>format:<span style="color:#e6db74">&#34;%H|%an|%ad|%s&#34;</span>
+</span></span></code></pre></div><p>展示提交历史后，等待用户选择 commit 或范围。Commit 数量 &gt; 20 时提示预警。</p>
+<h3 id="step-4-diff--获取代码变更">Step 4: Diff — 获取代码变更<a hidden class="anchor" aria-hidden="true" href="#step-4-diff--获取代码变更">#</a></h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># 单个 commit</span>
+</span></span><span style="display:flex;"><span>git show --no-color <span style="color:#e6db74">&#34;{commit_hash}&#34;</span> &gt; evidence.diff
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 分支间比较</span>
+</span></span><span style="display:flex;"><span>git diff --no-color <span style="color:#e6db74">&#34;{branch1}...{branch2}&#34;</span> &gt; evidence.diff
+</span></span></code></pre></div><p>验证步骤：</p>
+<ul>
+<li>检查 diff 是否包含错误 → 报错则停止</li>
+<li>检查 diff 是否为空 → 为空则生成空报告</li>
+<li>文件数 &gt; 50 → 仅评审前 50 个（按风险权重排序）</li>
+<li>diff 行数 &gt; 5000 → 截断处理</li>
+</ul>
+<h3 id="step-5-reviewer--初步评审">Step 5: Reviewer — 初步评审<a hidden class="anchor" aria-hidden="true" href="#step-5-reviewer--初步评审">#</a></h3>
+<p><strong>评审检查项分类</strong>：</p>
+<table>
+	<thead>
+			<tr>
+					<th style="text-align: left">类别</th>
+					<th style="text-align: left">检查项</th>
+					<th style="text-align: left">适用深度</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td style="text-align: left">安全</td>
+					<td style="text-align: left">SQL 注入、XSS、权限绕过、敏感信息泄露、硬编码密钥</td>
+					<td style="text-align: left">all</td>
+			</tr>
+			<tr>
+					<td style="text-align: left">正确性</td>
+					<td style="text-align: left">空指针、事务边界、并发安全、金额精度、时区处理</td>
+					<td style="text-align: left">all</td>
+			</tr>
+			<tr>
+					<td style="text-align: left">性能</td>
+					<td style="text-align: left">N+1 查询、资源未关闭、循环嵌套</td>
+					<td style="text-align: left">standard+</td>
+			</tr>
+			<tr>
+					<td style="text-align: left">可维护性</td>
+					<td style="text-align: left">重复代码、过长方法、魔法数字</td>
+					<td style="text-align: left">standard+</td>
+			</tr>
+			<tr>
+					<td style="text-align: left">架构</td>
+					<td style="text-align: left">循环依赖、分层违规、设计模式滥用</td>
+					<td style="text-align: left">deep+</td>
+			</tr>
+			<tr>
+					<td style="text-align: left">业务一致性</td>
+					<td style="text-align: left">与需求文档对齐、资金方向正确、状态机合规</td>
+					<td style="text-align: left">deep+</td>
+			</tr>
+			<tr>
+					<td style="text-align: left"><strong>领域专项</strong></td>
+					<td style="text-align: left">分库分表、分布式锁、日切、幂等、脱敏</td>
+					<td style="text-align: left"><strong>payment</strong></td>
+			</tr>
+	</tbody>
+</table>
+<h3 id="支付结算域专项检测规则">支付结算域专项检测规则<a hidden class="anchor" aria-hidden="true" href="#支付结算域专项检测规则">#</a></h3>
+<p>这是整个 Skill 最有价值的部分——它不仅仅是检查代码规范，而是理解<strong>支付结算业务</strong>：</p>
+<ul>
+<li><strong>分库分表</strong> — 检查分片键是否合理、跨分片事务是否正确处理</li>
+<li><strong>分布式锁</strong> — 检查资金操作是否有分布式锁保护，锁的粒度和超时设置是否合理</li>
+<li><strong>日切机制</strong> — 检查日切回滚逻辑是否完整，T+1 清算数据是否一致</li>
+<li><strong>退款幂等</strong> — 检查退款请求是否有幂等保障，防止重复退款</li>
+<li><strong>日志脱敏</strong> — 检查关键字段（身份证、银行卡号）是否正确脱敏</li>
+<li><strong>资金流追踪</strong> — 检查资金流向是否正确，借贷方向是否匹配</li>
+<li><strong>事务边界</strong> — 检查事务范围是否合理，长事务是否有拆分策略</li>
+<li><strong>并发安全</strong> — 检查并发场景下的数据竞争和状态不一致问题</li>
+</ul>
+<h3 id="假阳性过滤三层规则引擎">假阳性过滤（三层规则引擎）<a hidden class="anchor" aria-hidden="true" href="#假阳性过滤三层规则引擎">#</a></h3>
+<p>这是保证评审质量的关键——<strong>没有假阳性过滤的评审工具，开发团队不会用</strong>。</p>
+<ul>
+<li><strong>L1: 语法模式匹配</strong> — 防御性判空、try-with-resources、Optional 包装等</li>
+<li><strong>L2: 领域模式匹配</strong> — 支付结算域专用（金额比较、分布式锁、幂等注解、日切、脱敏等）</li>
+<li><strong>L3: 上下文模式匹配</strong> — 基于上下文的降级判断（如基础框架类代码降级检查标准）</li>
+</ul>
+<hr>
+<h2 id="step-6-风险溯源强制步骤不可跳过">Step 6: 风险溯源（强制步骤，不可跳过）<a hidden class="anchor" aria-hidden="true" href="#step-6-风险溯源强制步骤不可跳过">#</a></h2>
+<p>这是整个 Skill 设计中最重要的一步——<strong>不溯源的评审只是在重复 LLM 的第一印象</strong>。</p>
+<h3 id="六个维度的溯源">六个维度的溯源<a hidden class="anchor" aria-hidden="true" href="#六个维度的溯源">#</a></h3>
+<ol>
+<li><strong>上游调用链</strong> — 哪些方法调用了目标方法？调用链路是否存在风险？</li>
+<li><strong>下游调用链</strong> — 目标方法调用了哪些方法？是否引入了不安全的依赖？</li>
+<li><strong>数据流溯源</strong> — 敏感字段和资金字段如何流转？是否存在泄露风险？</li>
+<li><strong>事务链溯源</strong> — 事务边界在哪里？是否存在事务过长或不合理嵌套？</li>
+<li><strong>并发链溯源</strong> — 是否存在并发安全问题？锁机制是否正确？</li>
+<li><strong>配置溯源</strong> — <code>@Value</code> 和 <code>@ConfigurationProperties</code> 的值从哪来？</li>
+</ol>
+<h3 id="溯源命令示例">溯源命令示例<a hidden class="anchor" aria-hidden="true" href="#溯源命令示例">#</a></h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>python review.py context-trace <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span>  --repo-dir <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">${</span>repo_dir<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span> --target-class <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">${</span>TARGET_CLASS<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span>  --target-method <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">${</span>TARGET_METHOD<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span> --direction upstream
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>python review.py dataflow-trace <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span>  --repo-dir <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">${</span>repo_dir<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span> --target-class <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">${</span>TARGET_CLASS<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span>  --target-fields <span style="color:#e6db74">&#34;sensitiveFields,moneyFields&#34;</span>
+</span></span></code></pre></div><h3 id="风险重新评估">风险重新评估<a hidden class="anchor" aria-hidden="true" href="#风险重新评估">#</a></h3>
+<p>根据溯源结果动态调整等级：</p>
+<ul>
+<li>上游已做防护 → <strong>降级</strong></li>
+<li>下游有补偿机制 → 保持或降级</li>
+<li>完全没有防护 → <strong>保持 H</strong></li>
+<li>风险叠加 → <strong>升级为 H</strong></li>
+<li>数据已脱敏 → 降级或移除</li>
+</ul>
+<hr>
+<h2 id="step-7-9-报告修复与通知">Step 7-9: 报告、修复与通知<a hidden class="anchor" aria-hidden="true" href="#step-7-9-报告修复与通知">#</a></h2>
+<h3 id="报告结构">报告结构<a hidden class="anchor" aria-hidden="true" href="#报告结构">#</a></h3>
+<p>最终报告遵循严格的结构，必须包含：</p>
+<ul>
+<li><strong>执行摘要</strong> — 评分雷达图、关键风险清单</li>
+<li><strong>变更统计</strong> — 表格 + Mermaid 饼图、风险热力图</li>
+<li><strong>风险明细清单</strong> — 按 H/M/L/INFO 分组，含证据和溯源结果</li>
+<li><strong>修复建议汇总</strong> — 按优先级排序，预估工时</li>
+<li><strong>附录</strong> — 假阳性过滤记录、溯源工具调用日志</li>
+</ul>
+<h3 id="修复方案类型">修复方案类型<a hidden class="anchor" aria-hidden="true" href="#修复方案类型">#</a></h3>
+<table>
+	<thead>
+			<tr>
+					<th style="text-align: left">类型</th>
+					<th style="text-align: left">适用场景</th>
+					<th style="text-align: left">说明</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td style="text-align: left"><code>auto_patch</code></td>
+					<td style="text-align: left">规范类、简单安全类</td>
+					<td style="text-align: left">自动生成代码补丁</td>
+			</tr>
+			<tr>
+					<td style="text-align: left"><code>test_template</code></td>
+					<td style="text-align: left">缺陷类、并发类</td>
+					<td style="text-align: left">生成单元测试模板</td>
+			</tr>
+			<tr>
+					<td style="text-align: left"><code>checklist</code></td>
+					<td style="text-align: left">架构类、业务一致性</td>
+					<td style="text-align: left">生成检查清单</td>
+			</tr>
+	</tbody>
+</table>
+<h3 id="质量门禁">质量门禁<a hidden class="anchor" aria-hidden="true" href="#质量门禁">#</a></h3>
+<p>只有所有步骤都 success 才能发正式钉钉通知（gate = full_pass）。如果存在降级步骤，通知中必须包含&quot;执行完整性说明&quot;。</p>
+<h3 id="钉钉通知集成">钉钉通知集成<a hidden class="anchor" aria-hidden="true" href="#钉钉通知集成">#</a></h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>python review.py notify <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span>  --webhook-url <span style="color:#e6db74">&#34;{webhook_url}&#34;</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span>  --title <span style="color:#e6db74">&#34;代码评审完成&#34;</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span>  --text <span style="color:#e6db74">&#34;发现了 N 个问题（H:N, M:N, L:N）&#34;</span>
+</span></span></code></pre></div><hr>
+<h2 id="防幻觉机制">防幻觉机制<a hidden class="anchor" aria-hidden="true" href="#防幻觉机制">#</a></h2>
+<p>LLM 在代码评审场景中特别喜欢&quot;编造&quot;，为此我设计了一套严格的约束：</p>
+<table>
+	<thead>
+			<tr>
+					<th style="text-align: left">禁止项</th>
+					<th style="text-align: left">说明</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td style="text-align: left">伪造 commit hash</td>
+					<td style="text-align: left">必须使用 Step 3 返回的 hash</td>
+			</tr>
+			<tr>
+					<td style="text-align: left">凭空编造代码</td>
+					<td style="text-align: left">所有 evidence 必须来自真实 diff</td>
+			</tr>
+			<tr>
+					<td style="text-align: left">猜测行号</td>
+					<td style="text-align: left">行号必须与 diff 一致</td>
+			</tr>
+			<tr>
+					<td style="text-align: left">忽略空 diff</td>
+					<td style="text-align: left">diff 为空时必须停止</td>
+			</tr>
+			<tr>
+					<td style="text-align: left">跳过假阳性过滤</td>
+					<td style="text-align: left">必须应用三层规则引擎</td>
+			</tr>
+			<tr>
+					<td style="text-align: left">自动选择分支</td>
+					<td style="text-align: left">必须等待用户选择</td>
+			</tr>
+			<tr>
+					<td style="text-align: left">伪造溯源结果</td>
+					<td style="text-align: left">工具失败时必须标注</td>
+			</tr>
+			<tr>
+					<td style="text-align: left">绕过 notify</td>
+					<td style="text-align: left">禁止用 bash/curl 直接发通知</td>
+			</tr>
+	</tbody>
+</table>
+<hr>
+<h2 id="与-harness-的关系">与 Harness 的关系<a hidden class="anchor" aria-hidden="true" href="#与-harness-的关系">#</a></h2>
+<p>这个 Skill 在运行时同样依赖于之前那篇文章中提到的 <strong>Harness 架构</strong>：</p>
+<ul>
+<li><strong>控制平面</strong> — Skill 的执行纪律和约束规则</li>
+<li><strong>Query Loop</strong> — 9 步流水线的迭代执行</li>
+<li><strong>权限门</strong> — 每一步的产物校验和质量门禁</li>
+<li><strong>上下文治理</strong> — diff 内容的分段处理和预算控制</li>
+<li><strong>错误恢复</strong> — 单步失败不阻塞整体流程</li>
+</ul>
+<p>这也印证了我在 Harness Engineering 中提到的观点：<strong>今天模型之间的差距，远小于系统设计好坏带来的差距。</strong></p>
+<hr>
+<h2 id="总结">总结<a hidden class="anchor" aria-hidden="true" href="#总结">#</a></h2>
+<p>从 2025 年中开始，我用一年时间做了一个垂直领域的代码评审 Skill。它的核心价值不在于&quot;AI 能不能评审代码&quot;，而在于：</p>
+<ol>
+<li><strong>垂直化</strong> — 只有深入支付结算领域，才能发现真正有意义的代码风险</li>
+<li><strong>流水线化</strong> — 9 步执行流水线保证评审质量和可追溯性</li>
+<li><strong>可溯源</strong> — 每一个 H 级问题都有 6 个维度的溯源证据</li>
+<li><strong>防幻觉</strong> — 严格约束 LLM 的输出，防止编造</li>
+<li><strong>可落地</strong> — 通过钉钉集成和自动修复方案，真正融入开发流程</li>
+</ol>
+<p>这个 Skill 最终以这个平台为切入点，我规划了需求分析 → 产品文档 → 代码编写 → 代码评审 → 测试案例生成的<strong>完整工作流</strong>。目前代码评审模块已经相对成熟，其他模块还在初步阶段。</p>
+<p>但正如我做这件事的初衷：<strong>在 AI 越来越强的今天，我们要做的不是阻止 AI 写代码，而是确保 AI 写的代码在进生产之前，被充分理解、充分评审。</strong></p>
 
 
   </div>
 
   <footer class="post-footer">
     <ul class="post-tags">
+      <li><a href="https://csqread.top/tags/%E4%BB%A3%E7%A0%81%E8%AF%84%E5%AE%A1/">代码评审</a></li>
+      <li><a href="https://csqread.top/tags/%E6%94%AF%E4%BB%98%E7%BB%93%E7%AE%97/">支付结算</a></li>
+      <li><a href="https://csqread.top/tags/ai/">AI</a></li>
+      <li><a href="https://csqread.top/tags/skill/">Skill</a></li>
+      <li><a href="https://csqread.top/tags/%E5%B7%A5%E7%A8%8B%E5%AE%9E%E8%B7%B5/">工程实践</a></li>
+      <li><a href="https://csqread.top/tags/code-review/">Code Review</a></li>
     </ul>
   </footer>
 </article>
