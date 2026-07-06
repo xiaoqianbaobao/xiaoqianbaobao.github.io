@@ -1,24 +1,24 @@
 <!DOCTYPE html>
 <html lang="en" dir="auto" data-theme="auto">
 
-<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset="utf-8">
+<head><meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="robots" content="noindex, nofollow">
+<meta name="robots" content="index, follow">
 <title>DDIA第九章 | Qian&#39;s Blog</title>
 <meta name="keywords" content="">
 <meta name="description" content="第九章：一致性与共识 构建容错系统的最好方法，是找到一些带有实用保证的通用抽象，实现一次，然后让应用依赖这些保证。比如事务。 我们需要了解系统能">
 <meta name="author" content="">
-<link rel="canonical" href="http://localhost:1313/posts/tech/ddia%E7%AC%AC%E4%B9%9D%E7%AB%A0/">
+<link rel="canonical" href="https://csqread.top/posts/tech/ddia%E7%AC%AC%E4%B9%9D%E7%AB%A0/">
 <link crossorigin="anonymous" href="/assets/css/stylesheet.cd9298b33628769aa1bc1acebbbfd7aa11ce81dfe03484d479e1907760249a1d.css" integrity="sha256-zZKYszYodpqhvBrOu7/XqhHOgd/gNITUeeGQd2Akmh0=" rel="preload stylesheet" as="style">
-<link rel="icon" href="http://localhost:1313/favicon.ico">
-<link rel="icon" type="image/png" sizes="16x16" href="http://localhost:1313/favicon-16x16.png">
-<link rel="icon" type="image/png" sizes="32x32" href="http://localhost:1313/favicon-32x32.png">
-<link rel="apple-touch-icon" href="http://localhost:1313/apple-touch-icon.png">
-<link rel="mask-icon" href="http://localhost:1313/safari-pinned-tab.svg">
+<link rel="icon" href="https://csqread.top/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://csqread.top/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://csqread.top/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://csqread.top/apple-touch-icon.png">
+<link rel="mask-icon" href="https://csqread.top/safari-pinned-tab.svg">
 <meta name="theme-color" content="#2e2e33">
 <meta name="msapplication-TileColor" content="#2e2e33">
-<link rel="alternate" hreflang="en" href="http://localhost:1313/posts/tech/ddia%E7%AC%AC%E4%B9%9D%E7%AB%A0/">
+<link rel="alternate" hreflang="en" href="https://csqread.top/posts/tech/ddia%E7%AC%AC%E4%B9%9D%E7%AB%A0/">
 <noscript>
     <style>
         #theme-toggle,
@@ -64,13 +64,82 @@
         document.querySelector("html").dataset.theme = 'light';
     }
 
+</script><meta property="og:url" content="https://csqread.top/posts/tech/ddia%E7%AC%AC%E4%B9%9D%E7%AB%A0/">
+  <meta property="og:site_name" content="Qian&#39;s Blog">
+  <meta property="og:title" content="DDIA第九章">
+  <meta property="og:description" content="第九章：一致性与共识 构建容错系统的最好方法，是找到一些带有实用保证的通用抽象，实现一次，然后让应用依赖这些保证。比如事务。 我们需要了解系统能">
+  <meta property="og:locale" content="zh_cn">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2024-02-03T23:07:22+08:00">
+    <meta property="article:modified_time" content="2024-02-03T23:07:22+08:00">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="DDIA第九章">
+  <meta name="twitter:description" content="第九章：一致性与共识 构建容错系统的最好方法，是找到一些带有实用保证的通用抽象，实现一次，然后让应用依赖这些保证。比如事务。 我们需要了解系统能">
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "文章",
+      "item": "https://csqread.top/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "技术",
+      "item": "https://csqread.top/posts/tech/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  3 ,
+      "name": "DDIA第九章",
+      "item": "https://csqread.top/posts/tech/ddia%E7%AC%AC%E4%B9%9D%E7%AB%A0/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "DDIA第九章",
+  "name": "DDIA第九章",
+  "description": "第九章：一致性与共识 构建容错系统的最好方法，是找到一些带有实用保证的通用抽象，实现一次，然后让应用依赖这些保证。比如事务。 我们需要了解系统能",
+  "keywords": [
+    
+  ],
+  "articleBody": "第九章：一致性与共识\n构建容错系统的最好方法，是找到一些带有实用保证的通用抽象，实现一次，然后让应用依赖这些保证。比如事务。 我们需要了解系统能力的边界：哪些可行，哪些不可行。\n一致性保证 分布式系统的时序问题：\n在同一时刻查看两个数据库节点，则可能在两个节点上看到不同的数据，因为写请求在不同的时间到达不同的节点。\n无论数据库使用何种复制方法（单主复制，多主复制或无主复制），都会出现这些不一致情况。\n大多数复制的数据库至少提供了最终一致性，这意味着如果你停止向数据库写入数据并等待一段不确定的时间，那么最终所有的读取请求都会返回相同的值。\n换句话说，不一致性是暂时的，最终会自行解决（假设网络中的任何故障最终都会被修复）。最终一致性的一个更好的名字可能是收敛（convergence），因为我们预计所有的副本最终会收敛到相同的值。\n最终一致性是非常弱的保证——没有说什么时候会收敛。\n在与只提供弱保证的数据库打交道时，你需要始终意识到它的局限性，而不是意外地作出太多假设。（始终不信任它） 除了最终一致性，有没有更强的一致性模型？\n分布式一致性模型\n分布式一致性模型和我们之前讨论的事务隔离级别的层次结构有一些相似之处。\n不同：事务隔离主要是为了避免由于同时执行事务而导致的竞争状态，而分布式一致性主要关于在面对延迟和故障时如何协调副本间的状态。\n线性一致性 线性一致性的想法？\n数据库可以提供只有一个副本的假象（即，只有一个数据副本），那么每个客户端都会有相同的数据视图，且不必担心复制滞后了。\n线性一致性（linearizability），也称为原子一致性（atomic consistency），强一致性（strong consistency），立即一致性（immediate consistency） 或外部一致性（external consistency ）。 线性一致性提供了什么保证？\n只要一个客户端成功完成写操作，所有客户端从数据库中读取数据必须能够看到刚刚写入的值。\n系统应保障读到的值是最近的、最新的，而不是来自陈旧的缓存或副本。\n线性一致性是一个新鲜度保证（recency guarantee）。 图9-1 这个系统是非线性一致的，导致了球迷的困惑\n如何使得系统线性一致？ ",
+  "wordCount" : "907",
+  "inLanguage": "en",
+  "datePublished": "2024-02-03T23:07:22+08:00",
+  "dateModified": "2024-02-03T23:07:22+08:00",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://csqread.top/posts/tech/ddia%E7%AC%AC%E4%B9%9D%E7%AB%A0/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Qian's Blog",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://csqread.top/favicon.ico"
+    }
+  }
+}
 </script>
 </head>
 <body id="top">
     <header class="header">
     <nav class="header-nav">
         <div class="logo">
-            <a href="http://localhost:1313/" accesskey="h" title="Qian&#39;s Blog (Alt + H)">Qian&#39;s Blog</a>
+            <a href="https://csqread.top/" accesskey="h" title="Qian&#39;s Blog (Alt + H)">Qian&#39;s Blog</a>
             <div class="logo-switches">
                 <button id="theme-toggle" class="theme-toggle" accesskey="t" title="(Alt + T)" aria-label="Toggle theme">
                     <svg class="moon" xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24"
@@ -96,37 +165,37 @@
         </div>
         <ul id="menu" class="menu">
             <li>
-                <a href="http://localhost:1313/search" title="🔍搜索 (Alt &#43; /)" accesskey=/>
+                <a href="https://csqread.top/search" title="🔍搜索 (Alt &#43; /)" accesskey=/>
                     <span>🔍搜索</span>
                 </a>
             </li>
             <li>
-                <a href="http://localhost:1313/posts" title="📚文章">
+                <a href="https://csqread.top/posts" title="📚文章">
                     <span>📚文章</span>
                 </a>
             </li>
             <li>
-                <a href="http://localhost:1313/archives/" title="⏱时间轴">
+                <a href="https://csqread.top/archives/" title="⏱时间轴">
                     <span>⏱时间轴</span>
                 </a>
             </li>
             <li>
-                <a href="http://localhost:1313/tags" title="🔖标签">
+                <a href="https://csqread.top/tags" title="🔖标签">
                     <span>🔖标签</span>
                 </a>
             </li>
             <li>
-                <a href="http://localhost:1313/about" title="🙋🏻‍♂️关于">
+                <a href="https://csqread.top/about" title="🙋🏻‍♂️关于">
                     <span>🙋🏻‍♂️关于</span>
                 </a>
             </li>
             <li>
-                <a href="http://localhost:1313/links" title="🤝友链">
+                <a href="https://csqread.top/links" title="🤝友链">
                     <span>🤝友链</span>
                 </a>
             </li>
             <li>
-                <a href="http://localhost:1313/" title="">
+                <a href="https://csqread.top/" title="">
                     <span></span>
                 </a>
             </li>
@@ -219,7 +288,7 @@
     </main>
     
 <footer class="footer">
-        <span>&copy; 2026 <a href="http://localhost:1313/">Qian&#39;s Blog</a></span> · 
+        <span>&copy; 2026 <a href="https://csqread.top/">Qian&#39;s Blog</a></span> · 
 
     
     

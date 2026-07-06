@@ -1,24 +1,24 @@
 <!DOCTYPE html>
 <html lang="en" dir="auto" data-theme="auto">
 
-<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset="utf-8">
+<head><meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="robots" content="noindex, nofollow">
+<meta name="robots" content="index, follow">
 <title>Hugo博客搭建 | Qian&#39;s Blog</title>
 <meta name="keywords" content="">
 <meta name="description" content="Hugo博客搭建过程及遇到的问题">
 <meta name="author" content="">
-<link rel="canonical" href="http://localhost:1313/posts/blog/hugo%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/">
+<link rel="canonical" href="https://csqread.top/posts/blog/hugo%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/">
 <link crossorigin="anonymous" href="/assets/css/stylesheet.cd9298b33628769aa1bc1acebbbfd7aa11ce81dfe03484d479e1907760249a1d.css" integrity="sha256-zZKYszYodpqhvBrOu7/XqhHOgd/gNITUeeGQd2Akmh0=" rel="preload stylesheet" as="style">
-<link rel="icon" href="http://localhost:1313/favicon.ico">
-<link rel="icon" type="image/png" sizes="16x16" href="http://localhost:1313/favicon-16x16.png">
-<link rel="icon" type="image/png" sizes="32x32" href="http://localhost:1313/favicon-32x32.png">
-<link rel="apple-touch-icon" href="http://localhost:1313/apple-touch-icon.png">
-<link rel="mask-icon" href="http://localhost:1313/safari-pinned-tab.svg">
+<link rel="icon" href="https://csqread.top/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://csqread.top/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://csqread.top/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://csqread.top/apple-touch-icon.png">
+<link rel="mask-icon" href="https://csqread.top/safari-pinned-tab.svg">
 <meta name="theme-color" content="#2e2e33">
 <meta name="msapplication-TileColor" content="#2e2e33">
-<link rel="alternate" hreflang="en" href="http://localhost:1313/posts/blog/hugo%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/">
+<link rel="alternate" hreflang="en" href="https://csqread.top/posts/blog/hugo%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/">
 <noscript>
     <style>
         #theme-toggle,
@@ -64,13 +64,82 @@
         document.querySelector("html").dataset.theme = 'light';
     }
 
+</script><meta property="og:url" content="https://csqread.top/posts/blog/hugo%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/">
+  <meta property="og:site_name" content="Qian&#39;s Blog">
+  <meta property="og:title" content="Hugo博客搭建">
+  <meta property="og:description" content="Hugo博客搭建过程及遇到的问题">
+  <meta property="og:locale" content="zh_cn">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2023-03-05T12:47:51+08:00">
+    <meta property="article:modified_time" content="2023-03-05T12:47:51+08:00">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Hugo博客搭建">
+  <meta name="twitter:description" content="Hugo博客搭建过程及遇到的问题">
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "文章",
+      "item": "https://csqread.top/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "博客",
+      "item": "https://csqread.top/posts/blog/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  3 ,
+      "name": "Hugo博客搭建",
+      "item": "https://csqread.top/posts/blog/hugo%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Hugo博客搭建",
+  "name": "Hugo博客搭建",
+  "description": "Hugo博客搭建过程及遇到的问题",
+  "keywords": [
+    
+  ],
+  "articleBody": "这篇文章主要记录我搭建Hugo博客的详细过程，包括搭建、配置、主题选择和部署到GitHub Pages的完整步骤，以及搭建过程中遇到的问题及解决方法。\n1. 准备工作 1.1 安装Git 首先需要安装Git，用于版本控制和部署到GitHub。\nWindows用户：从Git官网下载安装包并安装 macOS用户：使用Homebrew安装 brew install git Linux用户：使用包管理器安装，如 sudo apt install git 1.2 注册GitHub账号 如果还没有GitHub账号，需要先注册一个。\n2. 创建GitHub仓库 登录GitHub账号 点击右上角的\"+“按钮，选择\"New repository” 仓库名称填写为\"你的GitHub用户名.github.io\"（例如：username.github.io） 选择公开仓库（Public） 勾选\"Initialize this repository with a README\" 点击\"Create repository\"创建仓库 3. 安装Hugo 3.1 下载Hugo 从Hugo官方GitHub releases页面下载适合你操作系统的版本：\nWindows：选择 hugo_extended_{版本}_Windows-64bit.zip macOS：选择 hugo_extended_{版本}_macOS-64bit.tar.gz Linux：选择 hugo_extended_{版本}_Linux-64bit.tar.gz 3.2 安装Hugo Windows用户： 解压下载的zip文件 将解压得到的 hugo.exe 文件复制到一个固定的文件夹，例如 C:\\hugo\\bin 右键点击\"此电脑\" → “属性” → “高级系统设置” → “环境变量” 在\"系统变量\"中找到\"Path\"，点击\"编辑\" 点击\"新建\"，添加 C:\\hugo\\bin 路径 点击\"确定\"保存设置 macOS/Linux用户： 解压下载的tar.gz文件 将解压得到的 hugo 可执行文件移动到 /usr/local/bin 目录 1 3.3 验证安装 打开终端或命令提示符，运行以下命令验证Hugo是否安装成功：\n1 如果显示Hugo版本信息，则安装成功。\n4. 创建Hugo网站 4.1 初始化网站 选择一个合适的目录，运行以下命令创建一个新的Hugo网站：\n1 这将创建一个名为 my-blog 的文件夹，包含Hugo网站的基本结构。\n4.2 进入网站目录 1 5. 选择并安装主题 5.1 选择主题 Hugo有很多优秀的主题，可以在Hugo Themes网站上浏览选择。本文使用的是PaperMod主题，这是一个简洁美观的主题。\n5.2 安装主题 使用Git克隆主题到 themes 目录：\n1 5.3 配置主题 在网站根目录下找到 config.toml 或 config.yml 文件（如果没有，需要创建一个），添加以下配置：\n1 2 3 4 5 6. 配置网站 6.1 基本配置 根据你的需求，进一步配置网站信息：\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 6.2 创建内容 创建第一篇博客文章：\n1 编辑 content/posts/first-post.md 文件，添加文章内容：\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 7. 本地预览 在网站根目录运行以下命令启动本地服务器：\n1 然后在浏览器中访问 http://localhost:1313 查看网站效果。\n8. 部署到GitHub Pages 8.1 构建网站 在网站根目录运行以下命令构建静态网站：\n1 这将在 public 目录生成静态网站文件。\n8.2 部署到GitHub 方法一：手动部署 进入 public 目录\n1 初始化Git仓库\n1 2 提交并推送\n1 2 3 方法二：使用GitHub Actions自动部署 在网站根目录创建 .github/workflows/gh-pages.yml 文件\n添加以下内容：\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 推送更改到GitHub\n1 2 3 9. 常见问题及解决方法 9.1 主题安装后不显示 检查主题名称是否正确配置 检查主题文件是否正确克隆到 themes 目录 运行 hugo server -D 重新启动本地服务器 9.2 部署后GitHub Pages显示404 检查仓库名称是否正确（必须是 username.github.io） 检查是否推送到了 main 分支 等待几分钟，GitHub Pages需要时间更新 9.3 本地预览时样式丢失 检查 baseURL 配置是否正确 尝试清除浏览器缓存 10. 后续优化 添加网站统计（如Google Analytics） 配置评论系统（如Disqus、Utterances） 优化网站SEO 定期更新主题 备份网站内容 通过以上步骤，你已经成功搭建了一个基于Hugo的个人博客，并部署到了GitHub Pages。随着使用的深入，你可以根据自己的需求进一步定制和优化你的博客。\n",
+  "wordCount" : "1807",
+  "inLanguage": "en",
+  "datePublished": "2023-03-05T12:47:51+08:00",
+  "dateModified": "2023-03-05T12:47:51+08:00",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://csqread.top/posts/blog/hugo%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Qian's Blog",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://csqread.top/favicon.ico"
+    }
+  }
+}
 </script>
 </head>
 <body id="top">
     <header class="header">
     <nav class="header-nav">
         <div class="logo">
-            <a href="http://localhost:1313/" accesskey="h" title="Qian&#39;s Blog (Alt + H)">Qian&#39;s Blog</a>
+            <a href="https://csqread.top/" accesskey="h" title="Qian&#39;s Blog (Alt + H)">Qian&#39;s Blog</a>
             <div class="logo-switches">
                 <button id="theme-toggle" class="theme-toggle" accesskey="t" title="(Alt + T)" aria-label="Toggle theme">
                     <svg class="moon" xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24"
@@ -96,37 +165,37 @@
         </div>
         <ul id="menu" class="menu">
             <li>
-                <a href="http://localhost:1313/search" title="🔍搜索 (Alt &#43; /)" accesskey=/>
+                <a href="https://csqread.top/search" title="🔍搜索 (Alt &#43; /)" accesskey=/>
                     <span>🔍搜索</span>
                 </a>
             </li>
             <li>
-                <a href="http://localhost:1313/posts" title="📚文章">
+                <a href="https://csqread.top/posts" title="📚文章">
                     <span>📚文章</span>
                 </a>
             </li>
             <li>
-                <a href="http://localhost:1313/archives/" title="⏱时间轴">
+                <a href="https://csqread.top/archives/" title="⏱时间轴">
                     <span>⏱时间轴</span>
                 </a>
             </li>
             <li>
-                <a href="http://localhost:1313/tags" title="🔖标签">
+                <a href="https://csqread.top/tags" title="🔖标签">
                     <span>🔖标签</span>
                 </a>
             </li>
             <li>
-                <a href="http://localhost:1313/about" title="🙋🏻‍♂️关于">
+                <a href="https://csqread.top/about" title="🙋🏻‍♂️关于">
                     <span>🙋🏻‍♂️关于</span>
                 </a>
             </li>
             <li>
-                <a href="http://localhost:1313/links" title="🤝友链">
+                <a href="https://csqread.top/links" title="🤝友链">
                     <span>🤝友链</span>
                 </a>
             </li>
             <li>
-                <a href="http://localhost:1313/" title="">
+                <a href="https://csqread.top/" title="">
                     <span></span>
                 </a>
             </li>
@@ -389,7 +458,7 @@
     </main>
     
 <footer class="footer">
-        <span>&copy; 2026 <a href="http://localhost:1313/">Qian&#39;s Blog</a></span> · 
+        <span>&copy; 2026 <a href="https://csqread.top/">Qian&#39;s Blog</a></span> · 
 
     
     
