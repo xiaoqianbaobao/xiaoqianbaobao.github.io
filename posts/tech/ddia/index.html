@@ -10,7 +10,7 @@
 <meta name="description" content="第一章：可靠性，可扩展性，可维护性 1.1 关于数据系统的思考 单个工具已经不能满足应用系统的需求，总体工作被拆分成一系列能被单个工具高效完成的任务，">
 <meta name="author" content="">
 <link rel="canonical" href="https://csqread.top/posts/tech/ddia/">
-<link crossorigin="anonymous" href="/assets/css/stylesheet.css" rel="preload stylesheet" as="style">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.cd9298b33628769aa1bc1acebbbfd7aa11ce81dfe03484d479e1907760249a1d.css" integrity="sha256-zZKYszYodpqhvBrOu7/XqhHOgd/gNITUeeGQd2Akmh0=" rel="preload stylesheet" as="style">
 <link rel="icon" href="https://csqread.top/favicon.ico">
 <link rel="icon" type="image/png" sizes="16x16" href="https://csqread.top/favicon-16x16.png">
 <link rel="icon" type="image/png" sizes="32x32" href="https://csqread.top/favicon-32x32.png">
@@ -139,9 +139,7 @@
     <header class="header">
     <nav class="header-nav">
         <div class="logo">
-            <a href="https://csqread.top/" accesskey="h" title="Qian&#39;s Blog (Alt + H)">
-                <img src="https://csqread.top/img/Q.gif" alt="" aria-label="logo"
-                    height="35">Qian&#39;s Blog</a>
+            <a href="https://csqread.top/" accesskey="h" title="Qian&#39;s Blog (Alt + H)">Qian&#39;s Blog</a>
             <div class="logo-switches">
                 <button id="theme-toggle" class="theme-toggle" accesskey="t" title="(Alt + T)" aria-label="Toggle theme">
                     <svg class="moon" xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24"
@@ -197,23 +195,8 @@
                 </a>
             </li>
             <li>
-                <a href="https://csqread.top/posts/blog" title="🧱博客">
-                    <span>🧱博客</span>
-                </a>
-            </li>
-            <li>
-                <a href="https://csqread.top/posts/tech" title="👨🏻‍💻技术">
-                    <span>👨🏻‍💻技术</span>
-                </a>
-            </li>
-            <li>
-                <a href="https://csqread.top/posts/read" title="📕阅读-电影">
-                    <span>📕阅读-电影</span>
-                </a>
-            </li>
-            <li>
-                <a href="https://csqread.top/posts/life" title="🏖生活">
-                    <span>🏖生活</span>
+                <a href="https://csqread.top/" title="">
+                    <span></span>
                 </a>
             </li>
         </ul>
@@ -223,23 +206,7 @@
 
 <article class="post-single">
   <header class="post-header">
-    <nav class="breadcrumbs" role="navigation" aria-label="Breadcrumb">
-            <a href="/">Home</a>
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right">
-                <polyline points="9 18 15 12 9 6"></polyline>
-            </svg>
-            <a href="/posts/">文章</a>
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right">
-                <polyline points="9 18 15 12 9 6"></polyline>
-            </svg>
-            <a href="/posts/tech/">技术</a>
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-        stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right">
-        <polyline points="9 18 15 12 9 6"></polyline>
-    </svg>
-</nav>
+    
     <h1 class="post-title entry-hint-parent">
       DDIA
     </h1>
@@ -248,720 +215,10 @@
     </div>
     <div class="post-meta">
 
-<span title='2024-03-08 18:03:04 +0800 CST'>March 8, 2024</span>&nbsp;·&nbsp;<span>180 min</span>
+<span title='2024-03-08 18:03:04 +0800 CST'>March 8, 2024</span>
 
 </div>
-  </header> <details class="toc" >
-    <summary accesskey="c" title="(Alt + C)">
-        <span class="title">Table of Contents</span>
-    </summary>
-
-    <div class="inner"><ul>
-            <li>
-                <a href="#11-%e5%85%b3%e4%ba%8e%e6%95%b0%e6%8d%ae%e7%b3%bb%e7%bb%9f%e7%9a%84%e6%80%9d%e8%80%83" aria-label="1.1 关于数据系统的思考">1.1 关于数据系统的思考</a></li>
-            <li>
-                <a href="#12-%e5%8f%af%e9%9d%a0%e6%80%a7" aria-label="1.2 可靠性">1.2 可靠性</a><ul>
-                    
-            <li>
-                <a href="#121-%e5%ae%9a%e4%b9%89" aria-label="1.2.1 定义">1.2.1 定义</a></li>
-            <li>
-                <a href="#122-%e7%a1%ac%e4%bb%b6%e6%95%85%e9%9a%9c" aria-label="1.2.2 硬件故障">1.2.2 硬件故障</a></li>
-            <li>
-                <a href="#123%e8%bd%af%e4%bb%b6%e9%94%99%e8%af%af" aria-label="1.2.3软件错误">1.2.3软件错误</a></li>
-            <li>
-                <a href="#124-%e4%ba%ba%e4%b8%ba%e9%94%99%e8%af%af" aria-label="1.2.4 人为错误">1.2.4 人为错误</a></li></ul>
-            </li>
-            <li>
-                <a href="#13-%e5%8f%af%e6%89%a9%e5%b1%95%e6%80%a7" aria-label="1.3 可扩展性">1.3 可扩展性</a><ul>
-                    
-            <li>
-                <a href="#131-%e5%ae%9a%e4%b9%89" aria-label="1.3.1 定义">1.3.1 定义</a></li>
-            <li>
-                <a href="#132-%e6%8f%8f%e8%bf%b0%e8%b4%9f%e8%bd%bd" aria-label="1.3.2 描述负载">1.3.2 描述负载</a></li>
-            <li>
-                <a href="#133-%e6%8f%8f%e8%bf%b0%e6%80%a7%e8%83%bd" aria-label="1.3.3 描述性能">1.3.3 描述性能</a></li>
-            <li>
-                <a href="#134-%e5%ba%94%e5%af%b9%e8%b4%9f%e8%bd%bd%e7%9a%84%e6%96%b9%e6%b3%95" aria-label="1.3.4 应对负载的方法">1.3.4 应对负载的方法</a></li></ul>
-            </li>
-            <li>
-                <a href="#14-%e5%8f%af%e7%bb%b4%e6%8a%a4%e6%80%a7" aria-label="1.4 可维护性">1.4 可维护性</a><ul>
-                    
-            <li>
-                <a href="#141-%e5%8f%af%e6%93%8d%e4%bd%9c%e6%80%a7%e4%ba%ba%e7%94%9f%e8%8b%a6%e7%9f%ad%e5%85%b3%e7%88%b1%e8%bf%90%e7%bb%b4" aria-label="1.4.1 可操作性：人生苦短，关爱运维">1.4.1 可操作性：人生苦短，关爱运维</a></li>
-            <li>
-                <a href="#142-%e7%ae%80%e5%8d%95%e6%80%a7%e7%ae%a1%e7%90%86%e5%a4%8d%e6%9d%82%e5%ba%a6" aria-label="1.4.2 简单性：管理复杂度">1.4.2 简单性：管理复杂度</a></li>
-            <li>
-                <a href="#143-%e5%8f%af%e6%bc%94%e5%8c%96%e6%80%a7%e6%8b%a5%e6%8a%b1%e5%8f%98%e5%8c%96" aria-label="1.4.3 可演化性：拥抱变化">1.4.3 可演化性：拥抱变化</a></li></ul>
-            </li>
-            <li>
-                <a href="#21-%e5%85%b3%e7%b3%bb%e6%a8%a1%e5%9e%8b%e4%b8%8e%e6%96%87%e6%a1%a3%e6%a8%a1%e5%9e%8b" aria-label="2.1 关系模型与文档模型">2.1 关系模型与文档模型</a><ul>
-                    
-            <li>
-                <a href="#211-nosql%e7%9a%84%e8%af%9e%e7%94%9f" aria-label="2.1.1 NoSQL的诞生">2.1.1 NoSQL的诞生</a></li>
-            <li>
-                <a href="#212-%e5%af%b9%e8%b1%a1%e5%85%b3%e7%b3%bb%e4%b8%8d%e5%8c%b9%e9%85%8d" aria-label="2.1.2 对象关系不匹配">2.1.2 对象关系不匹配</a></li>
-            <li>
-                <a href="#213-%e5%a4%9a%e5%af%b9%e4%b8%80%e5%92%8c%e5%a4%9a%e5%af%b9%e5%a4%9a%e7%9a%84%e5%85%b3%e7%b3%bb" aria-label="2.1.3 多对一和多对多的关系">2.1.3 多对一和多对多的关系</a></li>
-            <li>
-                <a href="#214-%e6%96%87%e6%a1%a3%e6%95%b0%e6%8d%ae%e5%ba%93%e6%98%af%e5%90%a6%e5%9c%a8%e9%87%8d%e8%b9%88%e8%a6%86%e8%be%99" aria-label="2.1.4 文档数据库是否在重蹈覆辙？">2.1.4 文档数据库是否在重蹈覆辙？</a><ul>
-                    
-            <li>
-                <a href="#2141-%e7%bd%91%e7%bb%9c%e6%a8%a1%e5%9e%8b" aria-label="2.1.4.1 网络模型">2.1.4.1 网络模型</a></li>
-            <li>
-                <a href="#2142-%e5%85%b3%e7%b3%bb%e6%a8%a1%e5%9e%8b" aria-label="2.1.4.2 关系模型">2.1.4.2 关系模型</a></li>
-            <li>
-                <a href="#2143-%e4%b8%8e%e6%96%87%e6%a1%a3%e6%95%b0%e6%8d%ae%e5%ba%93%e7%9b%b8%e6%af%94" aria-label="2.1.4.3 与文档数据库相比">2.1.4.3 与文档数据库相比</a></li></ul>
-            </li>
-            <li>
-                <a href="#215-%e5%85%b3%e7%b3%bb%e5%9e%8b%e6%95%b0%e6%8d%ae%e5%ba%93%e4%b8%8e%e6%96%87%e6%a1%a3%e6%95%b0%e6%8d%ae%e5%ba%93%e5%9c%a8%e4%bb%8a%e6%97%a5%e7%9a%84%e5%af%b9%e6%af%94" aria-label="2.1.5 关系型数据库与文档数据库在今日的对比">2.1.5 关系型数据库与文档数据库在今日的对比</a><ul>
-                    
-            <li>
-                <a href="#2151-%e5%93%aa%e4%b8%aa%e6%95%b0%e6%8d%ae%e6%a8%a1%e5%9e%8b%e6%9b%b4%e6%96%b9%e4%be%bf%e5%86%99%e4%bb%a3%e7%a0%81" aria-label="2.1.5.1 哪个数据模型更方便写代码？">2.1.5.1 哪个数据模型更方便写代码？</a></li>
-            <li>
-                <a href="#2152-%e6%96%87%e6%a1%a3%e6%a8%a1%e5%9e%8b%e4%b8%ad%e7%9a%84%e6%9e%b6%e6%9e%84%e7%81%b5%e6%b4%bb%e6%80%a7" aria-label="2.1.5.2 文档模型中的架构灵活性">2.1.5.2 文档模型中的架构灵活性</a></li>
-            <li>
-                <a href="#2153-%e6%9f%a5%e8%af%a2%e7%9a%84%e6%95%b0%e6%8d%ae%e5%b1%80%e9%83%a8%e6%80%a7" aria-label="2.1.5.3 查询的数据局部性">2.1.5.3 查询的数据局部性</a></li>
-            <li>
-                <a href="#2154-%e6%96%87%e6%a1%a3%e5%92%8c%e5%85%b3%e7%b3%bb%e6%95%b0%e6%8d%ae%e5%ba%93%e7%9a%84%e8%9e%8d%e5%90%88" aria-label="2.1.5.4 文档和关系数据库的融合">2.1.5.4 文档和关系数据库的融合</a></li></ul>
-            </li></ul>
-            </li>
-            <li>
-                <a href="#22-%e6%95%b0%e6%8d%ae%e6%9f%a5%e8%af%a2%e8%af%ad%e8%a8%80" aria-label="2.2 数据查询语言">2.2 数据查询语言</a><ul>
-                    
-            <li>
-                <a href="#221-web%e4%b8%8a%e7%9a%84%e5%a3%b0%e6%98%8e%e5%bc%8f%e6%9f%a5%e8%af%a2" aria-label="2.2.1 Web上的声明式查询">2.2.1 Web上的声明式查询</a></li>
-            <li>
-                <a href="#222-mapreduce%e6%9f%a5%e8%af%a2" aria-label="2.2.2 MapReduce查询">2.2.2 MapReduce查询</a></li></ul>
-            </li>
-            <li>
-                <a href="#23-%e5%9b%be%e6%95%b0%e6%8d%ae%e6%a8%a1%e5%9e%8b" aria-label="2.3 图数据模型">2.3 图数据模型</a><ul>
-                    
-            <li>
-                <a href="#231-%e5%b1%9e%e6%80%a7%e5%9b%be" aria-label="2.3.1 属性图">2.3.1 属性图</a></li>
-            <li>
-                <a href="#232-cypher%e6%9f%a5%e8%af%a2%e8%af%ad%e8%a8%80" aria-label="2.3.2 Cypher查询语言">2.3.2 Cypher查询语言</a></li>
-            <li>
-                <a href="#233-sql%e4%b8%ad%e7%9a%84%e5%9b%be%e6%9f%a5%e8%af%a2" aria-label="2.3.3 SQL中的图查询">2.3.3 SQL中的图查询</a></li>
-            <li>
-                <a href="#234-%e4%b8%89%e5%85%83%e7%bb%84%e5%ad%98%e5%82%a8%e5%92%8csparql" aria-label="2.3.4 三元组存储和SPARQL">2.3.4 三元组存储和SPARQL</a><ul>
-                    
-            <li>
-                <a href="#2341-%e8%af%ad%e4%b9%89%e7%bd%91%e7%bb%9c" aria-label="2.3.4.1 语义网络">2.3.4.1 语义网络</a></li></ul>
-            </li>
-            <li>
-                <a href="#235-sparql%e6%9f%a5%e8%af%a2%e8%af%ad%e8%a8%80" aria-label="2.3.5 SPARQL查询语言">2.3.5 SPARQL查询语言</a></li>
-            <li>
-                <a href="#236-%e5%9f%ba%e7%a1%80datalog" aria-label="2.3.6 基础：Datalog">2.3.6 基础：Datalog</a></li></ul>
-            </li>
-            <li>
-                <a href="#24-%e6%9c%ac%e7%ab%a0%e5%b0%8f%e7%bb%93" aria-label="2.4 本章小结">2.4 本章小结</a></li>
-            <li>
-                <a href="#31-%e9%a9%b1%e5%8a%a8%e6%95%b0%e6%8d%ae%e5%ba%93%e7%9a%84%e6%95%b0%e6%8d%ae%e7%bb%93%e6%9e%84" aria-label="3.1 驱动数据库的数据结构">3.1 驱动数据库的数据结构</a><ul>
-                    
-            <li>
-                <a href="#311-%e7%b4%a2%e5%bc%95" aria-label="3.1.1 索引">3.1.1 索引</a></li>
-            <li>
-                <a href="#312-%e5%93%88%e5%b8%8c%e7%b4%a2%e5%bc%95" aria-label="3.1.2 哈希索引">3.1.2 哈希索引</a></li>
-            <li>
-                <a href="#313-sstables%e5%92%8clsm%e6%a0%91" aria-label="3.1.3 SSTables和LSM树">3.1.3 SSTables和LSM树</a><ul>
-                    
-            <li>
-                <a href="#3131-%e6%9e%84%e5%bb%ba%e5%92%8c%e7%bb%b4%e6%8a%a4sstables" aria-label="3.1.3.1 构建和维护SSTables">3.1.3.1 构建和维护SSTables</a></li>
-            <li>
-                <a href="#3132-%e7%94%a8sstables%e5%88%b6%e4%bd%9clsm%e6%a0%91" aria-label="3.1.3.2 用SSTables制作LSM树">3.1.3.2 用SSTables制作LSM树</a></li>
-            <li>
-                <a href="#3133-%e6%80%a7%e8%83%bd%e4%bc%98%e5%8c%96" aria-label="3.1.3.3 性能优化">3.1.3.3 性能优化</a></li>
-            <li>
-                <a href="#3134-b%e6%a0%91" aria-label="3.1.3.4 B树">3.1.3.4 B树</a></li>
-            <li>
-                <a href="#3135-%e8%ae%a9b%e6%a0%91%e6%9b%b4%e5%8f%af%e9%9d%a0" aria-label="3.1.3.5 让B树更可靠">3.1.3.5 让B树更可靠</a></li>
-            <li>
-                <a href="#3136-b%e6%a0%91%e4%bc%98%e5%8c%96" aria-label="3.1.3.6 B树优化">3.1.3.6 B树优化</a></li></ul>
-            </li>
-            <li>
-                <a href="#314-%e6%af%94%e8%be%83b%e6%a0%91%e5%92%8clsm%e6%a0%91" aria-label="3.1.4 比较B树和LSM树">3.1.4 比较B树和LSM树</a><ul>
-                    
-            <li>
-                <a href="#3141-lsm%e6%a0%91%e7%9a%84%e4%bc%98%e7%82%b9" aria-label="3.1.4.1 LSM树的优点">3.1.4.1 LSM树的优点</a></li>
-            <li>
-                <a href="#3142-lsm%e6%a0%91%e7%9a%84%e7%bc%ba%e7%82%b9" aria-label="3.1.4.2 LSM树的缺点">3.1.4.2 LSM树的缺点</a></li></ul>
-            </li>
-            <li>
-                <a href="#315-%e5%85%b6%e4%bb%96%e7%b4%a2%e5%bc%95%e7%bb%93%e6%9e%84" aria-label="3.1.5 其他索引结构">3.1.5 其他索引结构</a><ul>
-                    
-            <li>
-                <a href="#3151-%e5%b0%86%e5%80%bc%e5%ad%98%e5%82%a8%e5%9c%a8%e7%b4%a2%e5%bc%95%e4%b8%ad" aria-label="3.1.5.1 将值存储在索引中">3.1.5.1 将值存储在索引中</a></li>
-            <li>
-                <a href="#3152-%e5%a4%9a%e5%88%97%e7%b4%a2%e5%bc%95" aria-label="3.1.5.2 多列索引">3.1.5.2 多列索引</a></li>
-            <li>
-                <a href="#3153-%e5%85%a8%e6%96%87%e6%90%9c%e7%b4%a2%e5%92%8c%e6%a8%a1%e7%b3%8a%e7%b4%a2%e5%bc%95" aria-label="3.1.5.3 全文搜索和模糊索引">3.1.5.3 全文搜索和模糊索引</a></li>
-            <li>
-                <a href="#3154-%e5%9c%a8%e5%86%85%e5%ad%98%e4%b8%ad%e5%ad%98%e5%82%a8%e4%b8%80%e5%88%87" aria-label="3.1.5.4 在内存中存储一切">3.1.5.4 在内存中存储一切</a></li></ul>
-            </li></ul>
-            </li>
-            <li>
-                <a href="#32-%e4%ba%8b%e5%8a%a1%e5%a4%84%e7%90%86%e8%bf%98%e6%98%af%e5%88%86%e6%9e%90" aria-label="3.2 事务处理还是分析？">3.2 事务处理还是分析？</a><ul>
-                    
-            <li>
-                <a href="#321-%e6%95%b0%e6%8d%ae%e4%bb%93%e5%ba%93" aria-label="3.2.1 数据仓库">3.2.1 数据仓库</a><ul>
-                    
-            <li>
-                <a href="#oltp%e6%95%b0%e6%8d%ae%e5%ba%93%e5%92%8c%e6%95%b0%e6%8d%ae%e4%bb%93%e5%ba%93%e4%b9%8b%e9%97%b4%e7%9a%84%e5%88%86%e6%ad%a7" aria-label="OLTP数据库和数据仓库之间的分歧">OLTP数据库和数据仓库之间的分歧</a></li></ul>
-            </li>
-            <li>
-                <a href="#322-%e6%98%9f%e5%9e%8b%e5%92%8c%e9%9b%aa%e8%8a%b1%e5%9e%8b%e5%88%86%e6%9e%90%e7%9a%84%e6%a8%a1%e5%bc%8f" aria-label="3.2.2 星型和雪花型：分析的模式">3.2.2 星型和雪花型：分析的模式</a></li></ul>
-            </li>
-            <li>
-                <a href="#33-%e5%88%97%e5%ad%98%e5%82%a8" aria-label="3.3 列存储">3.3 列存储</a><ul>
-                    
-            <li>
-                <a href="#331-%e5%88%97%e5%8e%8b%e7%bc%a9" aria-label="3.3.1 列压缩">3.3.1 列压缩</a><ul>
-                    
-            <li>
-                <a href="#3311-%e5%86%85%e5%ad%98%e5%b8%a6%e5%ae%bd%e5%92%8c%e5%90%91%e9%87%8f%e5%a4%84%e7%90%86" aria-label="3.3.1.1 内存带宽和向量处理">3.3.1.1 内存带宽和向量处理</a></li></ul>
-            </li>
-            <li>
-                <a href="#332-%e5%88%97%e5%ad%98%e5%82%a8%e4%b8%ad%e7%9a%84%e6%8e%92%e5%ba%8f%e9%a1%ba%e5%ba%8f" aria-label="3.3.2 列存储中的排序顺序">3.3.2 列存储中的排序顺序</a><ul>
-                    
-            <li>
-                <a href="#3321-%e5%87%a0%e4%b8%aa%e4%b8%8d%e5%90%8c%e7%9a%84%e6%8e%92%e5%ba%8f%e9%a1%ba%e5%ba%8f" aria-label="3.3.2.1 几个不同的排序顺序">3.3.2.1 几个不同的排序顺序</a></li></ul>
-            </li>
-            <li>
-                <a href="#333-%e5%86%99%e5%85%a5%e5%88%97%e5%ad%98%e5%82%a8" aria-label="3.3.3 写入列存储">3.3.3 写入列存储</a></li>
-            <li>
-                <a href="#334-%e8%81%9a%e5%90%88%e6%95%b0%e6%8d%ae%e7%ab%8b%e6%96%b9%e4%bd%93%e5%92%8c%e7%89%a9%e5%8c%96%e8%a7%86%e5%9b%be" aria-label="3.3.4 聚合：数据立方体和物化视图">3.3.4 聚合：数据立方体和物化视图</a></li></ul>
-            </li>
-            <li>
-                <a href="#34-%e6%9c%ac%e7%ab%a0%e5%b0%8f%e7%bb%93" aria-label="3.4 本章小结">3.4 本章小结</a></li>
-            <li>
-                <a href="#41-%e7%bc%96%e7%a0%81%e6%95%b0%e6%8d%ae%e7%9a%84%e6%a0%bc%e5%bc%8f" aria-label="4.1 编码数据的格式">4.1 编码数据的格式</a><ul>
-                    
-            <li>
-                <a href="#411-%e8%af%ad%e8%a8%80%e7%89%b9%e5%ae%9a%e7%9a%84%e6%a0%bc%e5%bc%8f" aria-label="4.1.1 语言特定的格式">4.1.1 语言特定的格式</a></li>
-            <li>
-                <a href="#412-jsonxml%e5%92%8c%e4%ba%8c%e8%bf%9b%e5%88%b6%e5%8f%98%e4%bd%93" aria-label="4.1.2 JSON，XML和二进制变体">4.1.2 JSON，XML和二进制变体</a><ul>
-                    
-            <li>
-                <a href="#4121-%e4%ba%8c%e8%bf%9b%e5%88%b6%e7%bc%96%e7%a0%81" aria-label="4.1.2.1 二进制编码">4.1.2.1 二进制编码</a></li></ul>
-            </li>
-            <li>
-                <a href="#413-thrift%e4%b8%8eprotocol-buffers" aria-label="4.1.3 Thrift与Protocol Buffers">4.1.3 Thrift与Protocol Buffers</a><ul>
-                    
-            <li>
-                <a href="#4131-%e5%ad%97%e6%ae%b5%e6%a0%87%e7%ad%be%e5%92%8c%e6%a8%a1%e5%bc%8f%e6%bc%94%e5%8f%98" aria-label="4.1.3.1 字段标签和模式演变">4.1.3.1 字段标签和模式演变</a></li>
-            <li>
-                <a href="#4132-%e6%95%b0%e6%8d%ae%e7%b1%bb%e5%9e%8b%e5%92%8c%e6%a8%a1%e5%bc%8f%e6%bc%94%e5%8f%98" aria-label="4.1.3.2 数据类型和模式演变">4.1.3.2 数据类型和模式演变</a></li></ul>
-            </li>
-            <li>
-                <a href="#414-avro" aria-label="4.1.4 Avro">4.1.4 Avro</a><ul>
-                    
-            <li>
-                <a href="#4141-writer%e6%a8%a1%e5%bc%8f%e4%b8%8ereader%e6%a8%a1%e5%bc%8f" aria-label="4.1.4.1 Writer模式与Reader模式">4.1.4.1 Writer模式与Reader模式</a></li>
-            <li>
-                <a href="#4142-%e6%a8%a1%e5%bc%8f%e6%bc%94%e5%8f%98%e8%a7%84%e5%88%99" aria-label="4.1.4.2 模式演变规则">4.1.4.2 模式演变规则</a></li>
-            <li>
-                <a href="#4143-%e4%bd%86writer%e6%a8%a1%e5%bc%8f%e5%88%b0%e5%ba%95%e6%98%af%e4%bb%80%e4%b9%88" aria-label="4.1.4.3 但Writer模式到底是什么？">4.1.4.3 但Writer模式到底是什么？</a></li>
-            <li>
-                <a href="#4144-%e5%8a%a8%e6%80%81%e7%94%9f%e6%88%90%e7%9a%84%e6%a8%a1%e5%bc%8f" aria-label="4.1.4.4 动态生成的模式">4.1.4.4 动态生成的模式</a></li>
-            <li>
-                <a href="#4145-%e4%bb%a3%e7%a0%81%e7%94%9f%e6%88%90%e5%92%8c%e5%8a%a8%e6%80%81%e7%b1%bb%e5%9e%8b%e7%9a%84%e8%af%ad%e8%a8%80" aria-label="4.1.4.5 代码生成和动态类型的语言">4.1.4.5 代码生成和动态类型的语言</a></li></ul>
-            </li>
-            <li>
-                <a href="#415-%e6%a8%a1%e5%bc%8f%e7%9a%84%e4%bc%98%e7%82%b9" aria-label="4.1.5 模式的优点">4.1.5 模式的优点</a></li></ul>
-            </li>
-            <li>
-                <a href="#42-%e6%95%b0%e6%8d%ae%e6%b5%81%e7%9a%84%e7%b1%bb%e5%9e%8b" aria-label="4.2 数据流的类型">4.2 数据流的类型</a><ul>
-                    
-            <li>
-                <a href="#421-%e6%95%b0%e6%8d%ae%e5%ba%93%e4%b8%ad%e7%9a%84%e6%95%b0%e6%8d%ae%e6%b5%81" aria-label="4.2.1 数据库中的数据流">4.2.1 数据库中的数据流</a><ul>
-                    
-            <li>
-                <a href="#4211-%e5%9c%a8%e4%b8%8d%e5%90%8c%e7%9a%84%e6%97%b6%e9%97%b4%e5%86%99%e5%85%a5%e4%b8%8d%e5%90%8c%e7%9a%84%e5%80%bc" aria-label="4.2.1.1 在不同的时间写入不同的值">4.2.1.1 在不同的时间写入不同的值</a></li>
-            <li>
-                <a href="#4212-%e5%bd%92%e6%a1%a3%e5%ad%98%e5%82%a8" aria-label="4.2.1.2 归档存储">4.2.1.2 归档存储</a></li></ul>
-            </li>
-            <li>
-                <a href="#422-%e6%9c%8d%e5%8a%a1%e4%b8%ad%e7%9a%84%e6%95%b0%e6%8d%ae%e6%b5%81rest%e4%b8%8erpc" aria-label="4.2.2 服务中的数据流：REST与RPC">4.2.2 服务中的数据流：REST与RPC</a><ul>
-                    
-            <li>
-                <a href="#4221-web%e6%9c%8d%e5%8a%a1" aria-label="4.2.2.1 Web服务">4.2.2.1 Web服务</a></li>
-            <li>
-                <a href="#4222-%e8%bf%9c%e7%a8%8b%e8%bf%87%e7%a8%8b%e8%b0%83%e7%94%a8rpc%e7%9a%84%e9%97%ae%e9%a2%98" aria-label="4.2.2.2 远程过程调用（RPC）的问题">4.2.2.2 远程过程调用（RPC）的问题</a></li>
-            <li>
-                <a href="#4223-rpc%e7%9a%84%e5%bd%93%e5%89%8d%e6%96%b9%e5%90%91" aria-label="4.2.2.3 RPC的当前方向">4.2.2.3 RPC的当前方向</a></li>
-            <li>
-                <a href="#4224-%e6%95%b0%e6%8d%ae%e7%bc%96%e7%a0%81%e4%b8%8erpc%e7%9a%84%e6%bc%94%e5%8c%96" aria-label="4.2.2.4 数据编码与RPC的演化">4.2.2.4 数据编码与RPC的演化</a></li></ul>
-            </li>
-            <li>
-                <a href="#423-%e6%b6%88%e6%81%af%e4%bc%a0%e9%80%92%e4%b8%ad%e7%9a%84%e6%95%b0%e6%8d%ae%e6%b5%81" aria-label="4.2.3 消息传递中的数据流">4.2.3 消息传递中的数据流</a><ul>
-                    
-            <li>
-                <a href="#4231-%e6%b6%88%e6%81%af%e4%bb%a3%e7%90%86" aria-label="4.2.3.1 消息代理">4.2.3.1 消息代理</a></li>
-            <li>
-                <a href="#4232-%e5%88%86%e5%b8%83%e5%bc%8f%e7%9a%84actor%e6%a1%86%e6%9e%b6" aria-label="4.2.3.2 分布式的Actor框架">4.2.3.2 分布式的Actor框架</a></li></ul>
-            </li></ul>
-            </li>
-            <li>
-                <a href="#43-%e6%9c%ac%e7%ab%a0%e5%b0%8f%e7%bb%93" aria-label="4.3 本章小结">4.3 本章小结</a></li>
-            <li>
-                <a href="#51-%e9%a2%86%e5%af%bc%e8%80%85%e4%b8%8e%e8%bf%bd%e9%9a%8f%e8%80%85" aria-label="5.1 领导者与追随者">5.1 领导者与追随者</a><ul>
-                    
-            <li>
-                <a href="#511-%e5%90%8c%e6%ad%a5%e5%a4%8d%e5%88%b6%e4%b8%8e%e5%bc%82%e6%ad%a5%e5%a4%8d%e5%88%b6" aria-label="5.1.1 同步复制与异步复制">5.1.1 同步复制与异步复制</a></li>
-            <li>
-                <a href="#512-%e8%ae%be%e7%bd%ae%e6%96%b0%e4%bb%8e%e5%ba%93" aria-label="5.1.2 设置新从库">5.1.2 设置新从库</a></li>
-            <li>
-                <a href="#513-%e5%a4%84%e7%90%86%e8%8a%82%e7%82%b9%e5%ae%95%e6%9c%ba" aria-label="5.1.3 处理节点宕机">5.1.3 处理节点宕机</a><ul>
-                    
-            <li>
-                <a href="#5131-%e4%bb%8e%e5%ba%93%e5%a4%b1%e6%95%88%e8%bf%bd%e8%b5%b6%e6%81%a2%e5%a4%8d" aria-label="5.1.3.1 从库失效：追赶恢复">5.1.3.1 从库失效：追赶恢复</a></li>
-            <li>
-                <a href="#5132-%e4%b8%bb%e5%ba%93%e5%a4%b1%e6%95%88%e6%95%85%e9%9a%9c%e5%88%87%e6%8d%a2" aria-label="5.1.3.2 主库失效：故障切换">5.1.3.2 主库失效：故障切换</a></li></ul>
-            </li>
-            <li>
-                <a href="#514-%e5%a4%8d%e5%88%b6%e6%97%a5%e5%bf%97%e7%9a%84%e5%ae%9e%e7%8e%b0" aria-label="5.1.4 复制日志的实现">5.1.4 复制日志的实现</a><ul>
-                    
-            <li>
-                <a href="#5141-%e5%9f%ba%e4%ba%8e%e8%af%ad%e5%8f%a5%e7%9a%84%e5%a4%8d%e5%88%b6" aria-label="5.1.4.1 基于语句的复制">5.1.4.1 基于语句的复制</a></li>
-            <li>
-                <a href="#5142-%e4%bc%a0%e8%be%93%e9%a2%84%e5%86%99%e5%bc%8f%e6%97%a5%e5%bf%97wal" aria-label="5.1.4.2 传输预写式日志（WAL）">5.1.4.2 传输预写式日志（WAL）</a></li>
-            <li>
-                <a href="#5143-%e9%80%bb%e8%be%91%e6%97%a5%e5%bf%97%e5%a4%8d%e5%88%b6%e5%9f%ba%e4%ba%8e%e8%a1%8c" aria-label="5.1.4.3 逻辑日志复制（基于行）">5.1.4.3 逻辑日志复制（基于行）</a></li>
-            <li>
-                <a href="#5144-%e5%9f%ba%e4%ba%8e%e8%a7%a6%e5%8f%91%e5%99%a8%e7%9a%84%e5%a4%8d%e5%88%b6" aria-label="5.1.4.4 基于触发器的复制">5.1.4.4 基于触发器的复制</a></li></ul>
-            </li></ul>
-            </li>
-            <li>
-                <a href="#52-%e5%a4%8d%e5%88%b6%e5%bb%b6%e8%bf%9f%e9%97%ae%e9%a2%98" aria-label="5.2 复制延迟问题">5.2 复制延迟问题</a><ul>
-                    
-            <li>
-                <a href="#521-%e8%af%bb%e5%b7%b1%e4%b9%8b%e5%86%99" aria-label="5.2.1 读己之写">5.2.1 读己之写</a></li>
-            <li>
-                <a href="#522-%e5%8d%95%e8%b0%83%e8%af%bb" aria-label="5.2.2 单调读">5.2.2 单调读</a></li>
-            <li>
-                <a href="#523-%e4%b8%80%e8%87%b4%e5%89%8d%e7%bc%80%e8%af%bb" aria-label="5.2.3 一致前缀读">5.2.3 一致前缀读</a></li>
-            <li>
-                <a href="#524-%e5%a4%8d%e5%88%b6%e5%bb%b6%e8%bf%9f%e7%9a%84%e8%a7%a3%e5%86%b3%e6%96%b9%e6%a1%88" aria-label="5.2.4 复制延迟的解决方案">5.2.4 复制延迟的解决方案</a></li></ul>
-            </li>
-            <li>
-                <a href="#53-%e5%a4%9a%e4%b8%bb%e5%a4%8d%e5%88%b6" aria-label="5.3 多主复制">5.3 多主复制</a><ul>
-                    
-            <li>
-                <a href="#531-%e5%a4%9a%e4%b8%bb%e5%a4%8d%e5%88%b6%e7%9a%84%e5%ba%94%e7%94%a8%e5%9c%ba%e6%99%af" aria-label="5.3.1 多主复制的应用场景">5.3.1 多主复制的应用场景</a><ul>
-                    
-            <li>
-                <a href="#5311-%e8%bf%90%e7%bb%b4%e5%a4%9a%e4%b8%aa%e6%95%b0%e6%8d%ae%e4%b8%ad%e5%bf%83" aria-label="5.3.1.1 运维多个数据中心">5.3.1.1 运维多个数据中心</a></li>
-            <li>
-                <a href="#5332-%e9%9c%80%e8%a6%81%e7%a6%bb%e7%ba%bf%e6%93%8d%e4%bd%9c%e7%9a%84%e5%ae%a2%e6%88%b7%e7%ab%af" aria-label="5.3.3.2 需要离线操作的客户端">5.3.3.2 需要离线操作的客户端</a></li>
-            <li>
-                <a href="#5333-%e5%8d%8f%e5%90%8c%e7%bc%96%e8%be%91" aria-label="5.3.3.3 协同编辑">5.3.3.3 协同编辑</a></li></ul>
-            </li>
-            <li>
-                <a href="#534-%e5%a4%84%e7%90%86%e5%86%99%e5%85%a5%e5%86%b2%e7%aa%81" aria-label="5.3.4 处理写入冲突">5.3.4 处理写入冲突</a><ul>
-                    
-            <li>
-                <a href="#5341-%e5%90%8c%e6%ad%a5%e4%b8%8e%e5%bc%82%e6%ad%a5%e5%86%b2%e7%aa%81%e6%a3%80%e6%b5%8b" aria-label="5.3.4.1 同步与异步冲突检测">5.3.4.1 同步与异步冲突检测</a></li>
-            <li>
-                <a href="#5342-%e9%81%bf%e5%85%8d%e5%86%b2%e7%aa%81" aria-label="5.3.4.2 避免冲突">5.3.4.2 避免冲突</a></li>
-            <li>
-                <a href="#5343-%e6%94%b6%e6%95%9b%e8%87%b3%e4%b8%80%e8%87%b4%e7%9a%84%e7%8a%b6%e6%80%81" aria-label="5.3.4.3 收敛至一致的状态">5.3.4.3 收敛至一致的状态</a></li>
-            <li>
-                <a href="#5344-%e8%87%aa%e5%ae%9a%e4%b9%89%e5%86%b2%e7%aa%81%e8%a7%a3%e5%86%b3%e9%80%bb%e8%be%91" aria-label="5.3.4.4 自定义冲突解决逻辑">5.3.4.4 自定义冲突解决逻辑</a></li>
-            <li>
-                <a href="#5345-%e8%87%aa%e5%8a%a8%e5%86%b2%e7%aa%81%e8%a7%a3%e5%86%b3" aria-label="5.3.4.5 自动冲突解决">5.3.4.5 自动冲突解决</a></li>
-            <li>
-                <a href="#5346-%e4%bb%80%e4%b9%88%e6%98%af%e5%86%b2%e7%aa%81" aria-label="5.3.4.6 什么是冲突？">5.3.4.6 什么是冲突？</a></li></ul>
-            </li>
-            <li>
-                <a href="#535-%e5%a4%9a%e4%b8%bb%e5%a4%8d%e5%88%b6%e6%8b%93%e6%89%91" aria-label="5.3.5 多主复制拓扑">5.3.5 多主复制拓扑</a></li></ul>
-            </li>
-            <li>
-                <a href="#54-%e6%97%a0%e4%b8%bb%e5%a4%8d%e5%88%b6" aria-label="5.4 无主复制">5.4 无主复制</a><ul>
-                    
-            <li>
-                <a href="#541-%e5%bd%93%e8%8a%82%e7%82%b9%e6%95%85%e9%9a%9c%e6%97%b6%e5%86%99%e5%85%a5%e6%95%b0%e6%8d%ae%e5%ba%93" aria-label="5.4.1 当节点故障时写入数据库">5.4.1 当节点故障时写入数据库</a><ul>
-                    
-            <li>
-                <a href="#5411-%e8%af%bb%e4%bf%ae%e5%a4%8d%e5%92%8c%e5%8f%8d%e7%86%b5" aria-label="5.4.1.1 读修复和反熵">5.4.1.1 读修复和反熵</a></li>
-            <li>
-                <a href="#5412-%e8%af%bb%e4%bf%ae%e5%a4%8dread-repair" aria-label="5.4.1.2 读修复（Read repair）">5.4.1.2 读修复（Read repair）</a></li>
-            <li>
-                <a href="#5413-%e5%8f%8d%e7%86%b5%e8%bf%87%e7%a8%8banti-entropy-process" aria-label="5.4.1.3 反熵过程（Anti-entropy process）">5.4.1.3 反熵过程（Anti-entropy process）</a></li>
-            <li>
-                <a href="#5414-%e8%af%bb%e5%86%99%e7%9a%84%e6%b3%95%e5%ae%9a%e4%ba%ba%e6%95%b0" aria-label="5.4.1.4 读写的法定人数">5.4.1.4 读写的法定人数</a></li></ul>
-            </li>
-            <li>
-                <a href="#542-%e6%b3%95%e5%ae%9a%e4%ba%ba%e6%95%b0%e4%b8%80%e8%87%b4%e6%80%a7%e7%9a%84%e5%b1%80%e9%99%90%e6%80%a7" aria-label="5.4.2 法定人数一致性的局限性">5.4.2 法定人数一致性的局限性</a><ul>
-                    
-            <li>
-                <a href="#5421-%e7%9b%91%e6%8e%a7%e9%99%88%e6%97%a7%e5%ba%a6" aria-label="5.4.2.1 监控陈旧度">5.4.2.1 监控陈旧度</a></li></ul>
-            </li>
-            <li>
-                <a href="#543-%e5%ae%bd%e6%9d%be%e7%9a%84%e6%b3%95%e5%ae%9a%e4%ba%ba%e6%95%b0%e4%b8%8e%e6%8f%90%e7%a4%ba%e7%a7%bb%e4%ba%a4" aria-label="5.4.3 宽松的法定人数与提示移交">5.4.3 宽松的法定人数与提示移交</a><ul>
-                    
-            <li>
-                <a href="#5431-%e8%bf%90%e7%bb%b4%e5%a4%9a%e4%b8%aa%e6%95%b0%e6%8d%ae%e4%b8%ad%e5%bf%83" aria-label="5.4.3.1 运维多个数据中心">5.4.3.1 运维多个数据中心</a></li></ul>
-            </li>
-            <li>
-                <a href="#544-%e6%a3%80%e6%b5%8b%e5%b9%b6%e5%8f%91%e5%86%99%e5%85%a5" aria-label="5.4.4 检测并发写入">5.4.4 检测并发写入</a><ul>
-                    
-            <li>
-                <a href="#5441-%e6%9c%80%e5%90%8e%e5%86%99%e5%85%a5%e8%83%9c%e5%88%a9%e4%b8%a2%e5%bc%83%e5%b9%b6%e5%8f%91%e5%86%99%e5%85%a5" aria-label="5.4.4.1 最后写入胜利（丢弃并发写入）">5.4.4.1 最后写入胜利（丢弃并发写入）</a></li>
-            <li>
-                <a href="#5442-%e6%8d%95%e8%8e%b7%e6%ad%a4%e5%89%8d%e5%8f%91%e7%94%9f%e5%85%b3%e7%b3%bb" aria-label="5.4.4.2 捕获&quot;此前发生&quot;关系">5.4.4.2 捕获&quot;此前发生&quot;关系</a></li>
-            <li>
-                <a href="#5443-%e5%90%88%e5%b9%b6%e5%90%8c%e6%97%b6%e5%86%99%e5%85%a5%e7%9a%84%e5%80%bc" aria-label="5.4.4.3 合并同时写入的值">5.4.4.3 合并同时写入的值</a></li>
-            <li>
-                <a href="#5444-%e7%89%88%e6%9c%ac%e5%90%91%e9%87%8f" aria-label="5.4.4.4 版本向量">5.4.4.4 版本向量</a></li></ul>
-            </li></ul>
-            </li>
-            <li>
-                <a href="#55-%e6%9c%ac%e7%ab%a0%e5%b0%8f%e7%bb%93" aria-label="5.5 本章小结">5.5 本章小结</a></li>
-            <li>
-                <a href="#%e5%88%86%e5%8c%ba%e4%b8%8e%e5%a4%8d%e5%88%b6" aria-label="分区与复制">分区与复制</a></li>
-            <li>
-                <a href="#%e9%94%ae%e5%80%bc%e6%95%b0%e6%8d%ae%e7%9a%84%e5%88%86%e5%8c%ba" aria-label="键值数据的分区">键值数据的分区</a><ul>
-                    
-            <li>
-                <a href="#%e6%a0%b9%e6%8d%ae%e9%94%ae%e7%9a%84%e8%8c%83%e5%9b%b4%e5%88%86%e5%8c%ba" aria-label="根据键的范围分区">根据键的范围分区</a></li>
-            <li>
-                <a href="#%e6%a0%b9%e6%8d%ae%e9%94%ae%e7%9a%84%e6%95%a3%e5%88%97%e5%88%86%e5%8c%ba" aria-label="根据键的散列分区">根据键的散列分区</a></li>
-            <li>
-                <a href="#%e8%b4%9f%e8%bd%bd%e5%81%8f%e6%96%9c%e4%b8%8e%e7%83%ad%e7%82%b9%e6%b6%88%e9%99%a4" aria-label="负载偏斜与热点消除">负载偏斜与热点消除</a></li></ul>
-            </li>
-            <li>
-                <a href="#%e5%88%86%e5%8c%ba%e4%b8%8e%e6%ac%a1%e7%ba%a7%e7%b4%a2%e5%bc%95" aria-label="分区与次级索引">分区与次级索引</a><ul>
-                    
-            <li>
-                <a href="#%e5%9f%ba%e4%ba%8e%e6%96%87%e6%a1%a3%e7%9a%84%e4%ba%8c%e7%ba%a7%e7%b4%a2%e5%bc%95%e8%bf%9b%e8%a1%8c%e5%88%86%e5%8c%ba" aria-label="基于文档的二级索引进行分区">基于文档的二级索引进行分区</a></li>
-            <li>
-                <a href="#%e5%9f%ba%e4%ba%8e%e5%85%b3%e9%94%ae%e8%af%8dterm%e7%9a%84%e4%ba%8c%e7%ba%a7%e7%b4%a2%e5%bc%95%e8%bf%9b%e8%a1%8c%e5%88%86%e5%8c%ba" aria-label="基于关键词(Term)的二级索引进行分区">基于关键词(Term)的二级索引进行分区</a></li></ul>
-            </li>
-            <li>
-                <a href="#%e5%88%86%e5%8c%ba%e5%86%8d%e5%b9%b3%e8%a1%a1" aria-label="分区再平衡">分区再平衡</a><ul>
-                    
-            <li>
-                <a href="#%e5%86%8d%e5%b9%b3%e8%a1%a1%e7%ad%96%e7%95%a5" aria-label="再平衡策略">再平衡策略</a><ul>
-                    
-            <li>
-                <a href="#%e5%8f%8d%e9%9d%a2%e6%95%99%e6%9d%90hash-mod-n" aria-label="反面教材：hash mod N">反面教材：hash mod N</a></li>
-            <li>
-                <a href="#%e5%9b%ba%e5%ae%9a%e6%95%b0%e9%87%8f%e7%9a%84%e5%88%86%e5%8c%ba" aria-label="固定数量的分区">固定数量的分区</a></li>
-            <li>
-                <a href="#%e5%8a%a8%e6%80%81%e5%88%86%e5%8c%ba" aria-label="动态分区">动态分区</a></li>
-            <li>
-                <a href="#%e6%8c%89%e8%8a%82%e7%82%b9%e6%af%94%e4%be%8b%e5%88%86%e5%8c%ba" aria-label="按节点比例分区">按节点比例分区</a></li></ul>
-            </li>
-            <li>
-                <a href="#%e8%bf%90%e7%bb%b4%e6%89%8b%e5%8a%a8%e8%bf%98%e6%98%af%e8%87%aa%e5%8a%a8%e5%86%8d%e5%b9%b3%e8%a1%a1" aria-label="运维：手动还是自动再平衡">运维：手动还是自动再平衡</a></li></ul>
-            </li>
-            <li>
-                <a href="#%e8%af%b7%e6%b1%82%e8%b7%af%e7%94%b1" aria-label="请求路由">请求路由</a><ul>
-                    
-            <li>
-                <a href="#%e6%89%a7%e8%a1%8c%e5%b9%b6%e8%a1%8c%e6%9f%a5%e8%af%a2" aria-label="执行并行查询">执行并行查询</a></li></ul>
-            </li>
-            <li>
-                <a href="#%e6%9c%ac%e7%ab%a0%e5%b0%8f%e7%bb%93" aria-label="本章小结">本章小结</a></li>
-            <li>
-                <a href="#%e4%ba%8b%e5%8a%a1%e7%9a%84%e6%a3%98%e6%89%8b%e6%a6%82%e5%bf%b5" aria-label="事务的棘手概念">事务的棘手概念</a><ul>
-                    
-            <li>
-                <a href="#acid%e7%9a%84%e5%90%ab%e4%b9%89" aria-label="ACID的含义">ACID的含义</a><ul>
-                    
-            <li>
-                <a href="#%e5%8e%9f%e5%ad%90%e6%80%a7" aria-label="原子性">原子性</a></li>
-            <li>
-                <a href="#%e4%b8%80%e8%87%b4%e6%80%a7" aria-label="一致性">一致性</a></li>
-            <li>
-                <a href="#%e9%9a%94%e7%a6%bb%e6%80%a7" aria-label="隔离性">隔离性</a></li>
-            <li>
-                <a href="#%e6%8c%81%e4%b9%85%e6%80%a7" aria-label="持久性">持久性</a></li></ul>
-            </li>
-            <li>
-                <a href="#%e5%8d%95%e5%af%b9%e8%b1%a1%e5%92%8c%e5%a4%9a%e5%af%b9%e8%b1%a1%e6%93%8d%e4%bd%9c" aria-label="单对象和多对象操作">单对象和多对象操作</a><ul>
-                    
-            <li>
-                <a href="#%e5%8d%95%e5%af%b9%e8%b1%a1%e5%86%99%e5%85%a5" aria-label="单对象写入">单对象写入</a></li>
-            <li>
-                <a href="#%e5%a4%9a%e5%af%b9%e8%b1%a1%e4%ba%8b%e5%8a%a1%e7%9a%84%e5%bf%85%e8%a6%81%e6%80%a7" aria-label="多对象事务的必要性">多对象事务的必要性</a></li>
-            <li>
-                <a href="#%e5%a4%84%e7%90%86%e9%94%99%e8%af%af%e5%92%8c%e4%b8%ad%e6%ad%a2" aria-label="处理错误和中止">处理错误和中止</a></li></ul>
-            </li></ul>
-            </li>
-            <li>
-                <a href="#%e5%bc%b1%e9%9a%94%e7%a6%bb%e7%ba%a7%e5%88%ab" aria-label="弱隔离级别">弱隔离级别</a><ul>
-                    
-            <li>
-                <a href="#%e8%af%bb%e5%b7%b2%e6%8f%90%e4%ba%a4" aria-label="读已提交">读已提交</a><ul>
-                    
-            <li>
-                <a href="#%e5%ae%9e%e7%8e%b0%e8%af%bb%e5%b7%b2%e6%8f%90%e4%ba%a4" aria-label="实现读已提交">实现读已提交</a></li></ul>
-            </li>
-            <li>
-                <a href="#%e5%bf%ab%e7%85%a7%e9%9a%94%e7%a6%bb%e5%92%8c%e5%8f%af%e9%87%8d%e5%a4%8d%e8%af%bb" aria-label="快照隔离和可重复读">快照隔离和可重复读</a></li>
-            <li>
-                <a href="#%e5%ae%9e%e7%8e%b0%e5%bf%ab%e7%85%a7%e9%9a%94%e7%a6%bb" aria-label="实现快照隔离">实现快照隔离</a><ul>
-                    
-            <li>
-                <a href="#%e8%a7%82%e5%af%9f%e4%b8%80%e8%87%b4%e6%80%a7%e5%bf%ab%e7%85%a7%e7%9a%84%e5%8f%af%e8%a7%81%e6%80%a7%e8%a7%84%e5%88%99" aria-label="观察一致性快照的可见性规则">观察一致性快照的可见性规则</a></li>
-            <li>
-                <a href="#%e7%b4%a2%e5%bc%95%e5%92%8c%e5%bf%ab%e7%85%a7%e9%9a%94%e7%a6%bb" aria-label="索引和快照隔离">索引和快照隔离</a></li>
-            <li>
-                <a href="#%e5%8f%af%e9%87%8d%e5%a4%8d%e8%af%bb%e4%b8%8e%e5%91%bd%e5%90%8d%e6%b7%b7%e6%b7%86" aria-label="可重复读与命名混淆">可重复读与命名混淆</a></li></ul>
-            </li>
-            <li>
-                <a href="#%e9%98%b2%e6%ad%a2%e4%b8%a2%e5%a4%b1%e6%9b%b4%e6%96%b0" aria-label="防止丢失更新">防止丢失更新</a><ul>
-                    
-            <li>
-                <a href="#%e5%8e%9f%e5%ad%90%e5%86%99" aria-label="原子写">原子写</a></li>
-            <li>
-                <a href="#%e6%98%be%e5%bc%8f%e9%94%81%e5%ae%9a" aria-label="显式锁定">显式锁定</a></li>
-            <li>
-                <a href="#%e8%87%aa%e5%8a%a8%e6%a3%80%e6%b5%8b%e4%b8%a2%e5%a4%b1%e7%9a%84%e6%9b%b4%e6%96%b0" aria-label="自动检测丢失的更新">自动检测丢失的更新</a></li>
-            <li>
-                <a href="#%e6%af%94%e8%be%83%e5%b9%b6%e8%ae%be%e7%bd%aecas" aria-label="比较并设置（CAS）">比较并设置（CAS）</a></li>
-            <li>
-                <a href="#%e5%86%b2%e7%aa%81%e8%a7%a3%e5%86%b3%e5%92%8c%e5%a4%8d%e5%88%b6" aria-label="冲突解决和复制">冲突解决和复制</a></li></ul>
-            </li>
-            <li>
-                <a href="#%e5%86%99%e5%85%a5%e5%81%8f%e6%96%9c%e4%b8%8e%e5%b9%bb%e8%af%bb" aria-label="写入偏斜与幻读">写入偏斜与幻读</a><ul>
-                    
-            <li>
-                <a href="#%e5%86%99%e5%81%8f%e5%b7%ae%e7%9a%84%e7%89%b9%e5%be%81" aria-label="写偏差的特征">写偏差的特征</a></li></ul>
-            </li></ul>
-            </li>
-            <li>
-                <a href="#%e5%8f%af%e4%b8%b2%e8%a1%8c%e5%8c%96" aria-label="可串行化">可串行化</a><ul>
-                    
-            <li>
-                <a href="#%e7%9c%9f%e7%9a%84%e4%b8%b2%e8%a1%8c%e6%89%a7%e8%a1%8c" aria-label="真的串行执行">真的串行执行</a><ul>
-                    
-            <li>
-                <a href="#%e5%9c%a8%e5%ad%98%e5%82%a8%e8%bf%87%e7%a8%8b%e4%b8%ad%e5%b0%81%e8%a3%85%e4%ba%8b%e5%8a%a1" aria-label="在存储过程中封装事务">在存储过程中封装事务</a></li>
-            <li>
-                <a href="#%e5%ad%98%e5%82%a8%e8%bf%87%e7%a8%8b%e7%9a%84%e4%bc%98%e7%82%b9%e5%92%8c%e7%bc%ba%e7%82%b9" aria-label="存储过程的优点和缺点">存储过程的优点和缺点</a></li></ul>
-            </li>
-            <li>
-                <a href="#%e4%b8%a4%e9%98%b6%e6%ae%b5%e9%94%81%e5%ae%9a" aria-label="两阶段锁定">两阶段锁定</a><ul>
-                    
-            <li>
-                <a href="#%e5%ae%9e%e7%8e%b0%e4%b8%a4%e9%98%b6%e6%ae%b5%e9%94%81" aria-label="实现两阶段锁">实现两阶段锁</a></li>
-            <li>
-                <a href="#%e7%b4%a2%e5%bc%95%e8%8c%83%e5%9b%b4%e9%94%81" aria-label="索引范围锁">索引范围锁</a></li></ul>
-            </li>
-            <li>
-                <a href="#%e5%8f%af%e4%b8%b2%e8%a1%8c%e5%8c%96%e5%bf%ab%e7%85%a7%e9%9a%94%e7%a6%bb" aria-label="可串行化快照隔离">可串行化快照隔离</a><ul>
-                    
-            <li>
-                <a href="#%e6%82%b2%e8%a7%82%e4%b8%8e%e4%b9%90%e8%a7%82%e7%9a%84%e5%b9%b6%e5%8f%91%e6%8e%a7%e5%88%b6" aria-label="悲观与乐观的并发控制">悲观与乐观的并发控制</a></li></ul>
-            </li></ul>
-            </li>
-            <li>
-                <a href="#%e6%9c%ac%e7%ab%a0%e5%b0%8f%e7%bb%93-1" aria-label="本章小结">本章小结</a></li>
-            <li>
-                <a href="#%e6%95%85%e9%9a%9c%e4%b8%8e%e9%83%a8%e5%88%86%e5%a4%b1%e6%95%88" aria-label="故障与部分失效">故障与部分失效</a><ul>
-                    
-            <li>
-                <a href="#%e4%ba%91%e8%ae%a1%e7%ae%97%e4%b8%8e%e8%b6%85%e7%ba%a7%e8%ae%a1%e7%ae%97%e6%9c%ba" aria-label="云计算与超级计算机">云计算与超级计算机</a></li></ul>
-            </li>
-            <li>
-                <a href="#%e4%b8%8d%e5%8f%af%e9%9d%a0%e7%9a%84%e7%bd%91%e7%bb%9c" aria-label="不可靠的网络">不可靠的网络</a><ul>
-                    
-            <li>
-                <a href="#%e7%9c%9f%e5%ae%9e%e4%b8%96%e7%95%8c%e7%9a%84%e7%bd%91%e7%bb%9c%e6%95%85%e9%9a%9c" aria-label="真实世界的网络故障">真实世界的网络故障</a></li>
-            <li>
-                <a href="#%e6%a3%80%e6%b5%8b%e6%95%85%e9%9a%9c" aria-label="检测故障">检测故障</a></li>
-            <li>
-                <a href="#%e8%b6%85%e6%97%b6%e4%b8%8e%e6%97%a0%e7%a9%b7%e7%9a%84%e5%bb%b6%e8%bf%9f" aria-label="超时与无穷的延迟">超时与无穷的延迟</a><ul>
-                    
-            <li>
-                <a href="#%e7%bd%91%e7%bb%9c%e6%8b%a5%e5%a1%9e%e5%92%8c%e6%8e%92%e9%98%9f" aria-label="网络拥塞和排队">网络拥塞和排队</a></li></ul>
-            </li>
-            <li>
-                <a href="#%e5%90%8c%e6%ad%a5%e7%bd%91%e7%bb%9c%e4%b8%8e%e5%bc%82%e6%ad%a5%e7%bd%91%e7%bb%9c" aria-label="同步网络与异步网络">同步网络与异步网络</a><ul>
-                    
-            <li>
-                <a href="#%e7%bd%91%e7%bb%9c%e5%bb%b6%e8%bf%9f%e5%8f%af%e4%bb%a5%e9%a2%84%e6%b5%8b%e5%90%97" aria-label="网络延迟可以预测吗？">网络延迟可以预测吗？</a></li></ul>
-            </li></ul>
-            </li>
-            <li>
-                <a href="#%e4%b8%8d%e5%8f%af%e9%9d%a0%e7%9a%84%e6%97%b6%e9%92%9f" aria-label="不可靠的时钟">不可靠的时钟</a><ul>
-                    
-            <li>
-                <a href="#%e5%8d%95%e8%b0%83%e9%92%9f%e4%b8%8e%e6%97%a5%e5%8e%86%e6%97%b6%e9%92%9f" aria-label="单调钟与日历时钟">单调钟与日历时钟</a><ul>
-                    
-            <li>
-                <a href="#%e6%97%a5%e5%8e%86%e6%97%b6%e9%92%9f" aria-label="日历时钟">日历时钟</a></li>
-            <li>
-                <a href="#%e5%8d%95%e8%b0%83%e9%92%9f" aria-label="单调钟">单调钟</a></li></ul>
-            </li>
-            <li>
-                <a href="#%e6%97%b6%e9%92%9f%e5%90%8c%e6%ad%a5%e4%b8%8e%e5%87%86%e7%a1%ae%e6%80%a7" aria-label="时钟同步与准确性">时钟同步与准确性</a></li>
-            <li>
-                <a href="#%e4%be%9d%e8%b5%96%e5%90%8c%e6%ad%a5%e6%97%b6%e9%92%9f" aria-label="依赖同步时钟">依赖同步时钟</a><ul>
-                    
-            <li>
-                <a href="#%e6%9c%89%e5%ba%8f%e4%ba%8b%e4%bb%b6%e7%9a%84%e6%97%b6%e9%97%b4%e6%88%b3" aria-label="有序事件的时间戳">有序事件的时间戳</a></li>
-            <li>
-                <a href="#%e6%97%b6%e9%92%9f%e8%af%bb%e6%95%b0%e5%ad%98%e5%9c%a8%e7%bd%ae%e4%bf%a1%e5%8c%ba%e9%97%b4" aria-label="时钟读数存在置信区间">时钟读数存在置信区间</a></li>
-            <li>
-                <a href="#%e5%85%a8%e5%b1%80%e5%bf%ab%e7%85%a7%e7%9a%84%e5%90%8c%e6%ad%a5%e6%97%b6%e9%92%9f" aria-label="全局快照的同步时钟">全局快照的同步时钟</a></li></ul>
-            </li>
-            <li>
-                <a href="#%e8%bf%9b%e7%a8%8b%e6%9a%82%e5%81%9c" aria-label="进程暂停">进程暂停</a><ul>
-                    
-            <li>
-                <a href="#%e5%93%8d%e5%ba%94%e6%97%b6%e9%97%b4%e4%bf%9d%e8%af%81" aria-label="响应时间保证">响应时间保证</a></li>
-            <li>
-                <a href="#%e9%99%90%e5%88%b6%e5%9e%83%e5%9c%be%e6%94%b6%e9%9b%86%e7%9a%84%e5%bd%b1%e5%93%8d" aria-label="限制垃圾收集的影响">限制垃圾收集的影响</a></li></ul>
-            </li></ul>
-            </li>
-            <li>
-                <a href="#%e7%9f%a5%e8%af%86%e7%9c%9f%e7%9b%b8%e4%b8%8e%e8%b0%8e%e8%a8%80" aria-label="知识、真相与谎言">知识、真相与谎言</a><ul>
-                    
-            <li>
-                <a href="#%e7%9c%9f%e7%9b%b8%e7%94%b1%e5%a4%9a%e6%95%b0%e6%89%80%e5%ae%9a%e4%b9%89" aria-label="真相由多数所定义">真相由多数所定义</a><ul>
-                    
-            <li>
-                <a href="#%e9%a2%86%e5%af%bc%e8%80%85%e5%92%8c%e9%94%81" aria-label="领导者和锁">领导者和锁</a></li>
-            <li>
-                <a href="#%e9%98%b2%e6%8a%a4%e4%bb%a4%e7%89%8c" aria-label="防护令牌">防护令牌</a></li></ul>
-            </li>
-            <li>
-                <a href="#%e6%8b%9c%e5%8d%a0%e5%ba%ad%e6%95%85%e9%9a%9c" aria-label="拜占庭故障">拜占庭故障</a></li>
-            <li>
-                <a href="#%e7%b3%bb%e7%bb%9f%e6%a8%a1%e5%9e%8b%e4%b8%8e%e7%8e%b0%e5%ae%9e" aria-label="系统模型与现实">系统模型与现实</a><ul>
-                    
-            <li>
-                <a href="#%e7%ae%97%e6%b3%95%e7%9a%84%e6%ad%a3%e7%a1%ae%e6%80%a7" aria-label="算法的正确性">算法的正确性</a></li>
-            <li>
-                <a href="#%e5%ae%89%e5%85%a8%e6%80%a7%e5%92%8c%e6%b4%bb%e6%80%a7" aria-label="安全性和活性">安全性和活性</a></li>
-            <li>
-                <a href="#%e5%b0%86%e7%b3%bb%e7%bb%9f%e6%a8%a1%e5%9e%8b%e6%98%a0%e5%b0%84%e5%88%b0%e7%8e%b0%e5%ae%9e%e4%b8%96%e7%95%8c" aria-label="将系统模型映射到现实世界">将系统模型映射到现实世界</a></li></ul>
-            </li></ul>
-            </li>
-            <li>
-                <a href="#%e6%9c%ac%e7%ab%a0%e5%b0%8f%e7%bb%93-2" aria-label="本章小结">本章小结</a></li>
-            <li>
-                <a href="#%e4%b8%80%e8%87%b4%e6%80%a7%e4%bf%9d%e8%af%81" aria-label="一致性保证">一致性保证</a></li>
-            <li>
-                <a href="#%e7%ba%bf%e6%80%a7%e4%b8%80%e8%87%b4%e6%80%a7" aria-label="线性一致性">线性一致性</a><ul>
-                    
-            <li>
-                <a href="#%e5%a6%82%e4%bd%95%e4%bd%bf%e5%be%97%e7%b3%bb%e7%bb%9f%e7%ba%bf%e6%80%a7%e4%b8%80%e8%87%b4" aria-label="如何使得系统线性一致？">如何使得系统线性一致？</a></li></ul>
-            </li>
-            <li>
-                <a href="#%e4%bd%bf%e7%94%a8unix%e5%b7%a5%e5%85%b7%e7%9a%84%e6%89%b9%e5%a4%84%e7%90%86" aria-label="使用Unix工具的批处理">使用Unix工具的批处理</a><ul>
-                    
-            <li>
-                <a href="#%e7%ae%80%e5%8d%95%e6%97%a5%e5%bf%97%e5%88%86%e6%9e%90" aria-label="简单日志分析">简单日志分析</a><ul>
-                    
-            <li>
-                <a href="#%e5%91%bd%e4%bb%a4%e9%93%be%e4%b8%8e%e8%87%aa%e5%ae%9a%e4%b9%89%e7%a8%8b%e5%ba%8f" aria-label="命令链与自定义程序">命令链与自定义程序</a></li>
-            <li>
-                <a href="#%e6%8e%92%e5%ba%8f-vs-%e5%86%85%e5%ad%98%e4%b8%ad%e7%9a%84%e8%81%9a%e5%90%88" aria-label="排序 VS 内存中的聚合">排序 VS 内存中的聚合</a></li></ul>
-            </li>
-            <li>
-                <a href="#unix%e5%93%b2%e5%ad%a6" aria-label="Unix哲学">Unix哲学</a><ul>
-                    
-            <li>
-                <a href="#%e7%bb%9f%e4%b8%80%e7%9a%84%e6%8e%a5%e5%8f%a3" aria-label="统一的接口">统一的接口</a></li>
-            <li>
-                <a href="#%e9%80%bb%e8%be%91%e4%b8%8e%e5%b8%83%e7%ba%bf%e7%9b%b8%e5%88%86%e7%a6%bb" aria-label="逻辑与布线相分离">逻辑与布线相分离</a></li>
-            <li>
-                <a href="#%e9%80%8f%e6%98%8e%e5%ba%a6%e5%92%8c%e5%ae%9e%e9%aa%8c" aria-label="透明度和实验">透明度和实验</a></li></ul>
-            </li></ul>
-            </li>
-            <li>
-                <a href="#mapreduce%e5%92%8c%e5%88%86%e5%b8%83%e5%bc%8f%e6%96%87%e4%bb%b6%e7%b3%bb%e7%bb%9f" aria-label="MapReduce和分布式文件系统">MapReduce和分布式文件系统</a><ul>
-                    
-            <li>
-                <a href="#mapreduce%e4%bd%9c%e4%b8%9a%e6%89%a7%e8%a1%8c" aria-label="MapReduce作业执行">MapReduce作业执行</a><ul>
-                    
-            <li>
-                <a href="#%e5%88%86%e5%b8%83%e5%bc%8f%e6%89%a7%e8%a1%8cmapreduce" aria-label="分布式执行MapReduce">分布式执行MapReduce</a></li>
-            <li>
-                <a href="#mapreduce%e5%b7%a5%e4%bd%9c%e6%b5%81" aria-label="MapReduce工作流">MapReduce工作流</a></li></ul>
-            </li>
-            <li>
-                <a href="#reduce%e4%be%a7join%e4%b8%8e%e5%88%86%e7%bb%84" aria-label="Reduce侧Join与分组">Reduce侧Join与分组</a></li>
-            <li>
-                <a href="#%e7%a4%ba%e4%be%8b%e7%94%a8%e6%88%b7%e6%b4%bb%e5%8a%a8%e4%ba%8b%e4%bb%b6%e5%88%86%e6%9e%90" aria-label="示例：用户活动事件分析">示例：用户活动事件分析</a><ul>
-                    
-            <li>
-                <a href="#%e6%8e%92%e5%ba%8f%e5%90%88%e5%b9%b6%e8%bf%9e%e6%8e%a5" aria-label="排序合并连接">排序合并连接</a></li>
-            <li>
-                <a href="#%e6%8a%8a%e7%9b%b8%e5%85%b3%e6%95%b0%e6%8d%ae%e6%94%be%e5%9c%a8%e4%b8%80%e8%b5%b7" aria-label="把相关数据放在一起">把相关数据放在一起</a></li>
-            <li>
-                <a href="#%e5%88%86%e7%bb%84" aria-label="分组">分组</a></li>
-            <li>
-                <a href="#%e5%a4%84%e7%90%86%e5%81%8f%e6%96%9c" aria-label="处理偏斜">处理偏斜</a></li></ul>
-            </li>
-            <li>
-                <a href="#map%e4%be%a7-join" aria-label="Map侧 join">Map侧 join</a></li>
-            <li>
-                <a href="#%e5%b9%bf%e6%92%ad%e6%95%a3%e5%88%97%e8%bf%9e%e6%8e%a5" aria-label="广播散列连接">广播散列连接</a><ul>
-                    
-            <li>
-                <a href="#%e5%88%86%e5%8c%ba%e6%95%a3%e5%88%97%e8%bf%9e%e6%8e%a5" aria-label="分区散列连接">分区散列连接</a></li>
-            <li>
-                <a href="#map%e4%be%a7%e5%90%88%e5%b9%b6%e8%bf%9e%e6%8e%a5" aria-label="Map侧合并连接">Map侧合并连接</a></li>
-            <li>
-                <a href="#mapreduce%e5%b7%a5%e4%bd%9c%e6%b5%81%e4%b8%8emap%e4%be%a7%e8%bf%9e%e6%8e%a5" aria-label="MapReduce工作流与Map侧连接">MapReduce工作流与Map侧连接</a></li></ul>
-            </li>
-            <li>
-                <a href="#%e6%89%b9%e5%a4%84%e7%90%86%e5%b7%a5%e4%bd%9c%e6%b5%81%e7%9a%84%e8%be%93%e5%87%ba" aria-label="批处理工作流的输出">批处理工作流的输出</a><ul>
-                    
-            <li>
-                <a href="#%e5%bb%ba%e7%ab%8b%e6%90%9c%e7%b4%a2%e7%b4%a2%e5%bc%95" aria-label="建立搜索索引">建立搜索索引</a></li>
-            <li>
-                <a href="#%e9%94%ae%e5%80%bc%e5%ad%98%e5%82%a8%e4%bd%9c%e4%b8%ba%e6%89%b9%e5%a4%84%e7%90%86%e8%be%93%e5%87%ba" aria-label="键值存储作为批处理输出">键值存储作为批处理输出</a></li>
-            <li>
-                <a href="#%e6%89%b9%e5%a4%84%e7%90%86%e8%be%93%e5%87%ba%e7%9a%84%e5%93%b2%e5%ad%a6" aria-label="批处理输出的哲学">批处理输出的哲学</a></li></ul>
-            </li>
-            <li>
-                <a href="#hadoop%e4%b8%8e%e5%88%86%e5%b8%83%e5%bc%8f%e6%95%b0%e6%8d%ae%e5%ba%93%e7%9a%84%e5%af%b9%e6%af%94" aria-label="Hadoop与分布式数据库的对比">Hadoop与分布式数据库的对比</a><ul>
-                    
-            <li>
-                <a href="#%e5%a4%84%e7%90%86%e6%a8%a1%e5%9e%8b%e7%9a%84%e5%a4%9a%e6%a0%b7%e6%80%a7" aria-label="处理模型的多样性">处理模型的多样性</a></li>
-            <li>
-                <a href="#%e9%92%88%e5%af%b9%e9%a2%91%e7%b9%81%e6%95%85%e9%9a%9c%e8%ae%be%e8%ae%a1" aria-label="针对频繁故障设计">针对频繁故障设计</a></li></ul>
-            </li></ul>
-            </li>
-            <li>
-                <a href="#mapreduce%e4%b9%8b%e5%90%8e" aria-label="MapReduce之后">MapReduce之后</a><ul>
-                    
-            <li>
-                <a href="#%e7%89%a9%e5%8c%96%e4%b8%ad%e9%97%b4%e7%8a%b6%e6%80%81" aria-label="物化中间状态">物化中间状态</a><ul>
-                    
-            <li>
-                <a href="#%e6%95%b0%e6%8d%ae%e6%b5%81%e5%bc%95%e6%93%8e" aria-label="数据流引擎">数据流引擎</a></li>
-            <li>
-                <a href="#%e5%ae%b9%e9%94%99" aria-label="容错">容错</a></li>
-            <li>
-                <a href="#%e5%85%b3%e4%ba%8e%e7%89%a9%e5%8c%96%e7%9a%84%e8%ae%a8%e8%ae%ba" aria-label="关于物化的讨论">关于物化的讨论</a></li></ul>
-            </li>
-            <li>
-                <a href="#%e5%9b%be%e4%b8%8e%e8%bf%ad%e4%bb%a3%e5%a4%84%e7%90%86" aria-label="图与迭代处理">图与迭代处理</a><ul>
-                    
-            <li>
-                <a href="#pregel%e5%a4%84%e7%90%86%e6%a8%a1%e5%9e%8b" aria-label="Pregel处理模型">Pregel处理模型</a></li>
-            <li>
-                <a href="#%e5%ae%b9%e9%94%99-1" aria-label="容错">容错</a></li>
-            <li>
-                <a href="#%e5%b9%b6%e8%a1%8c%e6%89%a7%e8%a1%8c" aria-label="并行执行">并行执行</a></li></ul>
-            </li>
-            <li>
-                <a href="#%e9%ab%98%e7%ba%a7api%e5%92%8c%e8%af%ad%e8%a8%80" aria-label="高级API和语言">高级API和语言</a></li></ul>
-            </li>
-            <li>
-                <a href="#%e6%9c%ac%e7%ab%a0%e5%b0%8f%e7%bb%93-3" aria-label="本章小结">本章小结</a>
-            </li>
-        </ul>
-    </div>
-</details>
-
+  </header> 
   <div class="post-content md-content"><p>第一章：可靠性，可扩展性，可维护性</p>
 <h2 id="11-关于数据系统的思考">1.1 关于数据系统的思考<a hidden class="anchor" aria-hidden="true" href="#11-关于数据系统的思考">#</a></h2>
 <p>单个工具已经不能满足应用系统的需求，总体工作被拆分成一系列能被单个工具高效完成的任务，并通过应用代码将它们缝合起来。比如一个缓存、索引、数据库协作的例子：</p>
@@ -1174,22 +431,22 @@ b. 边（edges）（ 也称为关系（relationships）或弧 （arcs） ）。<
 ● 描述两个顶点之间关系类型的标签
 ● 一组属性（键值对）
 使用关系模式来表示属性图</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span> 1
-</span></span><span style="display:flex;"><span> 2
-</span></span><span style="display:flex;"><span> 3
-</span></span><span style="display:flex;"><span> 4
-</span></span><span style="display:flex;"><span> 5
-</span></span><span style="display:flex;"><span> 6
-</span></span><span style="display:flex;"><span> 7
-</span></span><span style="display:flex;"><span> 8
-</span></span><span style="display:flex;"><span> 9
-</span></span><span style="display:flex;"><span>10
-</span></span><span style="display:flex;"><span>11
-</span></span><span style="display:flex;"><span>12
-</span></span><span style="display:flex;"><span>13
-</span></span><span style="display:flex;"><span>14
-</span></span><span style="display:flex;"><span>15
-</span></span></code></pre></div><p>关于这个模型的一些重要方面是：</p>
+<pre tabindex="0"><code> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+</code></pre><p>关于这个模型的一些重要方面是：</p>
 <ul>
 <li>任何顶点都可以有一条边连接到任何其他顶点。没有模式限制哪种事物可不可以关联。</li>
 <li>给定任何顶点，可以高效地找到它的入边和出边，从而遍历图，即沿着一系列顶点的路径前后移动。（这就是为什么例2-2在tail_vertex和head_vertex列上都有索引的原因。）</li>
@@ -1201,11 +458,11 @@ b. 边（edges）（ 也称为关系（relationships）或弧 （arcs） ）。<
 <li>通常对于声明式查询语言来说，在编写查询语句时，不需要指定执行细节：查询优化程序会自动选择预测效率最高的策略，因此你可以继续编写应用程序的其他部分。</li>
 <li>查找所有从美国移民到欧洲的人的Cypher查询</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>1
-</span></span><span style="display:flex;"><span>2
-</span></span><span style="display:flex;"><span>3
-</span></span><span style="display:flex;"><span>4
-</span></span></code></pre></div><h3 id="233-sql中的图查询">2.3.3 SQL中的图查询<a hidden class="anchor" aria-hidden="true" href="#233-sql中的图查询">#</a></h3>
+<pre tabindex="0"><code>1
+2
+3
+4
+</code></pre><h3 id="233-sql中的图查询">2.3.3 SQL中的图查询<a hidden class="anchor" aria-hidden="true" href="#233-sql中的图查询">#</a></h3>
 <ul>
 <li>用关系数据库表示图数据，那么也可以用SQL，但有些困难。</li>
 <li>在关系数据库中，你通常会事先知道在查询中需要哪些连接。在图查询中，你可能需要在找到待查找的顶点之前，遍历可变数量的边。也就是说，连接的数量事先并不确定。</li>
@@ -1219,12 +476,12 @@ a. 原始数据类型中的值，例如字符串或数字。在这种情况下�
 b. 图中的另一个顶点。在这种情况下，谓语是图中的一条边，主语是其尾部顶点，而宾语是其头部顶点。例如，在(lucy, marriedTo, alain)中主语和宾语lucy和alain都是顶点，并且谓语marriedTo是连接他们的边的标签。</li>
 <li>当主语一样的时候，可以进行省略写法</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>1
-</span></span><span style="display:flex;"><span>2
-</span></span><span style="display:flex;"><span>3
-</span></span><span style="display:flex;"><span>4
-</span></span><span style="display:flex;"><span>5
-</span></span></code></pre></div><h4 id="2341-语义网络">2.3.4.1 语义网络<a hidden class="anchor" aria-hidden="true" href="#2341-语义网络">#</a></h4>
+<pre tabindex="0"><code>1
+2
+3
+4
+5
+</code></pre><h4 id="2341-语义网络">2.3.4.1 语义网络<a hidden class="anchor" aria-hidden="true" href="#2341-语义网络">#</a></h4>
 <ul>
 <li>语义网是一个简单且合理的想法：网站已经将信息发布为文字和图片供人类阅读，为什么不将信息作为机器可读的数据也发布给计算机呢？</li>
 <li>资源描述框架（RDF）的目的是作为不同网站以一致的格式发布数据的一种机制，允许来自不同网站的数据自动合并成一个数据网络 - 一种互联网范围内的“关于一切的数据库“。</li>
@@ -1235,13 +492,13 @@ b. 图中的另一个顶点。在这种情况下，谓语是图中的一条边�
 <li>SPARQL是一种用于三元组存储的面向RDF数据模型的查询语言</li>
 <li>查找从美国转移到欧洲的人</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>1
-</span></span><span style="display:flex;"><span>2
-</span></span><span style="display:flex;"><span>3
-</span></span><span style="display:flex;"><span>4
-</span></span><span style="display:flex;"><span>5
-</span></span><span style="display:flex;"><span>6
-</span></span></code></pre></div><h3 id="236-基础datalog">2.3.6 基础：Datalog<a hidden class="anchor" aria-hidden="true" href="#236-基础datalog">#</a></h3>
+<pre tabindex="0"><code>1
+2
+3
+4
+5
+6
+</code></pre><h3 id="236-基础datalog">2.3.6 基础：Datalog<a hidden class="anchor" aria-hidden="true" href="#236-基础datalog">#</a></h3>
 <p>Datalog是比SPARQL或Cypher更古老的语言，在20世纪80年代被学者广泛研究</p>
 <h2 id="24-本章小结">2.4 本章小结<a hidden class="anchor" aria-hidden="true" href="#24-本章小结">#</a></h2>
 <p>在历史上，数据最开始被表示为一棵大树（层次数据模型），但是这不利于表示多对多的关系，所以发明了关系模型来解决这个问题。
@@ -1257,43 +514,43 @@ b. 图中的另一个顶点。在这种情况下，谓语是图中的一条边�
 我们会研究两大类存储引擎：日志结构（log-structured） 的存储引擎，以及面向页面（page-oriented） 的存储引擎（例如B树）。</p>
 <h2 id="31-驱动数据库的数据结构">3.1 驱动数据库的数据结构<a hidden class="anchor" aria-hidden="true" href="#31-驱动数据库的数据结构">#</a></h2>
 <p>世界上最简单的数据库可以用两个Bash函数实现：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>1
-</span></span><span style="display:flex;"><span>2
-</span></span><span style="display:flex;"><span>3
-</span></span><span style="display:flex;"><span>4
-</span></span><span style="display:flex;"><span>5
-</span></span><span style="display:flex;"><span>6
-</span></span><span style="display:flex;"><span>7
-</span></span><span style="display:flex;"><span>8
-</span></span></code></pre></div><p>这两个函数实现了键值存储的功能。</p>
+<pre tabindex="0"><code>1
+2
+3
+4
+5
+6
+7
+8
+</code></pre><p>这两个函数实现了键值存储的功能。</p>
 <ul>
 <li>执行 db_set key value ，会将 键（key）和值（value） 存储在数据库中。键和值（几乎）可以是你喜欢的任何东西，例如，值可以是JSON文档。</li>
 <li>调用 db_get key ，查找与该键关联的最新值并将其返回。
 麻雀虽小，五脏俱全：</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>1
-</span></span><span style="display:flex;"><span>2
-</span></span><span style="display:flex;"><span>3
-</span></span><span style="display:flex;"><span>4
-</span></span><span style="display:flex;"><span>5
-</span></span><span style="display:flex;"><span>6
-</span></span></code></pre></div><p>huhu
+<pre tabindex="0"><code>1
+2
+3
+4
+5
+6
+</code></pre><p>huhu
 底层的存储格式非常简单：</p>
 <ul>
 <li>一个文本文件，每行包含一条逗号分隔的键值对（忽略转义问题的话，大致与CSV文件类似）。</li>
 <li>每次对 db_set 的调用都会向文件末尾追加记录，所以更新键的时候旧版本的值不会被覆盖。
 查找最新值的时候，需要找到文件中键最后一次出现的位置（因此 db_get 中使用了 tail -n 1 )</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>1
-</span></span><span style="display:flex;"><span>2
-</span></span><span style="display:flex;"><span>3
-</span></span><span style="display:flex;"><span>4
-</span></span><span style="display:flex;"><span>5
-</span></span><span style="display:flex;"><span>6
-</span></span><span style="display:flex;"><span>7
-</span></span><span style="display:flex;"><span>8
-</span></span><span style="display:flex;"><span>9
-</span></span></code></pre></div><ul>
+<pre tabindex="0"><code>1
+2
+3
+4
+5
+6
+7
+8
+9
+</code></pre><ul>
 <li>
 <p>db_set 函数对于极其简单的场景其实有非常好的性能，因为在文件尾部追加写入通常是非常高效的。
 与db_set做的事情类似，许多数据库在内部使用了日志（log），也就是一个 仅追加（append-only） 的数据文件。</p>
@@ -1761,13 +1018,13 @@ TB ~ PB/td&gt;</p>
 <p>当数据很多的时候，数据格式的选择会有很大影响。
 JSON比XML简洁，但与二进制格式相比还是太占空间。现在有很多二进制格式的 JSON（MessagePack，BSON，BJSON，UBJSON，BISON和Smile等）。
 JSON 字符串是：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>1
-</span></span><span style="display:flex;"><span>2
-</span></span><span style="display:flex;"><span>3
-</span></span><span style="display:flex;"><span>4
-</span></span><span style="display:flex;"><span>5
-</span></span><span style="display:flex;"><span>6
-</span></span></code></pre></div><p>二进制编码长度为66个字节，仅略小于文本JSON编码所取的81个字节（删除了空白）。</p>
+<pre tabindex="0"><code>1
+2
+3
+4
+5
+6
+</code></pre><p>二进制编码长度为66个字节，仅略小于文本JSON编码所取的81个字节（删除了空白）。</p>
 <h3 id="413-thrift与protocol-buffers">4.1.3 Thrift与Protocol Buffers<a hidden class="anchor" aria-hidden="true" href="#413-thrift与protocol-buffers">#</a></h3>
 <ul>
 <li>
@@ -1781,20 +1038,20 @@ JSON 字符串是：</p>
 <p>Thrift 比如：</p>
 </li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>1
-</span></span><span style="display:flex;"><span>2
-</span></span><span style="display:flex;"><span>3
-</span></span><span style="display:flex;"><span>4
-</span></span><span style="display:flex;"><span>5
-</span></span></code></pre></div><ul>
+<pre tabindex="0"><code>1
+2
+3
+4
+5
+</code></pre><ul>
 <li>Protocol Buffers的等效模式定义看起来非常相似：</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>1
-</span></span><span style="display:flex;"><span>2
-</span></span><span style="display:flex;"><span>3
-</span></span><span style="display:flex;"><span>4
-</span></span><span style="display:flex;"><span>5
-</span></span></code></pre></div><ul>
+<pre tabindex="0"><code>1
+2
+3
+4
+5
+</code></pre><ul>
 <li>
 <p>Thrift和Protocol Buffers每一个都带有一个代码生成工具，可以调用此代码对模式进行编码和解码。
 Thrift 编码格式</p>
@@ -1862,22 +1119,22 @@ Protocol Buffers</p>
 <li>Avro 有两种模式语言：一种(Avro IDL) 用于人工编辑，一种（基于JSON）更易于机器读取。
 举例:</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>1
-</span></span><span style="display:flex;"><span>2
-</span></span><span style="display:flex;"><span>3
-</span></span><span style="display:flex;"><span>4
-</span></span><span style="display:flex;"><span>5
-</span></span></code></pre></div><p>等价的JSON表示:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>1
-</span></span><span style="display:flex;"><span>2
-</span></span><span style="display:flex;"><span>3
-</span></span><span style="display:flex;"><span>4
-</span></span><span style="display:flex;"><span>5
-</span></span><span style="display:flex;"><span>6
-</span></span><span style="display:flex;"><span>7
-</span></span><span style="display:flex;"><span>8
-</span></span><span style="display:flex;"><span>9
-</span></span></code></pre></div><ul>
+<pre tabindex="0"><code>1
+2
+3
+4
+5
+</code></pre><p>等价的JSON表示:</p>
+<pre tabindex="0"><code>1
+2
+3
+4
+5
+6
+7
+8
+9
+</code></pre><ul>
 <li>
 <p>注意：没有标签号码。</p>
 </li>
@@ -2839,8 +2096,8 @@ ACID 的原子性
 通常需要多对象事务（multi-object transaction） 来保持多个数据对象的同步。</p>
 <p>一个邮件应用的例子：
 ● 执行以下查询来显示用户未读邮件数量：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>1
-</span></span></code></pre></div><p>● 如果邮件太多，觉得查询太慢，于是用了单独的字段存储未读邮件的数量。现在每当一个新消息写入时，必须也增长未读计数器，每当一个消息被标记为已读时，也必须减少未读计数器。
+<pre tabindex="0"><code>1
+</code></pre><p>● 如果邮件太多，觉得查询太慢，于是用了单独的字段存储未读邮件的数量。现在每当一个新消息写入时，必须也增长未读计数器，每当一个消息被标记为已读时，也必须减少未读计数器。
 ● 异常情况：
 ○ 邮件列表里显示有未读消息，但计数器显示为零未读消息，因为计数器增长还没有发生</p>
 <p>为了满足原子性：插入邮件和更新未读邮件数目需要状态一致，要么都成功，要么都失败（回滚）：</p>
@@ -3034,8 +2291,8 @@ ACID 的原子性
 <p>● 很多数据库提供了原子更新操作，从而消除在应用程序代码中执行读取-修改-写入序列的需要。
 ● 这通常是最好的解决方案。
 举例，下面的指令在大多数关系数据库中是并发安全的：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>1
-</span></span></code></pre></div><p>原子写的实现方法
+<pre tabindex="0"><code>1
+</code></pre><p>原子写的实现方法
 ● 原子操作通常通过在读取对象时，获取其上的排它锁来实现。
 ○ 使得更新完成之前，没有其他事务可以读取它。
 ○ 这种技术有时被称为游标稳定性（cursor stability）
@@ -3050,15 +2307,15 @@ ACID 的原子性
 ● 多个玩家可以同时移动相同的棋子。
 ● 一个原子操作可能是不够的，因为应用程序还需要确保玩家的移动符合游戏规则
 ● 可以使用锁来防止两名玩家同时移动相同的棋子</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>1
-</span></span><span style="display:flex;"><span>2
-</span></span><span style="display:flex;"><span>3
-</span></span><span style="display:flex;"><span>4
-</span></span><span style="display:flex;"><span>5
-</span></span><span style="display:flex;"><span>6
-</span></span><span style="display:flex;"><span>7
-</span></span><span style="display:flex;"><span>8
-</span></span></code></pre></div><p>● FOR UPDATE 子句告诉数据库应该对该查询返回的所有行加锁。
+<pre tabindex="0"><code>1
+2
+3
+4
+5
+6
+7
+8
+</code></pre><p>● FOR UPDATE 子句告诉数据库应该对该查询返回的所有行加锁。
 这是有效的，但要做对，你需要仔细考虑应用逻辑。忘记在代码某处加锁很容易引入竞争条件。</p>
 <h4 id="自动检测丢失的更新">自动检测丢失的更新<a hidden class="anchor" aria-hidden="true" href="#自动检测丢失的更新">#</a></h4>
 <p>● 原子操作和锁是通过强制读取-修改-写入序列按顺序发生，来防止丢失更新的方法。
@@ -3075,10 +2332,10 @@ ACID 的原子性
 ○ 如果当前值与先前读取的值不匹配，则更新不起作用，且必须重试读取-修改-写入序列。
 举例：
 为了防止两个用户同时更新同一个wiki页面，可以尝试类似这样的方式，只有当页面从上次读取之后没有发生变化时，才会发生更新：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>1
-</span></span><span style="display:flex;"><span>2
-</span></span><span style="display:flex;"><span>3
-</span></span></code></pre></div><p>注意
+<pre tabindex="0"><code>1
+2
+3
+</code></pre><p>注意
 ● 如果更新失败，需要应用层重试。
 ● 如果数据库的 WHERE子句从旧快照中读取，则此语句可能无法防止丢失更新，因为即使发生了另一个并发写入，WHERE条件也可能为真。在依赖数据库的CAS操作前要检查其安全运行条件。</p>
 <h4 id="冲突解决和复制">冲突解决和复制<a hidden class="anchor" aria-hidden="true" href="#冲突解决和复制">#</a></h4>
@@ -3116,35 +2373,35 @@ ACID 的原子性
 ● 某些数据库允许配置约束，然后由数据库强制执行（例如，唯一性，外键约束或特定值限制）。但是为了指定至少有一名医生必须在线，需要一个涉及多个对象的约束。大多数数据库没有内置对这种约束的支持，但是你可以使用触发器，或者物化视图来实现它们，这取决于不同的数据库
 解决办法：
 ● 如果无法使用可串行化的隔离级别，则此情况下的次优选项可能是显式锁定事务所依赖的行。</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span> 1
-</span></span><span style="display:flex;"><span> 2
-</span></span><span style="display:flex;"><span> 3
-</span></span><span style="display:flex;"><span> 4
-</span></span><span style="display:flex;"><span> 5
-</span></span><span style="display:flex;"><span> 6
-</span></span><span style="display:flex;"><span> 7
-</span></span><span style="display:flex;"><span> 8
-</span></span><span style="display:flex;"><span> 9
-</span></span><span style="display:flex;"><span>10
-</span></span><span style="display:flex;"><span>11
-</span></span></code></pre></div><p>● 和以前一样，FOR UPDATE告诉数据库锁定返回的所有行以用于更新。</p>
+<pre tabindex="0"><code> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+</code></pre><p>● 和以前一样，FOR UPDATE告诉数据库锁定返回的所有行以用于更新。</p>
 <p>写偏差的更多例子
 会议室预订系统
 ● 防止会议室被同一个会议室多次预定，需要检查时间是否有重叠。
 ● 快照级别隔离不安全的 SQL：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span> 1
-</span></span><span style="display:flex;"><span> 2
-</span></span><span style="display:flex;"><span> 3
-</span></span><span style="display:flex;"><span> 4
-</span></span><span style="display:flex;"><span> 5
-</span></span><span style="display:flex;"><span> 6
-</span></span><span style="display:flex;"><span> 7
-</span></span><span style="display:flex;"><span> 8
-</span></span><span style="display:flex;"><span> 9
-</span></span><span style="display:flex;"><span>10
-</span></span><span style="display:flex;"><span>11
-</span></span><span style="display:flex;"><span>12
-</span></span></code></pre></div><p>快照隔离并不能防止另一个用户同时插入冲突的会议。为了确保不会遇到调度冲突，你又需要可串行化的隔离级别了。</p>
+<pre tabindex="0"><code> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+</code></pre><p>快照隔离并不能防止另一个用户同时插入冲突的会议。为了确保不会遇到调度冲突，你又需要可串行化的隔离级别了。</p>
 <p>多人游戏
 ● 可以用锁防止丢失更新（也就是确保两个玩家不能同时移动同一个棋子）。
 ● 但是锁定并不妨碍玩家将两个不同的棋子移动到棋盘上的相同位置，或者采取其他违反游戏规则的行为。
@@ -3278,11 +2535,11 @@ ACID 的原子性
 如何防止会议室重复预定（即如果一个事务在某个时间窗口内搜索了一个房间的现有预定，则另一个事务不能同时插入或者更新同一个时间窗口内、同一房间的另一个约定）
 实现方式
 我们需要一个谓词锁（predicate lock）。它类似于前面描述的共享/排它锁，但不属于特定的对象（例如，表中的一行），它属于所有符合某些搜索条件的对象，如：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>1
-</span></span><span style="display:flex;"><span>2
-</span></span><span style="display:flex;"><span>3
-</span></span><span style="display:flex;"><span>4
-</span></span></code></pre></div><p>谓词锁限制访问的方式：
+<pre tabindex="0"><code>1
+2
+3
+4
+</code></pre><p>谓词锁限制访问的方式：
 ● 如果事务A想要读取匹配某些条件的对象，就像在这个 SELECT 查询中那样，它必须获取查询条件上的共享谓词锁（shared-mode predicate lock）。如果另一个事务B持有任何满足这一查询条件对象的排它锁，那么A必须等到B释放它的锁之后才允许进行查询。
 ● 如果事务A想要插入，更新或删除任何对象，则必须首先检查旧值或新值是否与任何现有的谓词锁匹配。如果事务B持有匹配的谓词锁，那么A必须等到B已经提交或中止后才能继续。
 关键思想
@@ -3838,39 +3095,39 @@ ACID 的原子性
 <h2 id="使用unix工具的批处理">使用Unix工具的批处理<a hidden class="anchor" aria-hidden="true" href="#使用unix工具的批处理">#</a></h2>
 <p>从一个例子开始。
 Web 服务器，每次处理请求，在日志中附加一行。使用nginx默认的访问日志格式。</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>1
-</span></span><span style="display:flex;"><span>2
-</span></span><span style="display:flex;"><span>3
-</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>1
-</span></span><span style="display:flex;"><span>2
-</span></span></code></pre></div><h3 id="简单日志分析">简单日志分析<a hidden class="anchor" aria-hidden="true" href="#简单日志分析">#</a></h3>
+<pre tabindex="0"><code>1
+2
+3
+</code></pre><pre tabindex="0"><code>1
+2
+</code></pre><h3 id="简单日志分析">简单日志分析<a hidden class="anchor" aria-hidden="true" href="#简单日志分析">#</a></h3>
 <p>想在你的网站上找到五个最受欢迎的网页：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>1
-</span></span><span style="display:flex;"><span>2
-</span></span><span style="display:flex;"><span>3
-</span></span><span style="display:flex;"><span>4
-</span></span><span style="display:flex;"><span>5
-</span></span><span style="display:flex;"><span>6
-</span></span></code></pre></div><p>输出结果：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>1
-</span></span><span style="display:flex;"><span>2
-</span></span><span style="display:flex;"><span>3
-</span></span><span style="display:flex;"><span>4
-</span></span><span style="display:flex;"><span>5
-</span></span></code></pre></div><p>特点：简单且强大。几分钟内完成许多数据分析，性能非常好。</p>
+<pre tabindex="0"><code>1
+2
+3
+4
+5
+6
+</code></pre><p>输出结果：</p>
+<pre tabindex="0"><code>1
+2
+3
+4
+5
+</code></pre><p>特点：简单且强大。几分钟内完成许多数据分析，性能非常好。</p>
 <h4 id="命令链与自定义程序">命令链与自定义程序<a hidden class="anchor" aria-hidden="true" href="#命令链与自定义程序">#</a></h4>
 <p>除了上述的 Unix 命令链。也可以用程序实现，例如在Ruby中：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span> 1
-</span></span><span style="display:flex;"><span> 2
-</span></span><span style="display:flex;"><span> 3
-</span></span><span style="display:flex;"><span> 4
-</span></span><span style="display:flex;"><span> 5
-</span></span><span style="display:flex;"><span> 6
-</span></span><span style="display:flex;"><span> 7
-</span></span><span style="display:flex;"><span> 8
-</span></span><span style="display:flex;"><span> 9
-</span></span><span style="display:flex;"><span>10
-</span></span></code></pre></div><p>特点：不简洁，但可读性强。性能较差。</p>
+<pre tabindex="0"><code> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+</code></pre><p>特点：不简洁，但可读性强。性能较差。</p>
 <h4 id="排序-vs-内存中的聚合">排序 VS 内存中的聚合<a hidden class="anchor" aria-hidden="true" href="#排序-vs-内存中的聚合">#</a></h4>
 <p>上述两种做法的区别</p>
 <ul>
@@ -4367,85 +3624,6 @@ Pregel 是怎么处理图的？（每个顶点是一个处理）
   <footer class="post-footer">
     <ul class="post-tags">
     </ul>
-<nav class="paginav">
-  <a class="prev" href="https://csqread.top/posts/tech/%E5%85%B3%E4%BA%8Emvcc%E7%9A%84%E4%B8%80%E4%BA%9B%E7%90%86%E8%A7%A3/">
-    <span class="title">« Prev</span>
-    <span>关于MVCC的一些理解</span>
-  </a>
-  <a class="next" href="https://csqread.top/posts/read/%E8%AF%BB%E7%B1%B3%E5%85%B0-%E6%98%86%E5%BE%B7%E6%8B%89%E4%B8%8D%E8%83%BD%E6%89%BF%E5%8F%97%E7%9A%84%E7%94%9F%E5%91%BD%E4%B9%8B%E8%BD%BB%E6%9C%89%E6%84%9F/">
-    <span class="title">Next »</span>
-    <span>读米兰 昆德拉《不能承受的生命之轻》有感</span>
-  </a>
-</nav>
-
-
-<ul class="share-buttons">
-    <li>
-        <a target="_blank" rel="noopener noreferrer" aria-label="share DDIA on x"
-            href="https://x.com/intent/tweet/?text=DDIA&amp;url=https%3a%2f%2fcsqread.top%2fposts%2ftech%2fddia%2f&amp;hashtags=">
-            <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve" height="30px" width="30px" fill="currentColor">
-                <path
-                    d="M512 62.554 L 512 449.446 C 512 483.97 483.97 512 449.446 512 L 62.554 512 C 28.03 512 0 483.97 0 449.446 L 0 62.554 C 0 28.03 28.029 0 62.554 0 L 449.446 0 C 483.971 0 512 28.03 512 62.554 Z M 269.951 190.75 L 182.567 75.216 L 56 75.216 L 207.216 272.95 L 63.9 436.783 L 125.266 436.783 L 235.9 310.383 L 332.567 436.783 L 456 436.783 L 298.367 228.367 L 432.367 75.216 L 371.033 75.216 Z M 127.633 110 L 164.101 110 L 383.481 400.065 L 349.5 400.065 Z" />
-            </svg>
-        </a>
-    </li>
-    <li>
-        <a target="_blank" rel="noopener noreferrer" aria-label="share DDIA on linkedin"
-            href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fcsqread.top%2fposts%2ftech%2fddia%2f&amp;title=DDIA&amp;summary=DDIA&amp;source=https%3a%2f%2fcsqread.top%2fposts%2ftech%2fddia%2f">
-            <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve" height="30px" width="30px" fill="currentColor">
-                <path
-                    d="M449.446,0c34.525,0 62.554,28.03 62.554,62.554l0,386.892c0,34.524 -28.03,62.554 -62.554,62.554l-386.892,0c-34.524,0 -62.554,-28.03 -62.554,-62.554l0,-386.892c0,-34.524 28.029,-62.554 62.554,-62.554l386.892,0Zm-288.985,423.278l0,-225.717l-75.04,0l0,225.717l75.04,0Zm270.539,0l0,-129.439c0,-69.333 -37.018,-101.586 -86.381,-101.586c-39.804,0 -57.634,21.891 -67.617,37.266l0,-31.958l-75.021,0c0.995,21.181 0,225.717 0,225.717l75.02,0l0,-126.056c0,-6.748 0.486,-13.492 2.474,-18.315c5.414,-13.475 17.767,-27.434 38.494,-27.434c27.135,0 38.007,20.707 38.007,51.037l0,120.768l75.024,0Zm-307.552,-334.556c-25.674,0 -42.448,16.879 -42.448,39.002c0,21.658 16.264,39.002 41.455,39.002l0.484,0c26.165,0 42.452,-17.344 42.452,-39.002c-0.485,-22.092 -16.241,-38.954 -41.943,-39.002Z" />
-            </svg>
-        </a>
-    </li>
-    <li>
-        <a target="_blank" rel="noopener noreferrer" aria-label="share DDIA on reddit"
-            href="https://reddit.com/submit?url=https%3a%2f%2fcsqread.top%2fposts%2ftech%2fddia%2f&title=DDIA">
-            <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve" height="30px" width="30px" fill="currentColor">
-                <path
-                    d="M449.446,0c34.525,0 62.554,28.03 62.554,62.554l0,386.892c0,34.524 -28.03,62.554 -62.554,62.554l-386.892,0c-34.524,0 -62.554,-28.03 -62.554,-62.554l0,-386.892c0,-34.524 28.029,-62.554 62.554,-62.554l386.892,0Zm-3.446,265.638c0,-22.964 -18.616,-41.58 -41.58,-41.58c-11.211,0 -21.361,4.457 -28.841,11.666c-28.424,-20.508 -67.586,-33.757 -111.204,-35.278l18.941,-89.121l61.884,13.157c0.756,15.734 13.642,28.29 29.56,28.29c16.407,0 29.706,-13.299 29.706,-29.701c0,-16.403 -13.299,-29.702 -29.706,-29.702c-11.666,0 -21.657,6.792 -26.515,16.578l-69.105,-14.69c-1.922,-0.418 -3.939,-0.042 -5.585,1.036c-1.658,1.073 -2.811,2.761 -3.224,4.686l-21.152,99.438c-44.258,1.228 -84.046,14.494 -112.837,35.232c-7.468,-7.164 -17.589,-11.591 -28.757,-11.591c-22.965,0 -41.585,18.616 -41.585,41.58c0,16.896 10.095,31.41 24.568,37.918c-0.639,4.135 -0.99,8.328 -0.99,12.576c0,63.977 74.469,115.836 166.33,115.836c91.861,0 166.334,-51.859 166.334,-115.836c0,-4.218 -0.347,-8.387 -0.977,-12.493c14.564,-6.47 24.735,-21.034 24.735,-38.001Zm-119.474,108.193c-20.27,20.241 -59.115,21.816 -70.534,21.816c-11.428,0 -50.277,-1.575 -70.522,-21.82c-3.007,-3.008 -3.007,-7.882 0,-10.889c3.003,-2.999 7.882,-3.003 10.885,0c12.777,12.781 40.11,17.317 59.637,17.317c19.522,0 46.86,-4.536 59.657,-17.321c3.016,-2.999 7.886,-2.995 10.885,0.008c3.008,3.011 3.003,7.882 -0.008,10.889Zm-5.23,-48.781c-16.373,0 -29.701,-13.324 -29.701,-29.698c0,-16.381 13.328,-29.714 29.701,-29.714c16.378,0 29.706,13.333 29.706,29.714c0,16.374 -13.328,29.698 -29.706,29.698Zm-160.386,-29.702c0,-16.381 13.328,-29.71 29.714,-29.71c16.369,0 29.689,13.329 29.689,29.71c0,16.373 -13.32,29.693 -29.689,29.693c-16.386,0 -29.714,-13.32 -29.714,-29.693Z" />
-            </svg>
-        </a>
-    </li>
-    <li>
-        <a target="_blank" rel="noopener noreferrer" aria-label="share DDIA on facebook"
-            href="https://facebook.com/sharer/sharer.php?u=https%3a%2f%2fcsqread.top%2fposts%2ftech%2fddia%2f">
-            <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve" height="30px" width="30px" fill="currentColor">
-                <path
-                    d="M449.446,0c34.525,0 62.554,28.03 62.554,62.554l0,386.892c0,34.524 -28.03,62.554 -62.554,62.554l-106.468,0l0,-192.915l66.6,0l12.672,-82.621l-79.272,0l0,-53.617c0,-22.603 11.073,-44.636 46.58,-44.636l36.042,0l0,-70.34c0,0 -32.71,-5.582 -63.982,-5.582c-65.288,0 -107.96,39.569 -107.96,111.204l0,62.971l-72.573,0l0,82.621l72.573,0l0,192.915l-191.104,0c-34.524,0 -62.554,-28.03 -62.554,-62.554l0,-386.892c0,-34.524 28.029,-62.554 62.554,-62.554l386.892,0Z" />
-            </svg>
-        </a>
-    </li>
-    <li>
-        <a target="_blank" rel="noopener noreferrer" aria-label="share DDIA on whatsapp"
-            href="https://api.whatsapp.com/send?text=DDIA%20-%20https%3a%2f%2fcsqread.top%2fposts%2ftech%2fddia%2f">
-            <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve" height="30px" width="30px" fill="currentColor">
-                <path
-                    d="M449.446,0c34.525,0 62.554,28.03 62.554,62.554l0,386.892c0,34.524 -28.03,62.554 -62.554,62.554l-386.892,0c-34.524,0 -62.554,-28.03 -62.554,-62.554l0,-386.892c0,-34.524 28.029,-62.554 62.554,-62.554l386.892,0Zm-58.673,127.703c-33.842,-33.881 -78.847,-52.548 -126.798,-52.568c-98.799,0 -179.21,80.405 -179.249,179.234c-0.013,31.593 8.241,62.428 23.927,89.612l-25.429,92.884l95.021,-24.925c26.181,14.28 55.659,21.807 85.658,21.816l0.074,0c98.789,0 179.206,-80.413 179.247,-179.243c0.018,-47.895 -18.61,-92.93 -52.451,-126.81Zm-126.797,275.782l-0.06,0c-26.734,-0.01 -52.954,-7.193 -75.828,-20.767l-5.441,-3.229l-56.386,14.792l15.05,-54.977l-3.542,-5.637c-14.913,-23.72 -22.791,-51.136 -22.779,-79.287c0.033,-82.142 66.867,-148.971 149.046,-148.971c39.793,0.014 77.199,15.531 105.329,43.692c28.128,28.16 43.609,65.592 43.594,105.4c-0.034,82.149 -66.866,148.983 -148.983,148.984Zm81.721,-111.581c-4.479,-2.242 -26.499,-13.075 -30.604,-14.571c-4.105,-1.495 -7.091,-2.241 -10.077,2.241c-2.986,4.483 -11.569,14.572 -14.182,17.562c-2.612,2.988 -5.225,3.364 -9.703,1.12c-4.479,-2.241 -18.91,-6.97 -36.017,-22.23c-13.314,-11.876 -22.304,-26.542 -24.916,-31.026c-2.612,-4.484 -0.279,-6.908 1.963,-9.14c2.016,-2.007 4.48,-5.232 6.719,-7.847c2.24,-2.615 2.986,-4.484 4.479,-7.472c1.493,-2.99 0.747,-5.604 -0.374,-7.846c-1.119,-2.241 -10.077,-24.288 -13.809,-33.256c-3.635,-8.733 -7.327,-7.55 -10.077,-7.688c-2.609,-0.13 -5.598,-0.158 -8.583,-0.158c-2.986,0 -7.839,1.121 -11.944,5.604c-4.105,4.484 -15.675,15.32 -15.675,37.364c0,22.046 16.048,43.342 18.287,46.332c2.24,2.99 31.582,48.227 76.511,67.627c10.685,4.615 19.028,7.371 25.533,9.434c10.728,3.41 20.492,2.929 28.209,1.775c8.605,-1.285 26.499,-10.833 30.231,-21.295c3.732,-10.464 3.732,-19.431 2.612,-21.298c-1.119,-1.869 -4.105,-2.99 -8.583,-5.232Z" />
-            </svg>
-        </a>
-    </li>
-    <li>
-        <a target="_blank" rel="noopener noreferrer" aria-label="share DDIA on telegram"
-            href="https://telegram.me/share/url?text=DDIA&amp;url=https%3a%2f%2fcsqread.top%2fposts%2ftech%2fddia%2f">
-            <svg version="1.1" xml:space="preserve" viewBox="2 2 28 28" height="30px" width="30px" fill="currentColor">
-                <path
-                    d="M26.49,29.86H5.5a3.37,3.37,0,0,1-2.47-1,3.35,3.35,0,0,1-1-2.47V5.48A3.36,3.36,0,0,1,3,3,3.37,3.37,0,0,1,5.5,2h21A3.38,3.38,0,0,1,29,3a3.36,3.36,0,0,1,1,2.46V26.37a3.35,3.35,0,0,1-1,2.47A3.38,3.38,0,0,1,26.49,29.86Zm-5.38-6.71a.79.79,0,0,0,.85-.66L24.73,9.24a.55.55,0,0,0-.18-.46.62.62,0,0,0-.41-.17q-.08,0-16.53,6.11a.59.59,0,0,0-.41.59.57.57,0,0,0,.43.52l4,1.24,1.61,4.83a.62.62,0,0,0,.63.43.56.56,0,0,0,.4-.17L16.54,20l4.09,3A.9.9,0,0,0,21.11,23.15ZM13.8,20.71l-1.21-4q8.72-5.55,8.78-5.55c.15,0,.23,0,.23.16a.18.18,0,0,1,0,.06s-2.51,2.3-7.52,6.8Z" />
-            </svg>
-        </a>
-    </li>
-    <li>
-        <a target="_blank" rel="noopener noreferrer" aria-label="share DDIA on ycombinator"
-            href="https://news.ycombinator.com/submitlink?t=DDIA&u=https%3a%2f%2fcsqread.top%2fposts%2ftech%2fddia%2f">
-            <svg version="1.1" xml:space="preserve" width="30px" height="30px" viewBox="0 0 512 512" fill="currentColor"
-                xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape">
-                <path
-                    d="M449.446 0C483.971 0 512 28.03 512 62.554L512 449.446C512 483.97 483.97 512 449.446 512L62.554 512C28.03 512 0 483.97 0 449.446L0 62.554C0 28.03 28.029 0 62.554 0L449.446 0ZM183.8767 87.9921H121.8427L230.6673 292.4508V424.0079H281.3328V292.4508L390.1575 87.9921H328.1233L256 238.2489z" />
-            </svg>
-        </a>
-    </li>
-</ul>
-
   </footer>
 </article>
     </main>
@@ -4527,53 +3705,6 @@ Pregel 是怎么处理图的？（每个顶点是一个处理）
         }
     })
 
-</script>
-<script>
-    document.querySelectorAll('pre > code').forEach((codeblock) => {
-        const container = codeblock.parentNode.parentNode;
-
-        const copybutton = document.createElement('button');
-        copybutton.classList.add('copy-code');
-        copybutton.innerHTML = 'copy';
-
-        function copyingDone() {
-            copybutton.innerHTML = 'copied!';
-            setTimeout(() => {
-                copybutton.innerHTML = 'copy';
-            }, 2000);
-        }
-
-        copybutton.addEventListener('click', (cb) => {
-            if ('clipboard' in navigator) {
-                navigator.clipboard.writeText(codeblock.textContent);
-                copyingDone();
-                return;
-            }
-
-            const range = document.createRange();
-            range.selectNodeContents(codeblock);
-            const selection = window.getSelection();
-            selection.removeAllRanges();
-            selection.addRange(range);
-            try {
-                document.execCommand('copy');
-                copyingDone();
-            } catch (e) { };
-            selection.removeRange(range);
-        });
-
-        if (container.classList.contains("highlight")) {
-            container.appendChild(copybutton);
-        } else if (container.parentNode.firstChild == container) {
-            
-        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
-            
-            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
-        } else {
-            
-            codeblock.parentNode.appendChild(copybutton);
-        }
-    });
 </script>
 </body>
 
