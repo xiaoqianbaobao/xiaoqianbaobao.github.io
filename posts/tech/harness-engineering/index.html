@@ -6,8 +6,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="robots" content="index, follow">
 <title>Harness Engineering | Qian&#39;s Blog</title>
-<meta name="keywords" content="">
-<meta name="description" content="Harness 设计：不是外壳，而是 Agent 系统的控制结构 &amp;lt;ArticleHeader module=&amp;ldquo;工具与框架&amp;rdquo; :tags=&amp;quot;[&amp;lsquo;工程&amp;r">
+<meta name="keywords" content="Agent, Harness, 架构设计, 工程实践, LLM">
+<meta name="description" content="Harness 不是外壳，而是 Agent 系统的控制结构。深入讲解七层控制结构、Query Loop、权限治理、上下文预算、错误恢复与验证机制。完全理解 Harness Engineering 的精髓。">
 <meta name="author" content="">
 <link rel="canonical" href="https://csqread.top/posts/tech/harness-engineering/">
 <link crossorigin="anonymous" href="/assets/css/stylesheet.cd9298b33628769aa1bc1acebbbfd7aa11ce81dfe03484d479e1907760249a1d.css" integrity="sha256-zZKYszYodpqhvBrOu7/XqhHOgd/gNITUeeGQd2Akmh0=" rel="preload stylesheet" as="style">
@@ -67,16 +67,21 @@
 </script><meta property="og:url" content="https://csqread.top/posts/tech/harness-engineering/">
   <meta property="og:site_name" content="Qian&#39;s Blog">
   <meta property="og:title" content="Harness Engineering">
-  <meta property="og:description" content="Harness 设计：不是外壳，而是 Agent 系统的控制结构 &lt;ArticleHeader module=“工具与框架” :tags=&#34;[‘工程&amp;r">
+  <meta property="og:description" content="Harness 不是外壳，而是 Agent 系统的控制结构。深入讲解七层控制结构、Query Loop、权限治理、上下文预算、错误恢复与验证机制。完全理解 Harness Engineering 的精髓。">
   <meta property="og:locale" content="zh_cn">
   <meta property="og:type" content="article">
     <meta property="article:section" content="posts">
     <meta property="article:published_time" content="2026-03-19T21:32:15+08:00">
     <meta property="article:modified_time" content="2026-03-19T21:32:15+08:00">
+    <meta property="article:tag" content="Agent">
+    <meta property="article:tag" content="Harness">
+    <meta property="article:tag" content="架构设计">
+    <meta property="article:tag" content="工程实践">
+    <meta property="article:tag" content="LLM">
 
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="Harness Engineering">
-  <meta name="twitter:description" content="Harness 设计：不是外壳，而是 Agent 系统的控制结构 &lt;ArticleHeader module=“工具与框架” :tags=&#34;[‘工程&amp;r">
+  <meta name="twitter:description" content="Harness 不是外壳，而是 Agent 系统的控制结构。深入讲解七层控制结构、Query Loop、权限治理、上下文预算、错误恢复与验证机制。完全理解 Harness Engineering 的精髓。">
 
 
 <script type="application/ld+json">
@@ -111,12 +116,12 @@
   "@type": "BlogPosting",
   "headline": "Harness Engineering",
   "name": "Harness Engineering",
-  "description": "Harness 设计：不是外壳，而是 Agent 系统的控制结构 \u0026lt;ArticleHeader module=\u0026ldquo;工具与框架\u0026rdquo; :tags=\u0026quot;[\u0026lsquo;工程\u0026r",
+  "description": "Harness 不是外壳，而是 Agent 系统的控制结构。深入讲解七层控制结构、Query Loop、权限治理、上下文预算、错误恢复与验证机制。完全理解 Harness Engineering 的精髓。",
   "keywords": [
-    
+    "Agent", "Harness", "架构设计", "工程实践", "LLM"
   ],
-  "articleBody": "Harness 设计：不是外壳，而是 Agent 系统的控制结构\n1. 为什么要重新理解 Harness 很多人第一次接触 harness，会把它理解成：\n一个运行时外壳 一个更大的 prompt 一个会话续接层 一个帮 Agent 跑起来的脚手架 这些理解不是完全错，但都偏窄。如果只这样理解，你会看不见 harness 真正关键的部分：谁控制系统、任务一轮轮怎么推进、哪些动作被允许、出错后如何恢复、上下文预算如何治理。\n有一个发人深省的数据点：在 Terminal Bench 2.0 上，Claude Opus 4.6 跑在 Claude Code 里的得分，远低于同一个模型跑在定制 Harness 里的得分。有团队仅通过优化 Harness 设计，就把一个 coding agent 从排行榜第 30 名提升到第 5 名。Harness 改变的不是模型能力，而是模型能力被激活和约束的方式。\n这也意味着：当 Agent 在真实工程环境失败时，大多数情况下不是\"模型不够强\"，而是 Harness 没有设计好。\n2. 一个核心公式：Agent = Model + Harness 这是理解 Harness Engineering 的起点：\n1 2 3 一个裸的模型不是 Agent。它只能预测下一个 token。\n变成 Agent，需要 Harness 给它：\n状态（知道自己在哪个阶段） 工具执行（能对世界产生实际影响） 反馈循环（能根据结果调整行动） 可强制执行的约束（在边界内而非无限自由地行动） 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 模型负责\"想什么\"，Harness 负责\"怎么做和做不做\"。\n3. Harness 到底是什么 结合 Claude Code 这类系统更准确的语境，一个实用定义是：\nHarness = 让 Agent 系统保持有界、可问责、可恢复的控制结构\n它通常包含以下几部分：\n所以 Harness 不是\"一个组件\"，更像是一整套 runtime skeleton（运行时骨架）。\n4. 七层控制结构详解 4.1 第一层：控制平面（Control Plane） Prompt 不是人格设定，而是控制平面的组成部分。\n很多人把 system prompt 当成\"给模型的任务说明\"。但在工程语境里，prompt 承担的是更接近控制规则的角色：\n1 2 3 4 5 6 7 8 9 10 一个工程化的控制平面示例：\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 关键洞察：控制平面的每一行规则，最好都能追溯到一次具体的失败。\n4.2 第二层：Query Loop（主循环） Harness 的第二个核心，是系统如何一轮一轮运转。\n这是 Agent 的心跳——不在模型里，而在 Harness 驱动的循环里：\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 这个循环看起来简单，但真实系统的大量稳定性由它决定。循环里的每一个判断节点，都是 Harness 的工作，不是模型的工作。\n4.3 第三层：工具、权限与中断 工具不是\"给模型一双手\"，而是\"在权限策略下借给它一双手\"。\n参考 Claude Code 的三层权限模型：\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 实现权限分级的代码结构：\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 关键设计原则：权限检查必须在 Harness 层执行，不能依赖模型自我约束。被妥协的模型无法通过\"讲道理\"绕过权限门。\n4.4 第四层：Context Governance（上下文治理） 不是\"省 token\"，而是对系统注意力做预算分配。\nHarness 视角下的上下文不只是一段聊天记录，而是一套分层管理的信息体系：\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 上下文治理的核心机制：\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 4.5 第五层：错误与恢复路径 真正成熟的 Harness，不以\"不会失败\"为前提，而以\"失败后还能继续工作\"为目标。\n常见失败类型及对应恢复策略：\n1 2 3 4 5 6 7 8 恢复路径的实现：\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 检查点策略：在哪些节点保存检查点？\n1 2 3 4 5 6 4.6 第六层：验证与分工 长任务系统的危险，不只是模型会犯错，还因为它会把错误一路带下去。\n验证机制可以分几个层级：\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 用 Hook 实现 L2 验证：\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 多 Agent 分工不是功能炫技，而是对不稳定模型的一种治理方式：\n1 2 3 4 5 6 4.7 第七层：团队落地与本地治理 Harness 真正成熟的标志，不是你自己会用，而是团队可以稳定复用。\n团队落地的四个层级：\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 一个可执行的团队清单示例：\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 5. 从零手写一个最小 Harness 理论已经足够，现在来看一个可运行的最小 Harness 实现：\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72 73 74 75 76 77 78 79 80 81 82 83 84 85 86 87 88 89 90 91 92 93 94 95 96 97 98 99 100 101 102 103 104 105 106 107 108 109 110 111 112 113 114 115 116 117 118 119 120 121 122 123 124 125 126 127 128 129 130 131 132 133 134 135 136 137 138 139 140 141 142 143 144 145 146 147 148 149 150 151 152 153 154 155 156 157 158 159 160 161 162 163 164 165 166 167 运行后你会看到 Harness 的完整工作流：控制平面约束行为 → Query Loop 驱动推进 → 权限门把关执行 → 结果写回继续下一轮。\n6. Claude Code 的 Harness 架构解析 Claude Code 是目前最好的 Harness Engineering 教学案例。当开发者反编译分析它时，发现的不是\"带文件权限的聊天机器人\"，而是一套精密的控制结构：\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 Claude Code 的核心设计哲学（来自论文）：\n模型负责推理，Harness 负责执行动作。\n模型永远不会直接接触文件系统——Harness 决定读取是否被允许、结果如何处理、多少内容能进入下一次 prompt。\n在 src/query.ts:365 之后，每次模型调用前，循环还会处理：消息切片、工具结果预算、历史截断、microcompact、上下文折叠和自动 compact。这些都在 Harness 里，不在模型里。\n7. Harness 的\"棘轮机制\"：把每一次失败变成规则 Harness Engineering 中最重要的工作习惯：把 Agent 的每次失败当作永久信号，而不是一次性事故。\n1 2 3 4 实际操作示例：\n1 2 3 4 5 6 7 8 这就是 Harness Engineering 是一种工程纪律而不是一个框架的原因——最好的 AGENTS.md 是根据你自己的失败历史写出来的，不能直接下载别人的。\n8. Harness vs Workflow vs Framework vs Skill 这几个概念常常被混用，实际上各自解决不同层次的问题：\n更准确的层级关系：\n1 2 3 4 所以：\nWorkflow 讲顺序 Skill 讲局部方法 Framework 讲实现抽象 Harness 讲秩序与治理 9. 实战：为一个代码 Agent 设计完整 Harness 场景：为一个用于重构 Python 项目的 Agent 设计 Harness。\nStep 1：定义控制平面 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 Step 2：设计 Query Loop 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 Step 3：设置验证 Hook 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 Step 4：定义团队规范 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 10. 常见症状与 Harness 诊断 当 Agent 系统出现以下问题，往往不是\"模型不够强\"，而是 Harness 出了问题：\n11. 设计 Harness 时最先要回答的 6 个问题 在动手写代码之前，先问清楚这 6 个问题：\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 如果这 6 个问题没有答案，系统通常还没真正进入 Harness 设计阶段。\n12. 本节总结 核心要点 什么是 Harness：\n让 Agent 系统保持有界、可问责、可恢复的控制结构。不是给模型包一层，而是把一个天然不稳定的模型放进有控制平面、权限边界、上下文治理、恢复路径和验证纪律的工程秩序里。\n七层结构：\n关键判断：\n当 Agent 反复失败时，先问\"是 Harness 问题\"，再问\"是模型问题\"。\n今天模型之间的差距，远小于 Harness 设计好坏带来的差距。\n参考资料：\nHarness Engineering: A Design Guide to Claude Code Agent Harness Engineering - Addy Osmani Dive into Claude Code: The Design Space of AI Agent Systems (arxiv) Claude Code Agent Harness Architecture - WaveSpeed Harness Engineering for Coding Agents - HumanLayer Effective context engineering for AI agents - Anthropic ",
-  "wordCount" : "3122",
+  "articleBody": "Harness 设计：不是外壳，而是 Agent 系统的控制结构\n1. 为什么要重新理解 Harness 很多人第一次接触 harness，会把它理解成：\n一个运行时外壳 一个更大的 prompt 一个会话续接层 一个帮 Agent 跑起来的脚手架 这些理解不是完全错，但都偏窄。如果只这样理解，你会看不见 harness 真正关键的部分：谁控制系统、任务一轮轮怎么推进、哪些动作被允许、出错后如何恢复、上下文预算如何治理。\n有一个发人深省的数据点：在 Terminal Bench 2.0 上，Claude Opus 4.6 跑在 Claude Code 里的得分，远低于同一个模型跑在定制 Harness 里的得分。有团队仅通过优化 Harness 设计，就把一个 coding agent 从排行榜第 30 名提升到第 5 名。Harness 改变的不是模型能力，而是模型能力被激活和约束的方式。\n这也意味着：当 Agent 在真实工程环境失败时，大多数情况下不是\"模型不够强\"，而是 Harness 没有设计好。\n2. 一个核心公式：Agent = Model + Harness 这是理解 Harness Engineering 的起点：\n# Agent = Model + Harness # 裸模型只能预测 token，Harness 赋予它 Agent 能力 class Agent: def __init__(self, model, harness): self.model = model # LLM 模型（负责推理） self.harness = harness # 控制结构（负责执行） def run(self, task): state = self.harness.initialize(task) while not state.is_finished(): action = self.model.decide(state) result = self.harness.execute(action) state = self.harness.update(state, result) return state.output 一个裸的模型不是 Agent。它只能预测下一个 token。\n变成 Agent，需要 Harness 给它：\n状态（知道自己在哪个阶段） 工具执行（能对世界产生实际影响） 反馈循环（能根据结果调整行动） 可强制执行的约束（在边界内而非无限自由地行动） # Agent = Model + Harness # 裸模型只能预测 token，Harness 赋予它 Agent 能力 class Agent: def __init__(self, model, harness): self.model = model # LLM 模型（负责推理） self.harness = harness # 控制结构（负责执行） def run(self, task): state = self.harness.initialize(task) while not state.is_finished(): action = self.model.decide(state) result = self.harness.execute(action) state = self.harness.update(state, result) return state.output 模型负责\"想什么\"，Harness 负责\"怎么做和做不做\"。\n3. Harness 到底是什么 结合 Claude Code 这类系统更准确的语境，一个实用定义是：\nHarness = 让 Agent 系统保持有界、可问责、可恢复的控制结构\n它通常包含以下几部分：\n所以 Harness 不是\"一个组件\"，更像是一整套 runtime skeleton（运行时骨架）。\n4. 七层控制结构详解 4.1 第一层：控制平面（Control Plane） Prompt 不是人格设定，而是控制平面的组成部分。\n很多人把 system prompt 当成\"给模型的任务说明\"。但在工程语境里，prompt 承担的是更接近控制规则的角色：\ninterface Harness { // 状态管理 state: AgentState; // 知道自己在哪个阶段 initialize(task: Task): AgentState; // 工具执行 tools: ToolRegistry; // 能对世界产生实际影响 execute(tool: string, args: any): Result; // 反馈循环 feedback(result: Result): void; // 能根据结果调整行动 // 可强制执行的约束 constraints: Constraint[]; // 在边界内而非无限自由地行动 check(action: Action): boolean; // 每次执行前检查约束 } 一个工程化的控制平面示例：\n# System Prompt 作为控制平面 你在回答前必须确认： 1. 当前正在执行的操作是什么？ 2. 这个操作是否在允许的区域内？ 3. 有没有更好的实现方式？ 4. 如果失败，回退策略是什么？ 你只能使用提供的工具，不能直接修改文件系统。 如果遇到边界情况，必须先解释你的分析。 关键洞察：控制平面的每一行规则，最好都能追溯到一次具体的失败。\n4.2 第二层：Query Loop（主循环） Harness 的第二个核心，是系统如何一轮一轮运转。\n这是 Agent 的心跳——不在模型里，而在 Harness 驱动的循环里：\n# 工程化的控制平面：可编程、可审计、可测试 class ControlPlane: def __init__(self): self.rules = [] self.audit_log = [] def add_rule(self, condition: str, action: str): \"\"\"每条规则都对应一次真实项目失败\"\"\" self.rules.append({ \"condition\": condition, \"action\": action, \"added_by\": \"incident-0425\", }) def evaluate(self, context) -\u003e list[str]: triggered = [] for rule in self.rules: if self._matches(rule[\"condition\"], context): triggered.append(rule[\"action\"]) self.audit_log.append({ \"rule\": rule, \"context\": context, \"timestamp\": now() }) return triggered 这个循环看起来简单，但真实系统的大量稳定性由它决定。循环里的每一个判断节点，都是 Harness 的工作，不是模型的工作。\n4.3 第三层：工具、权限与中断 工具不是\"给模型一双手\"，而是\"在权限策略下借给它一双手\"。\n参考 Claude Code 的三层权限模型：\n# Agent 的心跳——Harness 驱动的主循环 async def agent_loop(agent, task, max_steps=50): state = await initialize(task) step = 0 while step \u003c max_steps: step += 1 # 1. 上下文构建（Harness 的工作） messages = build_context(state) # 2. 模型推理（模型的工作） response = await model.generate(messages) # 3. 解析输出（Harness 的工作） actions = parse_actions(response) # 4. 权限检查（Harness 的工作） allowed = [] for action in actions: if check_permission(action, state): allowed.append(action) else: await notify_user(f\"Action blocked: {action}\") # 5. 执行工具（Harness 的工作） for action in allowed: result = await execute_tool(action) state = apply_result(state, result) # 6. 终止条件检查（Harness 的工作） if should_terminate(state): break return state 实现权限分级的代码结构：\n三层权限模型 (Claude Code style): ┌─────────────────────┬─────────────────┬─────────────────┐ │ Level 1 │ Level 2 │ Level 3 │ │ ⌘ Enter │ Auto-approve │ Always allow │ │ (手动确认) │ (安全操作) │ (只读操作) │ ├─────────────────────┼─────────────────┼─────────────────┤ │ bash write │ ls, cat │ git pull │ │ file write │ grep, find │ npm install │ │ package install │ file read │ build │ └─────────────────────┴─────────────────┴─────────────────┘ 关键设计原则：权限检查必须在 Harness 层执行，不能依赖模型自我约束。被妥协的模型无法通过\"讲道理\"绕过权限门。\n4.4 第四层：Context Governance（上下文治理） 不是\"省 token\"，而是对系统注意力做预算分配。\nHarness 视角下的上下文不只是一段聊天记录，而是一套分层管理的信息体系：\nclass PermissionGuard: \"\"\"权限检查必须在 Harness 层执行，不能依赖模型自我约束\"\"\" LEVEL3 = {\"read\", \"ls\", \"cat\", \"grep\", \"find\", \"stat\"} LEVEL2 = {\"write_file\", \"edit_file\", \"mkdir\", \"cp\", \"mv\"} LEVEL1 = {\"bash\", \"package_install\", \"delete\", \"chmod\"} def check(self, tool_name: str, context) -\u003e Permission: if tool_name in self.LEVEL3: return Permission.ALLOW if tool_name in self.LEVEL2: return Permission.ALLOW if self._is_safe(context) else Permission.ASK if tool_name in self.LEVEL1: return Permission.ASK return Permission.DENY # 默认拒绝 上下文治理的核心机制：\n上下文分层管理体系： ┌──────────────────────────────────────┐ │ Layer 1: 核心指令（系统 prompt） │ ← 始终保留 │ 角色定义、核心约束 │ ├──────────────────────────────────────┤ │ Layer 2: 当前任务上下文 │ ← 最近 N 轮 │ 当前目标、中间结果 │ ├──────────────────────────────────────┤ │ Layer 3: 长时记忆（摘要/记忆） │ ← 压缩后注入 │ 历史事实、关键决策 │ ├──────────────────────────────────────┤ │ Layer 4: 参考材料 │ ← 按需加载 │ 项目文件、API 文档 │ └──────────────────────────────────────┘ 4.5 第五层：错误与恢复路径 真正成熟的 Harness，不以\"不会失败\"为前提，而以\"失败后还能继续工作\"为目标。\n常见失败类型及对应恢复策略：\ninterface Harness { // 状态管理 state: AgentState; // 知道自己在哪个阶段 initialize(task: Task): AgentState; // 工具执行 tools: ToolRegistry; // 能对世界产生实际影响 execute(tool: string, args: any): Result; // 反馈循环 feedback(result: Result): void; // 能根据结果调整行动 // 可强制执行的约束 constraints: Constraint[]; // 在边界内而非无限自由地行动 check(action: Action): boolean; // 每次执行前检查约束 } 恢复路径的实现：\nclass ContextGovernance: MAX_TOKENS = 100_000 MIN_BUDGET = 10_000 def build(self, state): messages = [] budget = self.MAX_TOKENS # Layer 1: 核心指令 messages.append(self.get_system_prompt()) budget -= self.count(messages[-1]) # Layer 2: 最近上下文（保留 N 轮） for msg in state.messages[-10:]: if budget \u003c= 0: break messages.append(msg) budget -= self.count(msg) # 自动摘要 if budget \u003c self.MIN_BUDGET: summary = self.summarize(state.older_messages) messages.insert(1, summary) # 工具结果预算控制 for result in state.tool_results: if budget \u003c= 0: result = self.truncate(result) messages.append(result) return messages 检查点策略：在哪些节点保存检查点？\n你在回答前必须确认： 1. 当前正在执行的操作是什么？ 2. 这个操作是否在允许的区域内？ 3. 有没有更好的实现方式？ 4. 如果失败，回退策略是什么？ 你只能使用提供的工具，不能直接修改文件系统。 如果遇到边界情况，必须先解释你的分析。 4.6 第六层：验证与分工 长任务系统的危险，不只是模型会犯错，还因为它会把错误一路带下去。\n验证机制可以分几个层级：\n常见失败类型及恢复策略： ┌──────────────┬──────────────────────────────┐ │ 工具超时 │ 重试 + 指数退避 │ │ API 错误 │ 切换模型 / 重试 │ │ 权限拒绝 │ 通知用户 + 要求授权 │ │ token 超限 │ 压缩上下文 + 继续 │ │ 模型幻觉 │ L2 验证 + 纠正 │ │ 循环崩溃 │ 最大步数限制 + 回退检查点 │ │ 状态丢失 │ 从最新检查点恢复 │ └──────────────┴──────────────────────────────┘ 用 Hook 实现 L2 验证：\nclass RecoveryManager: def __init__(self): self.policies = { \"tool_timeout\": RetryPolicy(3, \"exponential\"), \"api_error\": RetryPolicy(2, \"linear\"), } self.checkpoints = CheckpointStore() async def run(self, agent, task): cp = await self.checkpoints.load(task.id) state = cp.state if cp else await agent.initialize(task) try: return await agent.execute(state) except ToolTimeoutError: return await self._retry(agent, state, \"tool_timeout\") except TokenLimitError: return await agent.execute(await self._compress(state)) except LoopDetectedError: fb = await self.checkpoints.load_latest(task.id) return await agent.execute(fb.state) async def save_checkpoint(self, task_id, state, node): await self.checkpoints.save( Checkpoint(task_id, node, state, timestamp=now())) 多 Agent 分工不是功能炫技，而是对不稳定模型的一种治理方式：\n# 工程化的控制平面：可编程、可审计、可测试 class ControlPlane: def __init__(self): self.rules = [] self.audit_log = [] def add_rule(self, condition: str, action: str): \"\"\"每条规则都对应一次真实项目失败\"\"\" self.rules.append({ \"condition\": condition, \"action\": action, \"added_by\": \"incident-0425\", # 可追溯到具体 incident }) def evaluate(self, context) -\u003e list[str]: \"\"\"评估当前上下文，返回触发的规则\"\"\" triggered = [] for rule in self.rules: if self._matches(rule[\"condition\"], context): triggered.append(rule[\"action\"]) self.audit_log.append({ \"rule\": rule, \"context\": context, \"timestamp\": now() }) return triggered def test_coverage(self, scenarios): \"\"\"每条控制规则都应该有测试覆盖\"\"\" pass 4.7 第七层：团队落地与本地治理 Harness 真正成熟的标志，不是你自己会用，而是团队可以稳定复用。\n团队落地的四个层级：\n验证机制层级： ┌──────────────┬──────────────────────────────┐ │ L0: 编译检查 │ 语法正确性、类型安全 │ │ L1: 静态分析 │ Lint、代码风格、安全扫描 │ │ L2: 功能验证 │ 测试通过、diff 合理性 │ │ L3: 集成检查 │ 不破坏已有功能、API 兼容 │ │ L4: 人工审核 │ 关键变更需要人工确认 │ └──────────────┴──────────────────────────────┘ 一个可执行的团队清单示例：\nclass ValidationHook: def __init__(self): self.validators = [] def add(self, name, fn, level=\"L2\"): self.validators.append({\"name\": name, \"fn\": fn, \"level\": level}) async def before_apply(self, changes): for v in self.validators: result = await v[\"fn\"](changes) if not result.passed and result.severity == \"blocking\": return result return ValidationResult(passed=True) async def after_apply(self, changes): for v in self.validators: result = await v[\"fn\"](changes) if not result.passed: return result return ValidationResult(passed=True) 5. 从零手写一个最小 Harness 理论已经足够，现在来看一个可运行的最小 Harness 实现：\n多 Agent 分工：对不稳定模型的一种治理方式 ┌──────────────┬──────────────┬──────────────┐ │ Planner │ Coder │ Reviewer │ │ 拆解任务 │ 生成代码 │ 审查输出 │ │ 制定方案 │ 执行改动 │ 验证质量 │ │ 分配资源 │ 跑测试 │ 报告问题 │ └──────────────┴──────────────┴──────────────┘ 每个 Agent 在各自的 Harness 约束内工作。 运行后你会看到 Harness 的完整工作流：控制平面约束行为 → Query Loop 驱动推进 → 权限门把关执行 → 结果写回继续下一轮。\n6. Claude Code 的 Harness 架构解析 Claude Code 是目前最好的 Harness Engineering 教学案例。当开发者反编译分析它时，发现的不是\"带文件权限的聊天机器人\"，而是一套精密的控制结构：\n团队落地四个层级： ┌──────────────┬──────────────────────────────┐ │ L1: 个人实验 │ 开发者自己写 prompt + 工具 │ │ L2: 团队共享 │ 共享 AGENTS.md + 工具集 │ │ L3: 平台化 │ 统一 Harness 框架 + 监控 │ │ L4: 持续改进 │ 失败自动入库 + 规则持续迭代 │ └──────────────┴──────────────────────────────┘ Claude Code 的核心设计哲学（来自论文）：\n模型负责推理，Harness 负责执行动作。\n模型永远不会直接接触文件系统——Harness 决定读取是否被允许、结果如何处理、多少内容能进入下一次 prompt。\n在 src/query.ts:365 之后，每次模型调用前，循环还会处理：消息切片、工具结果预算、历史截断、microcompact、上下文折叠和自动 compact。这些都在 Harness 里，不在模型里。\n7. Harness 的\"棘轮机制\"：把每一次失败变成规则 Harness Engineering 中最重要的工作习惯：把 Agent 的每次失败当作永久信号，而不是一次性事故。\n# Agent 的心跳——Harness 驱动的主循环 async def agent_loop(agent, task, max_steps=50): state = await initialize(task) step = 0 while step \u003c max_steps: step += 1 # 1. 上下文构建（Harness 的工作） messages = build_context(state) # 2. 模型推理（模型的工作） response = await model.generate(messages) # 3. 解析输出（Harness 的工作） actions = parse_actions(response) # 4. 权限检查（Harness 的工作） allowed = [] for action in actions: if check_permission(action, state): allowed.append(action) else: await notify_user(f\"Action blocked: {action}\") # 5. 执行工具（Harness 的工作） for action in allowed: result = await execute_tool(action) state = apply_result(state, result) # 6. 终止条件检查（Harness 的工作） if should_terminate(state): break return state # 循环里的每一个判断节点，都是 Harness 的工作 实际操作示例：\n┌─────────────────────────────────────────────┐ │ 三层权限模型 (Claude Code style) │ ├─────────────┬───────────────┬───────────────┤ │ Level 1 │ Level 2 │ Level 3 │ │ ⌘ Enter │ Auto-approve│ Always allow │ │ (手动确认) │ (安全操作) │ (只读操作) │ ├─────────────┼───────────────┼───────────────┤ │ bash write │ ls, cat │ git pull │ │ file write │ grep, find │ npm install │ │ package │ file read │ build │ │ install │ (非敏感) │ test │ └─────────────┴───────────────┴───────────────┘ 这就是 Harness Engineering 是一种工程纪律而不是一个框架的原因——最好的 AGENTS.md 是根据你自己的失败历史写出来的，不能直接下载别人的。\n8. Harness vs Workflow vs Framework vs Skill 这几个概念常常被混用，实际上各自解决不同层次的问题：\n更准确的层级关系：\n# 权限分级的实现：检查必须在 Harness 层执行 class PermissionGuard: ALLOWLIST_LEVEL3 = {\"read\", \"ls\", \"cat\", \"grep\", \"find\", \"stat\"} ALLOWLIST_LEVEL2 = {\"write_file\", \"edit_file\", \"mkdir\", \"cp\", \"mv\"} LEVEL1_TOOLS = {\"bash\", \"package_install\", \"delete\", \"chmod\"} def check(self, tool_name: str, context) -\u003e Permission: # 不能依赖模型自我约束 # 被妥协的模型无法通过\"讲道理\"绕过权限门 if tool_name in self.ALLOWLIST_LEVEL3: return Permission.ALLOW if tool_name in self.ALLOWLIST_LEVEL2: if self._is_safe_context(context): return Permission.ALLOW return Permission.ASK_USER if tool_name in self.LEVEL1_TOOLS: return Permission.ASK_USER return Permission.DENY # 默认拒绝 def _is_safe_context(self, context) -\u003e bool: \"\"\"判断当前上下文是否安全\"\"\" return context.danger_level \u003c THRESHOLD 所以：\nWorkflow 讲顺序 Skill 讲局部方法 Framework 讲实现抽象 Harness 讲秩序与治理 9. 实战：为一个代码 Agent 设计完整 Harness 场景：为一个用于重构 Python 项目的 Agent 设计 Harness。\nStep 1：定义控制平面 # AGENTS.md - 团队 Harness 规范 ## 控制平面 - [ ] 所有约束规则有明确的失败案例出处 - [ ] 每个 rule 有对应测试 ## 工具权限 - [ ] Level 1-3 工具列表已定义 - [ ] 自动批准规则明确 ## 上下文治理 - [ ] 最大 token 预算已设置 - [ ] 自动摘要触发条件已配置 ## 错误恢复 - [ ] 重试策略已配置 - [ ] 检查点策略已定义 Step 2：设计 Query Loop \"\"\" 最小 Harness 实现：可运行的 Agent 控制结构 \"\"\" import asyncio from dataclasses import dataclass, field from enum import Enum from typing import Callable, Any class Permission(Enum): ALLOW = \"allow\" ASK = \"ask_user\" DENY = \"deny\" @dataclass class Rule: condition: str action: str class ControlPlane: \"\"\"控制平面：约束、规则、边界\"\"\" def __init__(self): self.rules = [] def add_rule(self, condition: str, action: str): self.rules.append(Rule(condition, action)) def evaluate(self, context: dict) -\u003e list[str]: return [r.action for r in self.rules if r.condition in str(context)] @dataclass class Tool: name: str fn: Callable permission: Permission = Permission.ALLOW class ToolRegistry: def __init__(self): self.tools = {} def register(self, tool: Tool): self.tools[tool.name] = tool def execute(self, name: str, **kwargs): return self.tools[name].fn(**kwargs) class ContextManager: MAX_TOKENS = 10000 def __init__(self): self.messages = [] self.token_count = 0 def add(self, msg: str): self.messages.append(msg) self.token_count += len(msg) // 2 def build(self) -\u003e list[str]: if self.token_count \u003c= self.MAX_TOKENS: return self.messages system = self.messages[0] recent = self.messages[-3:] summary = f\"[Summarized {len(self.messages)-4} msgs]\" return [system, summary] + recent class CheckpointStore: def __init__(self): self.store = {} def save(self, key, state): self.store[key] = dict(state) def load(self, key) -\u003e dict | None: return self.store.get(key) @dataclass class AgentState: task: str = \"\" messages: list = field(default_factory=list) step: int = 0 result: Any = None finished: bool = False class Harness: def __init__(self, model_fn: Callable): self.model = model_fn self.control = ControlPlane() self.tools = ToolRegistry() self.context = ContextManager() self.checkpoint = CheckpointStore() async def run(self, task: str, max_steps: int = 20) -\u003e AgentState: state = AgentState(task=task) for step in range(max_steps): state.step = step context = self.context.build() triggered = self.control.evaluate({\"task\": task, \"step\": step}) if triggered: context = triggered + context response = self.model(context) action = response.strip() result = self.tools.execute(action, state=state) state.result = result self.context.add(f\"Step {step}: {result}\") self.checkpoint.save(f\"step-{step}\", { \"task\": task, \"step\": step, \"result\": result }) if result == \"DONE\": state.finished = True break return state # 运行示例 async def main(): harness = Harness(lambda ctx: \"search\") harness.control.add_rule(\"search\", \"verify_source\") harness.tools.register(Tool(\"search\", lambda **k: \"DONE\")) result = await harness.run(\"Find info about X\") print(f\"Finished: {result.finished}\") if __name__ == \"__main__\": asyncio.run(main()) Step 3：设置验证 Hook Claude Code 的 Harness 架构： ┌──────────────────────────────────────────┐ │ Claude Code Harness │ ├──────────────────────────────────────────┤ │ Control Plane: system prompt + AGENTS.md │ │ Query Loop: src/query.ts:365 │ │ ├─ 消息切片 + 工具结果预算 │ │ ├─ 历史截断 + microcompact │ │ └─ 上下文折叠 + auto compact │ │ Permission: ⌘ Enter / Auto / Always │ │ Tool Execution: 模型不直接接触文件系统 │ └──────────────────────────────────────────┘ Step 4：定义团队规范 Harness Engineering 工作习惯： 每一次 Agent 失败 → AGENTS.md → 永久规则 10. 常见症状与 Harness 诊断 当 Agent 系统出现以下问题，往往不是\"模型不够强\"，而是 Harness 出了问题：\n11. 设计 Harness 时最先要回答的 6 个问题 在动手写代码之前，先问清楚这 6 个问题：\n# 操作示例 # 失败: Agent 删除了 node_modules deny: delete node_modules/ # 失败: Agent 修改了 src/config/database.ts ask: modify src/config/ review_required: src/config/database.ts # 失败: Agent 升级了依赖导致兼容性问题 deny: upgrade dependencies without test require: explicit version pinning 如果这 6 个问题没有答案，系统通常还没真正进入 Harness 设计阶段。\n12. 本节总结 核心要点 什么是 Harness：\n让 Agent 系统保持有界、可问责、可恢复的控制结构。不是给模型包一层，而是把一个天然不稳定的模型放进有控制平面、权限边界、上下文治理、恢复路径和验证纪律的工程秩序里。\n七层结构：\n关键判断：\n当 Agent 反复失败时，先问\"是 Harness 问题\"，再问\"是模型问题\"。\n今天模型之间的差距，远小于 Harness 设计好坏带来的差距。\n参考资料：\nHarness Engineering: A Design Guide to Claude Code Agent Harness Engineering - Addy Osmani Dive into Claude Code: The Design Space of AI Agent Systems (arxiv) Claude Code Agent Harness Architecture - WaveSpeed Harness Engineering for Coding Agents - HumanLayer Effective context engineering for AI agents - Anthropic ",
+  "wordCount" : "6631",
   "inLanguage": "en",
   "datePublished": "2026-03-19T21:32:15+08:00",
   "dateModified": "2026-03-19T21:32:15+08:00",
@@ -211,7 +216,7 @@
       Harness Engineering
     </h1>
     <div class="post-description">
-      Harness 设计：不是外壳，而是 Agent 系统的控制结构 &amp;lt;ArticleHeader module=&amp;ldquo;工具与框架&amp;rdquo; :tags=&amp;quot;[&amp;lsquo;工程&amp;r
+      Harness 不是外壳，而是 Agent 系统的控制结构。深入讲解七层控制结构、Query Loop、权限治理、上下文预算、错误恢复与验证机制。完全理解 Harness Engineering 的精髓。
     </div>
     <div class="post-meta">
 
@@ -233,10 +238,22 @@
 <p>这也意味着：当 Agent 在真实工程环境失败时，大多数情况下不是&quot;模型不够强&quot;，而是 <strong>Harness 没有设计好</strong>。</p>
 <h2 id="2-一个核心公式agent--model--harness">2. 一个核心公式：Agent = Model + Harness<a hidden class="anchor" aria-hidden="true" href="#2-一个核心公式agent--model--harness">#</a></h2>
 <p>这是理解 Harness Engineering 的起点：</p>
-<pre tabindex="0"><code>1
-2
-3
-</code></pre><p>一个裸的模型不是 Agent。它只能预测下一个 token。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># Agent = Model + Harness</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 裸模型只能预测 token，Harness 赋予它 Agent 能力</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Agent</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">__init__</span>(self, model, harness):
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>model <span style="color:#f92672">=</span> model      <span style="color:#75715e"># LLM 模型（负责推理）</span>
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>harness <span style="color:#f92672">=</span> harness  <span style="color:#75715e"># 控制结构（负责执行）</span>
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">run</span>(self, task):
+</span></span><span style="display:flex;"><span>        state <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>harness<span style="color:#f92672">.</span>initialize(task)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">while</span> <span style="color:#f92672">not</span> state<span style="color:#f92672">.</span>is_finished():
+</span></span><span style="display:flex;"><span>            action <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>model<span style="color:#f92672">.</span>decide(state)
+</span></span><span style="display:flex;"><span>            result <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>harness<span style="color:#f92672">.</span>execute(action)
+</span></span><span style="display:flex;"><span>            state <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>harness<span style="color:#f92672">.</span>update(state, result)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> state<span style="color:#f92672">.</span>output
+</span></span></code></pre></div><p>一个裸的模型不是 Agent。它只能预测下一个 token。</p>
 <p>变成 Agent，需要 Harness 给它：</p>
 <ul>
 <li><strong>状态</strong>（知道自己在哪个阶段）</li>
@@ -244,24 +261,22 @@
 <li><strong>反馈循环</strong>（能根据结果调整行动）</li>
 <li><strong>可强制执行的约束</strong>（在边界内而非无限自由地行动）</li>
 </ul>
-<pre tabindex="0"><code> 1
- 2
- 3
- 4
- 5
- 6
- 7
- 8
- 9
-10
-11
-12
-13
-14
-15
-16
-17
-</code></pre><p><strong>模型负责&quot;想什么&quot;，Harness 负责&quot;怎么做和做不做&quot;。</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># Agent = Model + Harness</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 裸模型只能预测 token，Harness 赋予它 Agent 能力</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Agent</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">__init__</span>(self, model, harness):
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>model <span style="color:#f92672">=</span> model      <span style="color:#75715e"># LLM 模型（负责推理）</span>
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>harness <span style="color:#f92672">=</span> harness  <span style="color:#75715e"># 控制结构（负责执行）</span>
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">run</span>(self, task):
+</span></span><span style="display:flex;"><span>        state <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>harness<span style="color:#f92672">.</span>initialize(task)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">while</span> <span style="color:#f92672">not</span> state<span style="color:#f92672">.</span>is_finished():
+</span></span><span style="display:flex;"><span>            action <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>model<span style="color:#f92672">.</span>decide(state)
+</span></span><span style="display:flex;"><span>            result <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>harness<span style="color:#f92672">.</span>execute(action)
+</span></span><span style="display:flex;"><span>            state <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>harness<span style="color:#f92672">.</span>update(state, result)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> state<span style="color:#f92672">.</span>output
+</span></span></code></pre></div><p><strong>模型负责&quot;想什么&quot;，Harness 负责&quot;怎么做和做不做&quot;。</strong></p>
 <h2 id="3-harness-到底是什么">3. Harness 到底是什么<a hidden class="anchor" aria-hidden="true" href="#3-harness-到底是什么">#</a></h2>
 <p>结合 Claude Code 这类系统更准确的语境，一个实用定义是：</p>
 <p><strong>Harness = 让 Agent 系统保持有界、可问责、可恢复的控制结构</strong></p>
@@ -271,632 +286,418 @@
 <h3 id="41-第一层控制平面control-plane">4.1 第一层：控制平面（Control Plane）<a hidden class="anchor" aria-hidden="true" href="#41-第一层控制平面control-plane">#</a></h3>
 <p><strong>Prompt 不是人格设定，而是控制平面的组成部分。</strong></p>
 <p>很多人把 system prompt 当成&quot;给模型的任务说明&quot;。但在工程语境里，prompt 承担的是更接近控制规则的角色：</p>
-<pre tabindex="0"><code> 1
- 2
- 3
- 4
- 5
- 6
- 7
- 8
- 9
-10
-</code></pre><p>一个工程化的控制平面示例：</p>
-<pre tabindex="0"><code> 1
- 2
- 3
- 4
- 5
- 6
- 7
- 8
- 9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
-27
-28
-29
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-typescript" data-lang="typescript"><span style="display:flex;"><span><span style="color:#66d9ef">interface</span> <span style="color:#a6e22e">Harness</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// 状态管理
+</span></span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">state</span>: <span style="color:#66d9ef">AgentState</span>;           <span style="color:#75715e">// 知道自己在哪个阶段
+</span></span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">initialize</span>(<span style="color:#a6e22e">task</span>: <span style="color:#66d9ef">Task</span>)<span style="color:#f92672">:</span> <span style="color:#a6e22e">AgentState</span>;
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// 工具执行
+</span></span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">tools</span>: <span style="color:#66d9ef">ToolRegistry</span>;         <span style="color:#75715e">// 能对世界产生实际影响
+</span></span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">execute</span>(<span style="color:#a6e22e">tool</span>: <span style="color:#66d9ef">string</span>, <span style="color:#a6e22e">args</span>: <span style="color:#66d9ef">any</span>)<span style="color:#f92672">:</span> <span style="color:#a6e22e">Result</span>;
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// 反馈循环
+</span></span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">feedback</span>(<span style="color:#a6e22e">result</span>: <span style="color:#66d9ef">Result</span>)<span style="color:#f92672">:</span> <span style="color:#66d9ef">void</span>;  <span style="color:#75715e">// 能根据结果调整行动
+</span></span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// 可强制执行的约束
+</span></span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">constraints</span>: <span style="color:#66d9ef">Constraint</span>[];   <span style="color:#75715e">// 在边界内而非无限自由地行动
+</span></span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">check</span>(<span style="color:#a6e22e">action</span>: <span style="color:#66d9ef">Action</span>)<span style="color:#f92672">:</span> <span style="color:#66d9ef">boolean</span>; <span style="color:#75715e">// 每次执行前检查约束
+</span></span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>一个工程化的控制平面示例：</p>
+<pre tabindex="0"><code># System Prompt 作为控制平面
+你在回答前必须确认：
+1. 当前正在执行的操作是什么？
+2. 这个操作是否在允许的区域内？
+3. 有没有更好的实现方式？
+4. 如果失败，回退策略是什么？
+
+你只能使用提供的工具，不能直接修改文件系统。
+如果遇到边界情况，必须先解释你的分析。
 </code></pre><p><strong>关键洞察</strong>：控制平面的每一行规则，最好都能追溯到一次具体的失败。</p>
 <h3 id="42-第二层query-loop主循环">4.2 第二层：Query Loop（主循环）<a hidden class="anchor" aria-hidden="true" href="#42-第二层query-loop主循环">#</a></h3>
 <p><strong>Harness 的第二个核心，是系统如何一轮一轮运转。</strong></p>
 <p>这是 Agent 的心跳——不在模型里，而在 Harness 驱动的循环里：</p>
-<pre tabindex="0"><code> 1
- 2
- 3
- 4
- 5
- 6
- 7
- 8
- 9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
-27
-28
-29
-30
-31
-32
-33
-34
-35
-36
-37
-38
-39
-</code></pre><p>这个循环看起来简单，但真实系统的大量稳定性由它决定。<strong>循环里的每一个判断节点，都是 Harness 的工作，不是模型的工作。</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># 工程化的控制平面：可编程、可审计、可测试</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ControlPlane</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">__init__</span>(self):
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>rules <span style="color:#f92672">=</span> []
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>audit_log <span style="color:#f92672">=</span> []
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">add_rule</span>(self, condition: str, action: str):
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;&#34;&#34;每条规则都对应一次真实项目失败&#34;&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>rules<span style="color:#f92672">.</span>append({
+</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#34;condition&#34;</span>: condition,
+</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#34;action&#34;</span>: action,
+</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#34;added_by&#34;</span>: <span style="color:#e6db74">&#34;incident-0425&#34;</span>,
+</span></span><span style="display:flex;"><span>        })
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">evaluate</span>(self, context) <span style="color:#f92672">-&gt;</span> list[str]:
+</span></span><span style="display:flex;"><span>        triggered <span style="color:#f92672">=</span> []
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> rule <span style="color:#f92672">in</span> self<span style="color:#f92672">.</span>rules:
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> self<span style="color:#f92672">.</span>_matches(rule[<span style="color:#e6db74">&#34;condition&#34;</span>], context):
+</span></span><span style="display:flex;"><span>                triggered<span style="color:#f92672">.</span>append(rule[<span style="color:#e6db74">&#34;action&#34;</span>])
+</span></span><span style="display:flex;"><span>                self<span style="color:#f92672">.</span>audit_log<span style="color:#f92672">.</span>append({
+</span></span><span style="display:flex;"><span>                    <span style="color:#e6db74">&#34;rule&#34;</span>: rule,
+</span></span><span style="display:flex;"><span>                    <span style="color:#e6db74">&#34;context&#34;</span>: context,
+</span></span><span style="display:flex;"><span>                    <span style="color:#e6db74">&#34;timestamp&#34;</span>: now()
+</span></span><span style="display:flex;"><span>                })
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> triggered
+</span></span></code></pre></div><p>这个循环看起来简单，但真实系统的大量稳定性由它决定。<strong>循环里的每一个判断节点，都是 Harness 的工作，不是模型的工作。</strong></p>
 <h3 id="43-第三层工具权限与中断">4.3 第三层：工具、权限与中断<a hidden class="anchor" aria-hidden="true" href="#43-第三层工具权限与中断">#</a></h3>
 <p><strong>工具不是&quot;给模型一双手&quot;，而是&quot;在权限策略下借给它一双手&quot;。</strong></p>
 <p>参考 Claude Code 的三层权限模型：</p>
-<pre tabindex="0"><code> 1
- 2
- 3
- 4
- 5
- 6
- 7
- 8
- 9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-</code></pre><p>实现权限分级的代码结构：</p>
-<pre tabindex="0"><code> 1
- 2
- 3
- 4
- 5
- 6
- 7
- 8
- 9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
-27
-28
-29
-30
-31
-32
-33
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># Agent 的心跳——Harness 驱动的主循环</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">async</span> <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">agent_loop</span>(agent, task, max_steps<span style="color:#f92672">=</span><span style="color:#ae81ff">50</span>):
+</span></span><span style="display:flex;"><span>    state <span style="color:#f92672">=</span> <span style="color:#66d9ef">await</span> initialize(task)
+</span></span><span style="display:flex;"><span>    step <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">while</span> step <span style="color:#f92672">&lt;</span> max_steps:
+</span></span><span style="display:flex;"><span>        step <span style="color:#f92672">+=</span> <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># 1. 上下文构建（Harness 的工作）</span>
+</span></span><span style="display:flex;"><span>        messages <span style="color:#f92672">=</span> build_context(state)
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># 2. 模型推理（模型的工作）</span>
+</span></span><span style="display:flex;"><span>        response <span style="color:#f92672">=</span> <span style="color:#66d9ef">await</span> model<span style="color:#f92672">.</span>generate(messages)
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># 3. 解析输出（Harness 的工作）</span>
+</span></span><span style="display:flex;"><span>        actions <span style="color:#f92672">=</span> parse_actions(response)
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># 4. 权限检查（Harness 的工作）</span>
+</span></span><span style="display:flex;"><span>        allowed <span style="color:#f92672">=</span> []
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> action <span style="color:#f92672">in</span> actions:
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> check_permission(action, state):
+</span></span><span style="display:flex;"><span>                allowed<span style="color:#f92672">.</span>append(action)
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">else</span>:
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">await</span> notify_user(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;Action blocked: </span><span style="color:#e6db74">{</span>action<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># 5. 执行工具（Harness 的工作）</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> action <span style="color:#f92672">in</span> allowed:
+</span></span><span style="display:flex;"><span>            result <span style="color:#f92672">=</span> <span style="color:#66d9ef">await</span> execute_tool(action)
+</span></span><span style="display:flex;"><span>            state <span style="color:#f92672">=</span> apply_result(state, result)
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># 6. 终止条件检查（Harness 的工作）</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> should_terminate(state):
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">break</span>
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> state
+</span></span></code></pre></div><p>实现权限分级的代码结构：</p>
+<pre tabindex="0"><code>三层权限模型 (Claude Code style):
+┌─────────────────────┬─────────────────┬─────────────────┐
+│     Level 1         │   Level 2       │   Level 3       │
+│   ⌘ Enter          │   Auto-approve  │   Always allow   │
+│  (手动确认)         │  (安全操作)      │  (只读操作)      │
+├─────────────────────┼─────────────────┼─────────────────┤
+│  bash write         │   ls, cat       │   git pull      │
+│  file write         │   grep, find    │   npm install   │
+│  package install    │   file read     │   build         │
+└─────────────────────┴─────────────────┴─────────────────┘
 </code></pre><p><strong>关键设计原则</strong>：权限检查必须在 Harness 层执行，不能依赖模型自我约束。被妥协的模型无法通过&quot;讲道理&quot;绕过权限门。</p>
 <h3 id="44-第四层context-governance上下文治理">4.4 第四层：Context Governance（上下文治理）<a hidden class="anchor" aria-hidden="true" href="#44-第四层context-governance上下文治理">#</a></h3>
 <p><strong>不是&quot;省 token&quot;，而是对系统注意力做预算分配。</strong></p>
 <p>Harness 视角下的上下文不只是一段聊天记录，而是一套<strong>分层管理的信息体系</strong>：</p>
-<pre tabindex="0"><code> 1
- 2
- 3
- 4
- 5
- 6
- 7
- 8
- 9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-</code></pre><p><strong>上下文治理的核心机制</strong>：</p>
-<pre tabindex="0"><code> 1
- 2
- 3
- 4
- 5
- 6
- 7
- 8
- 9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
-27
-28
-29
-30
-31
-32
-33
-34
-35
-36
-37
-38
-39
-40
-41
-42
-43
-44
-45
-46
-47
-48
-49
-50
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">PermissionGuard</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;&#34;&#34;权限检查必须在 Harness 层执行，不能依赖模型自我约束&#34;&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>    LEVEL3 <span style="color:#f92672">=</span> {<span style="color:#e6db74">&#34;read&#34;</span>, <span style="color:#e6db74">&#34;ls&#34;</span>, <span style="color:#e6db74">&#34;cat&#34;</span>, <span style="color:#e6db74">&#34;grep&#34;</span>, <span style="color:#e6db74">&#34;find&#34;</span>, <span style="color:#e6db74">&#34;stat&#34;</span>}
+</span></span><span style="display:flex;"><span>    LEVEL2 <span style="color:#f92672">=</span> {<span style="color:#e6db74">&#34;write_file&#34;</span>, <span style="color:#e6db74">&#34;edit_file&#34;</span>, <span style="color:#e6db74">&#34;mkdir&#34;</span>, <span style="color:#e6db74">&#34;cp&#34;</span>, <span style="color:#e6db74">&#34;mv&#34;</span>}
+</span></span><span style="display:flex;"><span>    LEVEL1 <span style="color:#f92672">=</span> {<span style="color:#e6db74">&#34;bash&#34;</span>, <span style="color:#e6db74">&#34;package_install&#34;</span>, <span style="color:#e6db74">&#34;delete&#34;</span>, <span style="color:#e6db74">&#34;chmod&#34;</span>}
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">check</span>(self, tool_name: str, context) <span style="color:#f92672">-&gt;</span> Permission:
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> tool_name <span style="color:#f92672">in</span> self<span style="color:#f92672">.</span>LEVEL3:
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> Permission<span style="color:#f92672">.</span>ALLOW
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> tool_name <span style="color:#f92672">in</span> self<span style="color:#f92672">.</span>LEVEL2:
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> Permission<span style="color:#f92672">.</span>ALLOW <span style="color:#66d9ef">if</span> self<span style="color:#f92672">.</span>_is_safe(context) <span style="color:#66d9ef">else</span> Permission<span style="color:#f92672">.</span>ASK
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> tool_name <span style="color:#f92672">in</span> self<span style="color:#f92672">.</span>LEVEL1:
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> Permission<span style="color:#f92672">.</span>ASK
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> Permission<span style="color:#f92672">.</span>DENY  <span style="color:#75715e"># 默认拒绝</span>
+</span></span></code></pre></div><p><strong>上下文治理的核心机制</strong>：</p>
+<pre tabindex="0"><code>上下文分层管理体系：
+┌──────────────────────────────────────┐
+│ Layer 1: 核心指令（系统 prompt）       │ ← 始终保留
+│ 角色定义、核心约束                      │
+├──────────────────────────────────────┤
+│ Layer 2: 当前任务上下文                │ ← 最近 N 轮
+│ 当前目标、中间结果                      │
+├──────────────────────────────────────┤
+│ Layer 3: 长时记忆（摘要/记忆）         │ ← 压缩后注入
+│ 历史事实、关键决策                      │
+├──────────────────────────────────────┤
+│ Layer 4: 参考材料                     │ ← 按需加载
+│ 项目文件、API 文档                     │
+└──────────────────────────────────────┘
 </code></pre><h3 id="45-第五层错误与恢复路径">4.5 第五层：错误与恢复路径<a hidden class="anchor" aria-hidden="true" href="#45-第五层错误与恢复路径">#</a></h3>
 <p><strong>真正成熟的 Harness，不以&quot;不会失败&quot;为前提，而以&quot;失败后还能继续工作&quot;为目标。</strong></p>
 <p>常见失败类型及对应恢复策略：</p>
-<pre tabindex="0"><code>1
-2
-3
-4
-5
-6
-7
-8
-</code></pre><p>恢复路径的实现：</p>
-<pre tabindex="0"><code> 1
- 2
- 3
- 4
- 5
- 6
- 7
- 8
- 9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
-27
-28
-29
-30
-31
-32
-33
-34
-35
-36
-37
-38
-39
-40
-41
-42
-43
-44
-45
-46
-47
-48
-49
-50
-51
-52
-53
-54
-55
-56
-57
-58
-59
-60
-</code></pre><p><strong>检查点策略</strong>：在哪些节点保存检查点？</p>
-<pre tabindex="0"><code>1
-2
-3
-4
-5
-6
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-typescript" data-lang="typescript"><span style="display:flex;"><span><span style="color:#66d9ef">interface</span> <span style="color:#a6e22e">Harness</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// 状态管理
+</span></span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">state</span>: <span style="color:#66d9ef">AgentState</span>;           <span style="color:#75715e">// 知道自己在哪个阶段
+</span></span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">initialize</span>(<span style="color:#a6e22e">task</span>: <span style="color:#66d9ef">Task</span>)<span style="color:#f92672">:</span> <span style="color:#a6e22e">AgentState</span>;
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// 工具执行
+</span></span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">tools</span>: <span style="color:#66d9ef">ToolRegistry</span>;         <span style="color:#75715e">// 能对世界产生实际影响
+</span></span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">execute</span>(<span style="color:#a6e22e">tool</span>: <span style="color:#66d9ef">string</span>, <span style="color:#a6e22e">args</span>: <span style="color:#66d9ef">any</span>)<span style="color:#f92672">:</span> <span style="color:#a6e22e">Result</span>;
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// 反馈循环
+</span></span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">feedback</span>(<span style="color:#a6e22e">result</span>: <span style="color:#66d9ef">Result</span>)<span style="color:#f92672">:</span> <span style="color:#66d9ef">void</span>;  <span style="color:#75715e">// 能根据结果调整行动
+</span></span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// 可强制执行的约束
+</span></span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">constraints</span>: <span style="color:#66d9ef">Constraint</span>[];   <span style="color:#75715e">// 在边界内而非无限自由地行动
+</span></span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">check</span>(<span style="color:#a6e22e">action</span>: <span style="color:#66d9ef">Action</span>)<span style="color:#f92672">:</span> <span style="color:#66d9ef">boolean</span>; <span style="color:#75715e">// 每次执行前检查约束
+</span></span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>恢复路径的实现：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ContextGovernance</span>:
+</span></span><span style="display:flex;"><span>    MAX_TOKENS <span style="color:#f92672">=</span> <span style="color:#ae81ff">100_000</span>
+</span></span><span style="display:flex;"><span>    MIN_BUDGET <span style="color:#f92672">=</span> <span style="color:#ae81ff">10_000</span>
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">build</span>(self, state):
+</span></span><span style="display:flex;"><span>        messages <span style="color:#f92672">=</span> []
+</span></span><span style="display:flex;"><span>        budget <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>MAX_TOKENS
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># Layer 1: 核心指令</span>
+</span></span><span style="display:flex;"><span>        messages<span style="color:#f92672">.</span>append(self<span style="color:#f92672">.</span>get_system_prompt())
+</span></span><span style="display:flex;"><span>        budget <span style="color:#f92672">-=</span> self<span style="color:#f92672">.</span>count(messages[<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>])
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># Layer 2: 最近上下文（保留 N 轮）</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> msg <span style="color:#f92672">in</span> state<span style="color:#f92672">.</span>messages[<span style="color:#f92672">-</span><span style="color:#ae81ff">10</span>:]:
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> budget <span style="color:#f92672">&lt;=</span> <span style="color:#ae81ff">0</span>:
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">break</span>
+</span></span><span style="display:flex;"><span>            messages<span style="color:#f92672">.</span>append(msg)
+</span></span><span style="display:flex;"><span>            budget <span style="color:#f92672">-=</span> self<span style="color:#f92672">.</span>count(msg)
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># 自动摘要</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> budget <span style="color:#f92672">&lt;</span> self<span style="color:#f92672">.</span>MIN_BUDGET:
+</span></span><span style="display:flex;"><span>            summary <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>summarize(state<span style="color:#f92672">.</span>older_messages)
+</span></span><span style="display:flex;"><span>            messages<span style="color:#f92672">.</span>insert(<span style="color:#ae81ff">1</span>, summary)
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># 工具结果预算控制</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> result <span style="color:#f92672">in</span> state<span style="color:#f92672">.</span>tool_results:
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> budget <span style="color:#f92672">&lt;=</span> <span style="color:#ae81ff">0</span>:
+</span></span><span style="display:flex;"><span>                result <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>truncate(result)
+</span></span><span style="display:flex;"><span>            messages<span style="color:#f92672">.</span>append(result)
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> messages
+</span></span></code></pre></div><p><strong>检查点策略</strong>：在哪些节点保存检查点？</p>
+<pre tabindex="0"><code>你在回答前必须确认：
+1. 当前正在执行的操作是什么？
+2. 这个操作是否在允许的区域内？
+3. 有没有更好的实现方式？
+4. 如果失败，回退策略是什么？
+
+你只能使用提供的工具，不能直接修改文件系统。
+如果遇到边界情况，必须先解释你的分析。
 </code></pre><h3 id="46-第六层验证与分工">4.6 第六层：验证与分工<a hidden class="anchor" aria-hidden="true" href="#46-第六层验证与分工">#</a></h3>
 <p><strong>长任务系统的危险，不只是模型会犯错，还因为它会把错误一路带下去。</strong></p>
 <p>验证机制可以分几个层级：</p>
-<pre tabindex="0"><code> 1
- 2
- 3
- 4
- 5
- 6
- 7
- 8
- 9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
+<pre tabindex="0"><code>常见失败类型及恢复策略：
+┌──────────────┬──────────────────────────────┐
+│  工具超时     │ 重试 + 指数退避               │
+│  API 错误    │ 切换模型 / 重试               │
+│  权限拒绝     │ 通知用户 + 要求授权            │
+│  token 超限  │ 压缩上下文 + 继续              │
+│  模型幻觉     │ L2 验证 + 纠正                │
+│  循环崩溃     │ 最大步数限制 + 回退检查点       │
+│  状态丢失     │ 从最新检查点恢复               │
+└──────────────┴──────────────────────────────┘
 </code></pre><p>用 Hook 实现 L2 验证：</p>
-<pre tabindex="0"><code> 1
- 2
- 3
- 4
- 5
- 6
- 7
- 8
- 9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
-27
-28
-29
-30
-31
-32
-33
-34
-35
-36
-</code></pre><p><strong>多 Agent 分工</strong>不是功能炫技，而是对不稳定模型的一种治理方式：</p>
-<pre tabindex="0"><code>1
-2
-3
-4
-5
-6
-</code></pre><h3 id="47-第七层团队落地与本地治理">4.7 第七层：团队落地与本地治理<a hidden class="anchor" aria-hidden="true" href="#47-第七层团队落地与本地治理">#</a></h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">RecoveryManager</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">__init__</span>(self):
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>policies <span style="color:#f92672">=</span> {
+</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#34;tool_timeout&#34;</span>: RetryPolicy(<span style="color:#ae81ff">3</span>, <span style="color:#e6db74">&#34;exponential&#34;</span>),
+</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#34;api_error&#34;</span>: RetryPolicy(<span style="color:#ae81ff">2</span>, <span style="color:#e6db74">&#34;linear&#34;</span>),
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>checkpoints <span style="color:#f92672">=</span> CheckpointStore()
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">async</span> <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">run</span>(self, agent, task):
+</span></span><span style="display:flex;"><span>        cp <span style="color:#f92672">=</span> <span style="color:#66d9ef">await</span> self<span style="color:#f92672">.</span>checkpoints<span style="color:#f92672">.</span>load(task<span style="color:#f92672">.</span>id)
+</span></span><span style="display:flex;"><span>        state <span style="color:#f92672">=</span> cp<span style="color:#f92672">.</span>state <span style="color:#66d9ef">if</span> cp <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">await</span> agent<span style="color:#f92672">.</span>initialize(task)
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">try</span>:
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">await</span> agent<span style="color:#f92672">.</span>execute(state)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">except</span> ToolTimeoutError:
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">await</span> self<span style="color:#f92672">.</span>_retry(agent, state, <span style="color:#e6db74">&#34;tool_timeout&#34;</span>)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">except</span> TokenLimitError:
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">await</span> agent<span style="color:#f92672">.</span>execute(<span style="color:#66d9ef">await</span> self<span style="color:#f92672">.</span>_compress(state))
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">except</span> LoopDetectedError:
+</span></span><span style="display:flex;"><span>            fb <span style="color:#f92672">=</span> <span style="color:#66d9ef">await</span> self<span style="color:#f92672">.</span>checkpoints<span style="color:#f92672">.</span>load_latest(task<span style="color:#f92672">.</span>id)
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">await</span> agent<span style="color:#f92672">.</span>execute(fb<span style="color:#f92672">.</span>state)
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">async</span> <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">save_checkpoint</span>(self, task_id, state, node):
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">await</span> self<span style="color:#f92672">.</span>checkpoints<span style="color:#f92672">.</span>save(
+</span></span><span style="display:flex;"><span>            Checkpoint(task_id, node, state, timestamp<span style="color:#f92672">=</span>now()))
+</span></span></code></pre></div><p><strong>多 Agent 分工</strong>不是功能炫技，而是对不稳定模型的一种治理方式：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># 工程化的控制平面：可编程、可审计、可测试</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ControlPlane</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">__init__</span>(self):
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>rules <span style="color:#f92672">=</span> []
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>audit_log <span style="color:#f92672">=</span> []
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">add_rule</span>(self, condition: str, action: str):
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;&#34;&#34;每条规则都对应一次真实项目失败&#34;&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>rules<span style="color:#f92672">.</span>append({
+</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#34;condition&#34;</span>: condition,
+</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#34;action&#34;</span>: action,
+</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#34;added_by&#34;</span>: <span style="color:#e6db74">&#34;incident-0425&#34;</span>,  <span style="color:#75715e"># 可追溯到具体 incident</span>
+</span></span><span style="display:flex;"><span>        })
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">evaluate</span>(self, context) <span style="color:#f92672">-&gt;</span> list[str]:
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;&#34;&#34;评估当前上下文，返回触发的规则&#34;&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>        triggered <span style="color:#f92672">=</span> []
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> rule <span style="color:#f92672">in</span> self<span style="color:#f92672">.</span>rules:
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> self<span style="color:#f92672">.</span>_matches(rule[<span style="color:#e6db74">&#34;condition&#34;</span>], context):
+</span></span><span style="display:flex;"><span>                triggered<span style="color:#f92672">.</span>append(rule[<span style="color:#e6db74">&#34;action&#34;</span>])
+</span></span><span style="display:flex;"><span>                self<span style="color:#f92672">.</span>audit_log<span style="color:#f92672">.</span>append({
+</span></span><span style="display:flex;"><span>                    <span style="color:#e6db74">&#34;rule&#34;</span>: rule,
+</span></span><span style="display:flex;"><span>                    <span style="color:#e6db74">&#34;context&#34;</span>: context,
+</span></span><span style="display:flex;"><span>                    <span style="color:#e6db74">&#34;timestamp&#34;</span>: now()
+</span></span><span style="display:flex;"><span>                })
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> triggered
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">test_coverage</span>(self, scenarios):
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;&#34;&#34;每条控制规则都应该有测试覆盖&#34;&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">pass</span>
+</span></span></code></pre></div><h3 id="47-第七层团队落地与本地治理">4.7 第七层：团队落地与本地治理<a hidden class="anchor" aria-hidden="true" href="#47-第七层团队落地与本地治理">#</a></h3>
 <p><strong>Harness 真正成熟的标志，不是你自己会用，而是团队可以稳定复用。</strong></p>
 <p>团队落地的四个层级：</p>
-<pre tabindex="0"><code> 1
- 2
- 3
- 4
- 5
- 6
- 7
- 8
- 9
-10
-11
-12
-13
-14
+<pre tabindex="0"><code>验证机制层级：
+┌──────────────┬──────────────────────────────┐
+│  L0: 编译检查  │ 语法正确性、类型安全           │
+│  L1: 静态分析  │ Lint、代码风格、安全扫描        │
+│  L2: 功能验证  │ 测试通过、diff 合理性          │
+│  L3: 集成检查  │ 不破坏已有功能、API 兼容        │
+│  L4: 人工审核  │ 关键变更需要人工确认            │
+└──────────────┴──────────────────────────────┘
 </code></pre><p>一个可执行的团队清单示例：</p>
-<pre tabindex="0"><code> 1
- 2
- 3
- 4
- 5
- 6
- 7
- 8
- 9
-10
-11
-12
-13
-14
-15
-16
-</code></pre><h2 id="5-从零手写一个最小-harness">5. 从零手写一个最小 Harness<a hidden class="anchor" aria-hidden="true" href="#5-从零手写一个最小-harness">#</a></h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ValidationHook</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">__init__</span>(self):
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>validators <span style="color:#f92672">=</span> []
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">add</span>(self, name, fn, level<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;L2&#34;</span>):
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>validators<span style="color:#f92672">.</span>append({<span style="color:#e6db74">&#34;name&#34;</span>: name, <span style="color:#e6db74">&#34;fn&#34;</span>: fn, <span style="color:#e6db74">&#34;level&#34;</span>: level})
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">async</span> <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">before_apply</span>(self, changes):
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> v <span style="color:#f92672">in</span> self<span style="color:#f92672">.</span>validators:
+</span></span><span style="display:flex;"><span>            result <span style="color:#f92672">=</span> <span style="color:#66d9ef">await</span> v[<span style="color:#e6db74">&#34;fn&#34;</span>](changes)
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> <span style="color:#f92672">not</span> result<span style="color:#f92672">.</span>passed <span style="color:#f92672">and</span> result<span style="color:#f92672">.</span>severity <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;blocking&#34;</span>:
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">return</span> result
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> ValidationResult(passed<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">async</span> <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">after_apply</span>(self, changes):
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> v <span style="color:#f92672">in</span> self<span style="color:#f92672">.</span>validators:
+</span></span><span style="display:flex;"><span>            result <span style="color:#f92672">=</span> <span style="color:#66d9ef">await</span> v[<span style="color:#e6db74">&#34;fn&#34;</span>](changes)
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> <span style="color:#f92672">not</span> result<span style="color:#f92672">.</span>passed:
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">return</span> result
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> ValidationResult(passed<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
+</span></span></code></pre></div><h2 id="5-从零手写一个最小-harness">5. 从零手写一个最小 Harness<a hidden class="anchor" aria-hidden="true" href="#5-从零手写一个最小-harness">#</a></h2>
 <p>理论已经足够，现在来看一个可运行的最小 Harness 实现：</p>
-<pre tabindex="0"><code>  1
-  2
-  3
-  4
-  5
-  6
-  7
-  8
-  9
- 10
- 11
- 12
- 13
- 14
- 15
- 16
- 17
- 18
- 19
- 20
- 21
- 22
- 23
- 24
- 25
- 26
- 27
- 28
- 29
- 30
- 31
- 32
- 33
- 34
- 35
- 36
- 37
- 38
- 39
- 40
- 41
- 42
- 43
- 44
- 45
- 46
- 47
- 48
- 49
- 50
- 51
- 52
- 53
- 54
- 55
- 56
- 57
- 58
- 59
- 60
- 61
- 62
- 63
- 64
- 65
- 66
- 67
- 68
- 69
- 70
- 71
- 72
- 73
- 74
- 75
- 76
- 77
- 78
- 79
- 80
- 81
- 82
- 83
- 84
- 85
- 86
- 87
- 88
- 89
- 90
- 91
- 92
- 93
- 94
- 95
- 96
- 97
- 98
- 99
-100
-101
-102
-103
-104
-105
-106
-107
-108
-109
-110
-111
-112
-113
-114
-115
-116
-117
-118
-119
-120
-121
-122
-123
-124
-125
-126
-127
-128
-129
-130
-131
-132
-133
-134
-135
-136
-137
-138
-139
-140
-141
-142
-143
-144
-145
-146
-147
-148
-149
-150
-151
-152
-153
-154
-155
-156
-157
-158
-159
-160
-161
-162
-163
-164
-165
-166
-167
+<pre tabindex="0"><code>多 Agent 分工：对不稳定模型的一种治理方式
+┌──────────────┬──────────────┬──────────────┐
+│  Planner     │  Coder       │  Reviewer     │
+│  拆解任务     │  生成代码     │  审查输出     │
+│  制定方案     │  执行改动     │  验证质量     │
+│  分配资源     │  跑测试       │  报告问题     │
+└──────────────┴──────────────┴──────────────┘
+每个 Agent 在各自的 Harness 约束内工作。
 </code></pre><p>运行后你会看到 Harness 的完整工作流：控制平面约束行为 → Query Loop 驱动推进 → 权限门把关执行 → 结果写回继续下一轮。</p>
 <h2 id="6-claude-code-的-harness-架构解析">6. Claude Code 的 Harness 架构解析<a hidden class="anchor" aria-hidden="true" href="#6-claude-code-的-harness-架构解析">#</a></h2>
 <p>Claude Code 是目前最好的 Harness Engineering 教学案例。当开发者反编译分析它时，发现的不是&quot;带文件权限的聊天机器人&quot;，而是一套精密的控制结构：</p>
-<pre tabindex="0"><code> 1
- 2
- 3
- 4
- 5
- 6
- 7
- 8
- 9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
+<pre tabindex="0"><code>团队落地四个层级：
+┌──────────────┬──────────────────────────────┐
+│  L1: 个人实验  │ 开发者自己写 prompt + 工具      │
+│  L2: 团队共享  │ 共享 AGENTS.md + 工具集        │
+│  L3: 平台化    │ 统一 Harness 框架 + 监控       │
+│  L4: 持续改进  │ 失败自动入库 + 规则持续迭代      │
+└──────────────┴──────────────────────────────┘
 </code></pre><p><strong>Claude Code 的核心设计哲学</strong>（来自论文）：</p>
 <p>模型负责推理，Harness 负责执行动作。</p>
 <p>模型永远不会直接接触文件系统——Harness 决定读取是否被允许、结果如何处理、多少内容能进入下一次 prompt。</p>
 <p>在 <code>src/query.ts:365</code> 之后，每次模型调用前，循环还会处理：消息切片、工具结果预算、历史截断、microcompact、上下文折叠和自动 compact。<strong>这些都在 Harness 里，不在模型里。</strong></p>
 <h2 id="7-harness-的棘轮机制把每一次失败变成规则">7. Harness 的&quot;棘轮机制&quot;：把每一次失败变成规则<a hidden class="anchor" aria-hidden="true" href="#7-harness-的棘轮机制把每一次失败变成规则">#</a></h2>
 <p>Harness Engineering 中最重要的工作习惯：<strong>把 Agent 的每次失败当作永久信号，而不是一次性事故。</strong></p>
-<pre tabindex="0"><code>1
-2
-3
-4
-</code></pre><p><strong>实际操作示例</strong>：</p>
-<pre tabindex="0"><code>1
-2
-3
-4
-5
-6
-7
-8
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># Agent 的心跳——Harness 驱动的主循环</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">async</span> <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">agent_loop</span>(agent, task, max_steps<span style="color:#f92672">=</span><span style="color:#ae81ff">50</span>):
+</span></span><span style="display:flex;"><span>    state <span style="color:#f92672">=</span> <span style="color:#66d9ef">await</span> initialize(task)
+</span></span><span style="display:flex;"><span>    step <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">while</span> step <span style="color:#f92672">&lt;</span> max_steps:
+</span></span><span style="display:flex;"><span>        step <span style="color:#f92672">+=</span> <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># 1. 上下文构建（Harness 的工作）</span>
+</span></span><span style="display:flex;"><span>        messages <span style="color:#f92672">=</span> build_context(state)
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># 2. 模型推理（模型的工作）</span>
+</span></span><span style="display:flex;"><span>        response <span style="color:#f92672">=</span> <span style="color:#66d9ef">await</span> model<span style="color:#f92672">.</span>generate(messages)
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># 3. 解析输出（Harness 的工作）</span>
+</span></span><span style="display:flex;"><span>        actions <span style="color:#f92672">=</span> parse_actions(response)
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># 4. 权限检查（Harness 的工作）</span>
+</span></span><span style="display:flex;"><span>        allowed <span style="color:#f92672">=</span> []
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> action <span style="color:#f92672">in</span> actions:
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> check_permission(action, state):
+</span></span><span style="display:flex;"><span>                allowed<span style="color:#f92672">.</span>append(action)
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">else</span>:
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">await</span> notify_user(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;Action blocked: </span><span style="color:#e6db74">{</span>action<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># 5. 执行工具（Harness 的工作）</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> action <span style="color:#f92672">in</span> allowed:
+</span></span><span style="display:flex;"><span>            result <span style="color:#f92672">=</span> <span style="color:#66d9ef">await</span> execute_tool(action)
+</span></span><span style="display:flex;"><span>            state <span style="color:#f92672">=</span> apply_result(state, result)
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># 6. 终止条件检查（Harness 的工作）</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> should_terminate(state):
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">break</span>
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> state
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 循环里的每一个判断节点，都是 Harness 的工作</span>
+</span></span></code></pre></div><p><strong>实际操作示例</strong>：</p>
+<pre tabindex="0"><code>┌─────────────────────────────────────────────┐
+│ 三层权限模型 (Claude Code style)             │
+├─────────────┬───────────────┬───────────────┤
+│   Level 1   │   Level 2     │   Level 3     │
+│  ⌘ Enter    │   Auto-approve│  Always allow │
+│  (手动确认)  │  (安全操作)    │  (只读操作)    │
+├─────────────┼───────────────┼───────────────┤
+│  bash write │   ls, cat     │   git pull    │
+│  file write │   grep, find  │   npm install │
+│  package    │   file read   │   build       │
+│  install    │   (非敏感)     │   test        │
+└─────────────┴───────────────┴───────────────┘
 </code></pre><p>这就是 Harness Engineering 是一种<strong>工程纪律</strong>而不是一个框架的原因——最好的 AGENTS.md 是根据你自己的失败历史写出来的，不能直接下载别人的。</p>
 <h2 id="8-harness-vs-workflow-vs-framework-vs-skill">8. Harness vs Workflow vs Framework vs Skill<a hidden class="anchor" aria-hidden="true" href="#8-harness-vs-workflow-vs-framework-vs-skill">#</a></h2>
 <p>这几个概念常常被混用，实际上各自解决不同层次的问题：</p>
 <p>更准确的层级关系：</p>
-<pre tabindex="0"><code>1
-2
-3
-4
-</code></pre><p>所以：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># 权限分级的实现：检查必须在 Harness 层执行</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">PermissionGuard</span>:
+</span></span><span style="display:flex;"><span>    ALLOWLIST_LEVEL3 <span style="color:#f92672">=</span> {<span style="color:#e6db74">&#34;read&#34;</span>, <span style="color:#e6db74">&#34;ls&#34;</span>, <span style="color:#e6db74">&#34;cat&#34;</span>, <span style="color:#e6db74">&#34;grep&#34;</span>, <span style="color:#e6db74">&#34;find&#34;</span>, <span style="color:#e6db74">&#34;stat&#34;</span>}
+</span></span><span style="display:flex;"><span>    ALLOWLIST_LEVEL2 <span style="color:#f92672">=</span> {<span style="color:#e6db74">&#34;write_file&#34;</span>, <span style="color:#e6db74">&#34;edit_file&#34;</span>, <span style="color:#e6db74">&#34;mkdir&#34;</span>, <span style="color:#e6db74">&#34;cp&#34;</span>, <span style="color:#e6db74">&#34;mv&#34;</span>}
+</span></span><span style="display:flex;"><span>    LEVEL1_TOOLS <span style="color:#f92672">=</span> {<span style="color:#e6db74">&#34;bash&#34;</span>, <span style="color:#e6db74">&#34;package_install&#34;</span>, <span style="color:#e6db74">&#34;delete&#34;</span>, <span style="color:#e6db74">&#34;chmod&#34;</span>}
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">check</span>(self, tool_name: str, context) <span style="color:#f92672">-&gt;</span> Permission:
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># 不能依赖模型自我约束</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># 被妥协的模型无法通过&#34;讲道理&#34;绕过权限门</span>
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> tool_name <span style="color:#f92672">in</span> self<span style="color:#f92672">.</span>ALLOWLIST_LEVEL3:
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> Permission<span style="color:#f92672">.</span>ALLOW
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> tool_name <span style="color:#f92672">in</span> self<span style="color:#f92672">.</span>ALLOWLIST_LEVEL2:
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> self<span style="color:#f92672">.</span>_is_safe_context(context):
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">return</span> Permission<span style="color:#f92672">.</span>ALLOW
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> Permission<span style="color:#f92672">.</span>ASK_USER
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> tool_name <span style="color:#f92672">in</span> self<span style="color:#f92672">.</span>LEVEL1_TOOLS:
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> Permission<span style="color:#f92672">.</span>ASK_USER
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> Permission<span style="color:#f92672">.</span>DENY  <span style="color:#75715e"># 默认拒绝</span>
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">_is_safe_context</span>(self, context) <span style="color:#f92672">-&gt;</span> bool:
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;&#34;&#34;判断当前上下文是否安全&#34;&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> context<span style="color:#f92672">.</span>danger_level <span style="color:#f92672">&lt;</span> THRESHOLD
+</span></span></code></pre></div><p>所以：</p>
 <ul>
 <li><strong>Workflow</strong> 讲顺序</li>
 <li><strong>Skill</strong> 讲局部方法</li>
@@ -906,170 +707,165 @@
 <h2 id="9-实战为一个代码-agent-设计完整-harness">9. 实战：为一个代码 Agent 设计完整 Harness<a hidden class="anchor" aria-hidden="true" href="#9-实战为一个代码-agent-设计完整-harness">#</a></h2>
 <p><strong>场景</strong>：为一个用于重构 Python 项目的 Agent 设计 Harness。</p>
 <h3 id="step-1定义控制平面">Step 1：定义控制平面<a hidden class="anchor" aria-hidden="true" href="#step-1定义控制平面">#</a></h3>
-<pre tabindex="0"><code> 1
- 2
- 3
- 4
- 5
- 6
- 7
- 8
- 9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
+<pre tabindex="0"><code># AGENTS.md - 团队 Harness 规范
+## 控制平面
+- [ ] 所有约束规则有明确的失败案例出处
+- [ ] 每个 rule 有对应测试
+## 工具权限
+- [ ] Level 1-3 工具列表已定义
+- [ ] 自动批准规则明确
+## 上下文治理
+- [ ] 最大 token 预算已设置
+- [ ] 自动摘要触发条件已配置
+## 错误恢复
+- [ ] 重试策略已配置
+- [ ] 检查点策略已定义
 </code></pre><h3 id="step-2设计-query-loop">Step 2：设计 Query Loop<a hidden class="anchor" aria-hidden="true" href="#step-2设计-query-loop">#</a></h3>
-<pre tabindex="0"><code> 1
- 2
- 3
- 4
- 5
- 6
- 7
- 8
- 9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
-27
-28
-29
-30
-31
-32
-33
-34
-35
-36
-37
-38
-39
-40
-41
-42
-43
-44
-45
-46
-47
-48
-49
-50
-51
-52
-53
-54
-55
-56
-57
-58
-59
-60
-61
-62
-63
-</code></pre><h3 id="step-3设置验证-hook">Step 3：设置验证 Hook<a hidden class="anchor" aria-hidden="true" href="#step-3设置验证-hook">#</a></h3>
-<pre tabindex="0"><code> 1
- 2
- 3
- 4
- 5
- 6
- 7
- 8
- 9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
-27
-28
-29
-30
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#e6db74">&#34;&#34;&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">最小 Harness 实现：可运行的 Agent 控制结构
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">&#34;&#34;&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> asyncio
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> dataclasses <span style="color:#f92672">import</span> dataclass, field
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> enum <span style="color:#f92672">import</span> Enum
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> typing <span style="color:#f92672">import</span> Callable, Any
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Permission</span>(Enum):
+</span></span><span style="display:flex;"><span>    ALLOW <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;allow&#34;</span>
+</span></span><span style="display:flex;"><span>    ASK <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;ask_user&#34;</span>
+</span></span><span style="display:flex;"><span>    DENY <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;deny&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">@dataclass</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Rule</span>:
+</span></span><span style="display:flex;"><span>    condition: str
+</span></span><span style="display:flex;"><span>    action: str
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ControlPlane</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;&#34;&#34;控制平面：约束、规则、边界&#34;&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">__init__</span>(self):
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>rules <span style="color:#f92672">=</span> []
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">add_rule</span>(self, condition: str, action: str):
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>rules<span style="color:#f92672">.</span>append(Rule(condition, action))
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">evaluate</span>(self, context: dict) <span style="color:#f92672">-&gt;</span> list[str]:
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> [r<span style="color:#f92672">.</span>action <span style="color:#66d9ef">for</span> r <span style="color:#f92672">in</span> self<span style="color:#f92672">.</span>rules <span style="color:#66d9ef">if</span> r<span style="color:#f92672">.</span>condition <span style="color:#f92672">in</span> str(context)]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">@dataclass</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Tool</span>:
+</span></span><span style="display:flex;"><span>    name: str
+</span></span><span style="display:flex;"><span>    fn: Callable
+</span></span><span style="display:flex;"><span>    permission: Permission <span style="color:#f92672">=</span> Permission<span style="color:#f92672">.</span>ALLOW
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ToolRegistry</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">__init__</span>(self):
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>tools <span style="color:#f92672">=</span> {}
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">register</span>(self, tool: Tool):
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>tools[tool<span style="color:#f92672">.</span>name] <span style="color:#f92672">=</span> tool
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">execute</span>(self, name: str, <span style="color:#f92672">**</span>kwargs):
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> self<span style="color:#f92672">.</span>tools[name]<span style="color:#f92672">.</span>fn(<span style="color:#f92672">**</span>kwargs)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ContextManager</span>:
+</span></span><span style="display:flex;"><span>    MAX_TOKENS <span style="color:#f92672">=</span> <span style="color:#ae81ff">10000</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">__init__</span>(self):
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>messages <span style="color:#f92672">=</span> []
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>token_count <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">add</span>(self, msg: str):
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>messages<span style="color:#f92672">.</span>append(msg)
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>token_count <span style="color:#f92672">+=</span> len(msg) <span style="color:#f92672">//</span> <span style="color:#ae81ff">2</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">build</span>(self) <span style="color:#f92672">-&gt;</span> list[str]:
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> self<span style="color:#f92672">.</span>token_count <span style="color:#f92672">&lt;=</span> self<span style="color:#f92672">.</span>MAX_TOKENS:
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> self<span style="color:#f92672">.</span>messages
+</span></span><span style="display:flex;"><span>        system <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>messages[<span style="color:#ae81ff">0</span>]
+</span></span><span style="display:flex;"><span>        recent <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>messages[<span style="color:#f92672">-</span><span style="color:#ae81ff">3</span>:]
+</span></span><span style="display:flex;"><span>        summary <span style="color:#f92672">=</span> <span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;[Summarized </span><span style="color:#e6db74">{</span>len(self<span style="color:#f92672">.</span>messages)<span style="color:#f92672">-</span><span style="color:#ae81ff">4</span><span style="color:#e6db74">}</span><span style="color:#e6db74"> msgs]&#34;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> [system, summary] <span style="color:#f92672">+</span> recent
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">CheckpointStore</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">__init__</span>(self):
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>store <span style="color:#f92672">=</span> {}
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">save</span>(self, key, state):
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>store[key] <span style="color:#f92672">=</span> dict(state)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">load</span>(self, key) <span style="color:#f92672">-&gt;</span> dict <span style="color:#f92672">|</span> <span style="color:#66d9ef">None</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> self<span style="color:#f92672">.</span>store<span style="color:#f92672">.</span>get(key)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">@dataclass</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">AgentState</span>:
+</span></span><span style="display:flex;"><span>    task: str <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>    messages: list <span style="color:#f92672">=</span> field(default_factory<span style="color:#f92672">=</span>list)
+</span></span><span style="display:flex;"><span>    step: int <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>    result: Any <span style="color:#f92672">=</span> <span style="color:#66d9ef">None</span>
+</span></span><span style="display:flex;"><span>    finished: bool <span style="color:#f92672">=</span> <span style="color:#66d9ef">False</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Harness</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">__init__</span>(self, model_fn: Callable):
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>model <span style="color:#f92672">=</span> model_fn
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>control <span style="color:#f92672">=</span> ControlPlane()
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>tools <span style="color:#f92672">=</span> ToolRegistry()
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>context <span style="color:#f92672">=</span> ContextManager()
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>checkpoint <span style="color:#f92672">=</span> CheckpointStore()
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">async</span> <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">run</span>(self, task: str, max_steps: int <span style="color:#f92672">=</span> <span style="color:#ae81ff">20</span>) <span style="color:#f92672">-&gt;</span> AgentState:
+</span></span><span style="display:flex;"><span>        state <span style="color:#f92672">=</span> AgentState(task<span style="color:#f92672">=</span>task)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> step <span style="color:#f92672">in</span> range(max_steps):
+</span></span><span style="display:flex;"><span>            state<span style="color:#f92672">.</span>step <span style="color:#f92672">=</span> step
+</span></span><span style="display:flex;"><span>            context <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>context<span style="color:#f92672">.</span>build()
+</span></span><span style="display:flex;"><span>            triggered <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>control<span style="color:#f92672">.</span>evaluate({<span style="color:#e6db74">&#34;task&#34;</span>: task, <span style="color:#e6db74">&#34;step&#34;</span>: step})
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> triggered:
+</span></span><span style="display:flex;"><span>                context <span style="color:#f92672">=</span> triggered <span style="color:#f92672">+</span> context
+</span></span><span style="display:flex;"><span>            response <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>model(context)
+</span></span><span style="display:flex;"><span>            action <span style="color:#f92672">=</span> response<span style="color:#f92672">.</span>strip()
+</span></span><span style="display:flex;"><span>            result <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>tools<span style="color:#f92672">.</span>execute(action, state<span style="color:#f92672">=</span>state)
+</span></span><span style="display:flex;"><span>            state<span style="color:#f92672">.</span>result <span style="color:#f92672">=</span> result
+</span></span><span style="display:flex;"><span>            self<span style="color:#f92672">.</span>context<span style="color:#f92672">.</span>add(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;Step </span><span style="color:#e6db74">{</span>step<span style="color:#e6db74">}</span><span style="color:#e6db74">: </span><span style="color:#e6db74">{</span>result<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span>            self<span style="color:#f92672">.</span>checkpoint<span style="color:#f92672">.</span>save(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;step-</span><span style="color:#e6db74">{</span>step<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>, {
+</span></span><span style="display:flex;"><span>                <span style="color:#e6db74">&#34;task&#34;</span>: task, <span style="color:#e6db74">&#34;step&#34;</span>: step, <span style="color:#e6db74">&#34;result&#34;</span>: result
+</span></span><span style="display:flex;"><span>            })
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> result <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;DONE&#34;</span>:
+</span></span><span style="display:flex;"><span>                state<span style="color:#f92672">.</span>finished <span style="color:#f92672">=</span> <span style="color:#66d9ef">True</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">break</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> state
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 运行示例</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">async</span> <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">main</span>():
+</span></span><span style="display:flex;"><span>    harness <span style="color:#f92672">=</span> Harness(<span style="color:#66d9ef">lambda</span> ctx: <span style="color:#e6db74">&#34;search&#34;</span>)
+</span></span><span style="display:flex;"><span>    harness<span style="color:#f92672">.</span>control<span style="color:#f92672">.</span>add_rule(<span style="color:#e6db74">&#34;search&#34;</span>, <span style="color:#e6db74">&#34;verify_source&#34;</span>)
+</span></span><span style="display:flex;"><span>    harness<span style="color:#f92672">.</span>tools<span style="color:#f92672">.</span>register(Tool(<span style="color:#e6db74">&#34;search&#34;</span>, <span style="color:#66d9ef">lambda</span> <span style="color:#f92672">**</span>k: <span style="color:#e6db74">&#34;DONE&#34;</span>))
+</span></span><span style="display:flex;"><span>    result <span style="color:#f92672">=</span> <span style="color:#66d9ef">await</span> harness<span style="color:#f92672">.</span>run(<span style="color:#e6db74">&#34;Find info about X&#34;</span>)
+</span></span><span style="display:flex;"><span>    print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;Finished: </span><span style="color:#e6db74">{</span>result<span style="color:#f92672">.</span>finished<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">if</span> __name__ <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;__main__&#34;</span>:
+</span></span><span style="display:flex;"><span>    asyncio<span style="color:#f92672">.</span>run(main())
+</span></span></code></pre></div><h3 id="step-3设置验证-hook">Step 3：设置验证 Hook<a hidden class="anchor" aria-hidden="true" href="#step-3设置验证-hook">#</a></h3>
+<pre tabindex="0"><code>Claude Code 的 Harness 架构：
+┌──────────────────────────────────────────┐
+│            Claude Code Harness            │
+├──────────────────────────────────────────┤
+│  Control Plane: system prompt + AGENTS.md │
+│  Query Loop: src/query.ts:365             │
+│  ├─ 消息切片 + 工具结果预算               │
+│  ├─ 历史截断 + microcompact              │
+│  └─ 上下文折叠 + auto compact             │
+│  Permission: ⌘ Enter / Auto / Always      │
+│  Tool Execution: 模型不直接接触文件系统    │
+└──────────────────────────────────────────┘
 </code></pre><h3 id="step-4定义团队规范">Step 4：定义团队规范<a hidden class="anchor" aria-hidden="true" href="#step-4定义团队规范">#</a></h3>
-<pre tabindex="0"><code> 1
- 2
- 3
- 4
- 5
- 6
- 7
- 8
- 9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
+<pre tabindex="0"><code>Harness Engineering 工作习惯：
+每一次 Agent 失败 → AGENTS.md → 永久规则
 </code></pre><h2 id="10-常见症状与-harness-诊断">10. 常见症状与 Harness 诊断<a hidden class="anchor" aria-hidden="true" href="#10-常见症状与-harness-诊断">#</a></h2>
 <p>当 Agent 系统出现以下问题，往往不是&quot;模型不够强&quot;，而是 Harness 出了问题：</p>
 <h2 id="11-设计-harness-时最先要回答的-6-个问题">11. 设计 Harness 时最先要回答的 6 个问题<a hidden class="anchor" aria-hidden="true" href="#11-设计-harness-时最先要回答的-6-个问题">#</a></h2>
 <p>在动手写代码之前，先问清楚这 6 个问题：</p>
-<pre tabindex="0"><code> 1
- 2
- 3
- 4
- 5
- 6
- 7
- 8
- 9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
+<pre tabindex="0"><code># 操作示例
+# 失败: Agent 删除了 node_modules
+deny: delete node_modules/
+
+# 失败: Agent 修改了 src/config/database.ts
+ask: modify src/config/
+review_required: src/config/database.ts
+
+# 失败: Agent 升级了依赖导致兼容性问题
+deny: upgrade dependencies without test
+require: explicit version pinning
 </code></pre><p>如果这 6 个问题没有答案，系统通常还没真正进入 Harness 设计阶段。</p>
 <h2 id="12-本节总结">12. 本节总结<a hidden class="anchor" aria-hidden="true" href="#12-本节总结">#</a></h2>
 <h3 id="核心要点">核心要点<a hidden class="anchor" aria-hidden="true" href="#核心要点">#</a></h3>
@@ -1094,6 +890,11 @@
 
   <footer class="post-footer">
     <ul class="post-tags">
+      <li><a href="https://csqread.top/tags/agent/">Agent</a></li>
+      <li><a href="https://csqread.top/tags/harness/">Harness</a></li>
+      <li><a href="https://csqread.top/tags/%E6%9E%B6%E6%9E%84%E8%AE%BE%E8%AE%A1/">架构设计</a></li>
+      <li><a href="https://csqread.top/tags/%E5%B7%A5%E7%A8%8B%E5%AE%9E%E8%B7%B5/">工程实践</a></li>
+      <li><a href="https://csqread.top/tags/llm/">LLM</a></li>
     </ul>
   </footer>
 </article>

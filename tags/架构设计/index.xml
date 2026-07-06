@@ -15,5 +15,12 @@
       <guid>https://csqread.top/posts/tech/deerflow-harness-deep-dive/</guid>
       <description>基于 deer-flow-by-cc 仓库源码、设计文档、白皮书，从 Harness 引擎到中间件链、从 Checkpoint 持久化到 M5 身份透传，全面拆解 DeerFlow Agent 运行时引擎的架构设计。</description>
     </item>
+    <item>
+      <title>Harness Engineering</title>
+      <link>https://csqread.top/posts/tech/harness-engineering/</link>
+      <pubDate>Thu, 19 Mar 2026 21:32:15 +0800</pubDate>
+      <guid>https://csqread.top/posts/tech/harness-engineering/</guid>
+      <description>Harness 不是外壳，而是 Agent 系统的控制结构。深入讲解七层控制结构、Query Loop、权限治理、上下文预算、错误恢复与验证机制。完全理解 Harness Engineering 的精髓。</description>
+    </item>
   </channel>
 </rss>
