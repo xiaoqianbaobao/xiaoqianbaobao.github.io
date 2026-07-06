@@ -1,27 +1,27 @@
 <!DOCTYPE html>
-<html lang="zh" dir="auto">
+<html lang="en" dir="auto" data-theme="auto">
 
 <head>
-	<meta name="generator" content="Hugo 0.108.0"><meta charset="utf-8">
+	<meta name="generator" content="Hugo 0.163.3"><meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="robots" content="index, follow">
 <title>Qian&#39;s Blog</title>
 
 <meta name="description" content="">
-<meta name="author" content="
-作者:&nbsp;ShengQian">
+<meta name="author" content="">
 <link rel="canonical" href="https://csqread.top/">
-<link crossorigin="anonymous" href="/assets/css/stylesheet.1304ba2a97d1ed976f43dcc4aec65464735b44589d091030cdd2873f2234b886.css" integrity="" rel="preload stylesheet" as="style">
-<link rel="icon" href="https://csqread.top/img/Q.gif">
-<link rel="icon" type="image/png" sizes="16x16" href="https://csqread.top/img/%21.jpg">
-<link rel="icon" type="image/png" sizes="32x32" href="https://csqread.top/img/%21.jpg">
-<link rel="apple-touch-icon" href="https://csqread.top/%21.jpg">
-<link rel="mask-icon" href="https://csqread.top/%21.jpg">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.css" rel="preload stylesheet" as="style">
+<link rel="icon" href="https://csqread.top/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://csqread.top/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://csqread.top/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://csqread.top/apple-touch-icon.png">
+<link rel="mask-icon" href="https://csqread.top/safari-pinned-tab.svg">
 <meta name="theme-color" content="#2e2e33">
 <meta name="msapplication-TileColor" content="#2e2e33">
-<link rel="alternate" type="application/rss+xml" href="https://csqread.top/index.xml">
-<link rel="alternate" type="application/json" href="https://csqread.top/index.json">
+<link rel="alternate" type="application/rss+xml" href="https://csqread.top/index.xml" title="rss">
+<link rel="alternate" type="application/json" href="https://csqread.top/index.json" title="json">
+<link rel="alternate" hreflang="en" href="https://csqread.top/">
 <noscript>
     <style>
         #theme-toggle,
@@ -39,75 +39,72 @@
                 --secondary: rgb(155, 156, 157);
                 --tertiary: rgb(65, 66, 68);
                 --content: rgb(196, 196, 197);
-                --hljs-bg: rgb(46, 46, 51);
+                --code-block-bg: rgb(46, 46, 51);
                 --code-bg: rgb(55, 56, 62);
                 --border: rgb(51, 51, 51);
+                color-scheme: dark;
             }
 
             .list {
                 background: var(--theme);
             }
 
-            .list:not(.dark)::-webkit-scrollbar-track {
-                background: 0 0;
-            }
-
-            .list:not(.dark)::-webkit-scrollbar-thumb {
-                border-color: var(--theme);
+            .toc {
+                background: var(--entry);
             }
         }
 
     </style>
-</noscript><meta property="og:title" content="Qian&#39;s Blog" />
-<meta property="og:description" content="" />
-<meta property="og:type" content="website" />
-<meta property="og:url" content="https://csqread.top/" />
+</noscript>
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.querySelector("html").dataset.theme = 'dark';
+    } else if (localStorage.getItem("pref-theme") === "light") {
+       document.querySelector("html").dataset.theme = 'light';
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.querySelector("html").dataset.theme = 'dark';
+    } else {
+        document.querySelector("html").dataset.theme = 'light';
+    }
 
-<meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="Qian&#39;s Blog"/>
-<meta name="twitter:description" content=""/>
+</script><meta property="og:url" content="https://csqread.top/">
+  <meta property="og:site_name" content="Qian&#39;s Blog">
+  <meta property="og:title" content="Qian&#39;s Blog">
+  <meta property="og:locale" content="zh_cn">
+  <meta property="og:type" content="website">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Qian&#39;s Blog">
 
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "Organization",
   "name": "Qian's Blog",
-  "url": "https://csqread.top",
+  "url": "https://csqread.top/",
   "description": "",
-  "thumbnailUrl": "https://csqread.top/img/Q.gif",
+  "logo": "https://csqread.top/favicon.ico",
   "sameAs": [
-      "https://github.com/xiaoqianbaobao", "https://twitter.com/@naughty_qian", "img/QQ.jpg", "img/WeChat.jpg", "chenshengqian2020@gmail.com", "index.xml"
+      "https://github.com/xiaoqianbaobao", "https://twitter.com/@naughty_qian", "/img/QQ.jpg", "/img/WeChat.jpg", "mailto:chenshengqian2020@gmail.com", "/index.xml"
   ]
 }
 </script>
 </head>
-
 <body class="list" id="top">
-<script>
-    if (localStorage.getItem("pref-theme") === "dark") {
-        document.body.classList.add('dark');
-    } else if (localStorage.getItem("pref-theme") === "light") {
-        document.body.classList.remove('dark')
-    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-        document.body.classList.add('dark');
-    }
-
-</script>
-
-<header class="header">
-    <nav class="nav">
+    <header class="header">
+    <nav class="header-nav">
         <div class="logo">
-            <a href="https://csqread.top" accesskey="h" title="Qian&#39;s Blog (Alt + H)">
-                <img src="https://csqread.top/img/%21.jpg" alt="" aria-label="logo"
+            <a href="https://csqread.top/" accesskey="h" title="Qian&#39;s Blog (Alt + H)">
+                <img src="https://csqread.top/img/Q.gif" alt="" aria-label="logo"
                     height="35">Qian&#39;s Blog</a>
             <div class="logo-switches">
-                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
-                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                <button id="theme-toggle" class="theme-toggle" accesskey="t" title="(Alt + T)" aria-label="Toggle theme">
+                    <svg class="moon" xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24"
                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                         stroke-linejoin="round">
                         <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
                     </svg>
-                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                    <svg class="sun" xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24"
                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                         stroke-linejoin="round">
                         <circle cx="12" cy="12" r="5"></circle>
@@ -123,52 +120,74 @@
                 </button>
             </div>
         </div>
-        <ul id="menu">
+        <ul id="menu" class="menu">
             <li>
-                <a href="https://csqread.top/search" title="🔍搜索">
-                    <span>🔍搜索</span>
+                <a href="https://csqread.top/search" title="??搜索 (Alt &#43; /)" accesskey=/>
+                    <span>??搜索</span>
                 </a>
             </li>
             <li>
-                <a href="https://csqread.top/" title="🏠主页">
-                    <span class="active">🏠主页</span>
+                <a href="https://csqread.top/posts" title="??文章">
+                    <span>??文章</span>
                 </a>
             </li>
             <li>
-                <a href="https://csqread.top/posts" title="📚文章">
-                    <span>📚文章</span>
+                <a href="https://csqread.top/archives/" title="??时间轴">
+                    <span>??时间轴</span>
                 </a>
             </li>
             <li>
-                <a href="https://csqread.top/archives/" title="⏱时间轴">
-                    <span>⏱时间轴</span>
+                <a href="https://csqread.top/tags" title="??标签">
+                    <span>??标签</span>
                 </a>
             </li>
             <li>
-                <a href="https://csqread.top/tags" title="🔖标签">
-                    <span>🔖标签</span>
+                <a href="https://csqread.top/about" title="???‍♂?关于">
+                    <span>???‍♂?关于</span>
                 </a>
             </li>
             <li>
-                <a href="https://csqread.top/about" title="🙋🏻‍♂️关于">
-                    <span>🙋🏻‍♂️关于</span>
+                <a href="https://csqread.top/links" title="??友链">
+                    <span>??友链</span>
                 </a>
             </li>
             <li>
-                <a href="https://csqread.top/links" title="🤝友链">
-                    <span>🤝友链</span>
+                <a href="https://csqread.top/posts/blog" title="??博客">
+                    <span>??博客</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://csqread.top/posts/tech" title="???‍?技术">
+                    <span>???‍?技术</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://csqread.top/posts/read" title="??阅读-电影">
+                    <span>??阅读-电影</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://csqread.top/posts/life" title="??生活">
+                    <span>??生活</span>
                 </a>
             </li>
         </ul>
     </nav>
 </header>
-<main class="main"><div class="profile">
-    <div class="profile_inner">
-        <img draggable="false" src="https://csqread.top/img/%21.jpg" alt="profile image" title=""
-            height="150" width="150" />
-        <h1>(〃&lsquo;▽&rsquo;〃)</h1>
-        <span>🧨学而时习之，不亦说乎？有朋自远方来，不亦乐乎？<br/>👏🏼欢迎光临圣乾(sQian&rsquo;s)的博客<br/>👇联系方式</span><div class="social-icons">
-    <a href="https://github.com/xiaoqianbaobao" target="_blank" rel="noopener noreferrer me" title="Github">
+<main class="main"> 
+<article class="first-entry home-info">
+    <header class="entry-header">
+        <h1>你好，我是 ShengQian</h1>
+    </header>
+    <div class="entry-content md-content">
+        
+        <p>欢迎来到我的博客，这里记录技术、阅读、生活和思考。</p>
+
+    </div>
+    <footer class="entry-footer">
+        <div class="social-icons" >
+    <a href="https://github.com/xiaoqianbaobao" target="_blank" rel="noopener noreferrer me"
+        title="Github">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
     stroke-linecap="round" stroke-linejoin="round">
     <path
@@ -176,7 +195,8 @@
     </path>
 </svg>
     </a>
-    <a href="https://twitter.com/@naughty_qian" target="_blank" rel="noopener noreferrer me" title="Twitter">
+    <a href="https://twitter.com/@naughty_qian" target="_blank" rel="noopener noreferrer me"
+        title="Twitter">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
     stroke-linecap="round" stroke-linejoin="round">
     <path
@@ -184,7 +204,8 @@
     </path>
 </svg>
     </a>
-    <a href="img/QQ.jpg" target="_blank" rel="noopener noreferrer me" title="QQ">
+    <a href="/img/QQ.jpg" target="_blank" rel="noopener noreferrer me"
+        title="QQ">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
     stroke-linecap="round" stroke-linejoin="round">
     <path transform="scale(0.04) translate(75 40)" stroke-width="50"
@@ -192,21 +213,26 @@
     </path>
 </svg>
     </a>
-    <a href="img/WeChat.jpg" target="_blank" rel="noopener noreferrer me" title="WeChat">
+    <a href="/img/WeChat.jpg" target="_blank" rel="noopener noreferrer me"
+        title="WeChat">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
     stroke-linecap="round" stroke-linejoin="round">
-    <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
-    <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+    <path
+        d="M17 10C20.3142 10 23 12.2165 23 14.95C23 16.4867 22.1513 17.8595 20.8182 18.767V21L18.6756 19.7042C18.1265 19.835 17.5642 19.9007 17 19.9C13.6858 19.9 11 17.6835 11 14.95C11 12.2165 13.6858 10 17 10Z" />
+    <path
+        d="M10.7657 15.5978C10.033 15.8089 9.24728 15.9231 8.43285 15.9231C7.4893 15.9251 6.55199 15.7679 5.65934 15.4578L3.12367 17V13.9835C1.81018 12.8183 1 11.2223 1 9.46154C1 5.89262 4.3278 3 8.43285 3C12.4487 3 15.7202 5.76769 15.8657 9.23V9.48092M9.49469 7.30769H9.50531M6.30918 7.30769H6.3198M14.8039 13.7692H14.8145M17.9894 13.7692H18" />
 </svg>
     </a>
-    <a href="chenshengqian2020@gmail.com" target="_blank" rel="noopener noreferrer me" title="Email">
+    <a href="mailto:chenshengqian2020@gmail.com" target="_blank" rel="noopener noreferrer me"
+        title="Email">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 21" fill="none" stroke="currentColor" stroke-width="2"
     stroke-linecap="round" stroke-linejoin="round">
     <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
     <polyline points="22,6 12,13 2,6"></polyline>
 </svg>
     </a>
-    <a href="index.xml" target="_blank" rel="noopener noreferrer me" title="RSS">
+    <a href="/index.xml" target="_blank" rel="noopener noreferrer me"
+        title="RSS">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
     stroke-linecap="round" stroke-linejoin="round">
     <path d="M4 11a9 9 0 0 1 9 9" />
@@ -216,51 +242,208 @@
     </a>
 </div>
 
-        <div class="buttons">
-            <a class="button" href="posts/blog" rel="noopener" title="🧱博客">
-                <span class="button-inner">
-                    🧱博客
-                </span>
-            </a>
-            <a class="button" href="posts/tech" rel="noopener" title="👨🏻‍💻技术">
-                <span class="button-inner">
-                    👨🏻‍💻技术
-                </span>
-            </a>
-            <a class="button" href="posts/read" rel="noopener" title="📕阅读-电影">
-                <span class="button-inner">
-                    📕阅读-电影
-                </span>
-            </a>
-            <a class="button" href="posts/life" rel="noopener" title="🏖生活">
-                <span class="button-inner">
-                    🏖生活
-                </span>
-            </a>
-        </div>
-    </div>
-</div>
+    </footer>
+</article>
 
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">DeerFlow Harness 深度拆解：Agent 运行时引擎的架构设计
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>引言 在 AI Agent 系统越来越复杂的今天，如何设计一个可插拔、可审计、可独立部署的 Agent 运行时引擎，是每个工程团队都需要面对的课题。
+DeerFlow 是一个开源的 AI Agent 平台，其核心运行时引擎 Harness 位于 backend/packages/harness/deerflow/，作为一个可独立发布的 Python 包，提供了完整的 AI Agent 执行能力。本文基于该仓库的源码、设计文档和白皮书，从架构到实现细节进行全面拆解。
+...</p>
+  </div>
+  <footer class="entry-footer">
+
+<span title='2026-07-06 14:00:00 +0800 CST'>July 6, 2026</span>&nbsp;·&nbsp;<span>5 min</span></footer>
+  <a class="entry-link" aria-label="post link to DeerFlow Harness 深度拆解：Agent 运行时引擎的架构设计" href="https://csqread.top/posts/tech/deerflow-harness-deep-dive/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">我为什么要做一个清结算垂直领域的代码评审skill
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>背景 在AI越来越发达的今天，我们传统业务开发不得不面临的一个问题是，面对越来越膨胀的AI写的代码，我们该如何review? 不同的业务场景AI能够介入的效果不同。有些业务AI能够轻松介入，比如智慧客服，智能OA等等。但是在C端，支付结算领域，从来没有说过有智能支付，智能交易，智能结算。AI是不可控的，因此随之有了harness工程来约束模型。但是即使这样，我们也不敢让AI在生产上去代替交易系统，支付系统，结算系统去对实时资金流产生影响。在这些背景下，我觉得从某个领域进行单点突破还是可行的。比如在代码上线前进行的代码评审，做好事前评审，可以防范一些因为对业务的不理解和AI写的代码人没有理解的情况下，避免产生一些不好的影响。因此我们做了AI代码评审。
+...</p>
+  </div>
+  <footer class="entry-footer">
+
+<span title='2026-04-28 20:05:32 +0800 CST'>April 28, 2026</span>&nbsp;·&nbsp;<span>2 min</span></footer>
+  <a class="entry-link" aria-label="post link to 我为什么要做一个清结算垂直领域的代码评审skill" href="https://csqread.top/posts/tech/%E6%88%91%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E5%81%9A%E4%B8%80%E4%B8%AA%E6%B8%85%E7%BB%93%E7%AE%97%E5%9E%82%E7%9B%B4%E9%A2%86%E5%9F%9F%E7%9A%84%E4%BB%A3%E7%A0%81%E8%AF%84%E5%AE%A1skill/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">Harness Engineering
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>Harness 设计：不是外壳，而是 Agent 系统的控制结构
+1. 为什么要重新理解 Harness 很多人第一次接触 harness，会把它理解成：
+一个运行时外壳 一个更大的 prompt 一个会话续接层 一个帮 Agent 跑起来的脚手架 这些理解不是完全错，但都偏窄。如果只这样理解，你会看不见 harness 真正关键的部分：谁控制系统、任务一轮轮怎么推进、哪些动作被允许、出错后如何恢复、上下文预算如何治理。
+...</p>
+  </div>
+  <footer class="entry-footer">
+
+<span title='2026-03-19 21:32:15 +0800 CST'>March 19, 2026</span>&nbsp;·&nbsp;<span>7 min</span></footer>
+  <a class="entry-link" aria-label="post link to Harness Engineering" href="https://csqread.top/posts/tech/harness-engineering/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">抽象工厂模式
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>🏭🔧三、 抽象工厂（Abstract Factory）——“成套生娃”一条龙(抽象工厂模式)
+一句话：
+不再只 new 一个披萨，而是一次性 new 整套原料家族（面团&#43;酱料&#43;芝士），
+...</p>
+  </div>
+  <footer class="entry-footer">
+
+<span title='2025-11-17 23:19:58 +0800 CST'>November 17, 2025</span>&nbsp;·&nbsp;<span>2 min</span></footer>
+  <a class="entry-link" aria-label="post link to 抽象工厂模式" href="https://csqread.top/posts/tech/%E6%8A%BD%E8%B1%A1%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">用数学思考,用代码实现
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>用数学思考，用代码实现：程序员真正的思考方式
+很多程序员习惯“边写边想”，结果写出来的代码混乱、低效，甚至解决了错误的问题。
+真正高效的做法是：先用数学把问题想清楚，再用代码精准实现。
+...</p>
+  </div>
+  <footer class="entry-footer">
+
+<span title='2025-11-16 22:26:54 +0800 CST'>November 16, 2025</span>&nbsp;·&nbsp;<span>3 min</span></footer>
+  <a class="entry-link" aria-label="post link to 用数学思考,用代码实现" href="https://csqread.top/posts/tech/%E7%94%A8%E6%95%B0%E5%AD%A6%E6%80%9D%E8%80%83%E7%94%A8%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">凤凰架构深度学习笔记
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>《凤凰架构》深度学习笔记 作者: 周志明
+文档定位: 构建可靠的大型分布式系统的技能地图
+📋 一、核心主题与结构框架 (SCQA分析) Situation (情境) 软件系统规模日益增大，复杂度持续攀升 传统单体架构难以应对大规模分布式场景 架构演进历程:大型机→原始分布式→单体→SOA→微服务→服务网格→无服务 业界缺乏系统性的架构知识地图 Complication (冲突) 墨菲定律困境: “事情可能出错就总会出错” 人员、代码、硬件、网络都存在不可靠因素 规模越大,系统整体可靠性反而越难保证 如何用不可靠的部件构造可靠的系统? Question (问题) 如何构建一套真正可靠的大型分布式系统? 不同架构风格的本质差异和适用场景是什么? 架构师在设计时应该思考哪些核心问题? Answer (答案) 核心理念: “Phoenix”(凤凰)——服务能够&#34;涅槃重生&#34;
+...</p>
+  </div>
+  <footer class="entry-footer">
+
+<span title='2025-11-13 21:53:10 +0800 CST'>November 13, 2025</span>&nbsp;·&nbsp;<span>10 min</span></footer>
+  <a class="entry-link" aria-label="post link to 凤凰架构深度学习笔记" href="https://csqread.top/posts/tech/%E5%87%A4%E5%87%B0%E6%9E%B6%E6%9E%84%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">数据密集型系统设计深度分析 读书笔记
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>《数据密集型应用系统设计》(DDIA) 深度学习笔记
+作者: Martin Kleppmann
+学习目标: 系统掌握数据密集型应用设计原理
+📋 一、SCQA框架分析 S (Situation - 情境) 现状描述:
+当今互联网时代,大多数应用都是数据密集型而非计算密集型 数据的主要挑战在于:数据量、数据复杂度、数据变化速度 技术生态百花齐放: NoSQL、大数据、Web-Scale、分片、最终一致性、ACID、CAP定理、云服务、MapReduce等 核心定位:
+...</p>
+  </div>
+  <footer class="entry-footer">
+
+<span title='2025-11-13 21:37:30 +0800 CST'>November 13, 2025</span>&nbsp;·&nbsp;<span>8 min</span></footer>
+  <a class="entry-link" aria-label="post link to 数据密集型系统设计深度分析 读书笔记" href="https://csqread.top/posts/tech/%E6%95%B0%E6%8D%AE%E5%AF%86%E9%9B%86%E5%9E%8B%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1%E6%B7%B1%E5%BA%A6%E5%88%86%E6%9E%90-%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">工厂方法模式
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>工厂方法模式(Factory Method Pattern)
+1. 模式动机 现在对该系统进行修改，不再设计一个按钮工厂类来统一负责所有产品的创建，而是将具体按钮的创建过程交给专门的工厂子类去完成，我们先定义一个抽象的按钮工厂类，再定义具体的工厂类来生成圆形按钮、矩形按钮、菱形按钮等，它们实现在抽象按钮工厂类中定义的方法。这种抽象化的结果使这种结构可以在不修改具体工厂类的情况下引进新的产品，如果出现新的按钮类型，只需要为这种新类型的按钮创建一个具体的工厂类就可以获得该新按钮的实例，这一特点无疑使得工厂方法模式具有超越简单工厂模式的优越性，更加符合“开闭原则”。
+...</p>
+  </div>
+  <footer class="entry-footer">
+
+<span title='2025-06-23 21:52:50 +0800 CST'>June 23, 2025</span>&nbsp;·&nbsp;<span>6 min</span></footer>
+  <a class="entry-link" aria-label="post link to 工厂方法模式" href="https://csqread.top/posts/tech/%E5%B7%A5%E5%8E%82%E6%96%B9%E6%B3%95%E6%A8%A1%E5%BC%8F/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">简单工厂模式
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p> 简单工厂模式( Simple Factory Pattern ) 1.1 模式动机 考虑一个简单的软件应用场景，一个软件系统可以提供多个外观不同的按钮（如圆形按钮、矩形按钮、菱形按钮等）， 这些按钮都源自同一个基类，不过在继承基类后不同的子类修改了部分属性从而使得它们可以呈现不同的外观，如果我们希望在使用这些按钮时，不需要知道这些具体按钮类的名字，只需要知道表示该按钮类的一个参数，并提供一个调用方便的方法，把该参数传入方法即可返回一个相应的按钮对象，此时，就可以使用简单工厂模式。
+...</p>
+  </div>
+  <footer class="entry-footer">
+
+<span title='2025-05-25 23:02:42 +0800 CST'>May 25, 2025</span>&nbsp;·&nbsp;<span>4 min</span></footer>
+  <a class="entry-link" aria-label="post link to 简单工厂模式" href="https://csqread.top/posts/tech/%E7%AE%80%E5%8D%95%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">高并发之限流
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>限流简介 每个系统都有服务的上线，所以当流量超过服务极限能力时，系统可能会出现卡死、崩溃的情况，所以就有了降级和限流。限流其实就是：当高并发或者瞬时高并发时，为了保证
+...</p>
+  </div>
+  <footer class="entry-footer">
+
+<span title='2024-12-30 18:36:05 +0800 CST'>December 30, 2024</span>&nbsp;·&nbsp;<span>6 min</span></footer>
+  <a class="entry-link" aria-label="post link to 高并发之限流" href="https://csqread.top/posts/tech/%E9%AB%98%E5%B9%B6%E5%8F%91%E4%B9%8B%E9%99%90%E6%B5%81/"></a>
+</article>
+<footer class="page-footer">
+  <nav class="pagination">
+    <a class="next" href="https://csqread.top/page/2/">Next&nbsp;2/7&nbsp;»
+    </a>
+  </nav>
+</footer>
     </main>
     
 <footer class="footer">
-    <span>&copy; 2026 <a href="https://csqread.top">Qian&#39;s Blog</a></span>
+        <span>&copy; 2026 <a href="https://csqread.top/">Qian&#39;s Blog</a></span> · 
+
+    
+    
     <span>
         Powered by
-        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://gohugo.io/?utm_source=papermod" rel="noopener" target="_blank">Hugo</a> &
         <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
     </span>
 </footer>
-<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
-        <path d="M12 6H0l6-6z" />
+<a href="#top" id="top-link" class="top-link hidden" aria-label="go to top" title="Go to Top (Alt + G)" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+        stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevrons-up">
+        <polyline points="17 11 12 6 7 11"></polyline>
+        <polyline points="17 18 12 13 7 18"></polyline>
     </svg>
 </a>
 
 <script>
-    let menu = document.getElementById('menu')
+    let menu = document.getElementById('menu');
     if (menu) {
-        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        
+        const scrollPosition = localStorage.getItem("menu-scroll-position");
+        if (scrollPosition) {
+            menu.scrollLeft = parseInt(scrollPosition, 10);
+        }
+        
         menu.onscroll = function () {
             localStorage.setItem("menu-scroll-position", menu.scrollLeft);
         }
@@ -287,25 +470,25 @@
 
 </script>
 <script>
-    var mybutton = document.getElementById("top-link");
+    var toplink = document.getElementById("top-link");
     window.onscroll = function () {
-        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
-            mybutton.style.visibility = "visible";
-            mybutton.style.opacity = "1";
+        const scrollThreshold = window.innerHeight;
+        if (document.body.scrollTop > scrollThreshold || document.documentElement.scrollTop > scrollThreshold) {
+            toplink.classList.remove("hidden");
         } else {
-            mybutton.style.visibility = "hidden";
-            mybutton.style.opacity = "0";
+            toplink.classList.add("hidden");
         }
     };
 
 </script>
 <script>
     document.getElementById("theme-toggle").addEventListener("click", () => {
-        if (document.body.className.includes("dark")) {
-            document.body.classList.remove('dark');
+        const html = document.querySelector("html");
+        if (html.dataset.theme === "dark") {
+            html.dataset.theme = 'light';
             localStorage.setItem("pref-theme", 'light');
         } else {
-            document.body.classList.add('dark');
+            html.dataset.theme = 'dark';
             localStorage.setItem("pref-theme", 'dark');
         }
     })

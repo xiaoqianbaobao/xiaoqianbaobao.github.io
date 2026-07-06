@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" dir="auto">
+<html lang="en" dir="auto" data-theme="auto">
 
 <head><meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -8,18 +8,18 @@
 <title>技术 | Qian&#39;s Blog</title>
 <meta name="keywords" content="">
 <meta name="description" content="技术 - Qian&#39;s Blog">
-<meta name="author" content="
-作者:&nbsp;ShengQian">
+<meta name="author" content="">
 <link rel="canonical" href="https://csqread.top/posts/tech/">
-<link crossorigin="anonymous" href="/assets/css/stylesheet.1304ba2a97d1ed976f43dcc4aec65464735b44589d091030cdd2873f2234b886.css" integrity="" rel="preload stylesheet" as="style">
-<link rel="icon" href="https://csqread.top/img/Q.gif">
-<link rel="icon" type="image/png" sizes="16x16" href="https://csqread.top/img/%21.jpg">
-<link rel="icon" type="image/png" sizes="32x32" href="https://csqread.top/img/%21.jpg">
-<link rel="apple-touch-icon" href="https://csqread.top/%21.jpg">
-<link rel="mask-icon" href="https://csqread.top/%21.jpg">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.css" rel="preload stylesheet" as="style">
+<link rel="icon" href="https://csqread.top/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://csqread.top/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://csqread.top/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://csqread.top/apple-touch-icon.png">
+<link rel="mask-icon" href="https://csqread.top/safari-pinned-tab.svg">
 <meta name="theme-color" content="#2e2e33">
 <meta name="msapplication-TileColor" content="#2e2e33">
-<link rel="alternate" type="application/rss+xml" href="https://csqread.top/posts/tech/index.xml">
+<link rel="alternate" type="application/rss+xml" href="https://csqread.top/posts/tech/index.xml" title="rss">
+<link rel="alternate" hreflang="en" href="https://csqread.top/posts/tech/">
 <noscript>
     <style>
         #theme-toggle,
@@ -37,49 +37,58 @@
                 --secondary: rgb(155, 156, 157);
                 --tertiary: rgb(65, 66, 68);
                 --content: rgb(196, 196, 197);
-                --hljs-bg: rgb(46, 46, 51);
+                --code-block-bg: rgb(46, 46, 51);
                 --code-bg: rgb(55, 56, 62);
                 --border: rgb(51, 51, 51);
+                color-scheme: dark;
             }
 
             .list {
                 background: var(--theme);
             }
 
-            .list:not(.dark)::-webkit-scrollbar-track {
-                background: 0 0;
-            }
-
-            .list:not(.dark)::-webkit-scrollbar-thumb {
-                border-color: var(--theme);
+            .toc {
+                background: var(--entry);
             }
         }
 
     </style>
-</noscript><meta property="og:title" content="技术" />
-<meta property="og:description" content="" />
-<meta property="og:type" content="website" />
-<meta property="og:url" content="https://csqread.top/posts/tech/" />
+</noscript>
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.querySelector("html").dataset.theme = 'dark';
+    } else if (localStorage.getItem("pref-theme") === "light") {
+       document.querySelector("html").dataset.theme = 'light';
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.querySelector("html").dataset.theme = 'dark';
+    } else {
+        document.querySelector("html").dataset.theme = 'light';
+    }
 
-<meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="技术"/>
-<meta name="twitter:description" content=""/>
+</script><meta property="og:url" content="https://csqread.top/posts/tech/">
+  <meta property="og:site_name" content="Qian&#39;s Blog">
+  <meta property="og:title" content="技术">
+  <meta property="og:locale" content="zh_cn">
+  <meta property="og:type" content="website">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="技术">
 
 
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "BreadcrumbList",
-  "itemListElement": [, 
+  "itemListElement": [
     {
       "@type": "ListItem",
-      "position":  2 ,
-      "name": "Posts",
+      "position":  1 ,
+      "name": "文章",
       "item": "https://csqread.top/posts/"
     }, 
     {
       "@type": "ListItem",
-      "position":  3 ,
+      "position":  2 ,
       "name": "技术",
       "item": "https://csqread.top/posts/tech/"
     }
@@ -87,33 +96,21 @@
 }
 </script>
 </head>
-
 <body class="list" id="top">
-<script>
-    if (localStorage.getItem("pref-theme") === "dark") {
-        document.body.classList.add('dark');
-    } else if (localStorage.getItem("pref-theme") === "light") {
-        document.body.classList.remove('dark')
-    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-        document.body.classList.add('dark');
-    }
-
-</script>
-
-<header class="header">
-    <nav class="nav">
+    <header class="header">
+    <nav class="header-nav">
         <div class="logo">
-            <a href="https://csqread.top" accesskey="h" title="Qian&#39;s Blog (Alt + H)">
-                <img src="https://csqread.top/img/%21.jpg" alt="" aria-label="logo"
+            <a href="https://csqread.top/" accesskey="h" title="Qian&#39;s Blog (Alt + H)">
+                <img src="https://csqread.top/img/Q.gif" alt="" aria-label="logo"
                     height="35">Qian&#39;s Blog</a>
             <div class="logo-switches">
-                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
-                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                <button id="theme-toggle" class="theme-toggle" accesskey="t" title="(Alt + T)" aria-label="Toggle theme">
+                    <svg class="moon" xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24"
                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                         stroke-linejoin="round">
                         <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
                     </svg>
-                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                    <svg class="sun" xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24"
                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                         stroke-linejoin="round">
                         <circle cx="12" cy="12" r="5"></circle>
@@ -129,394 +126,282 @@
                 </button>
             </div>
         </div>
-        <ul id="menu">
+        <ul id="menu" class="menu">
             <li>
-                <a href="https://csqread.top/search" title="🔍搜索">
-                    <span>🔍搜索</span>
+                <a href="https://csqread.top/search" title="??搜索 (Alt &#43; /)" accesskey=/>
+                    <span>??搜索</span>
                 </a>
             </li>
             <li>
-                <a href="https://csqread.top/" title="🏠主页">
-                    <span>🏠主页</span>
+                <a href="https://csqread.top/posts" title="??文章">
+                    <span>??文章</span>
                 </a>
             </li>
             <li>
-                <a href="https://csqread.top/posts" title="📚文章">
-                    <span>📚文章</span>
+                <a href="https://csqread.top/archives/" title="??时间轴">
+                    <span>??时间轴</span>
                 </a>
             </li>
             <li>
-                <a href="https://csqread.top/archives/" title="⏱时间轴">
-                    <span>⏱时间轴</span>
+                <a href="https://csqread.top/tags" title="??标签">
+                    <span>??标签</span>
                 </a>
             </li>
             <li>
-                <a href="https://csqread.top/tags" title="🔖标签">
-                    <span>🔖标签</span>
+                <a href="https://csqread.top/about" title="???‍♂?关于">
+                    <span>???‍♂?关于</span>
                 </a>
             </li>
             <li>
-                <a href="https://csqread.top/about" title="🙋🏻‍♂️关于">
-                    <span>🙋🏻‍♂️关于</span>
+                <a href="https://csqread.top/links" title="??友链">
+                    <span>??友链</span>
                 </a>
             </li>
             <li>
-                <a href="https://csqread.top/links" title="🤝友链">
-                    <span>🤝友链</span>
+                <a href="https://csqread.top/posts/blog" title="??博客">
+                    <span>??博客</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://csqread.top/posts/tech" title="???‍?技术">
+                    <span class="active">???‍?技术</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://csqread.top/posts/read" title="??阅读-电影">
+                    <span>??阅读-电影</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://csqread.top/posts/life" title="??生活">
+                    <span>??生活</span>
                 </a>
             </li>
         </ul>
     </nav>
 </header>
 <main class="main"> 
-<header class="page-header"><div class="breadcrumbs"><a href="https://csqread.top">主页</a>&nbsp;»&nbsp;<a href="https://csqread.top/posts/">Posts</a></div>
-  <h1>技术</h1>
+<header class="page-header"><nav class="breadcrumbs" role="navigation" aria-label="Breadcrumb">
+            <a href="/">Home</a>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right">
+                <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+            <a href="/posts/">文章</a>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+        stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right">
+        <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+</nav>
+  <h1>
+    技术
+    <a href="/posts/tech/index.xml" title="RSS" aria-label="RSS">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+        stroke-linecap="round" stroke-linejoin="round" height="23">
+        <path d="M4 11a9 9 0 0 1 9 9" />
+        <path d="M4 4a16 16 0 0 1 16 16" />
+        <circle cx="5" cy="19" r="1" />
+      </svg>
+    </a>
+  </h1>
 </header>
 
-<article class="post-entry">
-  <div class="post-info">
-    <header class="entry-header">
-      <h2>DDIA第三章
-      </h2>
-    </header>
-    <section class="entry-content">
-      <p>
-        
-        ...
-      </p>
-    </section>
-    <footer class="entry-footer">
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">DDIA第四章
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>第四章：数据编码与演化 应用程序总是增增改改。 修改程序大多数情况下也在修改存储的数据。
+关系数据库通常假定数据库中的所有数据都遵循一个模式：尽管可以更改该模式（通过模式迁移，即ALTER语句），但是在任何时间点都有且仅有一个正确的模式。
+...</p>
+  </div>
+  <footer class="entry-footer">
 
+<span title='2023-08-28 22:07:57 +0800 CST'>August 28, 2023</span>&nbsp;·&nbsp;<span>15 min</span></footer>
+  <a class="entry-link" aria-label="post link to DDIA第四章" href="https://csqread.top/posts/tech/ddia%E7%AC%AC%E5%9B%9B%E7%AB%A0/"></a>
+</article>
 
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">DDIA第三章
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>第三章：存储与检索
+本章介绍了传统关系型数据库与“NoSQL”数据库的存储引擎。 我们会研究两大类存储引擎：日志结构（log-structured） 的存储引擎，以及面向页面（page-oriented） 的存储引擎（例如B树）。
+...</p>
+  </div>
+  <footer class="entry-footer">
 
-
-
-
-
-
-
-
-创建:&nbsp;<span title='2023-08-15 21:26:51 +0800 CST'>2023-08-15</span>&nbsp;|&nbsp;更新:&nbsp;2023-08-15&nbsp;|&nbsp;字数:&nbsp;10548字&nbsp;|&nbsp;时长: 22分钟&nbsp;|&nbsp;
-作者:&nbsp;ShengQian</footer>
-  </div> 
+<span title='2023-08-15 21:26:51 +0800 CST'>August 15, 2023</span>&nbsp;·&nbsp;<span>21 min</span></footer>
   <a class="entry-link" aria-label="post link to DDIA第三章" href="https://csqread.top/posts/tech/ddia%E7%AC%AC%E4%B8%89%E7%AB%A0/"></a>
 </article>
 
-<article class="post-entry">
-  <div class="post-info">
-    <header class="entry-header">
-      <h2>DDIA第二章
-      </h2>
-    </header>
-    <section class="entry-content">
-      <p>
-        
-        ...
-      </p>
-    </section>
-    <footer class="entry-footer">
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">DDIA第二章
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>第二章：数据模型与查询语言 数据模型可能是软件开发中最重要的部分了，因为它们的影响如此深远：不仅仅影响着软件的编写方式，而且影响着我们的解题思路。 一个复杂的应用程序可能会有更多的中间层次，比如基于API的API，不过基本思想仍然是一样的：每个层都通过提供一个明确的数据模型来隐藏更低层次中的复杂性。这些抽象允许不同的人群有效地协作。
+...</p>
+  </div>
+  <footer class="entry-footer">
 
-
-
-
-
-
-
-
-
-
-创建:&nbsp;<span title='2023-08-08 22:06:41 +0800 CST'>2023-08-08</span>&nbsp;|&nbsp;更新:&nbsp;2023-08-08&nbsp;|&nbsp;字数:&nbsp;5705字&nbsp;|&nbsp;时长: 12分钟&nbsp;|&nbsp;
-作者:&nbsp;ShengQian</footer>
-  </div> 
+<span title='2023-08-08 22:06:41 +0800 CST'>August 8, 2023</span>&nbsp;·&nbsp;<span>12 min</span></footer>
   <a class="entry-link" aria-label="post link to DDIA第二章" href="https://csqread.top/posts/tech/ddia%E7%AC%AC%E4%BA%8C%E7%AB%A0/"></a>
 </article>
 
-<article class="post-entry">
-  <div class="post-info">
-    <header class="entry-header">
-      <h2>DDIA第一章
-      </h2>
-    </header>
-    <section class="entry-content">
-      <p>
-        
-        ...
-      </p>
-    </section>
-    <footer class="entry-footer">
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">DDIA第一章
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>第一章：可靠性，可扩展性，可维护性
+关于数据系统的思考 单个工具已经不能满足应用系统的需求，总体工作被拆分成一系列能被单个工具高效完成的任务，并通过应用代码将它们缝合起来。比如一个缓存、索引、数据库协作的例子：
+...</p>
+  </div>
+  <footer class="entry-footer">
 
-
-
-
-
-
-
-
-
-
-创建:&nbsp;<span title='2023-08-04 08:39:31 +0800 CST'>2023-08-04</span>&nbsp;|&nbsp;更新:&nbsp;2023-08-04&nbsp;|&nbsp;字数:&nbsp;1710字&nbsp;|&nbsp;时长: 4分钟&nbsp;|&nbsp;
-作者:&nbsp;ShengQian</footer>
-  </div> 
+<span title='2023-08-04 08:39:31 +0800 CST'>August 4, 2023</span>&nbsp;·&nbsp;<span>4 min</span></footer>
   <a class="entry-link" aria-label="post link to DDIA第一章" href="https://csqread.top/posts/tech/ddia%E7%AC%AC%E4%B8%80%E7%AB%A0/"></a>
 </article>
 
-<article class="post-entry">
-  <div class="post-info">
-    <header class="entry-header">
-      <h2>数据密集型应用系统设计
-      </h2>
-    </header>
-    <section class="entry-content">
-      <p>
-        《数据密集型应用系统设计》，英文名称是《Designing Data-Intensive Application》 ，也被简称为 DDIA。 这是本神书，豆瓣评分高达 9.7 分。
-        
-        ...
-      </p>
-    </section>
-    <footer class="entry-footer">
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">数据密集型应用系统设计
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>推荐序 这本书的适合所有后台开发工程师、大数据工程师，也很适合面试前复习系统设计的同学。
+什么是「数据密集型应用系统」？
+当数据（数据量、数据复杂度、数据变化速度）是一个应用的主要挑战，那么可以把这个应用称为数据密集型的。与之相对的是计算密集型——处理器速度是主要瓶颈。
+...</p>
+  </div>
+  <footer class="entry-footer">
 
-
-
-
-
-
-
-
-
-
-创建:&nbsp;<span title='2023-07-19 22:19:57 +0800 CST'>2023-07-19</span>&nbsp;|&nbsp;更新:&nbsp;2023-07-19&nbsp;|&nbsp;字数:&nbsp;946字&nbsp;|&nbsp;时长: 2分钟&nbsp;|&nbsp;
-作者:&nbsp;ShengQian</footer>
-  </div> 
+<span title='2023-07-19 22:19:57 +0800 CST'>July 19, 2023</span>&nbsp;·&nbsp;<span>2 min</span></footer>
   <a class="entry-link" aria-label="post link to 数据密集型应用系统设计" href="https://csqread.top/posts/tech/%E6%95%B0%E6%8D%AE%E5%AF%86%E9%9B%86%E5%9E%8B%E5%BA%94%E7%94%A8%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/"></a>
 </article>
 
-<article class="post-entry">
-  <div class="post-info">
-    <header class="entry-header">
-      <h2>分布式秒杀交易性能优化记录
-      </h2>
-    </header>
-    <section class="entry-content">
-      <p>
-        
-        ...
-      </p>
-    </section>
-    <footer class="entry-footer">
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">分布式秒杀交易性能优化记录
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>分布式系统秒杀交易性能优化
+1、背景 首先介绍一下这个交易的功能： 该交易是一个定期存款交易，利率非常高，存期有三个月，六个月、一年、两年、三年、五年，年化利率基本上每天发布的产品中都有4%以上的。其中六个月和一年的年化利率最受欢迎。这个定期产品只能每天9点开始购买，并且支持的渠道只有手机银行，因此在每天8点59-9点这个区间会收到非常的请求。根据指标控制中心查询的数据大概在9点到9点01秒这一秒中大概需要处理1000个请求。不过老核心那边怕给系统搞宕机做了一个并发控制，也就是达到性能瓶颈时会限制购买，打印“系统繁忙”反馈给前端.大概在不久前，老核心反馈给我们分布式核心说该交易也还需要持续进行优化，因为目前该产品实在是太火爆了，导致老核心也一直无法处理短时间内的大量请求，只能反馈系统繁忙。
+...</p>
+  </div>
+  <footer class="entry-footer">
 
-
-
-
-
-
-
-
-
-
-创建:&nbsp;<span title='2023-06-25 20:43:05 +0800 CST'>2023-06-25</span>&nbsp;|&nbsp;更新:&nbsp;2023-06-25&nbsp;|&nbsp;字数:&nbsp;2220字&nbsp;|&nbsp;时长: 5分钟&nbsp;|&nbsp;
-作者:&nbsp;ShengQian</footer>
-  </div> 
+<span title='2023-06-25 20:43:05 +0800 CST'>June 25, 2023</span>&nbsp;·&nbsp;<span>5 min</span></footer>
   <a class="entry-link" aria-label="post link to 分布式秒杀交易性能优化记录" href="https://csqread.top/posts/tech/%E5%88%86%E5%B8%83%E5%BC%8F%E7%A7%92%E6%9D%80%E4%BA%A4%E6%98%93%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E8%AE%B0%E5%BD%95/"></a>
 </article>
 
-<article class="post-entry">
-  <div class="post-info">
-    <header class="entry-header">
-      <h2>重构之管道替换循环
-      </h2>
-    </header>
-    <section class="entry-content">
-      <p>
-        
-        ...
-      </p>
-    </section>
-    <footer class="entry-footer">
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">重构之管道替换循环
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>最近在看《重构》第二版，看到替换循环这里，想到我在工作中也是无脑的使用循环和if-else，最近也有空没事就重构之前自己写的代码以及别人留下来的代码。因此就自己尝试了一下管道。发现确实非常的简单明了。大致我举个例子说明下：
+...</p>
+  </div>
+  <footer class="entry-footer">
 
-
-
-
-
-
-
-
-
-
-创建:&nbsp;<span title='2023-06-06 23:04:43 +0800 CST'>2023-06-06</span>&nbsp;|&nbsp;更新:&nbsp;2023-06-06&nbsp;|&nbsp;字数:&nbsp;628字&nbsp;|&nbsp;时长: 2分钟&nbsp;|&nbsp;
-作者:&nbsp;ShengQian</footer>
-  </div> 
+<span title='2023-06-06 23:04:43 +0800 CST'>June 6, 2023</span>&nbsp;·&nbsp;<span>1 min</span></footer>
   <a class="entry-link" aria-label="post link to 重构之管道替换循环" href="https://csqread.top/posts/tech/%E9%87%8D%E6%9E%84%E4%B9%8B%E7%AE%A1%E9%81%93%E6%9B%BF%E6%8D%A2%E5%BE%AA%E7%8E%AF/"></a>
 </article>
 
-<article class="post-entry">
-  <div class="post-info">
-    <header class="entry-header">
-      <h2>工作上遇到的坑记录
-      </h2>
-    </header>
-    <section class="entry-content">
-      <p>
-        工作上遇到的坑，记录一下
-        
-        ...
-      </p>
-    </section>
-    <footer class="entry-footer">
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">工作上遇到的坑记录
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>这几天一直在修并行环境的bug，也踩了不少坑， 记录一下
+1、关于对集合的排序循环问题。集合被修改之后不能再用于循环 原本的逻辑是这样的，在对C代码使用Java进行翻写的时候，因为C使用的是临时表，我这边用的是List集合，然后那边直接order By，而我用的是封装的一个对集合进行排序的方法。因此该集合在某种程度上是被修改了的，但是我仍然对让它进入了下一次循环，而没有break掉，或者使用一个新的集合来进行修改，导致并行生产环境报错。在不确定集合是否被修改的情况下，一定要New一个新的List来进行修改，保持原来的List进行循环。。。。
+...</p>
+  </div>
+  <footer class="entry-footer">
 
-
-
-
-
-
-
-
-
-
-创建:&nbsp;<span title='2023-06-06 22:47:27 +0800 CST'>2023-06-06</span>&nbsp;|&nbsp;更新:&nbsp;2023-06-06&nbsp;|&nbsp;字数:&nbsp;616字&nbsp;|&nbsp;时长: 2分钟&nbsp;|&nbsp;
-作者:&nbsp;ShengQian</footer>
-  </div> 
+<span title='2023-06-06 22:47:27 +0800 CST'>June 6, 2023</span>&nbsp;·&nbsp;<span>2 min</span></footer>
   <a class="entry-link" aria-label="post link to 工作上遇到的坑记录" href="https://csqread.top/posts/tech/%E5%B7%A5%E4%BD%9C%E4%B8%8A%E9%81%87%E5%88%B0%E7%9A%84%E5%9D%91%E8%AE%B0%E5%BD%95/"></a>
 </article>
 
-<article class="post-entry">
-  <div class="post-info">
-    <header class="entry-header">
-      <h2>进程与线程
-      </h2>
-    </header>
-    <section class="entry-content">
-      <p>
-        《现代操作系统》复习， 进程与线程相关知识点总结
-        
-        ...
-      </p>
-    </section>
-    <footer class="entry-footer">
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">进程与线程
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>进程的概念 在多道程序环境下，允许多个程序并发执行，此时他们将失去封闭性，并具有间断性和不可再现性的特征。为此引入了进程的概念，以便更好地描述和控制程序的并发执行，实现操作系统的并发行和共享性。为此引入了进程的概念，以便更好地描述和控制程序的并发执行，实现操作系统的并发性和共享性。
+...</p>
+  </div>
+  <footer class="entry-footer">
 
-
-
-
-
-
-
-
-
-
-创建:&nbsp;<span title='2023-05-23 22:07:01 +0800 CST'>2023-05-23</span>&nbsp;|&nbsp;更新:&nbsp;2023-05-23&nbsp;|&nbsp;字数:&nbsp;7789字&nbsp;|&nbsp;时长: 16分钟&nbsp;|&nbsp;
-作者:&nbsp;ShengQian</footer>
-  </div> 
+<span title='2023-05-23 22:07:01 +0800 CST'>May 23, 2023</span>&nbsp;·&nbsp;<span>16 min</span></footer>
   <a class="entry-link" aria-label="post link to 进程与线程" href="https://csqread.top/posts/tech/%E8%BF%9B%E7%A8%8B%E4%B8%8E%E7%BA%BF%E7%A8%8B/"></a>
 </article>
 
-<article class="post-entry">
-  <div class="post-info">
-    <header class="entry-header">
-      <h2>压测数据快速生成并插入数据库总结
-      </h2>
-    </header>
-    <section class="entry-content">
-      <p>
-        在工作中遇到的问题：需要在短时间内生成1亿笔数据，并埋进数据库，模拟生产环境数据，为压力测试做好数据准备。同时要在指定的表中产生相应的数据，这些是有效数据，用来跑压测交易
-        
-        ...
-      </p>
-    </section>
-    <footer class="entry-footer">
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">压测数据快速生成并插入数据库总结
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>有效数据生成以及插入数据库方案
+先产生insert数据并存到备份文件中 因为有效数据生成的数量不大， 按照压测那边给我的需求大概每个交易4千笔数据左右，需要并发量比较高的交易也不过4万笔数据，涉及到转账的交易数据量比较高一点。并且需要做一个备份为了以后压测可以备用，因此我选择先生成到不同的表对应的表名文件中，然后再写一个批量执行SQL的程序执行这些文件中的insert语句
+...</p>
+  </div>
+  <footer class="entry-footer">
 
-
-
-
-
-
-
-
-
-
-创建:&nbsp;<span title='2023-05-08 22:53:52 +0800 CST'>2023-05-08</span>&nbsp;|&nbsp;更新:&nbsp;2023-05-08&nbsp;|&nbsp;字数:&nbsp;2778字&nbsp;|&nbsp;时长: 6分钟&nbsp;|&nbsp;
-作者:&nbsp;ShengQian</footer>
-  </div> 
+<span title='2023-05-08 22:53:52 +0800 CST'>May 8, 2023</span>&nbsp;·&nbsp;<span>4 min</span></footer>
   <a class="entry-link" aria-label="post link to 压测数据快速生成并插入数据库总结" href="https://csqread.top/posts/tech/%E5%8E%8B%E6%B5%8B%E6%95%B0%E6%8D%AE%E5%BF%AB%E9%80%9F%E7%94%9F%E6%88%90%E5%B9%B6%E6%8F%92%E5%85%A5%E6%95%B0%E6%8D%AE%E5%BA%93%E6%80%BB%E7%BB%93/"></a>
 </article>
-
-<article class="post-entry">
-  <div class="post-info">
-    <header class="entry-header">
-      <h2>Java虚拟机知识总结
-      </h2>
-    </header>
-    <section class="entry-content">
-      <p>
-        将周志明老师的《深入理解Java虚拟机》看完了，二刷， 因此来做一个总结回顾
-        
-        ...
-      </p>
-    </section>
-    <footer class="entry-footer">
-
-
-
-
-
-
-
-
-
-
-创建:&nbsp;<span title='2023-05-08 22:37:29 +0800 CST'>2023-05-08</span>&nbsp;|&nbsp;更新:&nbsp;2023-05-08&nbsp;|&nbsp;字数:&nbsp;425字&nbsp;|&nbsp;时长: 1分钟&nbsp;|&nbsp;
-作者:&nbsp;ShengQian</footer>
-  </div> 
-  <a class="entry-link" aria-label="post link to Java虚拟机知识总结" href="https://csqread.top/posts/tech/java%E8%99%9A%E6%8B%9F%E6%9C%BA%E7%9F%A5%E8%AF%86%E6%80%BB%E7%BB%93/"></a>
-</article>
-
-<br />
-<br />
 <footer class="page-footer">
   <nav class="pagination">
-    
-    
-    
-    <span class="numFirst">
-        <a class="pageFirst" href="https://csqread.top/posts/tech/">1</a>
-      </span>
-    &nbsp;...&nbsp;
-    <span class="numPrev">
-            <a class="pagePrev" href="https://csqread.top/posts/tech/page/3/">3</a>
-          </span>
-
-    <span class="pageNum">
-      <a class="pageNow" href="https://csqread.top/posts/tech/page/4/">4</a>
-    </span>
-    <span class="numLast">
-        <a class="pageLast" href="https://csqread.top/posts/tech/page/5/">5</a>
-      </span>
-
-    
-    
-    
+    <a class="prev" href="https://csqread.top/posts/tech/page/3/">
+      «&nbsp;Prev&nbsp;3/6
+    </a>
+    <a class="next" href="https://csqread.top/posts/tech/page/5/">Next&nbsp;5/6&nbsp;»
+    </a>
   </nav>
 </footer>
-
-<br />
     </main>
     
 <footer class="footer">
-    <span>&copy; 2026 <a href="https://csqread.top">Qian&#39;s Blog</a></span>
+        <span>&copy; 2026 <a href="https://csqread.top/">Qian&#39;s Blog</a></span> · 
+
+    
+    
     <span>
         Powered by
-        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://gohugo.io/?utm_source=papermod" rel="noopener" target="_blank">Hugo</a> &
         <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
     </span>
 </footer>
-<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
-        <path d="M12 6H0l6-6z" />
+<a href="#top" id="top-link" class="top-link hidden" aria-label="go to top" title="Go to Top (Alt + G)" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+        stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevrons-up">
+        <polyline points="17 11 12 6 7 11"></polyline>
+        <polyline points="17 18 12 13 7 18"></polyline>
     </svg>
 </a>
 
 <script>
-    let menu = document.getElementById('menu')
+    let menu = document.getElementById('menu');
     if (menu) {
-        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        
+        const scrollPosition = localStorage.getItem("menu-scroll-position");
+        if (scrollPosition) {
+            menu.scrollLeft = parseInt(scrollPosition, 10);
+        }
+        
         menu.onscroll = function () {
             localStorage.setItem("menu-scroll-position", menu.scrollLeft);
         }
@@ -543,25 +428,25 @@
 
 </script>
 <script>
-    var mybutton = document.getElementById("top-link");
+    var toplink = document.getElementById("top-link");
     window.onscroll = function () {
-        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
-            mybutton.style.visibility = "visible";
-            mybutton.style.opacity = "1";
+        const scrollThreshold = window.innerHeight;
+        if (document.body.scrollTop > scrollThreshold || document.documentElement.scrollTop > scrollThreshold) {
+            toplink.classList.remove("hidden");
         } else {
-            mybutton.style.visibility = "hidden";
-            mybutton.style.opacity = "0";
+            toplink.classList.add("hidden");
         }
     };
 
 </script>
 <script>
     document.getElementById("theme-toggle").addEventListener("click", () => {
-        if (document.body.className.includes("dark")) {
-            document.body.classList.remove('dark');
+        const html = document.querySelector("html");
+        if (html.dataset.theme === "dark") {
+            html.dataset.theme = 'light';
             localStorage.setItem("pref-theme", 'light');
         } else {
-            document.body.classList.add('dark');
+            html.dataset.theme = 'dark';
             localStorage.setItem("pref-theme", 'dark');
         }
     })

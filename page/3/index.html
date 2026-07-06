@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto" data-theme="auto">
+
+<head>
+	<meta name="generator" content="Hugo 0.163.3"><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>Qian&#39;s Blog</title>
+
+<meta name="description" content="">
+<meta name="author" content="">
+<link rel="canonical" href="https://csqread.top/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.css" rel="preload stylesheet" as="style">
+<link rel="icon" href="https://csqread.top/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://csqread.top/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://csqread.top/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://csqread.top/apple-touch-icon.png">
+<link rel="mask-icon" href="https://csqread.top/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" type="application/rss+xml" href="https://csqread.top/index.xml" title="rss">
+<link rel="alternate" type="application/json" href="https://csqread.top/index.json" title="json">
+<link rel="alternate" hreflang="en" href="https://csqread.top/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+                color-scheme: dark;
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .toc {
+                background: var(--entry);
+            }
+        }
+
+    </style>
+</noscript>
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.querySelector("html").dataset.theme = 'dark';
+    } else if (localStorage.getItem("pref-theme") === "light") {
+       document.querySelector("html").dataset.theme = 'light';
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.querySelector("html").dataset.theme = 'dark';
+    } else {
+        document.querySelector("html").dataset.theme = 'light';
+    }
+
+</script><meta property="og:url" content="https://csqread.top/">
+  <meta property="og:site_name" content="Qian&#39;s Blog">
+  <meta property="og:title" content="Qian&#39;s Blog">
+  <meta property="og:locale" content="zh_cn">
+  <meta property="og:type" content="website">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Qian&#39;s Blog">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "Qian's Blog",
+  "url": "https://csqread.top/",
+  "description": "",
+  "logo": "https://csqread.top/favicon.ico",
+  "sameAs": [
+      "https://github.com/xiaoqianbaobao", "https://twitter.com/@naughty_qian", "/img/QQ.jpg", "/img/WeChat.jpg", "mailto:chenshengqian2020@gmail.com", "/index.xml"
+  ]
+}
+</script>
+</head>
+<body class="list" id="top">
+    <header class="header">
+    <nav class="header-nav">
+        <div class="logo">
+            <a href="https://csqread.top/" accesskey="h" title="Qian&#39;s Blog (Alt + H)">
+                <img src="https://csqread.top/img/Q.gif" alt="" aria-label="logo"
+                    height="35">Qian&#39;s Blog</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" class="theme-toggle" accesskey="t" title="(Alt + T)" aria-label="Toggle theme">
+                    <svg class="moon" xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg class="sun" xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu" class="menu">
+            <li>
+                <a href="https://csqread.top/search" title="??搜索 (Alt &#43; /)" accesskey=/>
+                    <span>??搜索</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://csqread.top/posts" title="??文章">
+                    <span>??文章</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://csqread.top/archives/" title="??时间轴">
+                    <span>??时间轴</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://csqread.top/tags" title="??标签">
+                    <span>??标签</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://csqread.top/about" title="???‍♂?关于">
+                    <span>???‍♂?关于</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://csqread.top/links" title="??友链">
+                    <span>??友链</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://csqread.top/posts/blog" title="??博客">
+                    <span>??博客</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://csqread.top/posts/tech" title="???‍?技术">
+                    <span>???‍?技术</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://csqread.top/posts/read" title="??阅读-电影">
+                    <span>??阅读-电影</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://csqread.top/posts/life" title="??生活">
+                    <span>??生活</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main"> 
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">关于MVCC的一些理解
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>Mysql MVCC机制我的一些理解
+什么是MVCC? MVCC 全称是 Multi-Version Concurrency Control, 即多版本并发控制。MVCC 在Mysql的 InnoDB中的实现主要是为了提高数据库并发性能，用更好的方式去处理读-写冲突，做到即使有读写冲突时，也能做到不加锁，非阻塞并发读.
+...</p>
+  </div>
+  <footer class="entry-footer">
+
+<span title='2024-03-25 00:01:28 +0800 CST'>March 25, 2024</span>&nbsp;·&nbsp;<span>2 min</span></footer>
+  <a class="entry-link" aria-label="post link to 关于MVCC的一些理解" href="https://csqread.top/posts/tech/%E5%85%B3%E4%BA%8Emvcc%E7%9A%84%E4%B8%80%E4%BA%9B%E7%90%86%E8%A7%A3/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">DDIA
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>第一章：可靠性，可扩展性，可维护性
+1.1 关于数据系统的思考 单个工具已经不能满足应用系统的需求，总体工作被拆分成一系列能被单个工具高效完成的任务，并通过应用代码将它们缝合起来。比如一个缓存、索引、数据库协作的例子：
+...</p>
+  </div>
+  <footer class="entry-footer">
+
+<span title='2024-03-08 18:03:04 +0800 CST'>March 8, 2024</span>&nbsp;·&nbsp;<span>180 min</span></footer>
+  <a class="entry-link" aria-label="post link to DDIA" href="https://csqread.top/posts/tech/ddia/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">读米兰 昆德拉《不能承受的生命之轻》有感
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>春节在家，我和胡小蕊约定每人读完一本书，我们在家里的书架上翻找。因为我在上海正在看米兰-昆德拉的《身份》，所以找到了这本《不能承受的生命之轻》来读。这本书是从胡小蕊家带过来的，我并没有买这本书。书页都已经泛黄，看起来是被翻过很多遍似的。这本书可能是高中生喜欢用来写作文摘抄句子材料的书。但是我高中的时候并没有接触到这本书，也不知道米兰昆德拉。
+...</p>
+  </div>
+  <footer class="entry-footer">
+
+<span title='2024-02-21 23:35:31 +0800 CST'>February 21, 2024</span>&nbsp;·&nbsp;<span>8 min</span></footer>
+  <a class="entry-link" aria-label="post link to 读米兰 昆德拉《不能承受的生命之轻》有感" href="https://csqread.top/posts/read/%E8%AF%BB%E7%B1%B3%E5%85%B0-%E6%98%86%E5%BE%B7%E6%8B%89%E4%B8%8D%E8%83%BD%E6%89%BF%E5%8F%97%E7%9A%84%E7%94%9F%E5%91%BD%E4%B9%8B%E8%BD%BB%E6%9C%89%E6%84%9F/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">DDIA第十章
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>第十章：批处理
+本书的前九章，讨论的都是请求、查询，以及相应的响应和结果。是在线系统，关注响应时间。 三种不同类型的系统： 服务（在线系统） 处理客户的请求或指令。衡量指标：响应时间，可用性。 批处理系统（离线系统） 跑一个作业，处理大量的输入数据，定时运行。衡量指标：吞吐量。 流处理系统（准实时系统） 介于在线系统和离线系统之间。消费输入并产生输出（不需要响应请求），在事件发生不久就对事件进行操作。 本章讨论批处理系统。
+...</p>
+  </div>
+  <footer class="entry-footer">
+
+<span title='2024-02-21 22:58:16 +0800 CST'>February 21, 2024</span>&nbsp;·&nbsp;<span>35 min</span></footer>
+  <a class="entry-link" aria-label="post link to DDIA第十章" href="https://csqread.top/posts/tech/ddia%E7%AC%AC%E5%8D%81%E7%AB%A0/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">基于树莓派 Piwigo的家庭云相册
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>基于树莓派-piwigo/apache2 的家庭云相册搭建
+背景 近期由于拍摄了很多我和胡小蕊在一起的照片，包括生活照片和出去游玩的照片，所以想搞一个家庭云相册，可以用于实时同步手机中的照片到云相册上。因为考虑到公有云相册的隐私安全保障问题，以及我想自己DIY一些功能。还有就是自己的手机内存问题以及手机自带的云相册需要付费申请更大的空间，我不想付费。因此我想可以利用树莓派作为服务器，寻找一个开源的云相册管理系统自己部署到服务器上，最好是带有软件的开源云相册。找来找去发现了这款PiWigo云相册，详细请见： PIWIGO 官网，这里是github地址: PIWIGO github仓库
+...</p>
+  </div>
+  <footer class="entry-footer">
+
+<span title='2024-02-18 21:46:29 +0800 CST'>February 18, 2024</span>&nbsp;·&nbsp;<span>5 min</span></footer>
+  <a class="entry-link" aria-label="post link to 基于树莓派 Piwigo的家庭云相册" href="https://csqread.top/posts/tech/%E5%9F%BA%E4%BA%8E%E6%A0%91%E8%8E%93%E6%B4%BE-piwigo%E7%9A%84%E5%AE%B6%E5%BA%AD%E4%BA%91%E7%9B%B8%E5%86%8C/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">DDIA第九章
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>第九章：一致性与共识
+构建容错系统的最好方法，是找到一些带有实用保证的通用抽象，实现一次，然后让应用依赖这些保证。比如事务。 我们需要了解系统能力的边界：哪些可行，哪些不可行。
+...</p>
+  </div>
+  <footer class="entry-footer">
+
+<span title='2024-02-03 23:07:22 +0800 CST'>February 3, 2024</span>&nbsp;·&nbsp;<span>2 min</span></footer>
+  <a class="entry-link" aria-label="post link to DDIA第九章" href="https://csqread.top/posts/tech/ddia%E7%AC%AC%E4%B9%9D%E7%AB%A0/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">DDIA第八章
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>第八章： 分布式系统的挑战 分布式系统面临哪些挑战？ ● 前面几章讨论的副本故障切换、复制延迟、事务控制； ● 本章讨论的不可靠网络、时钟和时序问题等等； ● 我们的假设：任何可能出错的东西都会出错。
+...</p>
+  </div>
+  <footer class="entry-footer">
+
+<span title='2024-01-19 20:34:59 +0800 CST'>January 19, 2024</span>&nbsp;·&nbsp;<span>22 min</span></footer>
+  <a class="entry-link" aria-label="post link to DDIA第八章" href="https://csqread.top/posts/tech/ddia%E7%AC%AC%E5%85%AB%E7%AB%A0/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">读《小岛经济学》有感
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>没有供应，美元就是废纸
+美元和鱼挂钩的故事 上个周末花了一个下午把《小岛经济学》这本书看完了。这本书讲的非常有意思，由浅入深的带你了解经济学的一点基本知识。不过，我觉得也只能用来图一乐，并不能代表主流看法。实际上学习经济学我觉得还是需要把一些基础理论过一遍。比如曼昆的《经济学原理》，这本书也是我最近正在看的。
+...</p>
+  </div>
+  <footer class="entry-footer">
+
+<span title='2024-01-16 21:15:36 +0800 CST'>January 16, 2024</span>&nbsp;·&nbsp;<span>5 min</span></footer>
+  <a class="entry-link" aria-label="post link to 读《小岛经济学》有感" href="https://csqread.top/posts/read/%E8%AF%BB%E5%B0%8F%E5%B2%9B%E7%BB%8F%E6%B5%8E%E5%AD%A6%E6%9C%89%E6%84%9F/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">家乡中老年人收入调查分析报告
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>背景
+原因 首先说明一下相关背景，因为最近整个社会对于经济预期不高，整体经济出现通缩迹象，楼市萎靡不振，各个城市的楼价出现不同程度的下滑。因此在各大机构和个人媒体中都充斥着各种经济分析的视频与文章。但是这些与我的实际生活其实相差比遥远。所以，我想对我身边农村的中老年人收入做一个分析。看看现在的中老年人的收入来源有哪些，他们不在大城市，又面临着即将过退休年龄与过退休年龄的问题。他们的基本的经济生活状况如何得到保证呢？
+...</p>
+  </div>
+  <footer class="entry-footer">
+
+<span title='2024-01-14 12:45:08 +0800 CST'>January 14, 2024</span>&nbsp;·&nbsp;<span>3 min</span></footer>
+  <a class="entry-link" aria-label="post link to 家乡中老年人收入调查分析报告" href="https://csqread.top/posts/life/%E5%AE%B6%E4%B9%A1%E4%B8%AD%E8%80%81%E5%B9%B4%E4%BA%BA%E6%94%B6%E5%85%A5%E8%B0%83%E6%9F%A5%E5%88%86%E6%9E%90%E6%8A%A5%E5%91%8A/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">关于Java String如何提升性能
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>String 如何提升性能？ 这几天我在看《Effective Java》,其中有一章提到我们在使用String的时候要慎用正则表达式，因为在注重性能的场景，这种方法不适用。我不懂是个什么情况，就去google了一下。于是把所有相关String的操作全部了解了一遍，也算是大概明白了为什么要慎用正则表达式。因此也来做个记录
+...</p>
+  </div>
+  <footer class="entry-footer">
+
+<span title='2024-01-14 10:51:28 +0800 CST'>January 14, 2024</span>&nbsp;·&nbsp;<span>7 min</span></footer>
+  <a class="entry-link" aria-label="post link to 关于Java String如何提升性能" href="https://csqread.top/posts/tech/%E5%85%B3%E4%BA%8Ejava-string%E5%A6%82%E4%BD%95%E6%8F%90%E5%8D%87%E6%80%A7%E8%83%BD/"></a>
+</article>
+<footer class="page-footer">
+  <nav class="pagination">
+    <a class="prev" href="https://csqread.top/page/2/">
+      «&nbsp;Prev&nbsp;2/7
+    </a>
+    <a class="next" href="https://csqread.top/page/4/">Next&nbsp;4/7&nbsp;»
+    </a>
+  </nav>
+</footer>
+    </main>
+    
+<footer class="footer">
+        <span>&copy; 2026 <a href="https://csqread.top/">Qian&#39;s Blog</a></span> · 
+
+    
+    
+    <span>
+        Powered by
+        <a href="https://gohugo.io/?utm_source=papermod" rel="noopener" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" id="top-link" class="top-link hidden" aria-label="go to top" title="Go to Top (Alt + G)" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+        stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevrons-up">
+        <polyline points="17 11 12 6 7 11"></polyline>
+        <polyline points="17 18 12 13 7 18"></polyline>
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu');
+    if (menu) {
+        
+        const scrollPosition = localStorage.getItem("menu-scroll-position");
+        if (scrollPosition) {
+            menu.scrollLeft = parseInt(scrollPosition, 10);
+        }
+        
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var toplink = document.getElementById("top-link");
+    window.onscroll = function () {
+        const scrollThreshold = window.innerHeight;
+        if (document.body.scrollTop > scrollThreshold || document.documentElement.scrollTop > scrollThreshold) {
+            toplink.classList.remove("hidden");
+        } else {
+            toplink.classList.add("hidden");
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        const html = document.querySelector("html");
+        if (html.dataset.theme === "dark") {
+            html.dataset.theme = 'light';
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            html.dataset.theme = 'dark';
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+</body>
+
+</html>

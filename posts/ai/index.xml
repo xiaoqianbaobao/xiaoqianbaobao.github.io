@@ -4,7 +4,8 @@
     <title>AI on Qian&#39;s Blog</title>
     <link>https://csqread.top/posts/ai/</link>
     <description>Recent content in AI on Qian&#39;s Blog</description>
-    <generator>Hugo -- gohugo.io</generator>
-    <language>zh-cn</language><atom:link href="https://csqread.top/posts/ai/index.xml" rel="self" type="application/rss+xml" />
+    <generator>Hugo</generator>
+    <language>zh-cn</language>
+    <atom:link href="https://csqread.top/posts/ai/index.xml" rel="self" type="application/rss+xml" />
   </channel>
 </rss>

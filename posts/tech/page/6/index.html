@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" dir="auto">
+<html lang="en" dir="auto" data-theme="auto">
 
 <head><meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -8,18 +8,18 @@
 <title>技术 | Qian&#39;s Blog</title>
 <meta name="keywords" content="">
 <meta name="description" content="技术 - Qian&#39;s Blog">
-<meta name="author" content="
-作者:&nbsp;ShengQian">
+<meta name="author" content="">
 <link rel="canonical" href="https://csqread.top/posts/tech/">
-<link crossorigin="anonymous" href="/assets/css/stylesheet.d056c2d8b86c8da0db95897f49066a3a22d796d21ff6173ef98b613234e402fe.css" integrity="" rel="preload stylesheet" as="style">
-<link rel="icon" href="https://csqread.top/img/Q.gif">
-<link rel="icon" type="image/png" sizes="16x16" href="https://csqread.top/img/%21.jpg">
-<link rel="icon" type="image/png" sizes="32x32" href="https://csqread.top/img/%21.jpg">
-<link rel="apple-touch-icon" href="https://csqread.top/%21.jpg">
-<link rel="mask-icon" href="https://csqread.top/%21.jpg">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.css" rel="preload stylesheet" as="style">
+<link rel="icon" href="https://csqread.top/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://csqread.top/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://csqread.top/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://csqread.top/apple-touch-icon.png">
+<link rel="mask-icon" href="https://csqread.top/safari-pinned-tab.svg">
 <meta name="theme-color" content="#2e2e33">
 <meta name="msapplication-TileColor" content="#2e2e33">
-<link rel="alternate" type="application/rss+xml" href="https://csqread.top/posts/tech/index.xml">
+<link rel="alternate" type="application/rss+xml" href="https://csqread.top/posts/tech/index.xml" title="rss">
+<link rel="alternate" hreflang="en" href="https://csqread.top/posts/tech/">
 <noscript>
     <style>
         #theme-toggle,
@@ -37,49 +37,58 @@
                 --secondary: rgb(155, 156, 157);
                 --tertiary: rgb(65, 66, 68);
                 --content: rgb(196, 196, 197);
-                --hljs-bg: rgb(46, 46, 51);
+                --code-block-bg: rgb(46, 46, 51);
                 --code-bg: rgb(55, 56, 62);
                 --border: rgb(51, 51, 51);
+                color-scheme: dark;
             }
 
             .list {
                 background: var(--theme);
             }
 
-            .list:not(.dark)::-webkit-scrollbar-track {
-                background: 0 0;
-            }
-
-            .list:not(.dark)::-webkit-scrollbar-thumb {
-                border-color: var(--theme);
+            .toc {
+                background: var(--entry);
             }
         }
 
     </style>
-</noscript><meta property="og:title" content="技术" />
-<meta property="og:description" content="" />
-<meta property="og:type" content="website" />
-<meta property="og:url" content="https://csqread.top/posts/tech/" />
+</noscript>
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.querySelector("html").dataset.theme = 'dark';
+    } else if (localStorage.getItem("pref-theme") === "light") {
+       document.querySelector("html").dataset.theme = 'light';
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.querySelector("html").dataset.theme = 'dark';
+    } else {
+        document.querySelector("html").dataset.theme = 'light';
+    }
 
-<meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="技术"/>
-<meta name="twitter:description" content=""/>
+</script><meta property="og:url" content="https://csqread.top/posts/tech/">
+  <meta property="og:site_name" content="Qian&#39;s Blog">
+  <meta property="og:title" content="技术">
+  <meta property="og:locale" content="zh_cn">
+  <meta property="og:type" content="website">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="技术">
 
 
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "BreadcrumbList",
-  "itemListElement": [, 
+  "itemListElement": [
     {
       "@type": "ListItem",
-      "position":  2 ,
-      "name": "Posts",
+      "position":  1 ,
+      "name": "文章",
       "item": "https://csqread.top/posts/"
     }, 
     {
       "@type": "ListItem",
-      "position":  3 ,
+      "position":  2 ,
       "name": "技术",
       "item": "https://csqread.top/posts/tech/"
     }
@@ -87,33 +96,21 @@
 }
 </script>
 </head>
-
 <body class="list" id="top">
-<script>
-    if (localStorage.getItem("pref-theme") === "dark") {
-        document.body.classList.add('dark');
-    } else if (localStorage.getItem("pref-theme") === "light") {
-        document.body.classList.remove('dark')
-    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-        document.body.classList.add('dark');
-    }
-
-</script>
-
-<header class="header">
-    <nav class="nav">
+    <header class="header">
+    <nav class="header-nav">
         <div class="logo">
-            <a href="https://csqread.top" accesskey="h" title="Qian&#39;s Blog (Alt + H)">
-                <img src="https://csqread.top/img/%21.jpg" alt="" aria-label="logo"
+            <a href="https://csqread.top/" accesskey="h" title="Qian&#39;s Blog (Alt + H)">
+                <img src="https://csqread.top/img/Q.gif" alt="" aria-label="logo"
                     height="35">Qian&#39;s Blog</a>
             <div class="logo-switches">
-                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
-                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                <button id="theme-toggle" class="theme-toggle" accesskey="t" title="(Alt + T)" aria-label="Toggle theme">
+                    <svg class="moon" xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24"
                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                         stroke-linejoin="round">
                         <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
                     </svg>
-                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                    <svg class="sun" xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24"
                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                         stroke-linejoin="round">
                         <circle cx="12" cy="12" r="5"></circle>
@@ -129,200 +126,137 @@
                 </button>
             </div>
         </div>
-        <ul id="menu">
+        <ul id="menu" class="menu">
             <li>
-                <a href="https://csqread.top/search" title="🔍搜索">
-                    <span>🔍搜索</span>
+                <a href="https://csqread.top/search" title="??搜索 (Alt &#43; /)" accesskey=/>
+                    <span>??搜索</span>
                 </a>
             </li>
             <li>
-                <a href="https://csqread.top/" title="🏠主页">
-                    <span>🏠主页</span>
+                <a href="https://csqread.top/posts" title="??文章">
+                    <span>??文章</span>
                 </a>
             </li>
             <li>
-                <a href="https://csqread.top/posts" title="📚文章">
-                    <span>📚文章</span>
+                <a href="https://csqread.top/archives/" title="??时间轴">
+                    <span>??时间轴</span>
                 </a>
             </li>
             <li>
-                <a href="https://csqread.top/archives/" title="⏱时间轴">
-                    <span>⏱时间轴</span>
+                <a href="https://csqread.top/tags" title="??标签">
+                    <span>??标签</span>
                 </a>
             </li>
             <li>
-                <a href="https://csqread.top/tags" title="🔖标签">
-                    <span>🔖标签</span>
+                <a href="https://csqread.top/about" title="???‍♂?关于">
+                    <span>???‍♂?关于</span>
                 </a>
             </li>
             <li>
-                <a href="https://csqread.top/about" title="🙋🏻‍♂️关于">
-                    <span>🙋🏻‍♂️关于</span>
+                <a href="https://csqread.top/links" title="??友链">
+                    <span>??友链</span>
                 </a>
             </li>
             <li>
-                <a href="https://csqread.top/links" title="🤝友链">
-                    <span>🤝友链</span>
+                <a href="https://csqread.top/posts/blog" title="??博客">
+                    <span>??博客</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://csqread.top/posts/tech" title="???‍?技术">
+                    <span class="active">???‍?技术</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://csqread.top/posts/read" title="??阅读-电影">
+                    <span>??阅读-电影</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://csqread.top/posts/life" title="??生活">
+                    <span>??生活</span>
                 </a>
             </li>
         </ul>
     </nav>
 </header>
 <main class="main"> 
-<header class="page-header"><div class="breadcrumbs"><a href="https://csqread.top">主页</a>&nbsp;»&nbsp;<a href="https://csqread.top/posts/">Posts</a></div>
+<header class="page-header"><nav class="breadcrumbs" role="navigation" aria-label="Breadcrumb">
+            <a href="/">Home</a>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right">
+                <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+            <a href="/posts/">文章</a>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+        stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right">
+        <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+</nav>
   <h1>
     技术
+    <a href="/posts/tech/index.xml" title="RSS" aria-label="RSS">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+        stroke-linecap="round" stroke-linejoin="round" height="23">
+        <path d="M4 11a9 9 0 0 1 9 9" />
+        <path d="M4 4a16 16 0 0 1 16 16" />
+        <circle cx="5" cy="19" r="1" />
+      </svg>
+    </a>
   </h1>
 </header>
 
 <article class="post-entry"> 
   <header class="entry-header">
-    <h2>拼多多面经
+    <h2 class="entry-hint-parent">自定义我的QQ机器人
     </h2>
   </header>
   <div class="entry-content">
-    <p>面试题目 记录下社招面试拼多多的总结与心得，以及失败的原因吧。 1、服务注册是如何发现的，eureka的基本原理， 容器ip是动态的还是静态的 答：...</p>
+    <p>一直以来，我在想做一个qq机器人，能够实现qq消息的转发，因为对于失物招领工作，其他的都挺满意的，但每天发那么多消息确实很浪费时间，所以就想做一个能够实现自动转发消息的机器人。对于这个需求如何实现，我也构思了很久。这个想法是大二下学期就有的，但一直没有去实现。暑假的时候在家中自学了前端，准备做好一个失物招领网站，但那又是一个半吊子项目，网站并没有完全达到我想要的那种结果。现在来做一个博客，来详细说明我的机器人是如何实现的：
+...</p>
   </div>
   <footer class="entry-footer">
 
-
-
-
-
-
-
-
-
-
-创建:&nbsp;<span title='2023-03-12 20:59:03 +0800 CST'>2023-03-12</span>&nbsp;|&nbsp;更新:&nbsp;2023-03-12&nbsp;|&nbsp;字数:&nbsp;9302字&nbsp;|&nbsp;时长: 19分钟&nbsp;|&nbsp;
-作者:&nbsp;ShengQian</footer>
-  <a class="entry-link" aria-label="post link to 拼多多面经" href="https://csqread.top/posts/tech/%E6%8B%BC%E5%A4%9A%E5%A4%9A%E9%9D%A2%E7%BB%8F/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2>Java ArrayList源码分析与总结
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>ArrayList 1. 概览 实现了 RandomAccess 接口，因此支持随机访问。这是理所当然的，因为 ArrayList 是基于数组实现的。 1 2 public class ArrayList&lt;E&gt; extends AbstractList&lt;E&gt; implements List&lt;E&gt;, RandomAccess, Cloneable, java.io.Serializable 数组的默认大小为 10。 1 private static final int DEFAULT_CAPACITY =...</p>
-  </div>
-  <footer class="entry-footer">
-
-
-
-
-
-
-
-
-
-
-创建:&nbsp;<span title='2023-03-09 21:09:22 +0800 CST'>2023-03-09</span>&nbsp;|&nbsp;更新:&nbsp;2023-03-09&nbsp;|&nbsp;字数:&nbsp;1053字&nbsp;|&nbsp;时长: 3分钟&nbsp;|&nbsp;
-作者:&nbsp;ShengQian</footer>
-  <a class="entry-link" aria-label="post link to Java ArrayList源码分析与总结" href="https://csqread.top/posts/tech/java-arraylist%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90%E4%B8%8E%E6%80%BB%E7%BB%93/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2>分布式性能优化总结
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>缓存优化 1、对应参数表数据量如果小于10M，数据要同时缓存到Redis和本地，查询遵循的缓存原则为:优先查询本地缓存，本地没有查询Redis...</p>
-  </div>
-  <footer class="entry-footer">
-
-
-
-
-
-
-
-
-
-
-创建:&nbsp;<span title='2023-03-09 20:18:13 +0800 CST'>2023-03-09</span>&nbsp;|&nbsp;更新:&nbsp;2023-03-09&nbsp;|&nbsp;字数:&nbsp;1327字&nbsp;|&nbsp;时长: 3分钟&nbsp;|&nbsp;
-作者:&nbsp;ShengQian</footer>
-  <a class="entry-link" aria-label="post link to 分布式性能优化总结" href="https://csqread.top/posts/tech/%E5%88%86%E5%B8%83%E5%BC%8F%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E6%80%BB%E7%BB%93/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2>Java中的字符操作
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>字符操作 编码与解码 编码就是把字符转换为字节，而解码是把字节重新组合成字符。 如果编码和解码过程使用不同的编码方式那么就出现了乱码。 GBK 编码中，中...</p>
-  </div>
-  <footer class="entry-footer">
-
-
-
-
-
-
-
-
-
-
-创建:&nbsp;<span title='2023-03-07 20:33:00 +0800 CST'>2023-03-07</span>&nbsp;|&nbsp;更新:&nbsp;2023-03-07&nbsp;|&nbsp;字数:&nbsp;725字&nbsp;|&nbsp;时长: 2分钟&nbsp;|&nbsp;
-作者:&nbsp;ShengQian</footer>
-  <a class="entry-link" aria-label="post link to Java中的字符操作" href="https://csqread.top/posts/tech/java%E4%B8%AD%E7%9A%84%E5%AD%97%E7%AC%A6%E6%93%8D%E4%BD%9C/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2>Java锁优化相关笔记
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>自旋锁 互斥同步进入阻塞状态的开销都很大，应该尽量避免。在许多应用中，共享数据的锁定状态只会持续很短的一段时间。自旋锁的思想是让一个线程在请求...</p>
-  </div>
-  <footer class="entry-footer">
-
-
-
-
-
-
-
-
-
-
-创建:&nbsp;<span title='2023-03-06 20:50:47 +0800 CST'>2023-03-06</span>&nbsp;|&nbsp;更新:&nbsp;2023-03-06&nbsp;|&nbsp;字数:&nbsp;1617字&nbsp;|&nbsp;时长: 4分钟&nbsp;|&nbsp;
-作者:&nbsp;ShengQian</footer>
-  <a class="entry-link" aria-label="post link to Java锁优化相关笔记" href="https://csqread.top/posts/tech/java%E9%94%81%E4%BC%98%E5%8C%96%E7%9B%B8%E5%85%B3%E7%AC%94%E8%AE%B0/"></a>
+<span title='2018-09-16 17:08:14 +0800 CST'>September 16, 2018</span>&nbsp;·&nbsp;<span>8 min</span></footer>
+  <a class="entry-link" aria-label="post link to 自定义我的QQ机器人" href="https://csqread.top/posts/tech/%E8%87%AA%E5%AE%9A%E4%B9%89%E6%88%91%E7%9A%84qq%E6%9C%BA%E5%99%A8%E4%BA%BA/"></a>
 </article>
 <footer class="page-footer">
   <nav class="pagination">
     <a class="prev" href="https://csqread.top/posts/tech/page/5/">
-      «&nbsp;上一页&nbsp;
-    </a>
-    <a class="next" href="https://csqread.top/posts/tech/page/7/">下一页&nbsp;&nbsp;»
+      «&nbsp;Prev&nbsp;5/6
     </a>
   </nav>
 </footer>
     </main>
     
 <footer class="footer">
-    <span>&copy; 2024 <a href="https://csqread.top">Qian&#39;s Blog</a></span>
+        <span>&copy; 2026 <a href="https://csqread.top/">Qian&#39;s Blog</a></span> · 
+
+    
+    
     <span>
         Powered by
-        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://gohugo.io/?utm_source=papermod" rel="noopener" target="_blank">Hugo</a> &
         <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
     </span>
 </footer>
-<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
-        <path d="M12 6H0l6-6z" />
+<a href="#top" id="top-link" class="top-link hidden" aria-label="go to top" title="Go to Top (Alt + G)" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+        stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevrons-up">
+        <polyline points="17 11 12 6 7 11"></polyline>
+        <polyline points="17 18 12 13 7 18"></polyline>
     </svg>
 </a>
 
 <script>
-    let menu = document.getElementById('menu')
+    let menu = document.getElementById('menu');
     if (menu) {
-        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        
+        const scrollPosition = localStorage.getItem("menu-scroll-position");
+        if (scrollPosition) {
+            menu.scrollLeft = parseInt(scrollPosition, 10);
+        }
+        
         menu.onscroll = function () {
             localStorage.setItem("menu-scroll-position", menu.scrollLeft);
         }
@@ -349,25 +283,25 @@
 
 </script>
 <script>
-    var mybutton = document.getElementById("top-link");
+    var toplink = document.getElementById("top-link");
     window.onscroll = function () {
-        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
-            mybutton.style.visibility = "visible";
-            mybutton.style.opacity = "1";
+        const scrollThreshold = window.innerHeight;
+        if (document.body.scrollTop > scrollThreshold || document.documentElement.scrollTop > scrollThreshold) {
+            toplink.classList.remove("hidden");
         } else {
-            mybutton.style.visibility = "hidden";
-            mybutton.style.opacity = "0";
+            toplink.classList.add("hidden");
         }
     };
 
 </script>
 <script>
     document.getElementById("theme-toggle").addEventListener("click", () => {
-        if (document.body.className.includes("dark")) {
-            document.body.classList.remove('dark');
+        const html = document.querySelector("html");
+        if (html.dataset.theme === "dark") {
+            html.dataset.theme = 'light';
             localStorage.setItem("pref-theme", 'light');
         } else {
-            document.body.classList.add('dark');
+            html.dataset.theme = 'dark';
             localStorage.setItem("pref-theme", 'dark');
         }
     })

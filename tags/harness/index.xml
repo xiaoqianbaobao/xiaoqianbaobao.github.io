@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Harness on Qian&#39;s Blog</title>
+    <link>https://csqread.top/tags/harness/</link>
+    <description>Recent content in Harness on Qian&#39;s Blog</description>
+    <generator>Hugo</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Mon, 06 Jul 2026 14:00:00 +0800</lastBuildDate>
+    <atom:link href="https://csqread.top/tags/harness/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>DeerFlow Harness 深度拆解：Agent 运行时引擎的架构设计</title>
+      <link>https://csqread.top/posts/tech/deerflow-harness-deep-dive/</link>
+      <pubDate>Mon, 06 Jul 2026 14:00:00 +0800</pubDate>
+      <guid>https://csqread.top/posts/tech/deerflow-harness-deep-dive/</guid>
+      <description>从源码层面全面拆解 DeerFlow 的 Agent 运行时引擎 Harness，涵盖 14 层中间件链、两种部署模式、Checkpoint 持久化方案、M5 身份透传等核心架构设计。</description>
+    </item>
+  </channel>
+</rss>

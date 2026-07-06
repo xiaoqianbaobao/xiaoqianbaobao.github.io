@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto" data-theme="auto">
+
+<head>
+	<meta name="generator" content="Hugo 0.163.3"><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>Qian&#39;s Blog</title>
+
+<meta name="description" content="">
+<meta name="author" content="">
+<link rel="canonical" href="https://csqread.top/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.css" rel="preload stylesheet" as="style">
+<link rel="icon" href="https://csqread.top/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://csqread.top/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://csqread.top/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://csqread.top/apple-touch-icon.png">
+<link rel="mask-icon" href="https://csqread.top/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" type="application/rss+xml" href="https://csqread.top/index.xml" title="rss">
+<link rel="alternate" type="application/json" href="https://csqread.top/index.json" title="json">
+<link rel="alternate" hreflang="en" href="https://csqread.top/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+                color-scheme: dark;
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .toc {
+                background: var(--entry);
+            }
+        }
+
+    </style>
+</noscript>
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.querySelector("html").dataset.theme = 'dark';
+    } else if (localStorage.getItem("pref-theme") === "light") {
+       document.querySelector("html").dataset.theme = 'light';
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.querySelector("html").dataset.theme = 'dark';
+    } else {
+        document.querySelector("html").dataset.theme = 'light';
+    }
+
+</script><meta property="og:url" content="https://csqread.top/">
+  <meta property="og:site_name" content="Qian&#39;s Blog">
+  <meta property="og:title" content="Qian&#39;s Blog">
+  <meta property="og:locale" content="zh_cn">
+  <meta property="og:type" content="website">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Qian&#39;s Blog">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "Qian's Blog",
+  "url": "https://csqread.top/",
+  "description": "",
+  "logo": "https://csqread.top/favicon.ico",
+  "sameAs": [
+      "https://github.com/xiaoqianbaobao", "https://twitter.com/@naughty_qian", "/img/QQ.jpg", "/img/WeChat.jpg", "mailto:chenshengqian2020@gmail.com", "/index.xml"
+  ]
+}
+</script>
+</head>
+<body class="list" id="top">
+    <header class="header">
+    <nav class="header-nav">
+        <div class="logo">
+            <a href="https://csqread.top/" accesskey="h" title="Qian&#39;s Blog (Alt + H)">
+                <img src="https://csqread.top/img/Q.gif" alt="" aria-label="logo"
+                    height="35">Qian&#39;s Blog</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" class="theme-toggle" accesskey="t" title="(Alt + T)" aria-label="Toggle theme">
+                    <svg class="moon" xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg class="sun" xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu" class="menu">
+            <li>
+                <a href="https://csqread.top/search" title="??搜索 (Alt &#43; /)" accesskey=/>
+                    <span>??搜索</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://csqread.top/posts" title="??文章">
+                    <span>??文章</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://csqread.top/archives/" title="??时间轴">
+                    <span>??时间轴</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://csqread.top/tags" title="??标签">
+                    <span>??标签</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://csqread.top/about" title="???‍♂?关于">
+                    <span>???‍♂?关于</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://csqread.top/links" title="??友链">
+                    <span>??友链</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://csqread.top/posts/blog" title="??博客">
+                    <span>??博客</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://csqread.top/posts/tech" title="???‍?技术">
+                    <span>???‍?技术</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://csqread.top/posts/read" title="??阅读-电影">
+                    <span>??阅读-电影</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://csqread.top/posts/life" title="??生活">
+                    <span>??生活</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main"> 
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">DDIA第七章
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>第七章：事务
+为什么有事务？ ● 分布式数据系统，可能会出各种错误。 ● 实现容错机制工作量巨大。需要仔细考虑所有可能出错的事情，并进行大量的测试，以确保解决方案真正管用。 ● 数十年来，事务（transaction） 一直是简化这些问题的首选机制。 什么是事务？ ● 事务是应用程序将多个读写操作组合成一个逻辑单元的一种方式。 ● 从概念上讲，事务中的所有读写操作被视作单个操作来执行： ○ 整个事务要么成功（提交（commit））要么失败（中止（abort），回滚（rollback））。 ○ 如果失败，应用程序可以安全地重试。 ○ 对于事务来说，应用程序的错误处理变得简单多了，因为它不用再担心部分失败的情况了，即某些操作成功，某些失败（无论出于何种原因）。 事务是天然存在的吗？ ● 不是天然存在，是为了简化应用编程模型而创建的。 ● 给应用程序提供了安全保证。 事务必须存在吗？ ● 不是所有应用都要有事务 ● 有时候弱化事务保证、或完全放弃事务也是有好处的（例如，为了获得更高性能或更高可用性）。 ● 一些安全属性也可以在没有事务的情况下实现。 怎样知道你是否需要事务？ ● 首先需要确切理解事务可以提供的安全保障，以及它们的代价。 ● 尽管乍看事务似乎很简单，但实际上有许多微妙但重要的细节在起作用。
+...</p>
+  </div>
+  <footer class="entry-footer">
+
+<span title='2024-01-12 00:01:09 +0800 CST'>January 12, 2024</span>&nbsp;·&nbsp;<span>38 min</span></footer>
+  <a class="entry-link" aria-label="post link to DDIA第七章" href="https://csqread.top/posts/tech/ddia%E7%AC%AC%E4%B8%83%E7%AB%A0/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">DDIA第六章
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>第六章: 分区
+什么是分区？ ● 对于非常大的数据集，或非常高的吞吐量，仅仅进行复制是不够的：我们需要将数据进行分区（partitions），也称为分片（sharding）。 ● 通常情况下，每条数据（每条记录，每行或每个文档）属于且仅属于一个分区。 ● 每个分区都是自己的小型数据库，尽管数据库可能支持同时进行多个分区的操作。 分区的优点？ ● 分区主要是为了可伸缩性。 ● 大数据集可以分布在多个磁盘上，并且查询负载可以分布在多个处理器上。 ● 单个分区上运行的查询，每个节点可以独立执行对自己的查询，因此可以通过添加更多的节点来扩大查询吞吐量。 ● 大型、复杂的查询可能会跨越多个节点并行处理，尽管这也带来了新的困难。 本章内容 ● 分割大型数据集的不同方法 ● 索引如何与分区配合 ● 分区再平衡 ● 数据库如何路由到正确的分区
+...</p>
+  </div>
+  <footer class="entry-footer">
+
+<span title='2023-10-25 22:01:54 +0800 CST'>October 25, 2023</span>&nbsp;·&nbsp;<span>13 min</span></footer>
+  <a class="entry-link" aria-label="post link to DDIA第六章" href="https://csqread.top/posts/tech/ddia%E7%AC%AC%E5%85%AD%E7%AB%A0/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">听老妈算命感想
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>听算命的一些感想 由于最近国庆订了婚，我家老母亲就想着去给我算个命，看看我和胡小蕊合不合。我也一直催着赶紧去给我们算，别耽误我们的时间，所以今天一大早她五点多就给我发消息问我胡小蕊的出生时辰，我没听到，就打电话给我，我还是睡眼朦胧的状态，极其不耐烦的回答了她。
+...</p>
+  </div>
+  <footer class="entry-footer">
+
+<span title='2023-10-08 20:39:44 +0800 CST'>October 8, 2023</span>&nbsp;·&nbsp;<span>4 min</span></footer>
+  <a class="entry-link" aria-label="post link to 听老妈算命感想" href="https://csqread.top/posts/life/%E5%90%AC%E8%80%81%E5%A6%88%E7%AE%97%E5%91%BD%E6%84%9F%E6%83%B3/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">蚌埠之旅
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>中秋国庆·蚌埠
+活动 蚌精 一年一度的中秋国庆假期来临，这次我的目的地是蚌埠，一个曾经的安徽第三大城市。
+从上海到蚌埠只要两个小时，虽然上海到安庆和上海到蚌埠的距离是一样的，但是京沪高铁就是不一样。上海回安庆要四个小时，哎，没办法，谁让他们是京爷和沪爷呢。不过，从理性的角度来分析下，上海到蚌埠中间仅仅停靠三站，而且都是大平原地区，时速非常快，而到安庆的后半段基本上是山区，而且要停靠很多站，所以导致时速非常慢。
+...</p>
+  </div>
+  <footer class="entry-footer">
+
+<span title='2023-10-06 16:39:55 +0800 CST'>October 6, 2023</span>&nbsp;·&nbsp;<span>4 min</span></footer>
+  <a class="entry-link" aria-label="post link to 蚌埠之旅" href="https://csqread.top/posts/life/%E8%9A%8C%E5%9F%A0%E4%B9%8B%E6%97%85/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">深入理解Java虚拟机系列读书笔记计划
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>这是一个计划
+其实这本书我已经看了两遍了，只能说第二次比第一次收获更多，可能是第二次读的时候是已经工作了一段时间，读起来再也不是纸上谈兵，而是能够联系到工作上的实际场景，脑子中有了图像。但是这本案牍之书，读两遍肯定是远远不够的。因此最近我想开始读第三遍，这个时候边读边做一个读书笔记以此来鞭策自己，能够真的深入理解JVM。
+...</p>
+  </div>
+  <footer class="entry-footer">
+
+<span title='2023-09-21 18:53:11 +0800 CST'>September 21, 2023</span>&nbsp;·&nbsp;<span>1 min</span></footer>
+  <a class="entry-link" aria-label="post link to 深入理解Java虚拟机系列读书笔记计划" href="https://csqread.top/posts/tech/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3java%E8%99%9A%E6%8B%9F%E6%9C%BA%E7%B3%BB%E5%88%97%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%E8%AE%A1%E5%88%92/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">DDIA第五章
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>第五章：数据复制
+复制的目的：
+● 使得数据与用户在地理上接近（从而减少延迟）
+● 即使系统的一部分出现故障，系统也能继续工作（从而提高可用性）
+● 伸缩可以接受读请求的机器数量（从而提高读取吞吐量） 如果复制的数据不会随时间而改变，那复制就很简单：复制一次即可。 复制的难点在于复制数据的变更。 三种流行的变更复制算法：
+...</p>
+  </div>
+  <footer class="entry-footer">
+
+<span title='2023-09-20 21:18:15 +0800 CST'>September 20, 2023</span>&nbsp;·&nbsp;<span>21 min</span></footer>
+  <a class="entry-link" aria-label="post link to DDIA第五章" href="https://csqread.top/posts/tech/ddia%E7%AC%AC%E4%BA%94%E7%AB%A0/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">又一次的刷机之旅
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>最近有一些原因，导致我想把我的小米11Ultra刷个MIUI GLOBAL， 想起来上一次刷机还是在大学的时候用的redmi k20 pro, 当时只是为了获取到root权限然后使用模拟定位打卡软件避免早起跑操打卡。
+...</p>
+  </div>
+  <footer class="entry-footer">
+
+<span title='2023-09-19 23:28:25 +0800 CST'>September 19, 2023</span>&nbsp;·&nbsp;<span>2 min</span></footer>
+  <a class="entry-link" aria-label="post link to 又一次的刷机之旅" href="https://csqread.top/posts/tech/%E5%8F%88%E4%B8%80%E6%AC%A1%E7%9A%84%E5%88%B7%E6%9C%BA%E4%B9%8B%E6%97%85/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">DDIA第四章
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>第四章：数据编码与演化 应用程序总是增增改改。 修改程序大多数情况下也在修改存储的数据。
+关系数据库通常假定数据库中的所有数据都遵循一个模式：尽管可以更改该模式（通过模式迁移，即ALTER语句），但是在任何时间点都有且仅有一个正确的模式。
+...</p>
+  </div>
+  <footer class="entry-footer">
+
+<span title='2023-08-28 22:07:57 +0800 CST'>August 28, 2023</span>&nbsp;·&nbsp;<span>15 min</span></footer>
+  <a class="entry-link" aria-label="post link to DDIA第四章" href="https://csqread.top/posts/tech/ddia%E7%AC%AC%E5%9B%9B%E7%AB%A0/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">单向度的人
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>单向度的人：探寻马尔库塞的思想之旅
+单向度社会：异化与标准化 《单向度的人》于20世纪60年代问世，正值工业和科技带来的变革迅猛发展。然而，马尔库塞并不乐观，他提出了“单向度”的概念，指的是人们的思想、欲望和行为受到同质化、标准化的社会结构制约，使个体丧失多样性和独立性。在单向度社会中，个体日益成为机械的、被规范化的社会工具，从而失去了真正的自由。
+...</p>
+  </div>
+  <footer class="entry-footer">
+
+<span title='2023-08-15 22:09:48 +0800 CST'>August 15, 2023</span>&nbsp;·&nbsp;<span>5 min</span></footer>
+  <a class="entry-link" aria-label="post link to 单向度的人" href="https://csqread.top/posts/read/%E5%8D%95%E5%90%91%E5%BA%A6%E7%9A%84%E4%BA%BA/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">DDIA第三章
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>第三章：存储与检索
+本章介绍了传统关系型数据库与“NoSQL”数据库的存储引擎。 我们会研究两大类存储引擎：日志结构（log-structured） 的存储引擎，以及面向页面（page-oriented） 的存储引擎（例如B树）。
+...</p>
+  </div>
+  <footer class="entry-footer">
+
+<span title='2023-08-15 21:26:51 +0800 CST'>August 15, 2023</span>&nbsp;·&nbsp;<span>21 min</span></footer>
+  <a class="entry-link" aria-label="post link to DDIA第三章" href="https://csqread.top/posts/tech/ddia%E7%AC%AC%E4%B8%89%E7%AB%A0/"></a>
+</article>
+<footer class="page-footer">
+  <nav class="pagination">
+    <a class="prev" href="https://csqread.top/page/3/">
+      «&nbsp;Prev&nbsp;3/7
+    </a>
+    <a class="next" href="https://csqread.top/page/5/">Next&nbsp;5/7&nbsp;»
+    </a>
+  </nav>
+</footer>
+    </main>
+    
+<footer class="footer">
+        <span>&copy; 2026 <a href="https://csqread.top/">Qian&#39;s Blog</a></span> · 
+
+    
+    
+    <span>
+        Powered by
+        <a href="https://gohugo.io/?utm_source=papermod" rel="noopener" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" id="top-link" class="top-link hidden" aria-label="go to top" title="Go to Top (Alt + G)" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+        stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevrons-up">
+        <polyline points="17 11 12 6 7 11"></polyline>
+        <polyline points="17 18 12 13 7 18"></polyline>
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu');
+    if (menu) {
+        
+        const scrollPosition = localStorage.getItem("menu-scroll-position");
+        if (scrollPosition) {
+            menu.scrollLeft = parseInt(scrollPosition, 10);
+        }
+        
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var toplink = document.getElementById("top-link");
+    window.onscroll = function () {
+        const scrollThreshold = window.innerHeight;
+        if (document.body.scrollTop > scrollThreshold || document.documentElement.scrollTop > scrollThreshold) {
+            toplink.classList.remove("hidden");
+        } else {
+            toplink.classList.add("hidden");
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        const html = document.querySelector("html");
+        if (html.dataset.theme === "dark") {
+            html.dataset.theme = 'light';
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            html.dataset.theme = 'dark';
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+</body>
+
+</html>

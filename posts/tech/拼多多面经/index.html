@@ -1,26 +1,24 @@
 <!DOCTYPE html>
-<html lang="zh" dir="auto">
+<html lang="en" dir="auto" data-theme="auto">
 
 <head><meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="robots" content="index, follow">
 <title>拼多多面经 | Qian&#39;s Blog</title>
-<meta name="keywords" content="面试, 面试经验与总结">
+<meta name="keywords" content="">
 <meta name="description" content="拼多多社招面试总结">
-<meta name="author" content="
-作者:&nbsp;ShengQian">
+<meta name="author" content="">
 <link rel="canonical" href="https://csqread.top/posts/tech/%E6%8B%BC%E5%A4%9A%E5%A4%9A%E9%9D%A2%E7%BB%8F/">
-<link crossorigin="anonymous" href="/assets/css/stylesheet.1304ba2a97d1ed976f43dcc4aec65464735b44589d091030cdd2873f2234b886.css" integrity="" rel="preload stylesheet" as="style">
-<script defer crossorigin="anonymous" src="/assets/js/highlight.acb54fd32bbc1982428b8850317e45d076b95012730a5936667e6bc21777692a.js" integrity=""
-    onload="hljs.initHighlightingOnLoad();"></script>
-<link rel="icon" href="https://csqread.top/img/Q.gif">
-<link rel="icon" type="image/png" sizes="16x16" href="https://csqread.top/img/%21.jpg">
-<link rel="icon" type="image/png" sizes="32x32" href="https://csqread.top/img/%21.jpg">
-<link rel="apple-touch-icon" href="https://csqread.top/%21.jpg">
-<link rel="mask-icon" href="https://csqread.top/%21.jpg">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.css" rel="preload stylesheet" as="style">
+<link rel="icon" href="https://csqread.top/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://csqread.top/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://csqread.top/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://csqread.top/apple-touch-icon.png">
+<link rel="mask-icon" href="https://csqread.top/safari-pinned-tab.svg">
 <meta name="theme-color" content="#2e2e33">
 <meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="https://csqread.top/posts/tech/%E6%8B%BC%E5%A4%9A%E5%A4%9A%E9%9D%A2%E7%BB%8F/">
 <noscript>
     <style>
         #theme-toggle,
@@ -38,57 +36,69 @@
                 --secondary: rgb(155, 156, 157);
                 --tertiary: rgb(65, 66, 68);
                 --content: rgb(196, 196, 197);
-                --hljs-bg: rgb(46, 46, 51);
+                --code-block-bg: rgb(46, 46, 51);
                 --code-bg: rgb(55, 56, 62);
                 --border: rgb(51, 51, 51);
+                color-scheme: dark;
             }
 
             .list {
                 background: var(--theme);
             }
 
-            .list:not(.dark)::-webkit-scrollbar-track {
-                background: 0 0;
-            }
-
-            .list:not(.dark)::-webkit-scrollbar-thumb {
-                border-color: var(--theme);
+            .toc {
+                background: var(--entry);
             }
         }
 
     </style>
-</noscript><meta property="og:title" content="拼多多面经" />
-<meta property="og:description" content="拼多多社招面试总结" />
-<meta property="og:type" content="article" />
-<meta property="og:url" content="https://csqread.top/posts/tech/%E6%8B%BC%E5%A4%9A%E5%A4%9A%E9%9D%A2%E7%BB%8F/" /><meta property="article:section" content="posts" />
-<meta property="article:published_time" content="2023-03-12T20:59:03+08:00" />
-<meta property="article:modified_time" content="2023-03-12T20:59:03+08:00" />
+</noscript>
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.querySelector("html").dataset.theme = 'dark';
+    } else if (localStorage.getItem("pref-theme") === "light") {
+       document.querySelector("html").dataset.theme = 'light';
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.querySelector("html").dataset.theme = 'dark';
+    } else {
+        document.querySelector("html").dataset.theme = 'light';
+    }
 
-<meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="拼多多面经"/>
-<meta name="twitter:description" content="拼多多社招面试总结"/>
+</script><meta property="og:url" content="https://csqread.top/posts/tech/%E6%8B%BC%E5%A4%9A%E5%A4%9A%E9%9D%A2%E7%BB%8F/">
+  <meta property="og:site_name" content="Qian&#39;s Blog">
+  <meta property="og:title" content="拼多多面经">
+  <meta property="og:description" content="拼多多社招面试总结">
+  <meta property="og:locale" content="zh_cn">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2023-03-12T20:59:03+08:00">
+    <meta property="article:modified_time" content="2023-03-12T20:59:03+08:00">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="拼多多面经">
+  <meta name="twitter:description" content="拼多多社招面试总结">
 
 
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "BreadcrumbList",
-  "itemListElement": [, 
+  "itemListElement": [
     {
       "@type": "ListItem",
-      "position":  2 ,
-      "name": "Posts",
+      "position":  1 ,
+      "name": "文章",
       "item": "https://csqread.top/posts/"
     }, 
     {
       "@type": "ListItem",
-      "position":  3 ,
+      "position":  2 ,
       "name": "技术",
       "item": "https://csqread.top/posts/tech/"
     }, 
     {
       "@type": "ListItem",
-      "position":  4 ,
+      "position":  3 ,
       "name": "拼多多面经",
       "item": "https://csqread.top/posts/tech/%E6%8B%BC%E5%A4%9A%E5%A4%9A%E9%9D%A2%E7%BB%8F/"
     }
@@ -103,17 +113,13 @@
   "name": "拼多多面经",
   "description": "拼多多社招面试总结",
   "keywords": [
-    "面试", "面试经验与总结"
+    
   ],
-  "articleBody": "面试题目 记录下社招面试拼多多的总结与心得，以及失败的原因吧。\n1、服务注册是如何发现的，eureka的基本原理， 容器ip是动态的还是静态的\n答：eureka, 基本原理大概说个一些：包括服务注册，服务发现，心跳机制，服务下线， 自我保护机制等等。\n2、转账，支付如何保证数据一致性的， 说一下分布式事务的实现， 消息的生产和消费机制。\n这个基本上说出个一二三来。其实就是分布式事务，保证这个数据的一致性就是要保证事务的原子性。即，事务要么全部成功，要么全部失败。我就提了下XA协议和TCC模式，具体如何实现的我也不太清楚。\n3、mysql 索引优化，子查询优化\n这里基本上都讲出来了。之前做过很多压测，包括让sql走上索引，参数表添加缓存等等。\n4、线上有排查过什么问题.\n5、MQ的实现原理\n5、图算法题\n还有些问题已经忘了。\n总结与回顾 其实关于这次面试，我还是没有做好完全的准备，而且是近三年以来的第一次面试，心里难免还是有点紧张。导致我有些东西知道的知识可能一时半会想不起来。后面把这些问到的知识点再复习一下。基本上只是浅浅的了解了一下，细说一下底层原理我就懵了。大概知道我们有这么个流程，知道哪里出了问题该找谁来看。因为现在吧，大公司基本上就是这么个情况， 包括中间件团队，数据库团队，DTF团队，DCF团队等等。基本上我们只用知道这些东西有，然后找相应团队的负责人帮忙看下问题就能解决。我们都是在脚手架上做着CURD。\n但是还是要把面试问到的东西基本原理做一个小小的总结和记录:\nEureka Eureka是Netflix开源的一款提供服务注册和发现的产品， 开源地址为 Eureka, 注册中心是分布式开发的核心组件之一\n而eureka是spring cloud推荐的注册中心实现, Eureka是一个REST (Representational State Transfer)服务 它主要用于AWS云，用于定位服务，以实现中间层服务器的负载平衡和故障转移，我们称此服务为Eureka服务器\nEureka也有一个基于java的客户端组件，Eureka客户端，这使得与服务的交互更加容易，同时客户端也有一个内置的负载平衡器，它执行基本的循环负载均衡。\n自我保护机制 自我保护机制主要在Eureka Client和Eureka Server之间存在网络分区的情况下发挥保护作用，在服务器端和客户端都有对应实现.\n假设在某种特定的情况下（如网络故障）, Eureka Client和Eureka Server无法进行通信，此时Eureka Client无法向Eureka Server发起注册和续约请求，Eureka Server中就可能因注册表中的服务实例租约出现大量过期而面临被剔除的危险，然而此时的Eureka Client可能是处于健康状态的（可接受服务访问），如果直接将注册表中大量过期的服务实例租约剔除显然是不合理的，自我保护机制提高了eureka的服务可用性。\n当自我保护机制触发时，Eureka不再从注册列表中移除因为长时间没收到心跳而应该过期的服务，仍能查询服务信息并且接受新服务注册请求，也就是其他功能是正常的。\n这里思考下，如果eureka节点A触发自我保护机制过程中，有新服务注册了然后网络回复后，其他peer节点能收到A节点的新服务信息，数据同步到peer过程中是有网络异常重试的，也就是说，是能保证最终一致性的。\n服务发现原理 eureka server可以集群部署，多个节点之间会进行（异步方式）数据同步，保证数据最终一致性，Eureka Server作为一个开箱即用的服务注册中心，提供的功能包括：服务注册、接收服务心跳、服务剔除、服务下线等。\n需要注意的是，Eureka Server同时也是一个Eureka Client，在不禁止Eureka Server的客户端行为时，它会向它配置文件中的其他Eureka Server进行拉取注册表、服务注册和发送心跳等操作。\neureka server端通过appName和instanceInfoId来唯一区分一个服务实例，服务实例信息是保存在哪里呢？其实就是一个Map中：\n1 2 // 第一层的key是appName，第二层的key是instanceInfoIdprivate final ConcurrentHashMap",
-  "wordCount" : "9302",
-  "inLanguage": "zh",
+  "articleBody": "面试题目 记录下社招面试拼多多的总结与心得，以及失败的原因吧。\n1、服务注册是如何发现的，eureka的基本原理， 容器ip是动态的还是静态的\n答：eureka, 基本原理大概说个一些：包括服务注册，服务发现，心跳机制，服务下线， 自我保护机制等等。\n2、转账，支付如何保证数据一致性的， 说一下分布式事务的实现， 消息的生产和消费机制。\n这个基本上说出个一二三来。其实就是分布式事务，保证这个数据的一致性就是要保证事务的原子性。即，事务要么全部成功，要么全部失败。我就提了下XA协议和TCC模式，具体如何实现的我也不太清楚。\n3、mysql 索引优化，子查询优化\n这里基本上都讲出来了。之前做过很多压测，包括让sql走上索引，参数表添加缓存等等。\n4、线上有排查过什么问题.\n5、MQ的实现原理\n5、图算法题\n还有些问题已经忘了。\n总结与回顾 其实关于这次面试，我还是没有做好完全的准备，而且是近三年以来的第一次面试，心里难免还是有点紧张。导致我有些东西知道的知识可能一时半会想不起来。后面把这些问到的知识点再复习一下。基本上只是浅浅的了解了一下，细说一下底层原理我就懵了。大概知道我们有这么个流程，知道哪里出了问题该找谁来看。因为现在吧，大公司基本上就是这么个情况， 包括中间件团队，数据库团队，DTF团队，DCF团队等等。基本上我们只用知道这些东西有，然后找相应团队的负责人帮忙看下问题就能解决。我们都是在脚手架上做着CURD。\n但是还是要把面试问到的东西基本原理做一个小小的总结和记录:\nEureka Eureka是Netflix开源的一款提供服务注册和发现的产品， 开源地址为 Eureka, 注册中心是分布式开发的核心组件之一\n而eureka是spring cloud推荐的注册中心实现, Eureka是一个REST (Representational State Transfer)服务 它主要用于AWS云，用于定位服务，以实现中间层服务器的负载平衡和故障转移，我们称此服务为Eureka服务器 Eureka也有一个基于java的客户端组件，Eureka客户端，这使得与服务的交互更加容易，同时客户端也有一个内置的负载平衡器，它执行基本的循环负载均衡。\n自我保护机制 自我保护机制主要在Eureka Client和Eureka Server之间存在网络分区的情况下发挥保护作用，在服务器端和客户端都有对应实现.\n假设在某种特定的情况下（如网络故障）, Eureka Client和Eureka Server无法进行通信，此时Eureka Client无法向Eureka Server发起注册和续约请求，Eureka Server中就可能因注册表中的服务实例租约出现大量过期而面临被剔除的危险，然而此时的Eureka Client可能是处于健康状态的（可接受服务访问），如果直接将注册表中大量过期的服务实例租约剔除显然是不合理的，自我保护机制提高了eureka的服务可用性。\n当自我保护机制触发时，Eureka不再从注册列表中移除因为长时间没收到心跳而应该过期的服务，仍能查询服务信息并且接受新服务注册请求，也就是其他功能是正常的。\n这里思考下，如果eureka节点A触发自我保护机制过程中，有新服务注册了然后网络回复后，其他peer节点能收到A节点的新服务信息，数据同步到peer过程中是有网络异常重试的，也就是说，是能保证最终一致性的。\n服务发现原理 eureka server可以集群部署，多个节点之间会进行（异步方式）数据同步，保证数据最终一致性，Eureka Server作为一个开箱即用的服务注册中心，提供的功能包括：服务注册、接收服务心跳、服务剔除、服务下线等。\n需要注意的是，Eureka Server同时也是一个Eureka Client，在不禁止Eureka Server的客户端行为时，它会向它配置文件中的其他Eureka Server进行拉取注册表、服务注册和发送心跳等操作。\neureka server端通过appName和instanceInfoId来唯一区分一个服务实例，服务实例信息是保存在哪里呢？其实就是一个Map中：\n1 2 服务注册 Service Provider启动时会将服务信息（InstanceInfo）发送给eureka server，eureka server接收到之后会写入registry中，服务注册默认过期时间DEFAULT_DURATION_IN_SECS = 90秒。InstanceInfo写入到本地registry之后，然后同步给其他peer节点，对应方法com.netflix.eureka.registry.PeerAwareInstanceRegistryImpl#replicateToPeers。\n写入本地redistry 服务信息（InstanceInfo）保存在Lease中，写入本地registry对应方法com.netflix.eureka.registry.PeerAwareInstanceRegistryImpl#register，Lease统一保存在内存的ConcurrentHashMap中，在服务注册过程中，首先加个读锁，然后从registry中判断该Lease是否已存在，如果已存在则比较lastDirtyTimestamp时间戳，取二者最大的服务信息，避免发生数据覆盖。使用InstanceInfo创建一个新的InstanceInfo：\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 同步给其他peer InstanceInfo写入到本地registry之后，然后同步给其他peer节点，对应方法com.netflix.eureka.registry.PeerAwareInstanceRegistryImpl#replicateToPeers。如果当前节点接收到的InstanceInfo本身就是另一个节点同步来的，则不会继续同步给其他节点，避免形成“广播效应”；InstanceInfo同步时会排除当前节点。\nInstanceInfo的状态有依以下几种：Heartbeat, Register, Cancel, StatusUpdate, DeleteStatusOverride，默认情况下同步操作时批量异步执行的，同步请求首先缓存到Map中，key为requestType+appName+id，然后由发送线程将请求发送到peer节点。\nPeer之间的状态是采用异步的方式同步的，所以不保证节点间的状态一定是一致的，不过基本能保证最终状态是一致的。结合服务发现的场景，实际上也并不需要节点间的状态强一致。在一段时间内（比如30秒），节点A比节点B多一个服务实例或少一个服务实例，在业务上也是完全可以接受的（Service Consumer侧一般也会实现错误重试和负载均衡机制）。所以按照CAP理论，Eureka的选择就是放弃C，选择AP。 如果同步过程中，出现了异常怎么办呢，这时会根据异常信息做对应的处理，如果是读取超时或者网络连接异常，则稍后重试；如果其他异常则打印错误日志不再后续处理。\n服务续约 Renew（服务续约）操作由Service Provider定期调用，类似于heartbeat。主要是用来告诉Eureka Server Service Provider还活着，避免服务被剔除掉。renew接口实现方式和register基本一致：首先更新自身状态，再同步到其它Peer，服务续约也就是把过期时间设置为当前时间加上duration的值。\n注意：服务注册如果InstanceInfo不存在则加入，存在则更新；而服务预约只是进行更新，如果InstanceInfo不存在直接返回false。\n服务失效剔除 Eureka Server中有一个EvictionTask，用于检查服务是否失效。Eviction（失效服务剔除）用来定期（默认为每60秒）在Eureka Server检测失效的服务，检测标准就是超过一定时间没有Renew的服务。默认失效时间为90秒，也就是如果有服务超过90秒没有向Eureka Server发起Renew请求的话，就会被当做失效服务剔除掉。失效时间可以通过eureka.instance.leaseExpirationDurationInSeconds进行配置，定期扫描时间可以通过eureka.server.evictionIntervalTimerInMs进行配置。\n服务剔除#evict方法中有很多限制，都是为了保证Eureka Server的可用性：比如自我保护时期不能进行服务剔除操作、过期操作是分批进行、服务剔除是随机逐个剔除，剔除均匀分布在所有应用中，防止在同一时间内同一服务集群中的服务全部过期被剔除，以致大量剔除发生时，在未进行自我保护前促使了程序的崩溃。\n服务信息拉取 Eureka consumer服务信息的拉取分为全量式拉取和增量式拉取，eureka consumer启动时进行全量拉取，运行过程中由定时任务进行增量式拉取，如果网络出现异常，可能导致先拉取的数据被旧数据覆盖（比如上一次拉取线程获取结果较慢，数据已更新情况下使用返回结果再次更新，导致数据版本落后），产生脏数据。对此，eureka通过类型AtomicLong的fetchRegistryGeneration对数据版本进行跟踪，版本不一致则表示此次拉取到的数据已过期。\nfetchRegistryGeneration过程是在拉取数据之前，执行fetchRegistryGeneration.get获取当前版本号，获取到数据之后，通过fetchRegistryGeneration.compareAndSet来判断当前版本号是否已更新。 注意：如果增量式更新出现意外，会再次进行一次全量拉取更新。\nEureka server的伸缩容 Eureka Server是怎么知道有多少Peer的呢？Eureka Server在启动后会调用EurekaClientConfig.getEurekaServerServiceUrls来获取所有的Peer节点，并且会定期更新。定期更新频率可以通过eureka.server.peerEurekaNodesUpdateIntervalMs配置。\n这个方法的默认实现是从配置文件读取，所以如果Eureka Server节点相对固定的话，可以通过在配置文件中配置来实现。如果希望能更灵活的控制Eureka Server节点，比如动态扩容/缩容，那么可以override getEurekaServerServiceUrls方法，提供自己的实现，比如我们的项目中会通过数据库读取Eureka Server列表。\neureka server启动时把自己当做是Service Consumer从其它Peer Eureka获取所有服务的注册信息。然后对每个服务信息，在自己这里执行Register，isReplication=true，从而完成初始化。\nService Provider Service Provider启动时首先时注册到Eureka Service上，这样其他消费者才能进行服务调用，除了在启动时之外，只要实例状态信息有变化，也会注册到Eureka Service。需要注意的是，需要确保配置eureka.client.registerWithEureka=true。register逻辑在方法AbstractJerseyEurekaHttpClient.register中，Service Provider会依次注册到配置的Eureka Server Url上，如果注册出现异常，则会继续注册其他的url。\nRenew操作会在Service Provider端定期发起，用来通知Eureka Server自己还活着。 这里instance.leaseRenewalIntervalInSeconds属性表示Renew频率。默认是30秒，也就是每30秒会向Eureka Server发起Renew操作。这部分逻辑在HeartbeatThread类中。在Service Provider服务shutdown的时候，需要及时通知Eureka Server把自己剔除，从而避免客户端调用已经下线的服务，逻辑本身比较简单，通过对方法标记@PreDestroy，从而在服务shutdown的时候会被触发。\nService Consumer Service Consumer这块的实现相对就简单一些，因为它只涉及到从Eureka Server获取服务列表和更新服务列表。Service Consumer在启动时会从Eureka Server获取所有服务列表，并在本地缓存。需要注意的是，需要确保配置eureka.client.shouldFetchRegistry=true。由于在本地有一份Service Registries缓存，所以需要定期更新，定期更新频率可以通过eureka.client.registryFetchIntervalSeconds配置。\n总结 我们为什么要使用Eureka呢，在分布式开发架构中， 任何单点的服务都不能保证不会中断，因此需要服务发现机制，某个节点中断后，服务消费者能及时感知到保证服务高可用。注册中心除了Eureka之外，还有Zookeeper、consul、nacos等解决方案，实现原理不同， 各自适用于不同业务场景。\n数据一致性问题 事务 严格意义上的事务实现应该是具备原子性、一致性、隔离性和持久性，简称ACID。\n原子性(Atomicity) ， 可以理解为一个事务内的所有操作要么都执行，要么都不执行。 一致性(Consistency)， 数据是满足完整性约束的，也就是不会存在中间状态的数据，比如说你账户上有400， 我账户上有100， 你给我打200块，此时你账户上的钱应该是200， 我账户上的钱应该是300， 不会存在我账户上的钱加了，你账户上的钱没扣的中间状态 隔离性(Lsolation) ，指的是多个事务并发执行的时候不会互相干扰，即事务内部的数据对于其他事务来说是隔离的 持久性(Durability), 指的是一个事务完成了之后数据就被永远保存下来，之后的其他操作或故障都不会对事务的结果产生影响 而通俗意义上事务就是为了使得一些更新操作要么都成功，要么都失败。 分布式事务 分布式事务顾名思义就是要在分布式系统中实现事务，它其实是由多个本地事务组合而成。\n对于分布式事务而言几乎满足不了ACID，其实对于单机事务而言大部分情况下也没有满足ACID，不然怎么会有四种隔离级别呢？所以更不用说分布在不用数据库或者不同应用上的分布式事务了。\n2PC 2PC（Two-phase commit protocol），中文叫二阶段提交。 二阶段提交是一种强一致性设计，2PC 引入一个事务协调者的角色来协调管理各参与者（也可称之为各本地资源）的提交和回滚，二阶段分别指的是准备（投票）和提交两个阶段。\n注意这只是协议或者说是理论指导，只阐述了大方向，具体落地还是有会有差异的。\n让我们来看下两个阶段的具体流程。\n准备阶段协调者会给各参与者发送准备命令，你可以把准备命令理解成除了提交事务之外啥事都做完了。\n同步等待所有资源的响应之后就进入第二阶段即提交阶段（注意提交阶段不一定是提交事务，也可能是回滚事务）。\n假如在第一阶段所有参与者都返回准备成功，那么协调者则向所有参与者发送提交事务命令，然后等待所有事务都提交成功之后，返回事务执行成功。\n假如在第一阶段有一个参与者返回失败，那么协调者就会向所有参与者发送回滚事务的请求，即分布式事务执行失败。\n那第二阶段提交失败的话呢？\n这里有两种情况。\n第一种是第二阶段执行的是回滚事务操作，那么答案是不断重试，直到所有参与者都回滚了，不然那些在第一阶段准备成功的参与者会一直阻塞着。\n第二种是第二阶段执行的是提交事务操作，那么答案也是不断重试，因为有可能一些参与者的事务已经提交成功了，这个时候只有一条路，就是头铁往前冲，不断的重试，直到提交成功，到最后真的不行只能人工介入处理。\n大体上二阶段提交的流程就是这样，我们再来看看细节。\n首先 2PC 是一个同步阻塞协议，像第一阶段协调者会等待所有参与者响应才会进行下一步操作，当然第一阶段的协调者有超时机制，假设因为网络原因没有收到某参与者的响应或某参与者挂了，那么超时后就会判断事务失败，向所有参与者发送回滚命令。\n在第二阶段协调者的没法超时，因为按照我们上面分析只能不断重试！\n协调者故障分析 协调者是一个单点，存在单点故障问题\n假设协调者在发送准备命令之前挂了， 还行，等于事务没开始。\n假设协调者在发送准备命令之后挂了，这就不太行了，有些参与者等于都执行了处于事务资源锁定的状态。不仅事务执行不下去，还会因为锁定了一些公共资源而阻塞系统其他操作。\n假设协调者在发送事务回滚命令之前挂了，那么事务也是执行不下去，且在第一阶段那些准备成功参与者都阻塞着。\n假设协调者在发送回滚事务命令之后挂了，这个还行，至少命令发出去了，很大概率都会回滚成功，资源都会释放。但是如果出现网络分区问题，某些参与者将因为收不到命令而阻塞着。\n假设协调者在发送提交事务命令之前挂了，这个不行，这下所有资源都阻塞着。\n假设协调者在发送提交事务命令之后挂了，很大概率都会提交成功，然后释放资源。但是如果出现网络分区问题某些参与者因为收不到命令而阻塞着。\n协调者故障，通过选举得到新的协调者 因为协调者单点问题，因此我们可以通过选举等操作选出一个新协调者来顶替。\n如果处于第一阶段，其实影响不大都回滚好了，在第一阶段事务肯定还没提交。\n如果处于第二阶段，假设参与者都没挂，此时新协调者可以向所有参与者确认它们自身情况来推断下一步的操作。\n假设有个别参与者挂了！这就有点僵硬了，比如协调者发送了回滚命令，此时第一个参与者收到了并执行，然后协调者和第一个参与者都挂了。\n此时其他参与者都没收到请求，然后新协调者来了，它询问其他参与者都说OK，但它不知道挂了的那个参与者到底O不OK，所以它傻了。\n问题其实就出在每个参与者自身的状态只有自己和协调者知道，因此新协调者无法通过在场的参与者的状态推断出挂了的参与者是什么情况。\n虽然协议上没说，不过在实现的时候我们可以灵活的让协调者将自己发过的请求在哪个地方记一下，也就是日志记录，这样新协调者来的时候不就知道此时该不该发了？\n但是就算协调者知道自己该发提交请求，那么在参与者也一起挂了的情况下没用，因为你不知道参与者在挂之前有没有提交事务。\n如果参与者在挂之前事务提交成功，新协调者确定存活着的参与者都没问题，那肯定得向其他参与者发送提交事务命令才能保证数据一致。\n如果参与者在挂之前事务还未提交成功，参与者恢复了之后数据是回滚的，此时协调者必须是向其他参与者发送回滚事务命令才能保持事务的一致。\n所以说极端情况下还是无法避免数据不一致问题。\ntalk is cheap 让我们再来看下代码，可能更加的清晰。以下代码取自 Distributed System: Principles and Paradigms。\n这个代码就是实现了 2PC，但是相比于2PC增加了写日志的动作、参与者之间还会互相通知、参与者也实现了超时。这里要注意，一般所说的2PC，不含上述功能，这都是实现的时候添加的。\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 至此已经详细分析了2PC的各种细节，总结如下：\n2PC是一种尽量保证强一致性的分布式事务，因此它是同步阻塞的，而同步阻塞就导致长久的资源锁定问题，总体而言效率低，并且存在单点故障问题，在极端条件下存在数据不一致的风险。\n当然具体的实现可以变形，比如Tree 2PC、Dynamic 2PC\n2PC适用于数据库层面的分布式事务场景，而我们业务需求有时候不仅仅关乎数据库，也有可能是上传一张图片或者发送一条短信。\n而且像Java中的JTA, 它是基于XA规范实现的事务接口，这里的XA可以简单理解为基于数据库的XA规范来实现的2PC。\n解决方案 XA方案 2PC的传统方案是在数据库层面实现的，如 Oracle、MySQL 都支持 2PC 协议，为了统一标准减少行业内不必要的对接成本，需要制定标准化的处理模型及接口标准，国际开放标准组织 Open Group 定义了分布式事务处理模型DTP（Distributed Transaction Processing Reference Model）。\n整个 2PC 的事务流程涉及到三个角色 AP、RM、TM。AP 指的是使用 2PC 分布式事务的应用程序；RM 指的是资源管理器，它控制着分支事务；TM 指的是事务管理器，它控制着整个全局事务。\n（1）在准备阶段 RM 执行实际的业务操作，但不提交事务，资源锁定\n（2）在提交阶段 TM 会接受 RM 在准备阶段的执行回复，只要有任一个RM执行失败，TM 会通知所有 RM 执行回滚操作，否则，TM 将会通知所有 RM 提交该事务。提交阶段结束资源锁释放。\nXA方案的问题\n需要本地数据库支持XA协议。 资源锁需要等到两个阶段结束才释放，性能较差。\nSeata方案 Seata 是由阿里中间件团队发起的开源项目 Fescar，后更名为 Seata，它是一个是开源的分布式事务框架。\n传统 2PC 的问题在 Seata 中得到了解决，它通过对本地关系数据库的分支事务的协调来驱动完成全局事务，是工作在应用层的中间件。主要优点是性能较好，且不长时间占用连接资源，它以高效并且对业务 0 侵入的方式解决微服务场景下面临的分布式事务问题，它目前提供 AT 模式（即 2PC）及 TCC 模式的分布式事务解决方案。\nSeata 的设计思想如下: Seata 的设计目标其一是对业务无侵入，因此从业务无侵入的 2PC 方案着手，在传统 2PC的基础上演进，并解决 2PC 方案面临的问题。 Seata 把一个分布式事务理解成一个包含了若干分支事务的全局事务。全局事务的职责是协调其下管辖的分支事务达成一致，要么一起成功提交，要么一起失败回滚。此外，通常分支事务本身就是一个关系数据库的本地事务。\nSeata实现2PC与传统2PC的差别\n架构层次方面：传统 2PC 方案的 RM 实际上是在数据库层，RM 本质上就是数据库自身，通过 XA 协议实现，而 Seata 的 RM 是以 jar 包的形式作为中间件层部署在应用程序这一侧的。\n两阶段提交方面：传统 2PC无论第二阶段的决议是 commit 还是 rollback ，事务性资源的锁都要保持到 Phase2 完成才释放。而 Seata 的做法是在 Phase1 就将本地事务提交，这样就可以省去 Phase2 持锁的时间，整体提高效率。\n",
+  "wordCount" : "8819",
+  "inLanguage": "en",
   "datePublished": "2023-03-12T20:59:03+08:00",
   "dateModified": "2023-03-12T20:59:03+08:00",
-  "author":[{
-    "@type": "Person",
-    "name": "ShengQian"
-  }],
   "mainEntityOfPage": {
     "@type": "WebPage",
     "@id": "https://csqread.top/posts/tech/%E6%8B%BC%E5%A4%9A%E5%A4%9A%E9%9D%A2%E7%BB%8F/"
@@ -123,39 +129,27 @@
     "name": "Qian's Blog",
     "logo": {
       "@type": "ImageObject",
-      "url": "https://csqread.top/img/Q.gif"
+      "url": "https://csqread.top/favicon.ico"
     }
   }
 }
 </script>
 </head>
-
-<body class="" id="top">
-<script>
-    if (localStorage.getItem("pref-theme") === "dark") {
-        document.body.classList.add('dark');
-    } else if (localStorage.getItem("pref-theme") === "light") {
-        document.body.classList.remove('dark')
-    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-        document.body.classList.add('dark');
-    }
-
-</script>
-
-<header class="header">
-    <nav class="nav">
+<body id="top">
+    <header class="header">
+    <nav class="header-nav">
         <div class="logo">
-            <a href="https://csqread.top" accesskey="h" title="Qian&#39;s Blog (Alt + H)">
-                <img src="https://csqread.top/img/%21.jpg" alt="" aria-label="logo"
+            <a href="https://csqread.top/" accesskey="h" title="Qian&#39;s Blog (Alt + H)">
+                <img src="https://csqread.top/img/Q.gif" alt="" aria-label="logo"
                     height="35">Qian&#39;s Blog</a>
             <div class="logo-switches">
-                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
-                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                <button id="theme-toggle" class="theme-toggle" accesskey="t" title="(Alt + T)" aria-label="Toggle theme">
+                    <svg class="moon" xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24"
                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                         stroke-linejoin="round">
                         <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
                     </svg>
-                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                    <svg class="sun" xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24"
                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                         stroke-linejoin="round">
                         <circle cx="12" cy="12" r="5"></circle>
@@ -171,40 +165,55 @@
                 </button>
             </div>
         </div>
-        <ul id="menu">
+        <ul id="menu" class="menu">
             <li>
-                <a href="https://csqread.top/search" title="🔍搜索">
-                    <span>🔍搜索</span>
+                <a href="https://csqread.top/search" title="??搜索 (Alt &#43; /)" accesskey=/>
+                    <span>??搜索</span>
                 </a>
             </li>
             <li>
-                <a href="https://csqread.top/" title="🏠主页">
-                    <span>🏠主页</span>
+                <a href="https://csqread.top/posts" title="??文章">
+                    <span>??文章</span>
                 </a>
             </li>
             <li>
-                <a href="https://csqread.top/posts" title="📚文章">
-                    <span>📚文章</span>
+                <a href="https://csqread.top/archives/" title="??时间轴">
+                    <span>??时间轴</span>
                 </a>
             </li>
             <li>
-                <a href="https://csqread.top/archives/" title="⏱时间轴">
-                    <span>⏱时间轴</span>
+                <a href="https://csqread.top/tags" title="??标签">
+                    <span>??标签</span>
                 </a>
             </li>
             <li>
-                <a href="https://csqread.top/tags" title="🔖标签">
-                    <span>🔖标签</span>
+                <a href="https://csqread.top/about" title="???‍♂?关于">
+                    <span>???‍♂?关于</span>
                 </a>
             </li>
             <li>
-                <a href="https://csqread.top/about" title="🙋🏻‍♂️关于">
-                    <span>🙋🏻‍♂️关于</span>
+                <a href="https://csqread.top/links" title="??友链">
+                    <span>??友链</span>
                 </a>
             </li>
             <li>
-                <a href="https://csqread.top/links" title="🤝友链">
-                    <span>🤝友链</span>
+                <a href="https://csqread.top/posts/blog" title="??博客">
+                    <span>??博客</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://csqread.top/posts/tech" title="???‍?技术">
+                    <span>???‍?技术</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://csqread.top/posts/read" title="??阅读-电影">
+                    <span>??阅读-电影</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://csqread.top/posts/life" title="??生活">
+                    <span>??生活</span>
                 </a>
             </li>
         </ul>
@@ -214,8 +223,24 @@
 
 <article class="post-single">
   <header class="post-header">
-    <div class="breadcrumbs"><a href="https://csqread.top">主页</a>&nbsp;»&nbsp;<a href="https://csqread.top/posts/">Posts</a>&nbsp;»&nbsp;<a href="https://csqread.top/posts/tech/">技术</a></div>
-    <h1 class="post-title">
+    <nav class="breadcrumbs" role="navigation" aria-label="Breadcrumb">
+            <a href="/">Home</a>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right">
+                <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+            <a href="/posts/">文章</a>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right">
+                <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+            <a href="/posts/tech/">技术</a>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+        stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right">
+        <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+</nav>
+    <h1 class="post-title entry-hint-parent">
       拼多多面经
     </h1>
     <div class="post-description">
@@ -223,209 +248,72 @@
     </div>
     <div class="post-meta">
 
-
-
-
-
-
-
-
-
-
-创建:&nbsp;<span title='2023-03-12 20:59:03 +0800 CST'>2023-03-12</span>&nbsp;|&nbsp;更新:&nbsp;2023-03-12&nbsp;|&nbsp;字数:&nbsp;9302字&nbsp;|&nbsp;时长: 19分钟&nbsp;|&nbsp;
-作者:&nbsp;ShengQian
-
-
-    &nbsp;|&nbsp;标签: &nbsp;
-    <ul class="post-tags-meta">
-        <a href="https://csqread.top/tags/%E9%9D%A2%E8%AF%95/">面试</a>
-        <a href="https://csqread.top/tags/%E9%9D%A2%E8%AF%95%E7%BB%8F%E9%AA%8C%E4%B8%8E%E6%80%BB%E7%BB%93/">、面试经验与总结</a>
-    </ul>
-
-    
-    
-    
-    
-    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-    <span id="busuanzi_container_page_pv">
-        &nbsp;| 访问: <span id="busuanzi_value_page_pv"></span>
-    </span>
-
-    
-    
-    
-    
-    <script src="https://cdn.staticfile.org/twikoo/1.4.11/twikoo.all.min.js">
-    </script>
-    <script>
-        let url = document.documentURI
-        
-        let dnsUrl = "https://csqread.top"
-        let urlSplit = url.split(dnsUrl)
-        let finalUrl = urlSplit[1]
-        if (finalUrl[0] !== '/') {
-            finalUrl = '/'+finalUrl
-        }
-        twikoo.getCommentsCount({
-            envId:  null ,
-            region:  null ,
-            urls: [
-                finalUrl,
-            ],
-            includeReply: false 
-        }).then(function (res) {
-            let count = res[0].count
-            const obj = document.getElementById("comment_count");
-            obj.innerText = count
-            
-            
-            
-        }).catch(function (err) {
-            
-            console.error(err);
-        });
-    </script>
-    &nbsp;| 评论: &nbsp; <span id="comment_count"></span>
+<span title='2023-03-12 20:59:03 +0800 CST'>March 12, 2023</span>&nbsp;·&nbsp;<span>18 min</span>
 
 </div>
-  </header> <aside id="toc-container" class="toc-container wide">
-    <div class="toc">
-        <details  open>
-            <summary accesskey="c" title="(Alt + C)">
-                <span class="details">目录</span>
-            </summary>
+  </header> <details class="toc" >
+    <summary accesskey="c" title="(Alt + C)">
+        <span class="title">Table of Contents</span>
+    </summary>
 
-            <div class="inner"><ul>
-                    <li>
-                        <a href="#%e9%9d%a2%e8%af%95%e9%a2%98%e7%9b%ae" aria-label="面试题目">面试题目</a></li>
-                    <li>
-                        <a href="#%e6%80%bb%e7%bb%93%e4%b8%8e%e5%9b%9e%e9%a1%be" aria-label="总结与回顾">总结与回顾</a><ul>
-                            
-                    <li>
-                        <a href="#eureka" aria-label="Eureka">Eureka</a><ul>
-                            
-                    <li>
-                        <a href="#%e8%87%aa%e6%88%91%e4%bf%9d%e6%8a%a4%e6%9c%ba%e5%88%b6" aria-label="自我保护机制">自我保护机制</a></li>
-                    <li>
-                        <a href="#%e6%9c%8d%e5%8a%a1%e5%8f%91%e7%8e%b0%e5%8e%9f%e7%90%86" aria-label="服务发现原理">服务发现原理</a></li>
-                    <li>
-                        <a href="#%e6%9c%8d%e5%8a%a1%e6%b3%a8%e5%86%8c" aria-label="服务注册">服务注册</a></li>
-                    <li>
-                        <a href="#%e5%86%99%e5%85%a5%e6%9c%ac%e5%9c%b0redistry" aria-label="写入本地redistry">写入本地redistry</a></li>
-                    <li>
-                        <a href="#%e5%90%8c%e6%ad%a5%e7%bb%99%e5%85%b6%e4%bb%96peer" aria-label="同步给其他peer">同步给其他peer</a></li>
-                    <li>
-                        <a href="#%e6%9c%8d%e5%8a%a1%e7%bb%ad%e7%ba%a6" aria-label="服务续约">服务续约</a></li>
-                    <li>
-                        <a href="#%e6%9c%8d%e5%8a%a1%e5%a4%b1%e6%95%88%e5%89%94%e9%99%a4" aria-label="服务失效剔除">服务失效剔除</a></li>
-                    <li>
-                        <a href="#%e6%9c%8d%e5%8a%a1%e4%bf%a1%e6%81%af%e6%8b%89%e5%8f%96" aria-label="服务信息拉取">服务信息拉取</a></li>
-                    <li>
-                        <a href="#eureka-server%e7%9a%84%e4%bc%b8%e7%bc%a9%e5%ae%b9" aria-label="Eureka server的伸缩容">Eureka server的伸缩容</a></li>
-                    <li>
-                        <a href="#service-provider" aria-label="Service Provider">Service Provider</a></li>
-                    <li>
-                        <a href="#service-consumer" aria-label="Service Consumer">Service Consumer</a></li>
-                    <li>
-                        <a href="#%e6%80%bb%e7%bb%93" aria-label="总结">总结</a></li></ul>
-                    </li>
-                    <li>
-                        <a href="#%e6%95%b0%e6%8d%ae%e4%b8%80%e8%87%b4%e6%80%a7%e9%97%ae%e9%a2%98" aria-label="数据一致性问题">数据一致性问题</a><ul>
-                            
-                    <li>
-                        <a href="#%e4%ba%8b%e5%8a%a1" aria-label="事务">事务</a></li>
-                    <li>
-                        <a href="#%e5%88%86%e5%b8%83%e5%bc%8f%e4%ba%8b%e5%8a%a1" aria-label="分布式事务">分布式事务</a><ul>
-                            
-                    <li>
-                        <a href="#2pc" aria-label="2PC">2PC</a><ul>
-                            
-                    <li>
-                        <a href="#%e5%8d%8f%e8%b0%83%e8%80%85%e6%95%85%e9%9a%9c%e5%88%86%e6%9e%90" aria-label="协调者故障分析">协调者故障分析</a></li>
-                    <li>
-                        <a href="#%e5%8d%8f%e8%b0%83%e8%80%85%e6%95%85%e9%9a%9c%e9%80%9a%e8%bf%87%e9%80%89%e4%b8%be%e5%be%97%e5%88%b0%e6%96%b0%e7%9a%84%e5%8d%8f%e8%b0%83%e8%80%85" aria-label="协调者故障，通过选举得到新的协调者">协调者故障，通过选举得到新的协调者</a></li></ul>
-                    </li></ul>
-                    </li>
-                    <li>
-                        <a href="#%e8%a7%a3%e5%86%b3%e6%96%b9%e6%a1%88" aria-label="解决方案">解决方案</a><ul>
-                            
-                    <li>
-                        <a href="#xa%e6%96%b9%e6%a1%88" aria-label="XA方案">XA方案</a></li>
-                    <li>
-                        <a href="#seata%e6%96%b9%e6%a1%88" aria-label="Seata方案">Seata方案</a>
-                    </li>
-                </ul>
-                </li>
-                </ul>
-                </li>
-                </ul>
-                </li>
-                </ul>
-            </div>
-        </details>
+    <div class="inner"><ul>
+            <li>
+                <a href="#eureka" aria-label="Eureka">Eureka</a><ul>
+                    
+            <li>
+                <a href="#%e8%87%aa%e6%88%91%e4%bf%9d%e6%8a%a4%e6%9c%ba%e5%88%b6" aria-label="自我保护机制">自我保护机制</a></li>
+            <li>
+                <a href="#%e6%9c%8d%e5%8a%a1%e5%8f%91%e7%8e%b0%e5%8e%9f%e7%90%86" aria-label="服务发现原理">服务发现原理</a></li>
+            <li>
+                <a href="#%e6%9c%8d%e5%8a%a1%e6%b3%a8%e5%86%8c" aria-label="服务注册">服务注册</a></li>
+            <li>
+                <a href="#%e5%86%99%e5%85%a5%e6%9c%ac%e5%9c%b0redistry" aria-label="写入本地redistry">写入本地redistry</a></li>
+            <li>
+                <a href="#%e5%90%8c%e6%ad%a5%e7%bb%99%e5%85%b6%e4%bb%96peer" aria-label="同步给其他peer">同步给其他peer</a></li>
+            <li>
+                <a href="#%e6%9c%8d%e5%8a%a1%e7%bb%ad%e7%ba%a6" aria-label="服务续约">服务续约</a></li>
+            <li>
+                <a href="#%e6%9c%8d%e5%8a%a1%e5%a4%b1%e6%95%88%e5%89%94%e9%99%a4" aria-label="服务失效剔除">服务失效剔除</a></li>
+            <li>
+                <a href="#%e6%9c%8d%e5%8a%a1%e4%bf%a1%e6%81%af%e6%8b%89%e5%8f%96" aria-label="服务信息拉取">服务信息拉取</a></li>
+            <li>
+                <a href="#eureka-server%e7%9a%84%e4%bc%b8%e7%bc%a9%e5%ae%b9" aria-label="Eureka server的伸缩容">Eureka server的伸缩容</a></li>
+            <li>
+                <a href="#service-provider" aria-label="Service Provider">Service Provider</a></li>
+            <li>
+                <a href="#service-consumer" aria-label="Service Consumer">Service Consumer</a></li>
+            <li>
+                <a href="#%e6%80%bb%e7%bb%93" aria-label="总结">总结</a></li></ul>
+            </li>
+            <li>
+                <a href="#%e6%95%b0%e6%8d%ae%e4%b8%80%e8%87%b4%e6%80%a7%e9%97%ae%e9%a2%98" aria-label="数据一致性问题">数据一致性问题</a><ul>
+                    
+            <li>
+                <a href="#%e4%ba%8b%e5%8a%a1" aria-label="事务">事务</a></li>
+            <li>
+                <a href="#%e5%88%86%e5%b8%83%e5%bc%8f%e4%ba%8b%e5%8a%a1" aria-label="分布式事务">分布式事务</a><ul>
+                    
+            <li>
+                <a href="#2pc" aria-label="2PC">2PC</a></li></ul>
+            </li>
+            <li>
+                <a href="#%e8%a7%a3%e5%86%b3%e6%96%b9%e6%a1%88" aria-label="解决方案">解决方案</a><ul>
+                    
+            <li>
+                <a href="#xa%e6%96%b9%e6%a1%88" aria-label="XA方案">XA方案</a></li>
+            <li>
+                <a href="#seata%e6%96%b9%e6%a1%88" aria-label="Seata方案">Seata方案</a>
+            </li>
+        </ul>
+        </li>
+        </ul>
+        </li>
+        </ul>
     </div>
-</aside>
-<script>
-    let activeElement;
-    let elements;
-    window.addEventListener('DOMContentLoaded', function (event) {
-        checkTocPosition();
+</details>
 
-        elements = document.querySelectorAll('h1[id],h2[id],h3[id],h4[id],h5[id],h6[id]');
-         
-         activeElement = elements[0];
-         const id = encodeURI(activeElement.getAttribute('id')).toLowerCase();
-         document.querySelector(`.inner ul li a[href="#${id}"]`).classList.add('active');
-     }, false);
-
-    window.addEventListener('resize', function(event) {
-        checkTocPosition();
-    }, false);
-
-    window.addEventListener('scroll', () => {
-        
-        activeElement = Array.from(elements).find((element) => {
-            if ((getOffsetTop(element) - window.pageYOffset) > 0 && 
-                (getOffsetTop(element) - window.pageYOffset) < window.innerHeight/2) {
-                return element;
-            }
-        }) || activeElement
-
-        elements.forEach(element => {
-             const id = encodeURI(element.getAttribute('id')).toLowerCase();
-             if (element === activeElement){
-                 document.querySelector(`.inner ul li a[href="#${id}"]`).classList.add('active');
-             } else {
-                 document.querySelector(`.inner ul li a[href="#${id}"]`).classList.remove('active');
-             }
-         })
-     }, false);
-
-    const main = parseInt(getComputedStyle(document.body).getPropertyValue('--article-width'), 10);
-    const toc = parseInt(getComputedStyle(document.body).getPropertyValue('--toc-width'), 10);
-    const gap = parseInt(getComputedStyle(document.body).getPropertyValue('--gap'), 10);
-
-    function checkTocPosition() {
-        const width = document.body.scrollWidth;
-
-        if (width - main - (toc * 2) - (gap * 4) > 0) {
-            document.getElementById("toc-container").classList.add("wide");
-        } else {
-            document.getElementById("toc-container").classList.remove("wide");
-        }
-    }
-
-    function getOffsetTop(element) {
-        if (!element.getClientRects().length) {
-            return 0;
-        }
-        let rect = element.getBoundingClientRect();
-        let win = element.ownerDocument.defaultView;
-        return rect.top + win.pageYOffset;   
-    }
-</script>
-  <div class="post-content"><h1 id="面试题目">面试题目<a hidden class="anchor" aria-hidden="true" href="#面试题目">#</a></h1>
-<p>记录下社招面试拼多多的总结与心得，以及失败的原因吧。</p>
+  <div class="post-content md-content"><p>面试题目
+记录下社招面试拼多多的总结与心得，以及失败的原因吧。</p>
 <p>1、服务注册是如何发现的，eureka的基本原理， 容器ip是动态的还是静态的</p>
 <p>答：eureka, 基本原理大概说个一些：包括服务注册，服务发现，心跳机制，服务下线， 自我保护机制等等。</p>
 <p>2、转账，支付如何保证数据一致性的， 说一下分布式事务的实现， 消息的生产和消费机制。</p>
@@ -436,14 +324,14 @@
 <p>5、MQ的实现原理</p>
 <p>5、图算法题</p>
 <p>还有些问题已经忘了。</p>
-<h1 id="总结与回顾">总结与回顾<a hidden class="anchor" aria-hidden="true" href="#总结与回顾">#</a></h1>
-<p>其实关于这次面试，我还是没有做好完全的准备，而且是近三年以来的第一次面试，心里难免还是有点紧张。导致我有些东西知道的知识可能一时半会想不起来。后面把这些问到的知识点再复习一下。基本上只是浅浅的了解了一下，细说一下底层原理我就懵了。大概知道我们有这么个流程，知道哪里出了问题该找谁来看。因为现在吧，大公司基本上就是这么个情况， 包括中间件团队，数据库团队，DTF团队，DCF团队等等。基本上我们只用知道这些东西有，然后找相应团队的负责人帮忙看下问题就能解决。我们都是在脚手架上做着CURD。</p>
+<p>总结与回顾
+其实关于这次面试，我还是没有做好完全的准备，而且是近三年以来的第一次面试，心里难免还是有点紧张。导致我有些东西知道的知识可能一时半会想不起来。后面把这些问到的知识点再复习一下。基本上只是浅浅的了解了一下，细说一下底层原理我就懵了。大概知道我们有这么个流程，知道哪里出了问题该找谁来看。因为现在吧，大公司基本上就是这么个情况， 包括中间件团队，数据库团队，DTF团队，DCF团队等等。基本上我们只用知道这些东西有，然后找相应团队的负责人帮忙看下问题就能解决。我们都是在脚手架上做着CURD。</p>
 <p>但是还是要把面试问到的东西基本原理做一个小小的总结和记录:</p>
 <h2 id="eureka">Eureka<a hidden class="anchor" aria-hidden="true" href="#eureka">#</a></h2>
-<p>Eureka是Netflix开源的一款提供服务注册和发现的产品， 开源地址为 <a href = "https://link.zhihu.com/?target=https%3A//github.com/Netflix/eureka"> Eureka</a>,  注册中心是分布式开发的核心组件之一</p>
+<p>Eureka是Netflix开源的一款提供服务注册和发现的产品， 开源地址为  Eureka,  注册中心是分布式开发的核心组件之一</p>
 <p>而eureka是spring cloud推荐的注册中心实现, Eureka是一个REST (Representational State Transfer)服务
-它主要用于AWS云，用于定位服务，以实现中间层服务器的负载平衡和故障转移，我们称此服务为Eureka服务器</p>
-<p>Eureka也有一个基于java的客户端组件，Eureka客户端，这使得与服务的交互更加容易，同时客户端也有一个内置的负载平衡器，它执行基本的循环负载均衡。</p>
+它主要用于AWS云，用于定位服务，以实现中间层服务器的负载平衡和故障转移，我们称此服务为Eureka服务器
+Eureka也有一个基于java的客户端组件，Eureka客户端，这使得与服务的交互更加容易，同时客户端也有一个内置的负载平衡器，它执行基本的循环负载均衡。</p>
 <h3 id="自我保护机制">自我保护机制<a hidden class="anchor" aria-hidden="true" href="#自我保护机制">#</a></h3>
 <p>自我保护机制主要在Eureka Client和Eureka Server之间存在网络分区的情况下发挥保护作用，在服务器端和客户端都有对应实现.</p>
 <p>假设在某种特定的情况下（如网络故障）, Eureka Client和Eureka Server无法进行通信，此时Eureka Client无法向Eureka Server发起注册和续约请求，Eureka Server中就可能因注册表中的服务实例租约出现大量过期而面临被剔除的危险，然而此时的Eureka Client可能是处于健康状态的（可接受服务访问），如果直接将注册表中大量过期的服务实例租约剔除显然是不合理的，自我保护机制提高了eureka的服务可用性。</p>
@@ -453,59 +341,29 @@
 <p>eureka server可以集群部署，多个节点之间会进行（异步方式）数据同步，保证数据最终一致性，Eureka Server作为一个开箱即用的服务注册中心，提供的功能包括：服务注册、接收服务心跳、服务剔除、服务下线等。</p>
 <p>需要注意的是，Eureka Server同时也是一个Eureka Client，在不禁止Eureka Server的客户端行为时，它会向它配置文件中的其他Eureka Server进行拉取注册表、服务注册和发送心跳等操作。</p>
 <p>eureka server端通过appName和instanceInfoId来唯一区分一个服务实例，服务实例信息是保存在哪里呢？其实就是一个Map中：</p>
-<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>// 第一层的key是appName，第二层的key是instanceInfoIdprivate final ConcurrentHashMap&lt;String, Map&lt;String, Lease&lt;InstanceInfo&gt;&gt;&gt; registry
-</span></span><span style="display:flex;"><span>= new ConcurrentHashMap&lt;String, Map&lt;String, Lease&lt;InstanceInfo&gt;&gt;&gt;();
-</span></span></code></pre></td></tr></table>
-</div>
-</div><h3 id="服务注册">服务注册<a hidden class="anchor" aria-hidden="true" href="#服务注册">#</a></h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>1
+</span></span><span style="display:flex;"><span>2
+</span></span></code></pre></div><h3 id="服务注册">服务注册<a hidden class="anchor" aria-hidden="true" href="#服务注册">#</a></h3>
 <p>Service Provider启动时会将服务信息（InstanceInfo）发送给eureka server，eureka server接收到之后会写入registry中，服务注册默认过期时间DEFAULT_DURATION_IN_SECS = 90秒。InstanceInfo写入到本地registry之后，然后同步给其他peer节点，对应方法com.netflix.eureka.registry.PeerAwareInstanceRegistryImpl#replicateToPeers。</p>
 <h3 id="写入本地redistry">写入本地redistry<a hidden class="anchor" aria-hidden="true" href="#写入本地redistry">#</a></h3>
 <p>服务信息（InstanceInfo）保存在Lease中，写入本地registry对应方法com.netflix.eureka.registry.PeerAwareInstanceRegistryImpl#register，Lease统一保存在内存的ConcurrentHashMap中，在服务注册过程中，首先加个读锁，然后从registry中判断该Lease是否已存在，如果已存在则比较lastDirtyTimestamp时间戳，取二者最大的服务信息，避免发生数据覆盖。使用InstanceInfo创建一个新的InstanceInfo：</p>
-<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 1
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 2
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 3
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 4
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 5
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 6
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 7
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 8
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 9
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">10
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">11
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">12
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">13
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">14
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">15
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">16
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">if</span> (existingLastDirtyTimestamp &gt; registrationLastDirtyTimestamp) {
-</span></span><span style="display:flex;"><span>    <span style="color:#007f7f">// 已存在Lease则比较时间戳，取二者最大值
-</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>    registrant = existingLease.<span style="color:#007f7f">getHolder</span>();
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>Lease&lt;InstanceInfo&gt; lease = <span style="color:#fff;font-weight:bold">new</span> Lease&lt;InstanceInfo&gt;(registrant, leaseDuration);
-</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">if</span> (existingLease != <span style="color:#fff;font-weight:bold">null</span>) {
-</span></span><span style="display:flex;"><span>    <span style="color:#007f7f">// 已存在Lease则取上次up时间戳
-</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>    lease.<span style="color:#007f7f">setServiceUpTimestamp</span>(existingLease.<span style="color:#007f7f">getServiceUpTimestamp</span>());
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">public</span> Lease(T r, <span style="color:#fff;font-weight:bold">int</span> durationInSecs) {
-</span></span><span style="display:flex;"><span>    holder = r;
-</span></span><span style="display:flex;"><span>    registrationTimestamp = System.<span style="color:#007f7f">currentTimeMillis</span>(); <span style="color:#007f7f">// 当前时间
-</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>    lastUpdateTimestamp = registrationTimestamp;
-</span></span><span style="display:flex;"><span>    duration = (durationInSecs * <span style="color:#ff0;font-weight:bold">1000</span>);
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></td></tr></table>
-</div>
-</div><h3 id="同步给其他peer">同步给其他peer<a hidden class="anchor" aria-hidden="true" href="#同步给其他peer">#</a></h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span> 1
+</span></span><span style="display:flex;"><span> 2
+</span></span><span style="display:flex;"><span> 3
+</span></span><span style="display:flex;"><span> 4
+</span></span><span style="display:flex;"><span> 5
+</span></span><span style="display:flex;"><span> 6
+</span></span><span style="display:flex;"><span> 7
+</span></span><span style="display:flex;"><span> 8
+</span></span><span style="display:flex;"><span> 9
+</span></span><span style="display:flex;"><span>10
+</span></span><span style="display:flex;"><span>11
+</span></span><span style="display:flex;"><span>12
+</span></span><span style="display:flex;"><span>13
+</span></span><span style="display:flex;"><span>14
+</span></span><span style="display:flex;"><span>15
+</span></span><span style="display:flex;"><span>16
+</span></span></code></pre></div><h3 id="同步给其他peer">同步给其他peer<a hidden class="anchor" aria-hidden="true" href="#同步给其他peer">#</a></h3>
 <p>InstanceInfo写入到本地registry之后，然后同步给其他peer节点，对应方法com.netflix.eureka.registry.PeerAwareInstanceRegistryImpl#replicateToPeers。如果当前节点接收到的InstanceInfo本身就是另一个节点同步来的，则不会继续同步给其他节点，避免形成“广播效应”；InstanceInfo同步时会排除当前节点。</p>
 <p>InstanceInfo的状态有依以下几种：Heartbeat, Register, Cancel, StatusUpdate, DeleteStatusOverride，默认情况下同步操作时批量异步执行的，同步请求首先缓存到Map中，key为requestType+appName+id，然后由发送线程将请求发送到peer节点。</p>
 <p>Peer之间的状态是采用异步的方式同步的，所以不保证节点间的状态一定是一致的，不过基本能保证最终状态是一致的。结合服务发现的场景，实际上也并不需要节点间的状态强一致。在一段时间内（比如30秒），节点A比节点B多一个服务实例或少一个服务实例，在业务上也是完全可以接受的（Service Consumer侧一般也会实现错误重试和负载均衡机制）。所以按照CAP理论，Eureka的选择就是放弃C，选择AP。
@@ -534,16 +392,18 @@
 <h2 id="数据一致性问题">数据一致性问题<a hidden class="anchor" aria-hidden="true" href="#数据一致性问题">#</a></h2>
 <h3 id="事务">事务<a hidden class="anchor" aria-hidden="true" href="#事务">#</a></h3>
 <p>严格意义上的事务实现应该是具备原子性、一致性、隔离性和持久性，简称ACID。</p>
-<li> 原子性(Atomicity) ， 可以理解为一个事务内的所有操作要么都执行，要么都不执行。 </li>
-<li> 一致性(Consistency)， 数据是满足完整性约束的，也就是不会存在中间状态的数据，比如说你账户上有400， 我账户上有100， 你给我打200块，此时你账户上的钱应该是200， 我账户上的钱应该是300， 不会存在我账户上的钱加了，你账户上的钱没扣的中间状态</li>
-<li> 隔离性(Lsolation) ，指的是多个事务并发执行的时候不会互相干扰，即事务内部的数据对于其他事务来说是隔离的</li>
-<li> 持久性(Durability), 指的是一个事务完成了之后数据就被永远保存下来，之后的其他操作或故障都不会对事务的结果产生影响</li>
-<p>而通俗意义上事务就是为了使得一些更新操作要么都成功，要么都失败。</p>
+<ul>
+<li>原子性(Atomicity) ， 可以理解为一个事务内的所有操作要么都执行，要么都不执行。</li>
+<li>一致性(Consistency)， 数据是满足完整性约束的，也就是不会存在中间状态的数据，比如说你账户上有400， 我账户上有100， 你给我打200块，此时你账户上的钱应该是200， 我账户上的钱应该是300， 不会存在我账户上的钱加了，你账户上的钱没扣的中间状态</li>
+<li>隔离性(Lsolation) ，指的是多个事务并发执行的时候不会互相干扰，即事务内部的数据对于其他事务来说是隔离的</li>
+<li>持久性(Durability), 指的是一个事务完成了之后数据就被永远保存下来，之后的其他操作或故障都不会对事务的结果产生影响
+而通俗意义上事务就是为了使得一些更新操作要么都成功，要么都失败。</li>
+</ul>
 <h3 id="分布式事务">分布式事务<a hidden class="anchor" aria-hidden="true" href="#分布式事务">#</a></h3>
 <p>分布式事务顾名思义就是要在分布式系统中实现事务，它其实是由多个本地事务组合而成。</p>
 <p>对于分布式事务而言几乎满足不了ACID，其实对于单机事务而言大部分情况下也没有满足ACID，不然怎么会有四种隔离级别呢？所以更不用说分布在不用数据库或者不同应用上的分布式事务了。</p>
 <h4 id="2pc">2PC<a hidden class="anchor" aria-hidden="true" href="#2pc">#</a></h4>
-<p>2PC（Two-phase commit protocol），中文叫二阶段提交。 <b>二阶段提交是一种强一致性设计</b>，2PC 引入一个事务协调者的角色来协调管理各参与者（也可称之为各本地资源）的提交和回滚，二阶段分别指的是准备（投票）和提交两个阶段。</p>
+<p>2PC（Two-phase commit protocol），中文叫二阶段提交。 <strong>二阶段提交是一种强一致性设计</strong>，2PC 引入一个事务协调者的角色来协调管理各参与者（也可称之为各本地资源）的提交和回滚，二阶段分别指的是准备（投票）和提交两个阶段。</p>
 <p>注意这只是协议或者说是理论指导，只阐述了大方向，具体落地还是有会有差异的。</p>
 <p>让我们来看下两个阶段的具体流程。</p>
 <p>准备阶段协调者会给各参与者发送准备命令，你可以把准备命令理解成除了提交事务之外啥事都做完了。</p>
@@ -552,21 +412,21 @@
 <p>假如在第一阶段有一个参与者返回失败，那么协调者就会向所有参与者发送回滚事务的请求，即分布式事务执行失败。</p>
 <p>那第二阶段提交失败的话呢？</p>
 <p>这里有两种情况。</p>
-<p>第一种是<b>第二阶段执行的是回滚事务操作</b>，那么答案是不断重试，直到所有参与者都回滚了，不然那些在第一阶段准备成功的参与者会一直阻塞着。</p>
-<p>第二种是<b>第二阶段执行的是提交事务操作</b>，那么答案也是不断重试，因为有可能一些参与者的事务已经提交成功了，这个时候只有一条路，就是头铁往前冲，不断的重试，直到提交成功，到最后真的不行只能人工介入处理。</p>
+<p>第一种是<strong>第二阶段执行的是回滚事务操作</strong>，那么答案是不断重试，直到所有参与者都回滚了，不然那些在第一阶段准备成功的参与者会一直阻塞着。</p>
+<p>第二种是<strong>第二阶段执行的是提交事务操作</strong>，那么答案也是不断重试，因为有可能一些参与者的事务已经提交成功了，这个时候只有一条路，就是头铁往前冲，不断的重试，直到提交成功，到最后真的不行只能人工介入处理。</p>
 <p>大体上二阶段提交的流程就是这样，我们再来看看细节。</p>
 <p>首先 2PC 是一个同步阻塞协议，像第一阶段协调者会等待所有参与者响应才会进行下一步操作，当然第一阶段的协调者有超时机制，假设因为网络原因没有收到某参与者的响应或某参与者挂了，那么超时后就会判断事务失败，向所有参与者发送回滚命令。</p>
 <p>在第二阶段协调者的没法超时，因为按照我们上面分析只能不断重试！</p>
-<h5 id="协调者故障分析">协调者故障分析<a hidden class="anchor" aria-hidden="true" href="#协调者故障分析">#</a></h5>
-<p>协调者是一个单点，存在单点故障问题</p>
+<p>协调者故障分析
+协调者是一个单点，存在单点故障问题</p>
 <p>假设协调者在发送准备命令之前挂了， 还行，等于事务没开始。</p>
 <p>假设协调者在发送准备命令之后挂了，这就不太行了，有些参与者等于都执行了处于事务资源锁定的状态。不仅事务执行不下去，还会因为锁定了一些公共资源而阻塞系统其他操作。</p>
 <p>假设协调者在发送事务回滚命令之前挂了，那么事务也是执行不下去，且在第一阶段那些准备成功参与者都阻塞着。</p>
 <p>假设协调者在发送回滚事务命令之后挂了，这个还行，至少命令发出去了，很大概率都会回滚成功，资源都会释放。但是如果出现网络分区问题，某些参与者将因为收不到命令而阻塞着。</p>
 <p>假设协调者在发送提交事务命令之前挂了，这个不行，这下所有资源都阻塞着。</p>
 <p>假设协调者在发送提交事务命令之后挂了，很大概率都会提交成功，然后释放资源。但是如果出现网络分区问题某些参与者因为收不到命令而阻塞着。</p>
-<h5 id="协调者故障通过选举得到新的协调者">协调者故障，通过选举得到新的协调者<a hidden class="anchor" aria-hidden="true" href="#协调者故障通过选举得到新的协调者">#</a></h5>
-<p>因为协调者单点问题，因此我们可以通过选举等操作选出一个新协调者来顶替。</p>
+<p>协调者故障，通过选举得到新的协调者
+因为协调者单点问题，因此我们可以通过选举等操作选出一个新协调者来顶替。</p>
 <p>如果处于第一阶段，其实影响不大都回滚好了，在第一阶段事务肯定还没提交。</p>
 <p>如果处于第二阶段，假设参与者都没挂，此时新协调者可以向所有参与者确认它们自身情况来推断下一步的操作。</p>
 <p>假设有个别参与者挂了！这就有点僵硬了，比如协调者发送了回滚命令，此时第一个参与者收到了并执行，然后协调者和第一个参与者都挂了。</p>
@@ -579,133 +439,67 @@
 <p>所以说极端情况下还是无法避免数据不一致问题。</p>
 <p>talk is cheap 让我们再来看下代码，可能更加的清晰。以下代码取自 Distributed System: Principles and Paradigms。</p>
 <p>这个代码就是实现了 2PC，但是相比于2PC增加了写日志的动作、参与者之间还会互相通知、参与者也实现了超时。这里要注意，一般所说的2PC，不含上述功能，这都是实现的时候添加的。</p>
-<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 1
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 2
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 3
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 4
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 5
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 6
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 7
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 8
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 9
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">10
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">11
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">12
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">13
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">14
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">15
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">16
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">17
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">18
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">19
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">20
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">21
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">22
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">23
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">24
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">25
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">26
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">27
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">28
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">29
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">30
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">31
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">32
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">33
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">34
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">35
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">36
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">37
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">38
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">39
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">40
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">41
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">42
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">43
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">44
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">45
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">46
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">47
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">48
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">49
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">50
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">51
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">52
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">53
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">54
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">55
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">56
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">57
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">58
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">59
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">60
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>协调者:
-</span></span><span style="display:flex;"><span>    write START_2PC to local log; //开始事务
-</span></span><span style="display:flex;"><span>    multicast VOTE_REQUEST to all participants; //广播通知参与者投票
-</span></span><span style="display:flex;"><span>    while not all votes have been collected {
-</span></span><span style="display:flex;"><span>        wait for any incoming vote;
-</span></span><span style="display:flex;"><span>        if timeout { //协调者超时
-</span></span><span style="display:flex;"><span>            write GLOBAL_ABORT to local log; //写日志
-</span></span><span style="display:flex;"><span>            multicast GLOBAL_ABORT to all participants; //通知事务中断
-</span></span><span style="display:flex;"><span>            exit;
-</span></span><span style="display:flex;"><span>        }
-</span></span><span style="display:flex;"><span>        record vote;
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>    //如果所有参与者都ok
-</span></span><span style="display:flex;"><span>    if all participants sent VOTE_COMMIT and coordinator votes COMMIT {
-</span></span><span style="display:flex;"><span>        write GLOBAL_COMMIT to local log;
-</span></span><span style="display:flex;"><span>        multicast GLOBAL_COMMIT to all participants;
-</span></span><span style="display:flex;"><span>    } else {
-</span></span><span style="display:flex;"><span>        write GLOBAL_ABORT to local log;
-</span></span><span style="display:flex;"><span>        multicast GLOBAL_ABORT to all participants;
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>参与者:
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    write INIT to local log; //写日志
-</span></span><span style="display:flex;"><span>    wait for VOTE_REQUEST from coordinator;
-</span></span><span style="display:flex;"><span>    if timeout { //等待超时
-</span></span><span style="display:flex;"><span>        write VOTE_ABORT to local log;
-</span></span><span style="display:flex;"><span>        exit;
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>    if participant votes COMMIT {
-</span></span><span style="display:flex;"><span>        write VOTE_COMMIT to local log; //记录自己的决策
-</span></span><span style="display:flex;"><span>        send VOTE_COMMIT to coordinator;
-</span></span><span style="display:flex;"><span>        wait for DECISION from coordinator;
-</span></span><span style="display:flex;"><span>        if timeout {
-</span></span><span style="display:flex;"><span>            multicast DECISION_REQUEST to other participants; //超时通知
-</span></span><span style="display:flex;"><span>            wait until DECISION is received;  /* remain blocked*/
-</span></span><span style="display:flex;"><span>            write DECISION to local log;
-</span></span><span style="display:flex;"><span>        }
-</span></span><span style="display:flex;"><span>        if DECISION == GLOBAL_COMMIT
-</span></span><span style="display:flex;"><span>            write GLOBAL_COMMIT to local log;
-</span></span><span style="display:flex;"><span>        else if DECISION == GLOBAL_ABORT
-</span></span><span style="display:flex;"><span>            write GLOBAL_ABORT to local log;
-</span></span><span style="display:flex;"><span>    } else {
-</span></span><span style="display:flex;"><span>        write VOTE_ABORT to local log;
-</span></span><span style="display:flex;"><span>        send VOTE_ABORT to coordinator;
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>每个参与者维护一个线程处理其它参与者的DECISION_REQUEST请求：
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    while true {
-</span></span><span style="display:flex;"><span>        wait until any incoming DECISION_REQUEST is received;
-</span></span><span style="display:flex;"><span>        read most recently recorded STATE from the local log;
-</span></span><span style="display:flex;"><span>        if STATE == GLOBAL_COMMIT
-</span></span><span style="display:flex;"><span>            send GLOBAL_COMMIT to requesting participant;
-</span></span><span style="display:flex;"><span>        else if STATE == INIT or STATE == GLOBAL_ABORT;
-</span></span><span style="display:flex;"><span>            send GLOBAL_ABORT to requesting participant;
-</span></span><span style="display:flex;"><span>        else
-</span></span><span style="display:flex;"><span>            skip;  /* participant remains blocked */
-</span></span><span style="display:flex;"><span>    }
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>至此已经详细分析了2PC的各种细节，总结如下：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span> 1
+</span></span><span style="display:flex;"><span> 2
+</span></span><span style="display:flex;"><span> 3
+</span></span><span style="display:flex;"><span> 4
+</span></span><span style="display:flex;"><span> 5
+</span></span><span style="display:flex;"><span> 6
+</span></span><span style="display:flex;"><span> 7
+</span></span><span style="display:flex;"><span> 8
+</span></span><span style="display:flex;"><span> 9
+</span></span><span style="display:flex;"><span>10
+</span></span><span style="display:flex;"><span>11
+</span></span><span style="display:flex;"><span>12
+</span></span><span style="display:flex;"><span>13
+</span></span><span style="display:flex;"><span>14
+</span></span><span style="display:flex;"><span>15
+</span></span><span style="display:flex;"><span>16
+</span></span><span style="display:flex;"><span>17
+</span></span><span style="display:flex;"><span>18
+</span></span><span style="display:flex;"><span>19
+</span></span><span style="display:flex;"><span>20
+</span></span><span style="display:flex;"><span>21
+</span></span><span style="display:flex;"><span>22
+</span></span><span style="display:flex;"><span>23
+</span></span><span style="display:flex;"><span>24
+</span></span><span style="display:flex;"><span>25
+</span></span><span style="display:flex;"><span>26
+</span></span><span style="display:flex;"><span>27
+</span></span><span style="display:flex;"><span>28
+</span></span><span style="display:flex;"><span>29
+</span></span><span style="display:flex;"><span>30
+</span></span><span style="display:flex;"><span>31
+</span></span><span style="display:flex;"><span>32
+</span></span><span style="display:flex;"><span>33
+</span></span><span style="display:flex;"><span>34
+</span></span><span style="display:flex;"><span>35
+</span></span><span style="display:flex;"><span>36
+</span></span><span style="display:flex;"><span>37
+</span></span><span style="display:flex;"><span>38
+</span></span><span style="display:flex;"><span>39
+</span></span><span style="display:flex;"><span>40
+</span></span><span style="display:flex;"><span>41
+</span></span><span style="display:flex;"><span>42
+</span></span><span style="display:flex;"><span>43
+</span></span><span style="display:flex;"><span>44
+</span></span><span style="display:flex;"><span>45
+</span></span><span style="display:flex;"><span>46
+</span></span><span style="display:flex;"><span>47
+</span></span><span style="display:flex;"><span>48
+</span></span><span style="display:flex;"><span>49
+</span></span><span style="display:flex;"><span>50
+</span></span><span style="display:flex;"><span>51
+</span></span><span style="display:flex;"><span>52
+</span></span><span style="display:flex;"><span>53
+</span></span><span style="display:flex;"><span>54
+</span></span><span style="display:flex;"><span>55
+</span></span><span style="display:flex;"><span>56
+</span></span><span style="display:flex;"><span>57
+</span></span><span style="display:flex;"><span>58
+</span></span><span style="display:flex;"><span>59
+</span></span><span style="display:flex;"><span>60
+</span></span></code></pre></div><p>至此已经详细分析了2PC的各种细节，总结如下：</p>
 <p>2PC是一种尽量保证强一致性的分布式事务，因此它是同步阻塞的，而同步阻塞就导致长久的资源锁定问题，总体而言效率低，并且存在单点故障问题，在极端条件下存在数据不一致的风险。</p>
 <p>当然具体的实现可以变形，比如Tree 2PC、Dynamic 2PC</p>
 <p>2PC适用于数据库层面的分布式事务场景，而我们业务需求有时候不仅仅关乎数据库，也有可能是上传一张图片或者发送一条短信。</p>
@@ -722,9 +516,9 @@
 <h4 id="seata方案">Seata方案<a hidden class="anchor" aria-hidden="true" href="#seata方案">#</a></h4>
 <p>Seata 是由阿里中间件团队发起的开源项目 Fescar，后更名为 Seata，它是一个是开源的分布式事务框架。</p>
 <p>传统 2PC 的问题在 Seata 中得到了解决，它通过对本地关系数据库的分支事务的协调来驱动完成全局事务，是工作在应用层的中间件。主要优点是性能较好，且不长时间占用连接资源，它以高效并且对业务 0 侵入的方式解决微服务场景下面临的分布式事务问题，它目前提供 AT 模式（即 2PC）及 TCC 模式的分布式事务解决方案。</p>
-<p><b>Seata 的设计思想如下:</b>
-Seata 的设计目标其一是对业务无侵入，因此从业务无侵入的 2PC 方案着手，在传统 2PC的基础上演进，并解决 2PC 方案面临的问题。</p>
-<p>Seata 把一个分布式事务理解成一个包含了若干分支事务的全局事务。全局事务的职责是协调其下管辖的分支事务达成一致，要么一起成功提交，要么一起失败回滚。此外，通常分支事务本身就是一个关系数据库的本地事务。</p>
+<p><strong>Seata 的设计思想如下:</strong>
+Seata 的设计目标其一是对业务无侵入，因此从业务无侵入的 2PC 方案着手，在传统 2PC的基础上演进，并解决 2PC 方案面临的问题。
+Seata 把一个分布式事务理解成一个包含了若干分支事务的全局事务。全局事务的职责是协调其下管辖的分支事务达成一致，要么一起成功提交，要么一起失败回滚。此外，通常分支事务本身就是一个关系数据库的本地事务。</p>
 <p>Seata实现2PC与传统2PC的差别</p>
 <p>架构层次方面：传统 2PC 方案的 RM 实际上是在数据库层，RM 本质上就是数据库自身，通过 XA 协议实现，而 Seata 的 RM 是以 jar 包的形式作为中间件层部署在应用程序这一侧的。</p>
 <p>两阶段提交方面：传统 2PC无论第二阶段的决议是 commit 还是 rollback ，事务性资源的锁都要保持到 Phase2 完成才释放。而 Seata 的做法是在 Phase1 就将本地事务提交，这样就可以省去 Phase2 持锁的时间，整体提高效率。</p>
@@ -734,44 +528,118 @@ Seata 的设计目标其一是对业务无侵入，因此从业务无侵入的 2
 
   <footer class="post-footer">
     <ul class="post-tags">
-      <li><a href="https://csqread.top/tags/%E9%9D%A2%E8%AF%95/">面试</a></li>
-      <li><a href="https://csqread.top/tags/%E9%9D%A2%E8%AF%95%E7%BB%8F%E9%AA%8C%E4%B8%8E%E6%80%BB%E7%BB%93/">面试经验与总结</a></li>
     </ul>
 <nav class="paginav">
   <a class="prev" href="https://csqread.top/posts/tech/netty%E7%9B%B8%E5%85%B3%E6%80%BB%E7%BB%93/">
-    <span class="title">« 上一页</span>
-    <br>
+    <span class="title">« Prev</span>
     <span>Netty相关总结</span>
   </a>
   <a class="next" href="https://csqread.top/posts/tech/java-arraylist%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90%E4%B8%8E%E6%80%BB%E7%BB%93/">
-    <span class="title">下一页 »</span>
-    <br>
+    <span class="title">Next »</span>
     <span>Java ArrayList源码分析与总结</span>
   </a>
 </nav>
+
+
+<ul class="share-buttons">
+    <li>
+        <a target="_blank" rel="noopener noreferrer" aria-label="share 拼多多面经 on x"
+            href="https://x.com/intent/tweet/?text=%e6%8b%bc%e5%a4%9a%e5%a4%9a%e9%9d%a2%e7%bb%8f&amp;url=https%3a%2f%2fcsqread.top%2fposts%2ftech%2f%25E6%258B%25BC%25E5%25A4%259A%25E5%25A4%259A%25E9%259D%25A2%25E7%25BB%258F%2f&amp;hashtags=">
+            <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve" height="30px" width="30px" fill="currentColor">
+                <path
+                    d="M512 62.554 L 512 449.446 C 512 483.97 483.97 512 449.446 512 L 62.554 512 C 28.03 512 0 483.97 0 449.446 L 0 62.554 C 0 28.03 28.029 0 62.554 0 L 449.446 0 C 483.971 0 512 28.03 512 62.554 Z M 269.951 190.75 L 182.567 75.216 L 56 75.216 L 207.216 272.95 L 63.9 436.783 L 125.266 436.783 L 235.9 310.383 L 332.567 436.783 L 456 436.783 L 298.367 228.367 L 432.367 75.216 L 371.033 75.216 Z M 127.633 110 L 164.101 110 L 383.481 400.065 L 349.5 400.065 Z" />
+            </svg>
+        </a>
+    </li>
+    <li>
+        <a target="_blank" rel="noopener noreferrer" aria-label="share 拼多多面经 on linkedin"
+            href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fcsqread.top%2fposts%2ftech%2f%25E6%258B%25BC%25E5%25A4%259A%25E5%25A4%259A%25E9%259D%25A2%25E7%25BB%258F%2f&amp;title=%e6%8b%bc%e5%a4%9a%e5%a4%9a%e9%9d%a2%e7%bb%8f&amp;summary=%e6%8b%bc%e5%a4%9a%e5%a4%9a%e9%9d%a2%e7%bb%8f&amp;source=https%3a%2f%2fcsqread.top%2fposts%2ftech%2f%25E6%258B%25BC%25E5%25A4%259A%25E5%25A4%259A%25E9%259D%25A2%25E7%25BB%258F%2f">
+            <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve" height="30px" width="30px" fill="currentColor">
+                <path
+                    d="M449.446,0c34.525,0 62.554,28.03 62.554,62.554l0,386.892c0,34.524 -28.03,62.554 -62.554,62.554l-386.892,0c-34.524,0 -62.554,-28.03 -62.554,-62.554l0,-386.892c0,-34.524 28.029,-62.554 62.554,-62.554l386.892,0Zm-288.985,423.278l0,-225.717l-75.04,0l0,225.717l75.04,0Zm270.539,0l0,-129.439c0,-69.333 -37.018,-101.586 -86.381,-101.586c-39.804,0 -57.634,21.891 -67.617,37.266l0,-31.958l-75.021,0c0.995,21.181 0,225.717 0,225.717l75.02,0l0,-126.056c0,-6.748 0.486,-13.492 2.474,-18.315c5.414,-13.475 17.767,-27.434 38.494,-27.434c27.135,0 38.007,20.707 38.007,51.037l0,120.768l75.024,0Zm-307.552,-334.556c-25.674,0 -42.448,16.879 -42.448,39.002c0,21.658 16.264,39.002 41.455,39.002l0.484,0c26.165,0 42.452,-17.344 42.452,-39.002c-0.485,-22.092 -16.241,-38.954 -41.943,-39.002Z" />
+            </svg>
+        </a>
+    </li>
+    <li>
+        <a target="_blank" rel="noopener noreferrer" aria-label="share 拼多多面经 on reddit"
+            href="https://reddit.com/submit?url=https%3a%2f%2fcsqread.top%2fposts%2ftech%2f%25E6%258B%25BC%25E5%25A4%259A%25E5%25A4%259A%25E9%259D%25A2%25E7%25BB%258F%2f&title=%e6%8b%bc%e5%a4%9a%e5%a4%9a%e9%9d%a2%e7%bb%8f">
+            <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve" height="30px" width="30px" fill="currentColor">
+                <path
+                    d="M449.446,0c34.525,0 62.554,28.03 62.554,62.554l0,386.892c0,34.524 -28.03,62.554 -62.554,62.554l-386.892,0c-34.524,0 -62.554,-28.03 -62.554,-62.554l0,-386.892c0,-34.524 28.029,-62.554 62.554,-62.554l386.892,0Zm-3.446,265.638c0,-22.964 -18.616,-41.58 -41.58,-41.58c-11.211,0 -21.361,4.457 -28.841,11.666c-28.424,-20.508 -67.586,-33.757 -111.204,-35.278l18.941,-89.121l61.884,13.157c0.756,15.734 13.642,28.29 29.56,28.29c16.407,0 29.706,-13.299 29.706,-29.701c0,-16.403 -13.299,-29.702 -29.706,-29.702c-11.666,0 -21.657,6.792 -26.515,16.578l-69.105,-14.69c-1.922,-0.418 -3.939,-0.042 -5.585,1.036c-1.658,1.073 -2.811,2.761 -3.224,4.686l-21.152,99.438c-44.258,1.228 -84.046,14.494 -112.837,35.232c-7.468,-7.164 -17.589,-11.591 -28.757,-11.591c-22.965,0 -41.585,18.616 -41.585,41.58c0,16.896 10.095,31.41 24.568,37.918c-0.639,4.135 -0.99,8.328 -0.99,12.576c0,63.977 74.469,115.836 166.33,115.836c91.861,0 166.334,-51.859 166.334,-115.836c0,-4.218 -0.347,-8.387 -0.977,-12.493c14.564,-6.47 24.735,-21.034 24.735,-38.001Zm-119.474,108.193c-20.27,20.241 -59.115,21.816 -70.534,21.816c-11.428,0 -50.277,-1.575 -70.522,-21.82c-3.007,-3.008 -3.007,-7.882 0,-10.889c3.003,-2.999 7.882,-3.003 10.885,0c12.777,12.781 40.11,17.317 59.637,17.317c19.522,0 46.86,-4.536 59.657,-17.321c3.016,-2.999 7.886,-2.995 10.885,0.008c3.008,3.011 3.003,7.882 -0.008,10.889Zm-5.23,-48.781c-16.373,0 -29.701,-13.324 -29.701,-29.698c0,-16.381 13.328,-29.714 29.701,-29.714c16.378,0 29.706,13.333 29.706,29.714c0,16.374 -13.328,29.698 -29.706,29.698Zm-160.386,-29.702c0,-16.381 13.328,-29.71 29.714,-29.71c16.369,0 29.689,13.329 29.689,29.71c0,16.373 -13.32,29.693 -29.689,29.693c-16.386,0 -29.714,-13.32 -29.714,-29.693Z" />
+            </svg>
+        </a>
+    </li>
+    <li>
+        <a target="_blank" rel="noopener noreferrer" aria-label="share 拼多多面经 on facebook"
+            href="https://facebook.com/sharer/sharer.php?u=https%3a%2f%2fcsqread.top%2fposts%2ftech%2f%25E6%258B%25BC%25E5%25A4%259A%25E5%25A4%259A%25E9%259D%25A2%25E7%25BB%258F%2f">
+            <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve" height="30px" width="30px" fill="currentColor">
+                <path
+                    d="M449.446,0c34.525,0 62.554,28.03 62.554,62.554l0,386.892c0,34.524 -28.03,62.554 -62.554,62.554l-106.468,0l0,-192.915l66.6,0l12.672,-82.621l-79.272,0l0,-53.617c0,-22.603 11.073,-44.636 46.58,-44.636l36.042,0l0,-70.34c0,0 -32.71,-5.582 -63.982,-5.582c-65.288,0 -107.96,39.569 -107.96,111.204l0,62.971l-72.573,0l0,82.621l72.573,0l0,192.915l-191.104,0c-34.524,0 -62.554,-28.03 -62.554,-62.554l0,-386.892c0,-34.524 28.029,-62.554 62.554,-62.554l386.892,0Z" />
+            </svg>
+        </a>
+    </li>
+    <li>
+        <a target="_blank" rel="noopener noreferrer" aria-label="share 拼多多面经 on whatsapp"
+            href="https://api.whatsapp.com/send?text=%e6%8b%bc%e5%a4%9a%e5%a4%9a%e9%9d%a2%e7%bb%8f%20-%20https%3a%2f%2fcsqread.top%2fposts%2ftech%2f%25E6%258B%25BC%25E5%25A4%259A%25E5%25A4%259A%25E9%259D%25A2%25E7%25BB%258F%2f">
+            <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve" height="30px" width="30px" fill="currentColor">
+                <path
+                    d="M449.446,0c34.525,0 62.554,28.03 62.554,62.554l0,386.892c0,34.524 -28.03,62.554 -62.554,62.554l-386.892,0c-34.524,0 -62.554,-28.03 -62.554,-62.554l0,-386.892c0,-34.524 28.029,-62.554 62.554,-62.554l386.892,0Zm-58.673,127.703c-33.842,-33.881 -78.847,-52.548 -126.798,-52.568c-98.799,0 -179.21,80.405 -179.249,179.234c-0.013,31.593 8.241,62.428 23.927,89.612l-25.429,92.884l95.021,-24.925c26.181,14.28 55.659,21.807 85.658,21.816l0.074,0c98.789,0 179.206,-80.413 179.247,-179.243c0.018,-47.895 -18.61,-92.93 -52.451,-126.81Zm-126.797,275.782l-0.06,0c-26.734,-0.01 -52.954,-7.193 -75.828,-20.767l-5.441,-3.229l-56.386,14.792l15.05,-54.977l-3.542,-5.637c-14.913,-23.72 -22.791,-51.136 -22.779,-79.287c0.033,-82.142 66.867,-148.971 149.046,-148.971c39.793,0.014 77.199,15.531 105.329,43.692c28.128,28.16 43.609,65.592 43.594,105.4c-0.034,82.149 -66.866,148.983 -148.983,148.984Zm81.721,-111.581c-4.479,-2.242 -26.499,-13.075 -30.604,-14.571c-4.105,-1.495 -7.091,-2.241 -10.077,2.241c-2.986,4.483 -11.569,14.572 -14.182,17.562c-2.612,2.988 -5.225,3.364 -9.703,1.12c-4.479,-2.241 -18.91,-6.97 -36.017,-22.23c-13.314,-11.876 -22.304,-26.542 -24.916,-31.026c-2.612,-4.484 -0.279,-6.908 1.963,-9.14c2.016,-2.007 4.48,-5.232 6.719,-7.847c2.24,-2.615 2.986,-4.484 4.479,-7.472c1.493,-2.99 0.747,-5.604 -0.374,-7.846c-1.119,-2.241 -10.077,-24.288 -13.809,-33.256c-3.635,-8.733 -7.327,-7.55 -10.077,-7.688c-2.609,-0.13 -5.598,-0.158 -8.583,-0.158c-2.986,0 -7.839,1.121 -11.944,5.604c-4.105,4.484 -15.675,15.32 -15.675,37.364c0,22.046 16.048,43.342 18.287,46.332c2.24,2.99 31.582,48.227 76.511,67.627c10.685,4.615 19.028,7.371 25.533,9.434c10.728,3.41 20.492,2.929 28.209,1.775c8.605,-1.285 26.499,-10.833 30.231,-21.295c3.732,-10.464 3.732,-19.431 2.612,-21.298c-1.119,-1.869 -4.105,-2.99 -8.583,-5.232Z" />
+            </svg>
+        </a>
+    </li>
+    <li>
+        <a target="_blank" rel="noopener noreferrer" aria-label="share 拼多多面经 on telegram"
+            href="https://telegram.me/share/url?text=%e6%8b%bc%e5%a4%9a%e5%a4%9a%e9%9d%a2%e7%bb%8f&amp;url=https%3a%2f%2fcsqread.top%2fposts%2ftech%2f%25E6%258B%25BC%25E5%25A4%259A%25E5%25A4%259A%25E9%259D%25A2%25E7%25BB%258F%2f">
+            <svg version="1.1" xml:space="preserve" viewBox="2 2 28 28" height="30px" width="30px" fill="currentColor">
+                <path
+                    d="M26.49,29.86H5.5a3.37,3.37,0,0,1-2.47-1,3.35,3.35,0,0,1-1-2.47V5.48A3.36,3.36,0,0,1,3,3,3.37,3.37,0,0,1,5.5,2h21A3.38,3.38,0,0,1,29,3a3.36,3.36,0,0,1,1,2.46V26.37a3.35,3.35,0,0,1-1,2.47A3.38,3.38,0,0,1,26.49,29.86Zm-5.38-6.71a.79.79,0,0,0,.85-.66L24.73,9.24a.55.55,0,0,0-.18-.46.62.62,0,0,0-.41-.17q-.08,0-16.53,6.11a.59.59,0,0,0-.41.59.57.57,0,0,0,.43.52l4,1.24,1.61,4.83a.62.62,0,0,0,.63.43.56.56,0,0,0,.4-.17L16.54,20l4.09,3A.9.9,0,0,0,21.11,23.15ZM13.8,20.71l-1.21-4q8.72-5.55,8.78-5.55c.15,0,.23,0,.23.16a.18.18,0,0,1,0,.06s-2.51,2.3-7.52,6.8Z" />
+            </svg>
+        </a>
+    </li>
+    <li>
+        <a target="_blank" rel="noopener noreferrer" aria-label="share 拼多多面经 on ycombinator"
+            href="https://news.ycombinator.com/submitlink?t=%e6%8b%bc%e5%a4%9a%e5%a4%9a%e9%9d%a2%e7%bb%8f&u=https%3a%2f%2fcsqread.top%2fposts%2ftech%2f%25E6%258B%25BC%25E5%25A4%259A%25E5%25A4%259A%25E9%259D%25A2%25E7%25BB%258F%2f">
+            <svg version="1.1" xml:space="preserve" width="30px" height="30px" viewBox="0 0 512 512" fill="currentColor"
+                xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape">
+                <path
+                    d="M449.446 0C483.971 0 512 28.03 512 62.554L512 449.446C512 483.97 483.97 512 449.446 512L62.554 512C28.03 512 0 483.97 0 449.446L0 62.554C0 28.03 28.029 0 62.554 0L449.446 0ZM183.8767 87.9921H121.8427L230.6673 292.4508V424.0079H281.3328V292.4508L390.1575 87.9921H328.1233L256 238.2489z" />
+            </svg>
+        </a>
+    </li>
+</ul>
 
   </footer>
 </article>
     </main>
     
 <footer class="footer">
-    <span>&copy; 2026 <a href="https://csqread.top">Qian&#39;s Blog</a></span>
+        <span>&copy; 2026 <a href="https://csqread.top/">Qian&#39;s Blog</a></span> · 
+
+    
+    
     <span>
         Powered by
-        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://gohugo.io/?utm_source=papermod" rel="noopener" target="_blank">Hugo</a> &
         <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
     </span>
 </footer>
-<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
-        <path d="M12 6H0l6-6z" />
+<a href="#top" id="top-link" class="top-link hidden" aria-label="go to top" title="Go to Top (Alt + G)" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+        stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevrons-up">
+        <polyline points="17 11 12 6 7 11"></polyline>
+        <polyline points="17 18 12 13 7 18"></polyline>
     </svg>
 </a>
 
 <script>
-    let menu = document.getElementById('menu')
+    let menu = document.getElementById('menu');
     if (menu) {
-        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        
+        const scrollPosition = localStorage.getItem("menu-scroll-position");
+        if (scrollPosition) {
+            menu.scrollLeft = parseInt(scrollPosition, 10);
+        }
+        
         menu.onscroll = function () {
             localStorage.setItem("menu-scroll-position", menu.scrollLeft);
         }
@@ -798,25 +666,25 @@ Seata 的设计目标其一是对业务无侵入，因此从业务无侵入的 2
 
 </script>
 <script>
-    var mybutton = document.getElementById("top-link");
+    var toplink = document.getElementById("top-link");
     window.onscroll = function () {
-        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
-            mybutton.style.visibility = "visible";
-            mybutton.style.opacity = "1";
+        const scrollThreshold = window.innerHeight;
+        if (document.body.scrollTop > scrollThreshold || document.documentElement.scrollTop > scrollThreshold) {
+            toplink.classList.remove("hidden");
         } else {
-            mybutton.style.visibility = "hidden";
-            mybutton.style.opacity = "0";
+            toplink.classList.add("hidden");
         }
     };
 
 </script>
 <script>
     document.getElementById("theme-toggle").addEventListener("click", () => {
-        if (document.body.className.includes("dark")) {
-            document.body.classList.remove('dark');
+        const html = document.querySelector("html");
+        if (html.dataset.theme === "dark") {
+            html.dataset.theme = 'light';
             localStorage.setItem("pref-theme", 'light');
         } else {
-            document.body.classList.add('dark');
+            html.dataset.theme = 'dark';
             localStorage.setItem("pref-theme", 'dark');
         }
     })
@@ -828,12 +696,12 @@ Seata 的设计目标其一是对业务无侵入，因此从业务无侵入的 2
 
         const copybutton = document.createElement('button');
         copybutton.classList.add('copy-code');
-        copybutton.innerHTML = '复制';
+        copybutton.innerHTML = 'copy';
 
         function copyingDone() {
-            copybutton.innerHTML = '已复制！';
+            copybutton.innerHTML = 'copied!';
             setTimeout(() => {
-                copybutton.innerHTML = '复制';
+                copybutton.innerHTML = 'copy';
             }, 2000);
         }
 

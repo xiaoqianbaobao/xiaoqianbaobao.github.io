@@ -1,0 +1,919 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto" data-theme="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>DeerFlow Harness 深度拆解：Agent 运行时引擎的架构设计 | Qian&#39;s Blog</title>
+<meta name="keywords" content="Agent, Harness, LangGraph, 架构设计, LLM, Python">
+<meta name="description" content="从源码层面全面拆解 DeerFlow 的 Agent 运行时引擎 Harness，涵盖 14 层中间件链、两种部署模式、Checkpoint 持久化方案、M5 身份透传等核心架构设计。">
+<meta name="author" content="">
+<link rel="canonical" href="https://csqread.top/posts/tech/deerflow-harness-deep-dive/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.css" rel="preload stylesheet" as="style">
+<link rel="icon" href="https://csqread.top/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://csqread.top/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://csqread.top/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://csqread.top/apple-touch-icon.png">
+<link rel="mask-icon" href="https://csqread.top/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="https://csqread.top/posts/tech/deerflow-harness-deep-dive/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+                color-scheme: dark;
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .toc {
+                background: var(--entry);
+            }
+        }
+
+    </style>
+</noscript>
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.querySelector("html").dataset.theme = 'dark';
+    } else if (localStorage.getItem("pref-theme") === "light") {
+       document.querySelector("html").dataset.theme = 'light';
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.querySelector("html").dataset.theme = 'dark';
+    } else {
+        document.querySelector("html").dataset.theme = 'light';
+    }
+
+</script><meta property="og:url" content="https://csqread.top/posts/tech/deerflow-harness-deep-dive/">
+  <meta property="og:site_name" content="Qian&#39;s Blog">
+  <meta property="og:title" content="DeerFlow Harness 深度拆解：Agent 运行时引擎的架构设计">
+  <meta property="og:description" content="从源码层面全面拆解 DeerFlow 的 Agent 运行时引擎 Harness，涵盖 14 层中间件链、两种部署模式、Checkpoint 持久化方案、M5 身份透传等核心架构设计。">
+  <meta property="og:locale" content="zh_cn">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2026-07-06T14:00:00+08:00">
+    <meta property="article:modified_time" content="2026-07-06T14:00:00+08:00">
+    <meta property="article:tag" content="Agent">
+    <meta property="article:tag" content="Harness">
+    <meta property="article:tag" content="LangGraph">
+    <meta property="article:tag" content="架构设计">
+    <meta property="article:tag" content="LLM">
+    <meta property="article:tag" content="Python">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="DeerFlow Harness 深度拆解：Agent 运行时引擎的架构设计">
+  <meta name="twitter:description" content="从源码层面全面拆解 DeerFlow 的 Agent 运行时引擎 Harness，涵盖 14 层中间件链、两种部署模式、Checkpoint 持久化方案、M5 身份透传等核心架构设计。">
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "文章",
+      "item": "https://csqread.top/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "技术",
+      "item": "https://csqread.top/posts/tech/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  3 ,
+      "name": "DeerFlow Harness 深度拆解：Agent 运行时引擎的架构设计",
+      "item": "https://csqread.top/posts/tech/deerflow-harness-deep-dive/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "DeerFlow Harness 深度拆解：Agent 运行时引擎的架构设计",
+  "name": "DeerFlow Harness 深度拆解：Agent 运行时引擎的架构设计",
+  "description": "从源码层面全面拆解 DeerFlow 的 Agent 运行时引擎 Harness，涵盖 14 层中间件链、两种部署模式、Checkpoint 持久化方案、M5 身份透传等核心架构设计。",
+  "keywords": [
+    "Agent", "Harness", "LangGraph", "架构设计", "LLM", "Python"
+  ],
+  "articleBody": "引言 在 AI Agent 系统越来越复杂的今天，如何设计一个可插拔、可审计、可独立部署的 Agent 运行时引擎，是每个工程团队都需要面对的课题。\nDeerFlow 是一个开源的 AI Agent 平台，其核心运行时引擎 Harness 位于 backend/packages/harness/deerflow/，作为一个可独立发布的 Python 包，提供了完整的 AI Agent 执行能力。本文基于该仓库的源码、设计文档和白皮书，从架构到实现细节进行全面拆解。\n1. Harness 全景 Harness 是 DeerFlow 的 Agent 运行时引擎，核心职责：\n组装 LangGraph Agent — 将 lead agent 和 14 层中间件链组合成可执行的图 管理 Agent 执行生命周期 — 创建 → 运行 → 中断 → 恢复 → 清理 提供沙箱执行环境 — 安全执行 bash 命令，支持审计 提供状态持久化 — checkpointer + store，支持 memory/sqlite/postgres 关键依赖红线：app.* 可以 import deerflow.*，但 deerflow.* 绝不能 import app.*。这条红线由 CI 中强制执行的测试保证，确保 harness 包可以在任何 Python 项目中独立使用。\n包结构概览 deerflow/ ├── agents/ Agent 核心工厂 + 中间件 + checkpointer ├── runtime/ Gateway 模式运行时 ├── sandbox/ 沙箱抽象（LocalSandbox + 安全审计） ├── subagents/ 子智能体执行池 ├── tools/ 工具系统（内置 + MCP） ├── skills/ 技能系统 ├── models/ 模型工厂（适配 10+ LLM provider） ├── mcp/ MCP 客户端 ├── config/ 配置系统 ├── guardrails/ 权限护栏 └── tracing/ 链路追踪 2. 两种运行模式 Standard 模式（4 进程） Nginx ├── Frontend (Next.js, 3110) ├── Gateway API (FastAPI, 8100) 只做 REST 入口 └── LangGraph Server (2024) Agent 真正执行的地方 ├── 独立的 LangGraph SDK 进程 ├── 加载 agent → graph.astream() └── 通过 SSE 流式返回 Gateway 模式（3 进程） Nginx ├── Frontend (Next.js, 3110) └── Gateway API (FastAPI, 8100) 嵌入 Agent 运行时 ├── deerflow.runtime.RunManager ├── deerflow.runtime.run_agent() ├── deerflow.runtime.StreamBridge └── 直接 graph.astream() 之后 SSE 推送 维度 Standard Gateway 进程数 4 3 Agent 执行位置 LangGraph Server Gateway 进程内 网络跳转 Gateway → LG Server (HTTP) 无 运维复杂度 多一个进程 更简单 适用场景 开发/小规模 生产/私有化部署 Gateway 模式更适合生产部署——少一个进程、减少网络跳转。代价是 Gateway 进程的 CPU/内存消耗更高。\n3. Agent 工厂链 两层工厂分别服务于不同场景。\nSDK 级工厂 位于 agents/factory.py，纯参数驱动，不依赖 YAML 配置：\ndef create_deerflow_agent( model, tools=None, *, system_prompt=None, middleware=None, # 完全接管 features=None, # 声明式 Feature Flag extra_middleware=None, # @Next/@Prev 定位插入 plan_mode=False, state_schema=None, checkpointer=None, name=\"default\", ) -\u003e CompiledStateGraph: ... 应用级工厂 make_lead_agent() 位于 agents/lead_agent/agent.py，配置驱动，完整流程：\nRunnableConfig → 解析参数 → 加载 agent 配置 → 解析 skills → 创建模型 → 加载工具 → 组装中间件 → 应用 Prompt 模板 → LangGraph create_agent() 检查点不是在工厂中附着的，而是在 run_agent worker 中运行时才附加。\n4. 中间件链：最核心的架构模式 中间件在 agent 每次 LLM 调用前后和工具调用前后插入自定义逻辑。\nHook 机制 class AgentMiddleware: def before_agent(self, state, runtime) -\u003e dict | None def after_agent(self, state, runtime) -\u003e dict | None def wrap_tool_call(self, request, handler) -\u003e ToolMessage async def awrap_tool_call(self, request, handler) -\u003e ... 14 层中间件链 位置 Middleware 核心职责 [0] IdentityMiddleware M5 身份传播，验证 HMAC 签名 [1] ThreadDataMiddleware thread_id、sandbox 目录初始化 [2] UploadsMiddleware 上传文件注入到上下文 [3] SandboxMiddleware 沙箱容器生命周期管理 [4] DanglingToolCallMiddleware 修复\"悬挂\"的 ToolMessage [5] SandboxAuditMiddleware Bash 命令安全审计 [6] ToolErrorHandlingMiddleware 工具异常捕获，防崩溃 [7] SummarizationMiddleware 长对话自动摘要 [8] TodoMiddleware Plan 模式的 TODO 管理 [9] TitleMiddleware 自动生成对话标题 [10] TokenUsageMiddleware Token 用量统计 [11] MemoryMiddleware 持久记忆注入 [12] ViewImageMiddleware 图片自动查看与描述 [13] LoopDetectionMiddleware 循环检测打断 [14] ClarificationMiddleware 澄清请求拦截（永在链尾） @Next / @Prev 装饰器 @Next(TitleMiddleware) class MyCustomMiddleware(AgentMiddleware): pass 定位算法保证无锚点中间件插在 ClarificationMiddleware 之前， ClarificationMiddleware 永远在链尾。\n5. Runtime 子系统 主事件循环 一个经典难题：跨线程事件循环冲突。langchain_openai 的 httpx client 使用 @lru_cache，cache key 不包含事件循环标识。client 在短生命周期的循环上创建后，其连接池 socket 绑定到已关闭的循环：\nRuntimeError(\"Event loop is closed\") 解决方案——注册长生命周期的主循环：\ndef submit_to_main_loop(coro_factory): coro = coro_factory() future = asyncio.run_coroutine_threadsafe(coro, _main_loop) return future.result() StreamBridge 事件流 Agent 执行的每一步通过 StreamBridge 发布到事件流，SSE 端点订阅后推送到前端：\nagent.astream() → serialize() → bridge.publish() → SSE → React Query → UI 当前内存实现，未来可替换为 Redis pub/sub。\n6. Checkpoint 检查点系统 架构层级 LangGraph CompiledStateGraph → Checkpointer ABC ├─ MemorySaver（内存，开发用） ├─ SqliteSaver（文件持久化） └─ PostgresSaver（数据库持久化） 存储后端对比 后端 存储位置 内存占用 持久化 memory 进程内存 ✅ ❌ sqlite 磁盘文件 ❌ ✅ postgres 数据库 ❌ ✅ SQLite 数据在磁盘，操作系统只缓存热数据页到 page cache，可回收。InMemorySaver 才是存内存的——仅用于开发测试。\n7. Checkpoint 磁盘膨胀：真实生产问题 80GB 磁盘被 checkpoint.db 填满。根因——base64 图片数据被双重存储。\n根因 用户上传 1MB PNG → 文件存储 → base64 (~1.33MB) → state[\"viewed_images\"] (~1.33MB) → Messages 中再存一份 (~1.33MB) → checkpoint.aput() 写入磁盘 总计: 1MB 图片 → ~2.7MB 占用 解决方案 优先级 方案 难度 节省空间 P0 注入后清除 viewed_images 1 行代码 ~50% P1 迁移到 MySQL/Postgres（TOAST） 配置+迁移 ~70-85% P2 定期裁剪 checkpoint + VACUUM 定时任务 可变 P3 图片外存（只存引用） 中等改造 ~99.9% 8. 身份与多租户（M5） HMAC 签名驱动的身份透传机制。\n传播路径 Gateway Nginx → FastAPI → check_session → IdentityMiddleware.before_agent() → 验证 X-Deerflow-* headers → state[\"identity\"] 注入 关键设计 子 agent 直接继承 identity，不需要重新签名 HMAC 中间件通过 wrap_tool_call 拦截工具调用，按 TOOL_PERMISSION_MAP 检查权限 Whitelist default-deny：未注册的工具默认拒绝 Flag-off 兼容：ENABLE_IDENTITY=false 时跳过检查 9. 核心请求流 用户请求 → Nginx → FastAPI Gateway → Middleware 链（session → auth → rate_limit） → create_deerflow_agent() / make_lead_agent() → run_agent worker（异步 Task） → agent.astream() 执行（中间件链递归调用） → StreamBridge.publish() 每个 step → SSE 推送 → 前端消费 中间件的递归执行顺序：\nbefore_agent: [14] → [13] → ... → [0] → LLM after_agent: LLM → [0] → ... → [13] → [14] 10. 总结 DeerFlow Harness 在架构设计上值得学习的几点：\n红线隔离 — CI 强制 deerflow.* 不依赖 app.*，确保独立可复用 中间件链 — 14 层有序组装，@Next/@Prev 实现可插拔扩展 声明式 Feature Flag — RuntimeFeatures 声明式启用/禁用/替换功能 Gateway 模式 — 减少进程数，简化运维 M5 身份透传 — HMAC 签名驱动，Whitelist default-deny Checkpoint 优化 — 从 80GB 磁盘告警到一行代码解决双重存储 如果你也在设计 AI Agent 系统，Harness 的架构思路值得参考。\n本文基于 deer-flow-by-cc 仓库源码、设计文档和白皮书整理。\n延伸阅读：本博客的 Harness Engineering 一文从更高视角讨论了 Harness 的定位——“不是外壳，而是 Agent 系统的控制结构”，与本篇互为补充。\n",
+  "wordCount" : "2331",
+  "inLanguage": "en",
+  "datePublished": "2026-07-06T14:00:00+08:00",
+  "dateModified": "2026-07-06T14:00:00+08:00",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://csqread.top/posts/tech/deerflow-harness-deep-dive/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Qian's Blog",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://csqread.top/favicon.ico"
+    }
+  }
+}
+</script>
+</head>
+<body id="top">
+    <header class="header">
+    <nav class="header-nav">
+        <div class="logo">
+            <a href="https://csqread.top/" accesskey="h" title="Qian&#39;s Blog (Alt + H)">
+                <img src="https://csqread.top/img/Q.gif" alt="" aria-label="logo"
+                    height="35">Qian&#39;s Blog</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" class="theme-toggle" accesskey="t" title="(Alt + T)" aria-label="Toggle theme">
+                    <svg class="moon" xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg class="sun" xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu" class="menu">
+            <li>
+                <a href="https://csqread.top/search" title="??搜索 (Alt &#43; /)" accesskey=/>
+                    <span>??搜索</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://csqread.top/posts" title="??文章">
+                    <span>??文章</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://csqread.top/archives/" title="??时间轴">
+                    <span>??时间轴</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://csqread.top/tags" title="??标签">
+                    <span>??标签</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://csqread.top/about" title="???‍♂?关于">
+                    <span>???‍♂?关于</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://csqread.top/links" title="??友链">
+                    <span>??友链</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://csqread.top/posts/blog" title="??博客">
+                    <span>??博客</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://csqread.top/posts/tech" title="???‍?技术">
+                    <span>???‍?技术</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://csqread.top/posts/read" title="??阅读-电影">
+                    <span>??阅读-电影</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://csqread.top/posts/life" title="??生活">
+                    <span>??生活</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    <nav class="breadcrumbs" role="navigation" aria-label="Breadcrumb">
+            <a href="/">Home</a>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right">
+                <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+            <a href="/posts/">文章</a>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right">
+                <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+            <a href="/posts/tech/">技术</a>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+        stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right">
+        <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+</nav>
+    <h1 class="post-title entry-hint-parent">
+      DeerFlow Harness 深度拆解：Agent 运行时引擎的架构设计
+    </h1>
+    <div class="post-description">
+      从源码层面全面拆解 DeerFlow 的 Agent 运行时引擎 Harness，涵盖 14 层中间件链、两种部署模式、Checkpoint 持久化方案、M5 身份透传等核心架构设计。
+    </div>
+    <div class="post-meta">
+
+<span title='2026-07-06 14:00:00 +0800 CST'>July 6, 2026</span>&nbsp;·&nbsp;<span>5 min</span>
+
+</div>
+  </header> <details class="toc" >
+    <summary accesskey="c" title="(Alt + C)">
+        <span class="title">Table of Contents</span>
+    </summary>
+
+    <div class="inner"><ul>
+            <li>
+                <a href="#%e5%bc%95%e8%a8%80" aria-label="引言">引言</a></li>
+            <li>
+                <a href="#1-harness-%e5%85%a8%e6%99%af" aria-label="1. Harness 全景">1. Harness 全景</a><ul>
+                    
+            <li>
+                <a href="#%e5%8c%85%e7%bb%93%e6%9e%84%e6%a6%82%e8%a7%88" aria-label="包结构概览">包结构概览</a></li></ul>
+            </li>
+            <li>
+                <a href="#2-%e4%b8%a4%e7%a7%8d%e8%bf%90%e8%a1%8c%e6%a8%a1%e5%bc%8f" aria-label="2. 两种运行模式">2. 两种运行模式</a><ul>
+                    
+            <li>
+                <a href="#standard-%e6%a8%a1%e5%bc%8f4-%e8%bf%9b%e7%a8%8b" aria-label="Standard 模式（4 进程）">Standard 模式（4 进程）</a></li>
+            <li>
+                <a href="#gateway-%e6%a8%a1%e5%bc%8f3-%e8%bf%9b%e7%a8%8b" aria-label="Gateway 模式（3 进程）">Gateway 模式（3 进程）</a></li></ul>
+            </li>
+            <li>
+                <a href="#3-agent-%e5%b7%a5%e5%8e%82%e9%93%be" aria-label="3. Agent 工厂链">3. Agent 工厂链</a><ul>
+                    
+            <li>
+                <a href="#sdk-%e7%ba%a7%e5%b7%a5%e5%8e%82" aria-label="SDK 级工厂">SDK 级工厂</a></li>
+            <li>
+                <a href="#%e5%ba%94%e7%94%a8%e7%ba%a7%e5%b7%a5%e5%8e%82" aria-label="应用级工厂">应用级工厂</a></li></ul>
+            </li>
+            <li>
+                <a href="#4-%e4%b8%ad%e9%97%b4%e4%bb%b6%e9%93%be%e6%9c%80%e6%a0%b8%e5%bf%83%e7%9a%84%e6%9e%b6%e6%9e%84%e6%a8%a1%e5%bc%8f" aria-label="4. 中间件链：最核心的架构模式">4. 中间件链：最核心的架构模式</a><ul>
+                    
+            <li>
+                <a href="#hook-%e6%9c%ba%e5%88%b6" aria-label="Hook 机制">Hook 机制</a></li>
+            <li>
+                <a href="#14-%e5%b1%82%e4%b8%ad%e9%97%b4%e4%bb%b6%e9%93%be" aria-label="14 层中间件链">14 层中间件链</a></li>
+            <li>
+                <a href="#next--prev-%e8%a3%85%e9%a5%b0%e5%99%a8" aria-label="@Next / @Prev 装饰器">@Next / @Prev 装饰器</a></li></ul>
+            </li>
+            <li>
+                <a href="#5-runtime-%e5%ad%90%e7%b3%bb%e7%bb%9f" aria-label="5. Runtime 子系统">5. Runtime 子系统</a><ul>
+                    
+            <li>
+                <a href="#%e4%b8%bb%e4%ba%8b%e4%bb%b6%e5%be%aa%e7%8e%af" aria-label="主事件循环">主事件循环</a></li>
+            <li>
+                <a href="#streambridge-%e4%ba%8b%e4%bb%b6%e6%b5%81" aria-label="StreamBridge 事件流">StreamBridge 事件流</a></li></ul>
+            </li>
+            <li>
+                <a href="#6-checkpoint-%e6%a3%80%e6%9f%a5%e7%82%b9%e7%b3%bb%e7%bb%9f" aria-label="6. Checkpoint 检查点系统">6. Checkpoint 检查点系统</a><ul>
+                    
+            <li>
+                <a href="#%e6%9e%b6%e6%9e%84%e5%b1%82%e7%ba%a7" aria-label="架构层级">架构层级</a></li>
+            <li>
+                <a href="#%e5%ad%98%e5%82%a8%e5%90%8e%e7%ab%af%e5%af%b9%e6%af%94" aria-label="存储后端对比">存储后端对比</a></li></ul>
+            </li>
+            <li>
+                <a href="#7-checkpoint-%e7%a3%81%e7%9b%98%e8%86%a8%e8%83%80%e7%9c%9f%e5%ae%9e%e7%94%9f%e4%ba%a7%e9%97%ae%e9%a2%98" aria-label="7. Checkpoint 磁盘膨胀：真实生产问题">7. Checkpoint 磁盘膨胀：真实生产问题</a><ul>
+                    
+            <li>
+                <a href="#%e6%a0%b9%e5%9b%a0" aria-label="根因">根因</a></li>
+            <li>
+                <a href="#%e8%a7%a3%e5%86%b3%e6%96%b9%e6%a1%88" aria-label="解决方案">解决方案</a></li></ul>
+            </li>
+            <li>
+                <a href="#8-%e8%ba%ab%e4%bb%bd%e4%b8%8e%e5%a4%9a%e7%a7%9f%e6%88%b7m5" aria-label="8. 身份与多租户（M5）">8. 身份与多租户（M5）</a><ul>
+                    
+            <li>
+                <a href="#%e4%bc%a0%e6%92%ad%e8%b7%af%e5%be%84" aria-label="传播路径">传播路径</a></li>
+            <li>
+                <a href="#%e5%85%b3%e9%94%ae%e8%ae%be%e8%ae%a1" aria-label="关键设计">关键设计</a></li></ul>
+            </li>
+            <li>
+                <a href="#9-%e6%a0%b8%e5%bf%83%e8%af%b7%e6%b1%82%e6%b5%81" aria-label="9. 核心请求流">9. 核心请求流</a></li>
+            <li>
+                <a href="#10-%e6%80%bb%e7%bb%93" aria-label="10. 总结">10. 总结</a>
+            </li>
+        </ul>
+    </div>
+</details>
+
+  <div class="post-content md-content"><h2 id="引言">引言<a hidden class="anchor" aria-hidden="true" href="#引言">#</a></h2>
+<p>在 AI Agent 系统越来越复杂的今天，如何设计一个<strong>可插拔、可审计、可独立部署</strong>的 Agent 运行时引擎，是每个工程团队都需要面对的课题。</p>
+<p><strong>DeerFlow</strong> 是一个开源的 AI Agent 平台，其核心运行时引擎 <strong>Harness</strong> 位于 <code>backend/packages/harness/deerflow/</code>，作为一个可独立发布的 Python 包，提供了完整的 AI Agent 执行能力。本文基于该仓库的源码、设计文档和白皮书，从架构到实现细节进行全面拆解。</p>
+<hr>
+<h2 id="1-harness-全景">1. Harness 全景<a hidden class="anchor" aria-hidden="true" href="#1-harness-全景">#</a></h2>
+<p>Harness 是 DeerFlow 的 Agent 运行时引擎，核心职责：</p>
+<ol>
+<li><strong>组装 LangGraph Agent</strong> — 将 lead agent 和 14 层中间件链组合成可执行的图</li>
+<li><strong>管理 Agent 执行生命周期</strong> — 创建 → 运行 → 中断 → 恢复 → 清理</li>
+<li><strong>提供沙箱执行环境</strong> — 安全执行 bash 命令，支持审计</li>
+<li><strong>提供状态持久化</strong> — checkpointer + store，支持 memory/sqlite/postgres</li>
+</ol>
+<blockquote>
+<p><strong>关键依赖红线</strong>：<code>app.*</code> 可以 import <code>deerflow.*</code>，但 <code>deerflow.*</code> 绝不能 import <code>app.*</code>。这条红线由 CI 中强制执行的测试保证，确保 harness 包可以在任何 Python 项目中独立使用。</p>
+</blockquote>
+<h3 id="包结构概览">包结构概览<a hidden class="anchor" aria-hidden="true" href="#包结构概览">#</a></h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-gdscript3" data-lang="gdscript3"><span style="display:flex;"><span>deerflow<span style="color:#f92672">/</span>
+</span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">├──</span> agents<span style="color:#f92672">/</span>             Agent <span style="color:#960050;background-color:#1e0010">核心工厂</span> <span style="color:#f92672">+</span> <span style="color:#960050;background-color:#1e0010">中间件</span> <span style="color:#f92672">+</span> checkpointer
+</span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">├──</span> runtime<span style="color:#f92672">/</span>            Gateway <span style="color:#960050;background-color:#1e0010">模式运行时</span>
+</span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">├──</span> sandbox<span style="color:#f92672">/</span>            <span style="color:#960050;background-color:#1e0010">沙箱抽象（</span>LocalSandbox <span style="color:#f92672">+</span> <span style="color:#960050;background-color:#1e0010">安全审计）</span>
+</span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">├──</span> subagents<span style="color:#f92672">/</span>          <span style="color:#960050;background-color:#1e0010">子智能体执行池</span>
+</span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">├──</span> tools<span style="color:#f92672">/</span>              <span style="color:#960050;background-color:#1e0010">工具系统（内置</span> <span style="color:#f92672">+</span> MCP<span style="color:#960050;background-color:#1e0010">）</span>
+</span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">├──</span> skills<span style="color:#f92672">/</span>             <span style="color:#960050;background-color:#1e0010">技能系统</span>
+</span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">├──</span> models<span style="color:#f92672">/</span>             <span style="color:#960050;background-color:#1e0010">模型工厂（适配</span> <span style="color:#ae81ff">10</span><span style="color:#f92672">+</span> LLM provider<span style="color:#960050;background-color:#1e0010">）</span>
+</span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">├──</span> mcp<span style="color:#f92672">/</span>                MCP <span style="color:#960050;background-color:#1e0010">客户端</span>
+</span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">├──</span> config<span style="color:#f92672">/</span>             <span style="color:#960050;background-color:#1e0010">配置系统</span>
+</span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">├──</span> guardrails<span style="color:#f92672">/</span>         <span style="color:#960050;background-color:#1e0010">权限护栏</span>
+</span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">└──</span> tracing<span style="color:#f92672">/</span>            <span style="color:#960050;background-color:#1e0010">链路追踪</span>
+</span></span></code></pre></div><p><img alt="DeerFlow 包结构概览" loading="lazy" src="/posts/tech/deerflow-harness-deep-dive/package-structure.png"></p>
+<hr>
+<h2 id="2-两种运行模式">2. 两种运行模式<a hidden class="anchor" aria-hidden="true" href="#2-两种运行模式">#</a></h2>
+<h3 id="standard-模式4-进程">Standard 模式（4 进程）<a hidden class="anchor" aria-hidden="true" href="#standard-模式4-进程">#</a></h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>Nginx
+</span></span><span style="display:flex;"><span>├── Frontend (Next.js, 3110)
+</span></span><span style="display:flex;"><span>├── Gateway API (FastAPI, 8100)    只做 REST 入口
+</span></span><span style="display:flex;"><span>└── LangGraph Server (2024)        Agent 真正执行的地方
+</span></span><span style="display:flex;"><span>     ├── 独立的 LangGraph SDK 进程
+</span></span><span style="display:flex;"><span>     ├── 加载 agent → graph.astream()
+</span></span><span style="display:flex;"><span>     └── 通过 SSE 流式返回
+</span></span></code></pre></div><h3 id="gateway-模式3-进程">Gateway 模式（3 进程）<a hidden class="anchor" aria-hidden="true" href="#gateway-模式3-进程">#</a></h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>Nginx
+</span></span><span style="display:flex;"><span>├── Frontend (Next.js, 3110)
+</span></span><span style="display:flex;"><span>└── Gateway API (FastAPI, 8100)    嵌入 Agent 运行时
+</span></span><span style="display:flex;"><span>     ├── deerflow.runtime.RunManager
+</span></span><span style="display:flex;"><span>     ├── deerflow.runtime.run_agent()
+</span></span><span style="display:flex;"><span>     ├── deerflow.runtime.StreamBridge
+</span></span><span style="display:flex;"><span>     └── 直接 graph.astream() 之后 SSE 推送
+</span></span></code></pre></div><table>
+	<thead>
+			<tr>
+					<th>维度</th>
+					<th>Standard</th>
+					<th>Gateway</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td>进程数</td>
+					<td>4</td>
+					<td>3</td>
+			</tr>
+			<tr>
+					<td>Agent 执行位置</td>
+					<td>LangGraph Server</td>
+					<td>Gateway 进程内</td>
+			</tr>
+			<tr>
+					<td>网络跳转</td>
+					<td>Gateway → LG Server (HTTP)</td>
+					<td>无</td>
+			</tr>
+			<tr>
+					<td>运维复杂度</td>
+					<td>多一个进程</td>
+					<td>更简单</td>
+			</tr>
+			<tr>
+					<td>适用场景</td>
+					<td>开发/小规模</td>
+					<td>生产/私有化部署</td>
+			</tr>
+	</tbody>
+</table>
+<p>Gateway 模式更适合生产部署——少一个进程、减少网络跳转。代价是 Gateway 进程的 CPU/内存消耗更高。</p>
+<hr>
+<h2 id="3-agent-工厂链">3. Agent 工厂链<a hidden class="anchor" aria-hidden="true" href="#3-agent-工厂链">#</a></h2>
+<p>两层工厂分别服务于不同场景。</p>
+<h3 id="sdk-级工厂">SDK 级工厂<a hidden class="anchor" aria-hidden="true" href="#sdk-级工厂">#</a></h3>
+<p>位于 <code>agents/factory.py</code>，纯参数驱动，不依赖 YAML 配置：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">create_deerflow_agent</span>(
+</span></span><span style="display:flex;"><span>    model, tools<span style="color:#f92672">=</span><span style="color:#66d9ef">None</span>, <span style="color:#f92672">*</span>,
+</span></span><span style="display:flex;"><span>    system_prompt<span style="color:#f92672">=</span><span style="color:#66d9ef">None</span>,
+</span></span><span style="display:flex;"><span>    middleware<span style="color:#f92672">=</span><span style="color:#66d9ef">None</span>,            <span style="color:#75715e"># 完全接管</span>
+</span></span><span style="display:flex;"><span>    features<span style="color:#f92672">=</span><span style="color:#66d9ef">None</span>,              <span style="color:#75715e"># 声明式 Feature Flag</span>
+</span></span><span style="display:flex;"><span>    extra_middleware<span style="color:#f92672">=</span><span style="color:#66d9ef">None</span>,      <span style="color:#75715e"># @Next/@Prev 定位插入</span>
+</span></span><span style="display:flex;"><span>    plan_mode<span style="color:#f92672">=</span><span style="color:#66d9ef">False</span>,
+</span></span><span style="display:flex;"><span>    state_schema<span style="color:#f92672">=</span><span style="color:#66d9ef">None</span>,
+</span></span><span style="display:flex;"><span>    checkpointer<span style="color:#f92672">=</span><span style="color:#66d9ef">None</span>,
+</span></span><span style="display:flex;"><span>    name<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;default&#34;</span>,
+</span></span><span style="display:flex;"><span>) <span style="color:#f92672">-&gt;</span> CompiledStateGraph: <span style="color:#f92672">...</span>
+</span></span></code></pre></div><h3 id="应用级工厂">应用级工厂<a hidden class="anchor" aria-hidden="true" href="#应用级工厂">#</a></h3>
+<p><code>make_lead_agent()</code> 位于 <code>agents/lead_agent/agent.py</code>，配置驱动，完整流程：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>RunnableConfig → 解析参数 → 加载 agent 配置
+</span></span><span style="display:flex;"><span>  → 解析 skills → 创建模型 → 加载工具
+</span></span><span style="display:flex;"><span>  → 组装中间件 → 应用 Prompt 模板
+</span></span><span style="display:flex;"><span>  → LangGraph create_agent()
+</span></span></code></pre></div><blockquote>
+<p>检查点不是在工厂中附着的，而是在 run_agent worker 中运行时才附加。</p>
+</blockquote>
+<hr>
+<h2 id="4-中间件链最核心的架构模式">4. 中间件链：最核心的架构模式<a hidden class="anchor" aria-hidden="true" href="#4-中间件链最核心的架构模式">#</a></h2>
+<p>中间件在 agent 每次 LLM 调用前后和工具调用前后插入自定义逻辑。</p>
+<h3 id="hook-机制">Hook 机制<a hidden class="anchor" aria-hidden="true" href="#hook-机制">#</a></h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">AgentMiddleware</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">before_agent</span>(self, state, runtime) <span style="color:#f92672">-&gt;</span> dict <span style="color:#f92672">|</span> <span style="color:#66d9ef">None</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">after_agent</span>(self, state, runtime) <span style="color:#f92672">-&gt;</span> dict <span style="color:#f92672">|</span> <span style="color:#66d9ef">None</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">wrap_tool_call</span>(self, request, handler) <span style="color:#f92672">-&gt;</span> ToolMessage
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">async</span> <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">awrap_tool_call</span>(self, request, handler) <span style="color:#f92672">-&gt;</span> <span style="color:#f92672">...</span>
+</span></span></code></pre></div><h3 id="14-层中间件链">14 层中间件链<a hidden class="anchor" aria-hidden="true" href="#14-层中间件链">#</a></h3>
+<table>
+	<thead>
+			<tr>
+					<th>位置</th>
+					<th>Middleware</th>
+					<th>核心职责</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td>[0]</td>
+					<td><strong>IdentityMiddleware</strong></td>
+					<td>M5 身份传播，验证 HMAC 签名</td>
+			</tr>
+			<tr>
+					<td>[1]</td>
+					<td><strong>ThreadDataMiddleware</strong></td>
+					<td>thread_id、sandbox 目录初始化</td>
+			</tr>
+			<tr>
+					<td>[2]</td>
+					<td><strong>UploadsMiddleware</strong></td>
+					<td>上传文件注入到上下文</td>
+			</tr>
+			<tr>
+					<td>[3]</td>
+					<td><strong>SandboxMiddleware</strong></td>
+					<td>沙箱容器生命周期管理</td>
+			</tr>
+			<tr>
+					<td>[4]</td>
+					<td><strong>DanglingToolCallMiddleware</strong></td>
+					<td>修复&quot;悬挂&quot;的 ToolMessage</td>
+			</tr>
+			<tr>
+					<td>[5]</td>
+					<td><strong>SandboxAuditMiddleware</strong></td>
+					<td>Bash 命令安全审计</td>
+			</tr>
+			<tr>
+					<td>[6]</td>
+					<td><strong>ToolErrorHandlingMiddleware</strong></td>
+					<td>工具异常捕获，防崩溃</td>
+			</tr>
+			<tr>
+					<td>[7]</td>
+					<td><strong>SummarizationMiddleware</strong></td>
+					<td>长对话自动摘要</td>
+			</tr>
+			<tr>
+					<td>[8]</td>
+					<td><strong>TodoMiddleware</strong></td>
+					<td>Plan 模式的 TODO 管理</td>
+			</tr>
+			<tr>
+					<td>[9]</td>
+					<td><strong>TitleMiddleware</strong></td>
+					<td>自动生成对话标题</td>
+			</tr>
+			<tr>
+					<td>[10]</td>
+					<td><strong>TokenUsageMiddleware</strong></td>
+					<td>Token 用量统计</td>
+			</tr>
+			<tr>
+					<td>[11]</td>
+					<td><strong>MemoryMiddleware</strong></td>
+					<td>持久记忆注入</td>
+			</tr>
+			<tr>
+					<td>[12]</td>
+					<td><strong>ViewImageMiddleware</strong></td>
+					<td>图片自动查看与描述</td>
+			</tr>
+			<tr>
+					<td>[13]</td>
+					<td><strong>LoopDetectionMiddleware</strong></td>
+					<td>循环检测打断</td>
+			</tr>
+			<tr>
+					<td>[14]</td>
+					<td><strong>ClarificationMiddleware</strong></td>
+					<td>澄清请求拦截（永在链尾）</td>
+			</tr>
+	</tbody>
+</table>
+<p><img alt="14 层中间件链" loading="lazy" src="/posts/tech/deerflow-harness-deep-dive/middleware-chain.png"></p>
+<h3 id="next--prev-装饰器">@Next / @Prev 装饰器<a hidden class="anchor" aria-hidden="true" href="#next--prev-装饰器">#</a></h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#a6e22e">@Next</span>(TitleMiddleware)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">MyCustomMiddleware</span>(AgentMiddleware):
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">pass</span>
+</span></span></code></pre></div><p>定位算法保证无锚点中间件插在 ClarificationMiddleware 之前， ClarificationMiddleware 永远在链尾。</p>
+<hr>
+<h2 id="5-runtime-子系统">5. Runtime 子系统<a hidden class="anchor" aria-hidden="true" href="#5-runtime-子系统">#</a></h2>
+<h3 id="主事件循环">主事件循环<a hidden class="anchor" aria-hidden="true" href="#主事件循环">#</a></h3>
+<p>一个经典难题：<strong>跨线程事件循环冲突</strong>。langchain_openai 的 httpx client 使用 <code>@lru_cache</code>，cache key <strong>不包含事件循环标识</strong>。client 在短生命周期的循环上创建后，其连接池 socket 绑定到已关闭的循环：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>RuntimeError(&#34;Event loop is closed&#34;)
+</span></span></code></pre></div><p>解决方案——注册长生命周期的主循环：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">submit_to_main_loop</span>(coro_factory):
+</span></span><span style="display:flex;"><span>    coro <span style="color:#f92672">=</span> coro_factory()
+</span></span><span style="display:flex;"><span>    future <span style="color:#f92672">=</span> asyncio<span style="color:#f92672">.</span>run_coroutine_threadsafe(coro, _main_loop)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> future<span style="color:#f92672">.</span>result()
+</span></span></code></pre></div><h3 id="streambridge-事件流">StreamBridge 事件流<a hidden class="anchor" aria-hidden="true" href="#streambridge-事件流">#</a></h3>
+<p>Agent 执行的每一步通过 StreamBridge 发布到事件流，SSE 端点订阅后推送到前端：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>agent.astream() → serialize() → bridge.publish() → SSE → React Query → UI
+</span></span></code></pre></div><p>当前内存实现，未来可替换为 Redis pub/sub。</p>
+<hr>
+<h2 id="6-checkpoint-检查点系统">6. Checkpoint 检查点系统<a hidden class="anchor" aria-hidden="true" href="#6-checkpoint-检查点系统">#</a></h2>
+<h3 id="架构层级">架构层级<a hidden class="anchor" aria-hidden="true" href="#架构层级">#</a></h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>LangGraph CompiledStateGraph → Checkpointer ABC
+</span></span><span style="display:flex;"><span>  ├─ MemorySaver（内存，开发用）
+</span></span><span style="display:flex;"><span>  ├─ SqliteSaver（文件持久化）
+</span></span><span style="display:flex;"><span>  └─ PostgresSaver（数据库持久化）
+</span></span></code></pre></div><h3 id="存储后端对比">存储后端对比<a hidden class="anchor" aria-hidden="true" href="#存储后端对比">#</a></h3>
+<table>
+	<thead>
+			<tr>
+					<th>后端</th>
+					<th>存储位置</th>
+					<th>内存占用</th>
+					<th>持久化</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td>memory</td>
+					<td>进程内存</td>
+					<td>✅</td>
+					<td>❌</td>
+			</tr>
+			<tr>
+					<td>sqlite</td>
+					<td>磁盘文件</td>
+					<td>❌</td>
+					<td>✅</td>
+			</tr>
+			<tr>
+					<td>postgres</td>
+					<td>数据库</td>
+					<td>❌</td>
+					<td>✅</td>
+			</tr>
+	</tbody>
+</table>
+<blockquote>
+<p>SQLite 数据在磁盘，操作系统只缓存热数据页到 page cache，可回收。InMemorySaver 才是存内存的——仅用于开发测试。</p>
+</blockquote>
+<hr>
+<h2 id="7-checkpoint-磁盘膨胀真实生产问题">7. Checkpoint 磁盘膨胀：真实生产问题<a hidden class="anchor" aria-hidden="true" href="#7-checkpoint-磁盘膨胀真实生产问题">#</a></h2>
+<p>80GB 磁盘被 checkpoint.db 填满。根因——base64 图片数据被<strong>双重存储</strong>。</p>
+<h3 id="根因">根因<a hidden class="anchor" aria-hidden="true" href="#根因">#</a></h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>用户上传 1MB PNG → 文件存储 → base64 (~1.33MB)
+</span></span><span style="display:flex;"><span>  → state[&#34;viewed_images&#34;] (~1.33MB)
+</span></span><span style="display:flex;"><span>  → Messages 中再存一份 (~1.33MB)
+</span></span><span style="display:flex;"><span>  → checkpoint.aput() 写入磁盘
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>总计: 1MB 图片 → ~2.7MB 占用
+</span></span></code></pre></div><h3 id="解决方案">解决方案<a hidden class="anchor" aria-hidden="true" href="#解决方案">#</a></h3>
+<table>
+	<thead>
+			<tr>
+					<th>优先级</th>
+					<th>方案</th>
+					<th>难度</th>
+					<th>节省空间</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td><strong>P0</strong></td>
+					<td>注入后清除 viewed_images</td>
+					<td>1 行代码</td>
+					<td>~50%</td>
+			</tr>
+			<tr>
+					<td><strong>P1</strong></td>
+					<td>迁移到 MySQL/Postgres（TOAST）</td>
+					<td>配置+迁移</td>
+					<td>~70-85%</td>
+			</tr>
+			<tr>
+					<td><strong>P2</strong></td>
+					<td>定期裁剪 checkpoint + VACUUM</td>
+					<td>定时任务</td>
+					<td>可变</td>
+			</tr>
+			<tr>
+					<td><strong>P3</strong></td>
+					<td>图片外存（只存引用）</td>
+					<td>中等改造</td>
+					<td>~99.9%</td>
+			</tr>
+	</tbody>
+</table>
+<p><img alt="Checkpoint 存储方案对比" loading="lazy" src="/posts/tech/deerflow-harness-deep-dive/checkpoint-storage.png">
+<img alt="磁盘空间解决方案" loading="lazy" src="/posts/tech/deerflow-harness-deep-dive/disk-space-solutions.png"></p>
+<hr>
+<h2 id="8-身份与多租户m5">8. 身份与多租户（M5）<a hidden class="anchor" aria-hidden="true" href="#8-身份与多租户m5">#</a></h2>
+<p>HMAC 签名驱动的身份透传机制。</p>
+<h3 id="传播路径">传播路径<a hidden class="anchor" aria-hidden="true" href="#传播路径">#</a></h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>Gateway Nginx → FastAPI → check_session
+</span></span><span style="display:flex;"><span>  → IdentityMiddleware.before_agent()
+</span></span><span style="display:flex;"><span>  → 验证 X-Deerflow-* headers
+</span></span><span style="display:flex;"><span>  → state[&#34;identity&#34;] 注入
+</span></span></code></pre></div><h3 id="关键设计">关键设计<a hidden class="anchor" aria-hidden="true" href="#关键设计">#</a></h3>
+<ul>
+<li>子 agent 直接继承 identity，不需要重新签名 HMAC</li>
+<li>中间件通过 wrap_tool_call 拦截工具调用，按 TOOL_PERMISSION_MAP 检查权限</li>
+<li><strong>Whitelist default-deny</strong>：未注册的工具默认拒绝</li>
+<li>Flag-off 兼容：ENABLE_IDENTITY=false 时跳过检查</li>
+</ul>
+<hr>
+<h2 id="9-核心请求流">9. 核心请求流<a hidden class="anchor" aria-hidden="true" href="#9-核心请求流">#</a></h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>用户请求 → Nginx → FastAPI Gateway
+</span></span><span style="display:flex;"><span>  → Middleware 链（session → auth → rate_limit）
+</span></span><span style="display:flex;"><span>  → create_deerflow_agent() / make_lead_agent()
+</span></span><span style="display:flex;"><span>  → run_agent worker（异步 Task）
+</span></span><span style="display:flex;"><span>  → agent.astream() 执行（中间件链递归调用）
+</span></span><span style="display:flex;"><span>  → StreamBridge.publish() 每个 step
+</span></span><span style="display:flex;"><span>  → SSE 推送 → 前端消费
+</span></span></code></pre></div><p>中间件的递归执行顺序：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>before_agent: [14] → [13] → ... → [0] → LLM
+</span></span><span style="display:flex;"><span>after_agent:  LLM → [0] → ... → [13] → [14]
+</span></span></code></pre></div><hr>
+<h2 id="10-总结">10. 总结<a hidden class="anchor" aria-hidden="true" href="#10-总结">#</a></h2>
+<p>DeerFlow Harness 在架构设计上值得学习的几点：</p>
+<ol>
+<li><strong>红线隔离</strong> — CI 强制 deerflow.* 不依赖 app.*，确保独立可复用</li>
+<li><strong>中间件链</strong> — 14 层有序组装，@Next/@Prev 实现可插拔扩展</li>
+<li><strong>声明式 Feature Flag</strong> — RuntimeFeatures 声明式启用/禁用/替换功能</li>
+<li><strong>Gateway 模式</strong> — 减少进程数，简化运维</li>
+<li><strong>M5 身份透传</strong> — HMAC 签名驱动，Whitelist default-deny</li>
+<li><strong>Checkpoint 优化</strong> — 从 80GB 磁盘告警到一行代码解决双重存储</li>
+</ol>
+<p>如果你也在设计 AI Agent 系统，Harness 的架构思路值得参考。</p>
+<hr>
+<p><em>本文基于 deer-flow-by-cc 仓库源码、设计文档和白皮书整理。</em></p>
+<blockquote>
+<p><strong>延伸阅读</strong>：本博客的 <a href="/posts/tech/harness-engineering/">Harness Engineering</a> 一文从更高视角讨论了 Harness 的定位——&ldquo;不是外壳，而是 Agent 系统的控制结构&rdquo;，与本篇互为补充。</p>
+</blockquote>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+      <li><a href="https://csqread.top/tags/agent/">Agent</a></li>
+      <li><a href="https://csqread.top/tags/harness/">Harness</a></li>
+      <li><a href="https://csqread.top/tags/langgraph/">LangGraph</a></li>
+      <li><a href="https://csqread.top/tags/%E6%9E%B6%E6%9E%84%E8%AE%BE%E8%AE%A1/">架构设计</a></li>
+      <li><a href="https://csqread.top/tags/llm/">LLM</a></li>
+      <li><a href="https://csqread.top/tags/python/">Python</a></li>
+    </ul>
+<nav class="paginav">
+  <a class="next" href="https://csqread.top/posts/tech/%E6%88%91%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E5%81%9A%E4%B8%80%E4%B8%AA%E6%B8%85%E7%BB%93%E7%AE%97%E5%9E%82%E7%9B%B4%E9%A2%86%E5%9F%9F%E7%9A%84%E4%BB%A3%E7%A0%81%E8%AF%84%E5%AE%A1skill/">
+    <span class="title">Next »</span>
+    <span>我为什么要做一个清结算垂直领域的代码评审skill</span>
+  </a>
+</nav>
+
+
+<ul class="share-buttons">
+    <li>
+        <a target="_blank" rel="noopener noreferrer" aria-label="share DeerFlow Harness 深度拆解：Agent 运行时引擎的架构设计 on x"
+            href="https://x.com/intent/tweet/?text=DeerFlow%20Harness%20%e6%b7%b1%e5%ba%a6%e6%8b%86%e8%a7%a3%ef%bc%9aAgent%20%e8%bf%90%e8%a1%8c%e6%97%b6%e5%bc%95%e6%93%8e%e7%9a%84%e6%9e%b6%e6%9e%84%e8%ae%be%e8%ae%a1&amp;url=https%3a%2f%2fcsqread.top%2fposts%2ftech%2fdeerflow-harness-deep-dive%2f&amp;hashtags=Agent%2cHarness%2cLangGraph%2c%e6%9e%b6%e6%9e%84%e8%ae%be%e8%ae%a1%2cLLM%2cPython">
+            <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve" height="30px" width="30px" fill="currentColor">
+                <path
+                    d="M512 62.554 L 512 449.446 C 512 483.97 483.97 512 449.446 512 L 62.554 512 C 28.03 512 0 483.97 0 449.446 L 0 62.554 C 0 28.03 28.029 0 62.554 0 L 449.446 0 C 483.971 0 512 28.03 512 62.554 Z M 269.951 190.75 L 182.567 75.216 L 56 75.216 L 207.216 272.95 L 63.9 436.783 L 125.266 436.783 L 235.9 310.383 L 332.567 436.783 L 456 436.783 L 298.367 228.367 L 432.367 75.216 L 371.033 75.216 Z M 127.633 110 L 164.101 110 L 383.481 400.065 L 349.5 400.065 Z" />
+            </svg>
+        </a>
+    </li>
+    <li>
+        <a target="_blank" rel="noopener noreferrer" aria-label="share DeerFlow Harness 深度拆解：Agent 运行时引擎的架构设计 on linkedin"
+            href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fcsqread.top%2fposts%2ftech%2fdeerflow-harness-deep-dive%2f&amp;title=DeerFlow%20Harness%20%e6%b7%b1%e5%ba%a6%e6%8b%86%e8%a7%a3%ef%bc%9aAgent%20%e8%bf%90%e8%a1%8c%e6%97%b6%e5%bc%95%e6%93%8e%e7%9a%84%e6%9e%b6%e6%9e%84%e8%ae%be%e8%ae%a1&amp;summary=DeerFlow%20Harness%20%e6%b7%b1%e5%ba%a6%e6%8b%86%e8%a7%a3%ef%bc%9aAgent%20%e8%bf%90%e8%a1%8c%e6%97%b6%e5%bc%95%e6%93%8e%e7%9a%84%e6%9e%b6%e6%9e%84%e8%ae%be%e8%ae%a1&amp;source=https%3a%2f%2fcsqread.top%2fposts%2ftech%2fdeerflow-harness-deep-dive%2f">
+            <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve" height="30px" width="30px" fill="currentColor">
+                <path
+                    d="M449.446,0c34.525,0 62.554,28.03 62.554,62.554l0,386.892c0,34.524 -28.03,62.554 -62.554,62.554l-386.892,0c-34.524,0 -62.554,-28.03 -62.554,-62.554l0,-386.892c0,-34.524 28.029,-62.554 62.554,-62.554l386.892,0Zm-288.985,423.278l0,-225.717l-75.04,0l0,225.717l75.04,0Zm270.539,0l0,-129.439c0,-69.333 -37.018,-101.586 -86.381,-101.586c-39.804,0 -57.634,21.891 -67.617,37.266l0,-31.958l-75.021,0c0.995,21.181 0,225.717 0,225.717l75.02,0l0,-126.056c0,-6.748 0.486,-13.492 2.474,-18.315c5.414,-13.475 17.767,-27.434 38.494,-27.434c27.135,0 38.007,20.707 38.007,51.037l0,120.768l75.024,0Zm-307.552,-334.556c-25.674,0 -42.448,16.879 -42.448,39.002c0,21.658 16.264,39.002 41.455,39.002l0.484,0c26.165,0 42.452,-17.344 42.452,-39.002c-0.485,-22.092 -16.241,-38.954 -41.943,-39.002Z" />
+            </svg>
+        </a>
+    </li>
+    <li>
+        <a target="_blank" rel="noopener noreferrer" aria-label="share DeerFlow Harness 深度拆解：Agent 运行时引擎的架构设计 on reddit"
+            href="https://reddit.com/submit?url=https%3a%2f%2fcsqread.top%2fposts%2ftech%2fdeerflow-harness-deep-dive%2f&title=DeerFlow%20Harness%20%e6%b7%b1%e5%ba%a6%e6%8b%86%e8%a7%a3%ef%bc%9aAgent%20%e8%bf%90%e8%a1%8c%e6%97%b6%e5%bc%95%e6%93%8e%e7%9a%84%e6%9e%b6%e6%9e%84%e8%ae%be%e8%ae%a1">
+            <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve" height="30px" width="30px" fill="currentColor">
+                <path
+                    d="M449.446,0c34.525,0 62.554,28.03 62.554,62.554l0,386.892c0,34.524 -28.03,62.554 -62.554,62.554l-386.892,0c-34.524,0 -62.554,-28.03 -62.554,-62.554l0,-386.892c0,-34.524 28.029,-62.554 62.554,-62.554l386.892,0Zm-3.446,265.638c0,-22.964 -18.616,-41.58 -41.58,-41.58c-11.211,0 -21.361,4.457 -28.841,11.666c-28.424,-20.508 -67.586,-33.757 -111.204,-35.278l18.941,-89.121l61.884,13.157c0.756,15.734 13.642,28.29 29.56,28.29c16.407,0 29.706,-13.299 29.706,-29.701c0,-16.403 -13.299,-29.702 -29.706,-29.702c-11.666,0 -21.657,6.792 -26.515,16.578l-69.105,-14.69c-1.922,-0.418 -3.939,-0.042 -5.585,1.036c-1.658,1.073 -2.811,2.761 -3.224,4.686l-21.152,99.438c-44.258,1.228 -84.046,14.494 -112.837,35.232c-7.468,-7.164 -17.589,-11.591 -28.757,-11.591c-22.965,0 -41.585,18.616 -41.585,41.58c0,16.896 10.095,31.41 24.568,37.918c-0.639,4.135 -0.99,8.328 -0.99,12.576c0,63.977 74.469,115.836 166.33,115.836c91.861,0 166.334,-51.859 166.334,-115.836c0,-4.218 -0.347,-8.387 -0.977,-12.493c14.564,-6.47 24.735,-21.034 24.735,-38.001Zm-119.474,108.193c-20.27,20.241 -59.115,21.816 -70.534,21.816c-11.428,0 -50.277,-1.575 -70.522,-21.82c-3.007,-3.008 -3.007,-7.882 0,-10.889c3.003,-2.999 7.882,-3.003 10.885,0c12.777,12.781 40.11,17.317 59.637,17.317c19.522,0 46.86,-4.536 59.657,-17.321c3.016,-2.999 7.886,-2.995 10.885,0.008c3.008,3.011 3.003,7.882 -0.008,10.889Zm-5.23,-48.781c-16.373,0 -29.701,-13.324 -29.701,-29.698c0,-16.381 13.328,-29.714 29.701,-29.714c16.378,0 29.706,13.333 29.706,29.714c0,16.374 -13.328,29.698 -29.706,29.698Zm-160.386,-29.702c0,-16.381 13.328,-29.71 29.714,-29.71c16.369,0 29.689,13.329 29.689,29.71c0,16.373 -13.32,29.693 -29.689,29.693c-16.386,0 -29.714,-13.32 -29.714,-29.693Z" />
+            </svg>
+        </a>
+    </li>
+    <li>
+        <a target="_blank" rel="noopener noreferrer" aria-label="share DeerFlow Harness 深度拆解：Agent 运行时引擎的架构设计 on facebook"
+            href="https://facebook.com/sharer/sharer.php?u=https%3a%2f%2fcsqread.top%2fposts%2ftech%2fdeerflow-harness-deep-dive%2f">
+            <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve" height="30px" width="30px" fill="currentColor">
+                <path
+                    d="M449.446,0c34.525,0 62.554,28.03 62.554,62.554l0,386.892c0,34.524 -28.03,62.554 -62.554,62.554l-106.468,0l0,-192.915l66.6,0l12.672,-82.621l-79.272,0l0,-53.617c0,-22.603 11.073,-44.636 46.58,-44.636l36.042,0l0,-70.34c0,0 -32.71,-5.582 -63.982,-5.582c-65.288,0 -107.96,39.569 -107.96,111.204l0,62.971l-72.573,0l0,82.621l72.573,0l0,192.915l-191.104,0c-34.524,0 -62.554,-28.03 -62.554,-62.554l0,-386.892c0,-34.524 28.029,-62.554 62.554,-62.554l386.892,0Z" />
+            </svg>
+        </a>
+    </li>
+    <li>
+        <a target="_blank" rel="noopener noreferrer" aria-label="share DeerFlow Harness 深度拆解：Agent 运行时引擎的架构设计 on whatsapp"
+            href="https://api.whatsapp.com/send?text=DeerFlow%20Harness%20%e6%b7%b1%e5%ba%a6%e6%8b%86%e8%a7%a3%ef%bc%9aAgent%20%e8%bf%90%e8%a1%8c%e6%97%b6%e5%bc%95%e6%93%8e%e7%9a%84%e6%9e%b6%e6%9e%84%e8%ae%be%e8%ae%a1%20-%20https%3a%2f%2fcsqread.top%2fposts%2ftech%2fdeerflow-harness-deep-dive%2f">
+            <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve" height="30px" width="30px" fill="currentColor">
+                <path
+                    d="M449.446,0c34.525,0 62.554,28.03 62.554,62.554l0,386.892c0,34.524 -28.03,62.554 -62.554,62.554l-386.892,0c-34.524,0 -62.554,-28.03 -62.554,-62.554l0,-386.892c0,-34.524 28.029,-62.554 62.554,-62.554l386.892,0Zm-58.673,127.703c-33.842,-33.881 -78.847,-52.548 -126.798,-52.568c-98.799,0 -179.21,80.405 -179.249,179.234c-0.013,31.593 8.241,62.428 23.927,89.612l-25.429,92.884l95.021,-24.925c26.181,14.28 55.659,21.807 85.658,21.816l0.074,0c98.789,0 179.206,-80.413 179.247,-179.243c0.018,-47.895 -18.61,-92.93 -52.451,-126.81Zm-126.797,275.782l-0.06,0c-26.734,-0.01 -52.954,-7.193 -75.828,-20.767l-5.441,-3.229l-56.386,14.792l15.05,-54.977l-3.542,-5.637c-14.913,-23.72 -22.791,-51.136 -22.779,-79.287c0.033,-82.142 66.867,-148.971 149.046,-148.971c39.793,0.014 77.199,15.531 105.329,43.692c28.128,28.16 43.609,65.592 43.594,105.4c-0.034,82.149 -66.866,148.983 -148.983,148.984Zm81.721,-111.581c-4.479,-2.242 -26.499,-13.075 -30.604,-14.571c-4.105,-1.495 -7.091,-2.241 -10.077,2.241c-2.986,4.483 -11.569,14.572 -14.182,17.562c-2.612,2.988 -5.225,3.364 -9.703,1.12c-4.479,-2.241 -18.91,-6.97 -36.017,-22.23c-13.314,-11.876 -22.304,-26.542 -24.916,-31.026c-2.612,-4.484 -0.279,-6.908 1.963,-9.14c2.016,-2.007 4.48,-5.232 6.719,-7.847c2.24,-2.615 2.986,-4.484 4.479,-7.472c1.493,-2.99 0.747,-5.604 -0.374,-7.846c-1.119,-2.241 -10.077,-24.288 -13.809,-33.256c-3.635,-8.733 -7.327,-7.55 -10.077,-7.688c-2.609,-0.13 -5.598,-0.158 -8.583,-0.158c-2.986,0 -7.839,1.121 -11.944,5.604c-4.105,4.484 -15.675,15.32 -15.675,37.364c0,22.046 16.048,43.342 18.287,46.332c2.24,2.99 31.582,48.227 76.511,67.627c10.685,4.615 19.028,7.371 25.533,9.434c10.728,3.41 20.492,2.929 28.209,1.775c8.605,-1.285 26.499,-10.833 30.231,-21.295c3.732,-10.464 3.732,-19.431 2.612,-21.298c-1.119,-1.869 -4.105,-2.99 -8.583,-5.232Z" />
+            </svg>
+        </a>
+    </li>
+    <li>
+        <a target="_blank" rel="noopener noreferrer" aria-label="share DeerFlow Harness 深度拆解：Agent 运行时引擎的架构设计 on telegram"
+            href="https://telegram.me/share/url?text=DeerFlow%20Harness%20%e6%b7%b1%e5%ba%a6%e6%8b%86%e8%a7%a3%ef%bc%9aAgent%20%e8%bf%90%e8%a1%8c%e6%97%b6%e5%bc%95%e6%93%8e%e7%9a%84%e6%9e%b6%e6%9e%84%e8%ae%be%e8%ae%a1&amp;url=https%3a%2f%2fcsqread.top%2fposts%2ftech%2fdeerflow-harness-deep-dive%2f">
+            <svg version="1.1" xml:space="preserve" viewBox="2 2 28 28" height="30px" width="30px" fill="currentColor">
+                <path
+                    d="M26.49,29.86H5.5a3.37,3.37,0,0,1-2.47-1,3.35,3.35,0,0,1-1-2.47V5.48A3.36,3.36,0,0,1,3,3,3.37,3.37,0,0,1,5.5,2h21A3.38,3.38,0,0,1,29,3a3.36,3.36,0,0,1,1,2.46V26.37a3.35,3.35,0,0,1-1,2.47A3.38,3.38,0,0,1,26.49,29.86Zm-5.38-6.71a.79.79,0,0,0,.85-.66L24.73,9.24a.55.55,0,0,0-.18-.46.62.62,0,0,0-.41-.17q-.08,0-16.53,6.11a.59.59,0,0,0-.41.59.57.57,0,0,0,.43.52l4,1.24,1.61,4.83a.62.62,0,0,0,.63.43.56.56,0,0,0,.4-.17L16.54,20l4.09,3A.9.9,0,0,0,21.11,23.15ZM13.8,20.71l-1.21-4q8.72-5.55,8.78-5.55c.15,0,.23,0,.23.16a.18.18,0,0,1,0,.06s-2.51,2.3-7.52,6.8Z" />
+            </svg>
+        </a>
+    </li>
+    <li>
+        <a target="_blank" rel="noopener noreferrer" aria-label="share DeerFlow Harness 深度拆解：Agent 运行时引擎的架构设计 on ycombinator"
+            href="https://news.ycombinator.com/submitlink?t=DeerFlow%20Harness%20%e6%b7%b1%e5%ba%a6%e6%8b%86%e8%a7%a3%ef%bc%9aAgent%20%e8%bf%90%e8%a1%8c%e6%97%b6%e5%bc%95%e6%93%8e%e7%9a%84%e6%9e%b6%e6%9e%84%e8%ae%be%e8%ae%a1&u=https%3a%2f%2fcsqread.top%2fposts%2ftech%2fdeerflow-harness-deep-dive%2f">
+            <svg version="1.1" xml:space="preserve" width="30px" height="30px" viewBox="0 0 512 512" fill="currentColor"
+                xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape">
+                <path
+                    d="M449.446 0C483.971 0 512 28.03 512 62.554L512 449.446C512 483.97 483.97 512 449.446 512L62.554 512C28.03 512 0 483.97 0 449.446L0 62.554C0 28.03 28.029 0 62.554 0L449.446 0ZM183.8767 87.9921H121.8427L230.6673 292.4508V424.0079H281.3328V292.4508L390.1575 87.9921H328.1233L256 238.2489z" />
+            </svg>
+        </a>
+    </li>
+</ul>
+
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+        <span>&copy; 2026 <a href="https://csqread.top/">Qian&#39;s Blog</a></span> · 
+
+    
+    
+    <span>
+        Powered by
+        <a href="https://gohugo.io/?utm_source=papermod" rel="noopener" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" id="top-link" class="top-link hidden" aria-label="go to top" title="Go to Top (Alt + G)" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+        stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevrons-up">
+        <polyline points="17 11 12 6 7 11"></polyline>
+        <polyline points="17 18 12 13 7 18"></polyline>
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu');
+    if (menu) {
+        
+        const scrollPosition = localStorage.getItem("menu-scroll-position");
+        if (scrollPosition) {
+            menu.scrollLeft = parseInt(scrollPosition, 10);
+        }
+        
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var toplink = document.getElementById("top-link");
+    window.onscroll = function () {
+        const scrollThreshold = window.innerHeight;
+        if (document.body.scrollTop > scrollThreshold || document.documentElement.scrollTop > scrollThreshold) {
+            toplink.classList.remove("hidden");
+        } else {
+            toplink.classList.add("hidden");
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        const html = document.querySelector("html");
+        if (html.dataset.theme === "dark") {
+            html.dataset.theme = 'light';
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            html.dataset.theme = 'dark';
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerHTML = 'copy';
+
+        function copyingDone() {
+            copybutton.innerHTML = 'copied!';
+            setTimeout(() => {
+                copybutton.innerHTML = 'copy';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) { };
+            selection.removeRange(range);
+        });
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+        }
+    });
+</script>
+</body>
+
+</html>
