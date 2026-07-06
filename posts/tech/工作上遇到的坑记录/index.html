@@ -1,24 +1,24 @@
 <!DOCTYPE html>
 <html lang="en" dir="auto" data-theme="auto">
 
-<head><meta charset="utf-8">
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="robots" content="index, follow">
+<meta name="robots" content="noindex, nofollow">
 <title>工作上遇到的坑记录 | Qian&#39;s Blog</title>
 <meta name="keywords" content="">
 <meta name="description" content="工作上遇到的坑，记录一下">
 <meta name="author" content="">
-<link rel="canonical" href="https://csqread.top/posts/tech/%E5%B7%A5%E4%BD%9C%E4%B8%8A%E9%81%87%E5%88%B0%E7%9A%84%E5%9D%91%E8%AE%B0%E5%BD%95/">
+<link rel="canonical" href="http://localhost:1313/posts/tech/%E5%B7%A5%E4%BD%9C%E4%B8%8A%E9%81%87%E5%88%B0%E7%9A%84%E5%9D%91%E8%AE%B0%E5%BD%95/">
 <link crossorigin="anonymous" href="/assets/css/stylesheet.cd9298b33628769aa1bc1acebbbfd7aa11ce81dfe03484d479e1907760249a1d.css" integrity="sha256-zZKYszYodpqhvBrOu7/XqhHOgd/gNITUeeGQd2Akmh0=" rel="preload stylesheet" as="style">
-<link rel="icon" href="https://csqread.top/favicon.ico">
-<link rel="icon" type="image/png" sizes="16x16" href="https://csqread.top/favicon-16x16.png">
-<link rel="icon" type="image/png" sizes="32x32" href="https://csqread.top/favicon-32x32.png">
-<link rel="apple-touch-icon" href="https://csqread.top/apple-touch-icon.png">
-<link rel="mask-icon" href="https://csqread.top/safari-pinned-tab.svg">
+<link rel="icon" href="http://localhost:1313/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="http://localhost:1313/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="http://localhost:1313/favicon-32x32.png">
+<link rel="apple-touch-icon" href="http://localhost:1313/apple-touch-icon.png">
+<link rel="mask-icon" href="http://localhost:1313/safari-pinned-tab.svg">
 <meta name="theme-color" content="#2e2e33">
 <meta name="msapplication-TileColor" content="#2e2e33">
-<link rel="alternate" hreflang="en" href="https://csqread.top/posts/tech/%E5%B7%A5%E4%BD%9C%E4%B8%8A%E9%81%87%E5%88%B0%E7%9A%84%E5%9D%91%E8%AE%B0%E5%BD%95/">
+<link rel="alternate" hreflang="en" href="http://localhost:1313/posts/tech/%E5%B7%A5%E4%BD%9C%E4%B8%8A%E9%81%87%E5%88%B0%E7%9A%84%E5%9D%91%E8%AE%B0%E5%BD%95/">
 <noscript>
     <style>
         #theme-toggle,
@@ -64,82 +64,13 @@
         document.querySelector("html").dataset.theme = 'light';
     }
 
-</script><meta property="og:url" content="https://csqread.top/posts/tech/%E5%B7%A5%E4%BD%9C%E4%B8%8A%E9%81%87%E5%88%B0%E7%9A%84%E5%9D%91%E8%AE%B0%E5%BD%95/">
-  <meta property="og:site_name" content="Qian&#39;s Blog">
-  <meta property="og:title" content="工作上遇到的坑记录">
-  <meta property="og:description" content="工作上遇到的坑，记录一下">
-  <meta property="og:locale" content="zh_cn">
-  <meta property="og:type" content="article">
-    <meta property="article:section" content="posts">
-    <meta property="article:published_time" content="2023-06-06T22:47:27+08:00">
-    <meta property="article:modified_time" content="2023-06-06T22:47:27+08:00">
-
-  <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="工作上遇到的坑记录">
-  <meta name="twitter:description" content="工作上遇到的坑，记录一下">
-
-
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "BreadcrumbList",
-  "itemListElement": [
-    {
-      "@type": "ListItem",
-      "position":  1 ,
-      "name": "文章",
-      "item": "https://csqread.top/posts/"
-    }, 
-    {
-      "@type": "ListItem",
-      "position":  2 ,
-      "name": "技术",
-      "item": "https://csqread.top/posts/tech/"
-    }, 
-    {
-      "@type": "ListItem",
-      "position":  3 ,
-      "name": "工作上遇到的坑记录",
-      "item": "https://csqread.top/posts/tech/%E5%B7%A5%E4%BD%9C%E4%B8%8A%E9%81%87%E5%88%B0%E7%9A%84%E5%9D%91%E8%AE%B0%E5%BD%95/"
-    }
-  ]
-}
-</script>
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "BlogPosting",
-  "headline": "工作上遇到的坑记录",
-  "name": "工作上遇到的坑记录",
-  "description": "工作上遇到的坑，记录一下",
-  "keywords": [
-    
-  ],
-  "articleBody": "这几天一直在修并行环境的bug，也踩了不少坑， 记录一下\n1、关于对集合的排序循环问题。集合被修改之后不能再用于循环 原本的逻辑是这样的，在对C代码使用Java进行翻写的时候，因为C使用的是临时表，我这边用的是List集合，然后那边直接order By，而我用的是封装的一个对集合进行排序的方法。因此该集合在某种程度上是被修改了的，但是我仍然对让它进入了下一次循环，而没有break掉，或者使用一个新的集合来进行修改，导致并行生产环境报错。在不确定集合是否被修改的情况下，一定要New一个新的List来进行修改，保持原来的List进行循环。。。。\n2、spring boot redis 序列化报错 as a subtype of [simple type, class java.lang.Object]: no such class found 问题 大致场景是这样的， 有两个服务 A B, A服务用于授权， 授权成功会存储对象到redis中, B服务通过token去redis中拿到Object对象转换成业务对象。\n大致原因是： A服务存储对象到redis中时候会有一个全路径类名限定，在通过token进行取对象值并强制转换的时候，如果接受对象的全路径名与redis中保存的不一致的话就会转换失败报错。\n可能是因为之前项目类路径改造的时候，把这张表对应的类路径漏掉了，而redis那边不是实时从现有的数据库中获取的，而是根据我们各个业务组之前手动登记的路径进行修改的，因此并行生产出现这种问题。。。\n解决办法：\n1、把路径名称改成一致（使用了这个办法） 2、将保存对象的方式改成其他方式（这个存疑， 在网上看的）\n",
-  "wordCount" : "616",
-  "inLanguage": "en",
-  "datePublished": "2023-06-06T22:47:27+08:00",
-  "dateModified": "2023-06-06T22:47:27+08:00",
-  "mainEntityOfPage": {
-    "@type": "WebPage",
-    "@id": "https://csqread.top/posts/tech/%E5%B7%A5%E4%BD%9C%E4%B8%8A%E9%81%87%E5%88%B0%E7%9A%84%E5%9D%91%E8%AE%B0%E5%BD%95/"
-  },
-  "publisher": {
-    "@type": "Organization",
-    "name": "Qian's Blog",
-    "logo": {
-      "@type": "ImageObject",
-      "url": "https://csqread.top/favicon.ico"
-    }
-  }
-}
 </script>
 </head>
 <body id="top">
     <header class="header">
     <nav class="header-nav">
         <div class="logo">
-            <a href="https://csqread.top/" accesskey="h" title="Qian&#39;s Blog (Alt + H)">Qian&#39;s Blog</a>
+            <a href="http://localhost:1313/" accesskey="h" title="Qian&#39;s Blog (Alt + H)">Qian&#39;s Blog</a>
             <div class="logo-switches">
                 <button id="theme-toggle" class="theme-toggle" accesskey="t" title="(Alt + T)" aria-label="Toggle theme">
                     <svg class="moon" xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24"
@@ -165,37 +96,37 @@
         </div>
         <ul id="menu" class="menu">
             <li>
-                <a href="https://csqread.top/search" title="🔍搜索 (Alt &#43; /)" accesskey=/>
+                <a href="http://localhost:1313/search" title="🔍搜索 (Alt &#43; /)" accesskey=/>
                     <span>🔍搜索</span>
                 </a>
             </li>
             <li>
-                <a href="https://csqread.top/posts" title="📚文章">
+                <a href="http://localhost:1313/posts" title="📚文章">
                     <span>📚文章</span>
                 </a>
             </li>
             <li>
-                <a href="https://csqread.top/archives/" title="⏱时间轴">
+                <a href="http://localhost:1313/archives/" title="⏱时间轴">
                     <span>⏱时间轴</span>
                 </a>
             </li>
             <li>
-                <a href="https://csqread.top/tags" title="🔖标签">
+                <a href="http://localhost:1313/tags" title="🔖标签">
                     <span>🔖标签</span>
                 </a>
             </li>
             <li>
-                <a href="https://csqread.top/about" title="🙋🏻‍♂️关于">
+                <a href="http://localhost:1313/about" title="🙋🏻‍♂️关于">
                     <span>🙋🏻‍♂️关于</span>
                 </a>
             </li>
             <li>
-                <a href="https://csqread.top/links" title="🤝友链">
+                <a href="http://localhost:1313/links" title="🤝友链">
                     <span>🤝友链</span>
                 </a>
             </li>
             <li>
-                <a href="https://csqread.top/" title="">
+                <a href="http://localhost:1313/" title="">
                     <span></span>
                 </a>
             </li>
@@ -241,7 +172,7 @@
     </main>
     
 <footer class="footer">
-        <span>&copy; 2026 <a href="https://csqread.top/">Qian&#39;s Blog</a></span> · 
+        <span>&copy; 2026 <a href="http://localhost:1313/">Qian&#39;s Blog</a></span> · 
 
     
     
