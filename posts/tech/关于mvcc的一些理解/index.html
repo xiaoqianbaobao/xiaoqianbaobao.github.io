@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto" data-theme="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>关于MVCC的一些理解 | Qian&#39;s Blog</title>
+<meta name="keywords" content="">
+<meta name="description" content="Mysql MVCC机制我的一些理解 什么是MVCC? MVCC 全称是 Multi-Version Concurrency Control, 即多版本并发控制。MVCC 在Mysql的 InnoDB中的实现主要是为了提高数据库并发">
+<meta name="author" content="">
+<link rel="canonical" href="https://csqread.top/posts/tech/%E5%85%B3%E4%BA%8Emvcc%E7%9A%84%E4%B8%80%E4%BA%9B%E7%90%86%E8%A7%A3/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.cd9298b33628769aa1bc1acebbbfd7aa11ce81dfe03484d479e1907760249a1d.css" integrity="sha256-zZKYszYodpqhvBrOu7/XqhHOgd/gNITUeeGQd2Akmh0=" rel="preload stylesheet" as="style">
+<link rel="icon" href="https://csqread.top/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://csqread.top/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://csqread.top/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://csqread.top/apple-touch-icon.png">
+<link rel="mask-icon" href="https://csqread.top/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="https://csqread.top/posts/tech/%E5%85%B3%E4%BA%8Emvcc%E7%9A%84%E4%B8%80%E4%BA%9B%E7%90%86%E8%A7%A3/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+                color-scheme: dark;
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .toc {
+                background: var(--entry);
+            }
+        }
+
+    </style>
+</noscript>
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.querySelector("html").dataset.theme = 'dark';
+    } else if (localStorage.getItem("pref-theme") === "light") {
+       document.querySelector("html").dataset.theme = 'light';
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.querySelector("html").dataset.theme = 'dark';
+    } else {
+        document.querySelector("html").dataset.theme = 'light';
+    }
+
+</script><meta property="og:url" content="https://csqread.top/posts/tech/%E5%85%B3%E4%BA%8Emvcc%E7%9A%84%E4%B8%80%E4%BA%9B%E7%90%86%E8%A7%A3/">
+  <meta property="og:site_name" content="Qian&#39;s Blog">
+  <meta property="og:title" content="关于MVCC的一些理解">
+  <meta property="og:description" content="Mysql MVCC机制我的一些理解 什么是MVCC? MVCC 全称是 Multi-Version Concurrency Control, 即多版本并发控制。MVCC 在Mysql的 InnoDB中的实现主要是为了提高数据库并发">
+  <meta property="og:locale" content="zh_cn">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2024-03-25T00:01:28+08:00">
+    <meta property="article:modified_time" content="2024-03-25T00:01:28+08:00">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="关于MVCC的一些理解">
+  <meta name="twitter:description" content="Mysql MVCC机制我的一些理解 什么是MVCC? MVCC 全称是 Multi-Version Concurrency Control, 即多版本并发控制。MVCC 在Mysql的 InnoDB中的实现主要是为了提高数据库并发">
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "文章",
+      "item": "https://csqread.top/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "技术",
+      "item": "https://csqread.top/posts/tech/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  3 ,
+      "name": "关于MVCC的一些理解",
+      "item": "https://csqread.top/posts/tech/%E5%85%B3%E4%BA%8Emvcc%E7%9A%84%E4%B8%80%E4%BA%9B%E7%90%86%E8%A7%A3/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "关于MVCC的一些理解",
+  "name": "关于MVCC的一些理解",
+  "description": "Mysql MVCC机制我的一些理解 什么是MVCC? MVCC 全称是 Multi-Version Concurrency Control, 即多版本并发控制。MVCC 在Mysql的 InnoDB中的实现主要是为了提高数据库并发",
+  "keywords": [
+    
+  ],
+  "articleBody": "Mysql MVCC机制我的一些理解\n什么是MVCC? MVCC 全称是 Multi-Version Concurrency Control, 即多版本并发控制。MVCC 在Mysql的 InnoDB中的实现主要是为了提高数据库并发性能，用更好的方式去处理读-写冲突，做到即使有读写冲突时，也能做到不加锁，非阻塞并发读.\n其实我在之前读了很多篇关于MVCC的文章，大多讲的比较模糊，最近在看《Mysql是怎样运行的-从根儿上理解Mysql》这本书讲的非常好。让我理解了MVCC。其实就最简单来讲，用READ COMMIT和 REPERATED COMMIT这两个隔离机制讲解就非常清楚了。\n首先是 读已提交这种隔离级别，这种不能防止脏读，为什么呢？因为它的READ VIEW在每次SELECT的时候会生成一次。比如我一个事务中，第一次查询该记录的时候，生成了一次READ VIEW ，然后这笔记录被另一个事务修改并且提交了，那么当前事务再进行查询的时候，结果会是另一个事务提交后的结果，所以就产生了脏读，同一个事务读取了不同的结果。\n如果是可重复度这种隔离级别呢？这种是可以防止脏读的出现的。顾名思义，可重复读，在同一个事务里，是可以重复读取同一笔记录的并且结果不会变。咋实现的呢？原因就在这个READ VIEW，在该笔事务开始查询之前，也就是SELECT之前，就会生成一个READ VIEW，并且在这笔事务结束之前不会变，一直是这个READ VIEW，所以，不论其他事务对这个记录做任何改动并且提交，它读到的一直会是这笔记录在该事务开始的时候的记录。因此不会产生脏读。\n但是读已提交是没办法阻止幻读的出现的。因为幻读的话，是查询一系列数据，是一个结果集，并不是一个结果，所以其他事务可能会对这个结果集进行插入操作，导致该事务查询的前后结果集数量不一样，就像产生了幻觉一样。那么如何解决幻读呢？其实就是后面所讲的，加NEXT-KEY LOCK和 RECORD LOCK，就是把这个范围内记录的最大值加上间隙锁和记录锁，这样对这个记录内所有记录的修改和插入都无法进行，因为其他事务无法获取到这个区间内记录的锁，所以无法进行修改\n",
+  "wordCount" : "833",
+  "inLanguage": "en",
+  "datePublished": "2024-03-25T00:01:28+08:00",
+  "dateModified": "2024-03-25T00:01:28+08:00",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://csqread.top/posts/tech/%E5%85%B3%E4%BA%8Emvcc%E7%9A%84%E4%B8%80%E4%BA%9B%E7%90%86%E8%A7%A3/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Qian's Blog",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://csqread.top/favicon.ico"
+    }
+  }
+}
+</script>
+</head>
+<body id="top">
+    <header class="header">
+    <nav class="header-nav">
+        <div class="logo">
+            <a href="https://csqread.top/" accesskey="h" title="Qian&#39;s Blog (Alt + H)">Qian&#39;s Blog</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" class="theme-toggle" accesskey="t" title="(Alt + T)" aria-label="Toggle theme">
+                    <svg class="moon" xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg class="sun" xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu" class="menu">
+            <li>
+                <a href="https://csqread.top/search" title="🔍搜索 (Alt &#43; /)" accesskey=/>
+                    <span>🔍搜索</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://csqread.top/posts" title="📚文章">
+                    <span>📚文章</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://csqread.top/archives/" title="⏱时间轴">
+                    <span>⏱时间轴</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://csqread.top/tags" title="🔖标签">
+                    <span>🔖标签</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://csqread.top/about" title="🙋🏻‍♂️关于">
+                    <span>🙋🏻‍♂️关于</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://csqread.top/links" title="🤝友链">
+                    <span>🤝友链</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://csqread.top/" title="">
+                    <span></span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    
+    <h1 class="post-title entry-hint-parent">
+      关于MVCC的一些理解
+    </h1>
+    <div class="post-description">
+      Mysql MVCC机制我的一些理解 什么是MVCC? MVCC 全称是 Multi-Version Concurrency Control, 即多版本并发控制。MVCC 在Mysql的 InnoDB中的实现主要是为了提高数据库并发
+    </div>
+    <div class="post-meta">
+
+<span title='2024-03-25 00:01:28 +0800 CST'>March 25, 2024</span>
+
+</div>
+  </header> 
+  <div class="post-content md-content"><p>Mysql MVCC机制我的一些理解</p>
+<h2 id="什么是mvcc">什么是MVCC?<a hidden class="anchor" aria-hidden="true" href="#什么是mvcc">#</a></h2>
+<p>MVCC 全称是 Multi-Version Concurrency Control, 即多版本并发控制。MVCC 在Mysql的 InnoDB中的实现主要是为了提高数据库并发性能，用更好的方式去处理读-写冲突，做到即使有读写冲突时，也能做到不加锁，非阻塞并发读.</p>
+<p>其实我在之前读了很多篇关于MVCC的文章，大多讲的比较模糊，最近在看《Mysql是怎样运行的-从根儿上理解Mysql》这本书讲的非常好。让我理解了MVCC。其实就最简单来讲，用READ COMMIT和 REPERATED COMMIT这两个隔离机制讲解就非常清楚了。</p>
+<p>首先是 读已提交这种隔离级别，这种不能防止脏读，为什么呢？因为它的READ VIEW在每次SELECT的时候会生成一次。比如我一个事务中，第一次查询该记录的时候，生成了一次READ VIEW ，然后这笔记录被另一个事务修改并且提交了，那么当前事务再进行查询的时候，结果会是另一个事务提交后的结果，所以就产生了脏读，同一个事务读取了不同的结果。</p>
+<p>如果是可重复度这种隔离级别呢？这种是可以防止脏读的出现的。顾名思义，可重复读，在同一个事务里，是可以重复读取同一笔记录的并且结果不会变。咋实现的呢？原因就在这个READ VIEW，在该笔事务开始查询之前，也就是SELECT之前，就会生成一个READ VIEW，并且在这笔事务结束之前不会变，一直是这个READ VIEW，所以，不论其他事务对这个记录做任何改动并且提交，它读到的一直会是这笔记录在该事务开始的时候的记录。因此不会产生脏读。</p>
+<p>但是读已提交是没办法阻止幻读的出现的。因为幻读的话，是查询一系列数据，是一个结果集，并不是一个结果，所以其他事务可能会对这个结果集进行插入操作，导致该事务查询的前后结果集数量不一样，就像产生了幻觉一样。那么如何解决幻读呢？其实就是后面所讲的，加NEXT-KEY LOCK和 RECORD LOCK，就是把这个范围内记录的最大值加上间隙锁和记录锁，这样对这个记录内所有记录的修改和插入都无法进行，因为其他事务无法获取到这个区间内记录的锁，所以无法进行修改</p>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+    </ul>
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+        <span>&copy; 2026 <a href="https://csqread.top/">Qian&#39;s Blog</a></span> · 
+
+    
+    
+    <span>
+        Powered by
+        <a href="https://gohugo.io/?utm_source=papermod" rel="noopener" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" id="top-link" class="top-link hidden" aria-label="go to top" title="Go to Top (Alt + G)" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+        stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevrons-up">
+        <polyline points="17 11 12 6 7 11"></polyline>
+        <polyline points="17 18 12 13 7 18"></polyline>
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu');
+    if (menu) {
+        
+        const scrollPosition = localStorage.getItem("menu-scroll-position");
+        if (scrollPosition) {
+            menu.scrollLeft = parseInt(scrollPosition, 10);
+        }
+        
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var toplink = document.getElementById("top-link");
+    window.onscroll = function () {
+        const scrollThreshold = window.innerHeight;
+        if (document.body.scrollTop > scrollThreshold || document.documentElement.scrollTop > scrollThreshold) {
+            toplink.classList.remove("hidden");
+        } else {
+            toplink.classList.add("hidden");
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        const html = document.querySelector("html");
+        if (html.dataset.theme === "dark") {
+            html.dataset.theme = 'light';
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            html.dataset.theme = 'dark';
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+</body>
+
+</html>

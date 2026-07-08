@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>AI on Qian&#39;s Blog</title>
+    <link>https://csqread.top/posts/ai/</link>
+    <description>Recent content in AI on Qian&#39;s Blog</description>
+    <generator>Hugo</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Wed, 08 Jul 2026 22:41:00 +0800</lastBuildDate>
+    <atom:link href="https://csqread.top/posts/ai/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Loop 的四种形态：Claude Code 团队的 Agent 循环设计指南</title>
+      <link>https://csqread.top/posts/ai/loops-four-patterns/</link>
+      <pubDate>Wed, 08 Jul 2026 22:41:00 +0800</pubDate>
+      <guid>https://csqread.top/posts/ai/loops-four-patterns/</guid>
+      <description>从 Turn-Based 到 Proactive，Claude Code 团队定义了四种 Agent 循环模式。这篇是对官方文章的系统性梳理与延伸思考，看看 Loop Engineering 在 AI Agent 和内容生产中如何同构。</description>
+    </item>
+  </channel>
+</rss>
