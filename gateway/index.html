@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>认知网关 Cognitive Gateway</title>
+<link rel="stylesheet" href="style.css?v=1">
+<style>
+  /* Inline source icon mapping for emoji fallback */
+</style>
+</head>
+<body>
+
+<div class="app-container">
+  <!-- Header -->
+  <header class="app-header">
+    <div class="app-title">认知网关</div>
+    <nav class="app-nav">
+      <a href="#" data-view="dashboard" class="active">仪表盘</a>
+      <a href="#" data-view="inbox">采集箱</a>
+      <a href="#" data-view="process">每日处理</a>
+      <a href="#" data-view="shards">分片</a>
+      <a href="#" data-view="outputs">产出</a>
+      <a href="#" data-view="review">周度退款</a>
+    </nav>
+  </header>
+
+  <!-- ==================== Dashboard View ==================== -->
+  <div id="dashboard-view" class="view active">
+    <h2>仪表盘</h2>
+
+    <!-- Settle Section -->
+    <div class="settle-section">
+      <button class="btn btn-danger" id="settle-btn">&#x26A0;&#xFE0F; 执行日切</button>
+      <span class="settle-info">日切将归档今日数据，未处理的条目将自动清空</span>
+    </div>
+
+    <!-- Quota -->
+    <h3>今日配额</h3>
+    <div id="dashboard-quota"></div>
+
+    <!-- Stats Grid -->
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-label">转化率 <span style="font-family:var(--font-sans);font-weight:400;">(近7天)</span></div>
+        <div class="stat-value" id="stat-rate">—</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">归档占比</div>
+        <div class="stat-value" id="stat-archive">—</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">连续结算</div>
+        <div class="stat-value" id="stat-streak">—</div>
+      </div>
+    </div>
+
+    <!-- Trend Chart -->
+    <div class="chart-container">
+      <h4>近 14 天输入/输出趋势</h4>
+      <div id="trend-chart"></div>
+    </div>
+
+    <!-- Export/Import -->
+    <div style="display:flex;gap:8px;padding:12px 0 24px;border-top:1px solid var(--line);margin-top:16px;">
+      <button class="btn btn-sm btn-ghost btn-mono" id="export-btn">&#x2191; 导出备份</button>
+      <button class="btn btn-sm btn-ghost btn-mono" id="import-btn">&#x2193; 导入备份</button>
+      <input type="file" id="import-file-input" accept=".json" style="display:none;">
+      <span style="font-size:0.75rem;color:var(--ink-muted);font-family:var(--font-mono);margin-left:8px;line-height:32px;">数据存储在浏览器 localStorage 中</span>
+    </div>
+  </div>
+
+  <!-- ==================== Inbox View ==================== -->
+  <div id="inbox-view" class="view">
+    <h2>采集箱</h2>
+
+    <!-- Add Form -->
+    <div class="card" style="padding:16px;">
+      <div class="add-form">
+        <input type="url" class="form-input" id="inbox-url" placeholder="输入 URL / 链接" autocomplete="url">
+        <select class="form-select" id="inbox-source">
+          <option value="twitter">Twitter</option>
+          <option value="wechat">公众号</option>
+          <option value="paper">论文</option>
+          <option value="group">群聊</option>
+          <option value="other">其他</option>
+        </select>
+        <button class="btn btn-primary" id="inbox-add-btn">丢进队列</button>
+        <button class="btn btn-ghost" id="inbox-reset-btn">清空</button>
+      </div>
+      <input type="text" class="form-input" id="inbox-note" placeholder="一句话备注（选填）" style="width:100%;margin-top:8px;">
+    </div>
+
+    <h3 style="margin-top:20px;">待处理</h3>
+    <div id="inbox-list"></div>
+  </div>
+
+  <!-- ==================== Process View ==================== -->
+  <div id="process-view" class="view">
+    <h2>每日处理</h2>
+
+    <!-- Quota Display -->
+    <div id="process-quota"></div>
+    <div id="process-warning"></div>
+
+    <h3 style="margin-top:16px;">待处理队列</h3>
+    <div id="process-list"></div>
+  </div>
+
+  <!-- ==================== Shards View ==================== -->
+  <div id="shards-view" class="view">
+    <h2>分片浏览</h2>
+
+    <!-- Shard Tabs -->
+    <div id="shard-tabs" class="shard-tabs"></div>
+
+    <!-- Search -->
+    <input type="text" class="search-input" id="shard-search" placeholder="关键词搜索标题 / 备注 / URL...">
+
+    <!-- Content -->
+    <div id="shard-content"></div>
+  </div>
+
+  <!-- ==================== Outputs View ==================== -->
+  <div id="outputs-view" class="view">
+    <h2>产出记录</h2>
+
+    <button class="btn btn-primary" id="output-add-btn">&#x2795; 记录产出</button>
+
+    <div style="margin-top:16px;" id="outputs-list"></div>
+  </div>
+
+  <!-- ==================== Review View ==================== -->
+  <div id="review-view" class="view">
+    <h2>周度退款</h2>
+    <p style="font-size:0.8125rem;color:var(--ink-muted);margin-bottom:16px;">
+      以下是从 <code style="font-family:var(--font-mono);background:var(--paper-bg);padding:1px 4px;border-radius:3px;">archive</code> 分片中筛选出的超期未回看内容
+    </p>
+
+    <div id="review-actions" style="display:flex;gap:8px;align-items:center;margin-bottom:12px;"></div>
+    <div id="review-list"></div>
+  </div>
+</div>
+
+<!-- Modal Overlay -->
+<div id="modal-overlay" class="modal-overlay"></div>
+
+<!-- Toast -->
+<div id="toast" class="toast"></div>
+
+<script src="app.js?v=1"></script>
+</body>
+</html>
