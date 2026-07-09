@@ -6,8 +6,15 @@
     <description>Recent content in LLM on Qian&#39;s Blog</description>
     <generator>Hugo</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Wed, 08 Jul 2026 22:41:00 +0800</lastBuildDate>
+    <lastBuildDate>Thu, 09 Jul 2026 22:57:00 +0800</lastBuildDate>
     <atom:link href="https://csqread.top/tags/llm/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>当「脚手架」开始进化：从 Harness Engineering 看 AI 自我改进的另一条路径</title>
+      <link>https://csqread.top/posts/ai/harness-engineering-self-improvement/</link>
+      <pubDate>Thu, 09 Jul 2026 22:57:00 +0800</pubDate>
+      <guid>https://csqread.top/posts/ai/harness-engineering-self-improvement/</guid>
+      <description>Lilian Weng 在 2026 年 7 月发表了一篇关于 Harness Engineering for Self-Improvement 的文章。这篇文章沿着她的脉络，把 harness engineering 这条技术路线讲透——它是什么、经历了怎样的复杂度演进、目前卡在哪里，以及接下来可能往哪走。</description>
+    </item>
     <item>
       <title>Loop 的四种形态：Claude Code 团队的 Agent 循环设计指南</title>
       <link>https://csqread.top/posts/ai/loops-four-patterns/</link>

@@ -699,3 +699,7 @@ h4 {
   text-align: right;
   font-weight: 600;
 }
+
+/* --- Sync status --- */
+.sync-ok { color: var(--accent); }
+.sync-off { color: var(--ink-muted); }

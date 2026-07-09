@@ -15,6 +15,13 @@
     dailyLog: PREFIX + 'dailyLog'
   };
 
+  const SYNC_KEYS = {
+    token: PREFIX + 'sync_token',
+    gistId: PREFIX + 'sync_gist_id'
+  };
+  const GIST_FILENAME = 'cognitive-gateway-data.json';
+
+
   const DEFAULT_SETTINGS = {
     dailyQuota: { deep: 2, skim: 5 },
     archiveTtlDays: 7,
@@ -140,10 +147,10 @@
   }
 
   function getItems() { return readJSON(KEYS.items, []); }
-  function saveItems(items) { writeJSON(KEYS.items, items); }
+  function saveItems(items) { writeJSON(KEYS.items, items); scheduleSync(); }
 
   function getOutputs() { return readJSON(KEYS.outputs, []); }
-  function saveOutputs(outputs) { writeJSON(KEYS.outputs, outputs); }
+  function saveOutputs(outputs) { writeJSON(KEYS.outputs, outputs); scheduleSync(); }
 
   function getSettings() {
     var s = readJSON(KEYS.settings, null);
@@ -153,10 +160,133 @@
     }
     return s;
   }
-  function saveSettings(s) { writeJSON(KEYS.settings, s); }
+  function saveSettings(s) { writeJSON(KEYS.settings, s); scheduleSync(); }
 
   function getDailyLog() { return readJSON(KEYS.dailyLog, []); }
-  function saveDailyLog(log) { writeJSON(KEYS.dailyLog, log); }
+  function saveDailyLog(log) { writeJSON(KEYS.dailyLog, log); scheduleSync(); }
+
+  /* ======================= Gist Sync Layer ======================= */
+  function getSyncConfig() {
+    return {
+      token: localStorage.getItem(SYNC_KEYS.token) || '',
+      gistId: localStorage.getItem(SYNC_KEYS.gistId) || ''
+    };
+  }
+
+  function saveSyncConfig(token, gistId) {
+    localStorage.setItem(SYNC_KEYS.token, token);
+    localStorage.setItem(SYNC_KEYS.gistId, gistId);
+  }
+
+  function isSyncConfigured() {
+    var cfg = getSyncConfig();
+    return cfg.token.length > 0 && cfg.gistId.length > 0;
+  }
+
+  function getAllData() {
+    return {
+      items: getItems(),
+      outputs: getOutputs(),
+      settings: getSettings(),
+      dailyLog: getDailyLog()
+    };
+  }
+
+  function loadAllData(data) {
+    if (data.items) saveItems(data.items);
+    if (data.outputs) saveOutputs(data.outputs);
+    if (data.settings) saveSettings(data.settings);
+    if (data.dailyLog) saveDailyLog(data.dailyLog);
+  }
+
+  var _syncTimer = null;
+
+  function scheduleSync() {
+    if (!isSyncConfigured()) return;
+    if (_syncTimer) clearTimeout(_syncTimer);
+    _syncTimer = setTimeout(pushToGist, 500);
+  }
+
+  function pushToGist() {
+    var cfg = getSyncConfig();
+    if (!cfg.token || !cfg.gistId) return;
+
+    var data = getAllData();
+    var content = JSON.stringify(data, null, 2);
+    var payload = {
+      description: '认知网关 - ' + todayString(),
+      files: {}
+    };
+    payload.files[GIST_FILENAME] = { content: content };
+
+    var xhr = new XMLHttpRequest();
+    xhr.open('PATCH', 'https://api.github.com/gists/' + cfg.gistId, true);
+    xhr.setRequestHeader('Authorization', 'token ' + cfg.token);
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.setRequestHeader('Accept', 'application/vnd.github.v3+json');
+
+    xhr.onload = function() {
+      if (xhr.status >= 200 && xhr.status < 300) {
+        console.log('[GistSync] Push OK');
+      } else {
+        console.warn('[GistSync] Push failed:', xhr.status, xhr.responseText);
+      }
+    };
+    xhr.onerror = function() {
+      console.warn('[GistSync] Push network error');
+    };
+
+    xhr.send(JSON.stringify(payload));
+  }
+
+  function pullFromGist(callback) {
+    var cfg = getSyncConfig();
+    if (!cfg.token || !cfg.gistId) {
+      if (callback) callback(false);
+      return;
+    }
+
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', 'https://api.github.com/gists/' + cfg.gistId, true);
+    xhr.setRequestHeader('Authorization', 'token ' + cfg.token);
+    xhr.setRequestHeader('Accept', 'application/vnd.github.v3+json');
+
+    xhr.onload = function() {
+      if (xhr.status >= 200 && xhr.status < 300) {
+        try {
+          var gist = JSON.parse(xhr.responseText);
+          var file = gist.files[GIST_FILENAME];
+          if (file && file.content) {
+            var data = JSON.parse(file.content);
+            loadAllData(data);
+            if (callback) callback(true);
+            return;
+          }
+        } catch(e) {
+          console.warn('[GistSync] Parse failed:', e);
+        }
+      }
+      if (callback) callback(false);
+    };
+    xhr.onerror = function() {
+      console.warn('[GistSync] Pull network error');
+      if (callback) callback(false);
+    };
+
+    xhr.send();
+  }
+
+  function updateSyncStatus() {
+    var el = document.getElementById('sync-status');
+    if (!el) return;
+    if (isSyncConfigured()) {
+      el.textContent = '⚡ 云端同步已开启';
+      el.style.color = 'var(--accent)';
+    } else {
+      el.textContent = 'ℹ️ 数据仅存储在本地浏览器';
+      el.style.color = 'var(--ink-muted)';
+    }
+  }
 
   /* ======================= Algorithms ======================= */
   function getTodayQuotaUsed() {
@@ -800,6 +930,61 @@
         e.target.value = '';
       }
     });
+    $('sync-settings-btn').addEventListener('click', openSyncSettings);
+  }
+
+  /* ======================= Sync Settings Modal ======================= */
+  function openSyncSettings() {
+    var cfg = getSyncConfig();
+    var html = '<div class="modal-title">&#x2699; 云端同步设置</div>' +
+      '<p style="font-size:0.8125rem;color:var(--ink-muted);margin-bottom:16px;line-height:1.5;">' +
+      '配置 GitHub Gist 后可跨设备同步数据。需要先<a href="https://github.com/settings/tokens" target="_blank" style="color:var(--accent);">创建一个 Token</a>（勾选 <code style="font-family:var(--font-mono);background:var(--paper-bg);padding:1px 6px;border-radius:3px;">gist</code> 权限），' +
+      '并<a href="https://gist.github.com/" target="_blank" style="color:var(--accent);">新建一个空的私有 Gist</a>，复制 Gist ID（URL 中 <code style="font-family:var(--font-mono);background:var(--paper-bg);padding:1px 6px;border-radius:3px;">/gist/用户名/xxxxx</code> 的 xxxxx 部分）。</p>' +
+      '<div class="form-group"><label>GitHub Token</label>' +
+      '<input type="password" class="form-input" id="sync-token-input" value="' + escapeHtml(cfg.token) + '" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx"></div>' +
+      '<div class="form-group"><label>Gist ID</label>' +
+      '<input class="form-input" id="sync-gist-input" value="' + escapeHtml(cfg.gistId) + '" placeholder="xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"></div>' +
+      '<div class="modal-actions">' +
+      '<button class="btn btn-cancel" onclick="closeModal()">取消</button>' +
+      (isSyncConfigured() ? '<button class="btn btn-ghost" id="sync-clear-btn">清除配置</button>' : '') +
+      '<button class="btn btn-primary" id="sync-save-btn">保存</button></div>';
+
+    openModal(html, null);
+
+    var overlay = document.getElementById('modal-overlay');
+    var saveBtn = overlay.querySelector('#sync-save-btn');
+    if (saveBtn) {
+      saveBtn.addEventListener('click', function() {
+        var token = overlay.querySelector('#sync-token-input').value.trim();
+        var gistId = overlay.querySelector('#sync-gist-input').value.trim();
+        if (!token || !gistId) {
+          showToast('请填写 Token 和 Gist ID', true);
+          return;
+        }
+        saveSyncConfig(token, gistId);
+        closeModal();
+        showToast('同步配置已保存');
+        updateSyncStatus();
+        // Try a pull to verify the token works
+        pullFromGist(function(success) {
+          if (success) {
+            showToast('验证成功，已从云端同步数据');
+            var hash = location.hash.replace('#', '') || 'dashboard';
+            if (VIEWS.indexOf(hash) > -1) showView(hash);
+          }
+        });
+      });
+    }
+
+    var clearBtn = overlay.querySelector('#sync-clear-btn');
+    if (clearBtn) {
+      clearBtn.addEventListener('click', function() {
+        saveSyncConfig('', '');
+        closeModal();
+        showToast('同步配置已清除');
+        updateSyncStatus();
+      });
+    }
   }
 
   /* ======================= Action Handlers ======================= */
@@ -1101,6 +1286,18 @@
       var opts = select.querySelectorAll('option');
       opts.forEach(function(o) {
         if (SOURCE_LABELS[o.value]) o.textContent = SOURCE_LABELS[o.value];
+      });
+    }
+
+    updateSyncStatus();
+
+    // Pull from Gist on load if configured
+    if (isSyncConfigured()) {
+      pullFromGist(function(success) {
+        if (success) {
+          var hash = location.hash.replace('#', '') || 'dashboard';
+          if (VIEWS.indexOf(hash) > -1) showView(hash);
+        }
       });
     }
   }
