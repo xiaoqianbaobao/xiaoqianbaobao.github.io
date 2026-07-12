@@ -1,0 +1,842 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto" data-theme="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>从 Dubbo 到 AI：企业级微服务如何无缝集成智能 Agent | Qian&#39;s Blog</title>
+<meta name="keywords" content="Dubbo, AI Agent, DeerFlow, 企业架构, 微服务">
+<meta name="description" content="当传统 Dubbo 微服务体系遇上 AI Agent，中间的鸿沟怎么填？三种集成模式 &#43; 企业级安全 &#43; JDK 8 兼容 &#43; Sidecar 演进路线 &#43; 不同协议的普适规律">
+<meta name="author" content="">
+<link rel="canonical" href="https://csqread.top/posts/ai/dubbo-to-ai-integration/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.cd9298b33628769aa1bc1acebbbfd7aa11ce81dfe03484d479e1907760249a1d.css" integrity="sha256-zZKYszYodpqhvBrOu7/XqhHOgd/gNITUeeGQd2Akmh0=" rel="preload stylesheet" as="style">
+<link rel="icon" href="https://csqread.top/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://csqread.top/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://csqread.top/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://csqread.top/apple-touch-icon.png">
+<link rel="mask-icon" href="https://csqread.top/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="https://csqread.top/posts/ai/dubbo-to-ai-integration/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+                color-scheme: dark;
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .toc {
+                background: var(--entry);
+            }
+        }
+
+    </style>
+</noscript>
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.querySelector("html").dataset.theme = 'dark';
+    } else if (localStorage.getItem("pref-theme") === "light") {
+       document.querySelector("html").dataset.theme = 'light';
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.querySelector("html").dataset.theme = 'dark';
+    } else {
+        document.querySelector("html").dataset.theme = 'light';
+    }
+
+</script><meta property="og:url" content="https://csqread.top/posts/ai/dubbo-to-ai-integration/">
+  <meta property="og:site_name" content="Qian&#39;s Blog">
+  <meta property="og:title" content="从 Dubbo 到 AI：企业级微服务如何无缝集成智能 Agent">
+  <meta property="og:description" content="当传统 Dubbo 微服务体系遇上 AI Agent，中间的鸿沟怎么填？三种集成模式 &#43; 企业级安全 &#43; JDK 8 兼容 &#43; Sidecar 演进路线 &#43; 不同协议的普适规律">
+  <meta property="og:locale" content="zh_cn">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2026-07-12T00:00:00+00:00">
+    <meta property="article:modified_time" content="2026-07-12T00:00:00+00:00">
+    <meta property="article:tag" content="Dubbo">
+    <meta property="article:tag" content="AI Agent">
+    <meta property="article:tag" content="DeerFlow">
+    <meta property="article:tag" content="企业架构">
+    <meta property="article:tag" content="微服务">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="从 Dubbo 到 AI：企业级微服务如何无缝集成智能 Agent">
+  <meta name="twitter:description" content="当传统 Dubbo 微服务体系遇上 AI Agent，中间的鸿沟怎么填？三种集成模式 &#43; 企业级安全 &#43; JDK 8 兼容 &#43; Sidecar 演进路线 &#43; 不同协议的普适规律">
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "文章",
+      "item": "https://csqread.top/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "AI",
+      "item": "https://csqread.top/posts/ai/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  3 ,
+      "name": "从 Dubbo 到 AI：企业级微服务如何无缝集成智能 Agent",
+      "item": "https://csqread.top/posts/ai/dubbo-to-ai-integration/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "从 Dubbo 到 AI：企业级微服务如何无缝集成智能 Agent",
+  "name": "从 Dubbo 到 AI：企业级微服务如何无缝集成智能 Agent",
+  "description": "当传统 Dubbo 微服务体系遇上 AI Agent，中间的鸿沟怎么填？三种集成模式 + 企业级安全 + JDK 8 兼容 + Sidecar 演进路线 + 不同协议的普适规律",
+  "keywords": [
+    "Dubbo", "AI Agent", "DeerFlow", "企业架构", "微服务"
+  ],
+  "articleBody": "一、背景与目标 大多数企业的核心业务系统基于 Dubbo 微服务架构构建，服务之间通过 Dubbo RPC 协议通信。而新一代 AI Agent 平台（如 DeerFlow）则以 HTTP API 对外暴露能力。\n这就产生了一个架构鸿沟：\n┌─────────────┐ Dubbo RPC ┌──────────────┐ HTTP ┌──────────────┐ │ 业务系统 A │ ────────────────▶ │ 业务系统 B │ │ AI Agent │ │ (OA 系统) │ │ (财务系统) │ │ (DeerFlow) │ └─────────────┘ └──────────────┘ └──────────────┘ ↑ 传统 Dubbo 通信 ↑ 仅暴露 HTTP ⚠️ 这篇文章不是教你怎么接一个大模型 API 然后写死几个业务场景。 市面上大多数所谓的\"AI 集成\"就是在 Controller 里写 if-else 调一下 OpenAI，场景写死、能力固定、扩展困难。\n我们做的是：底层 Harness 全栈能力支撑 + Skills 插件式架构 + Agent 自主规划执行。\n不是简单 HTTP 透传，Identity Guardrail 权限控制、Sandbox 执行隔离、Skills 插件系统、MCP 协议，全部保留 不是写死场景，每个业务域一个 SKILL.md，Agent 自主读文档、自主规划、自主调接口 不是玩具，是企业级的安全可控 二、项目架构概览 我们构建了四个模块：\njava-simple-dubbo-app/ ├── dubbo-api/ # 公共 Dubbo 接口和 DTO │ ├── FinanceService.java # 财务系统接口 │ └── QuickFlowService.java # AI Agent 接口 ├── finance-system/ # 财务系统 — Dubbo Provider │ └── FinanceServiceImpl.java # @DubboService 实现 ├── oa-system/ # OA 系统 — Dubbo Consumer │ ├── OaBizService.java # → Dubbo → Finance │ ├── OaAiService.java # → Dubbo → QuickFlow Adapter │ └── OaAiController.java # 含业务意图识别+数据拼接 └── quickflow-adapter/ # 协议转换层 — Dubbo Provider └── QuickFlowServiceImpl.java # Dubbo → HTTP → DeerFlow 端口分配 服务 HTTP 端口 Dubbo 端口 finance-system 8082 20880 oa-system 8081 — quickflow-adapter 8083 20881 DeerFlow Gateway 2026 (Nginx) — 三、三种集成模式 模式 A：Dubbo 直连（传统业务服务间通信） OA 系统通过 @DubboReference(url = \"dubbo://localhost:20880\") 直连财务系统。\n完整链路：\n浏览器 → OA HTTP (8081) → @DubboReference → Finance Service (20880) → 查询报销单/校验预算 → 返回 Mock 数据 // OA 侧 — Dubbo Consumer @DubboReference(url = \"dubbo://localhost:20880\") private FinanceService financeService; public ReimburseResponse queryReimburse(String reimburseNo, String applicantId) { return financeService.queryReimburse(new ReimburseRequest(reimburseNo, applicantId)); } 模式 B：Dubbo → HTTP 协议转换（AI Agent 集成） 这是最核心的模式。OA 系统只认 Dubbo 协议，DeerFlow 只暴露 HTTP API，中间需要一个协议转换层。\nOA 系统 (Dubbo Consumer) │ @DubboReference(url = \"dubbo://localhost:20881\") ▼ QuickFlow Adapter (Dubbo Provider + HTTP Client) │ WebClient POST → /api/runs/wait ▼ DeerFlow Gateway (FastAPI, port 2026) │ DeepSeek / OpenAI ▼ AI 回复 为什么需要这个适配器层？\nOA 系统是纯 Dubbo 体系，没有 HTTP Client 的依赖和管理 适配器可以集中管理 API Token、超时、重试等配置 适配器可以被多个业务系统复用（一篇适配，多处调用） 未来如果 DeerFlow 升级或更换，只改适配器即可 @DubboService public class QuickFlowServiceImpl implements QuickFlowService { @Value(\"${quickflow.base-url}\") private String baseUrl; @Value(\"${quickflow.api-token}\") private String apiToken; private WebClient webClient; @Override public ChatResponse chat(ChatRequest request) { // 1. 构建 DeerFlow 请求体 ObjectNode body = mapper.createObjectNode(); body.putNull(\"assistant_id\"); // 使用默认 Agent // 2. 调用 DeerFlow HTTP API String jsonResponse = webClient.post() .uri(\"/api/runs/wait\") .bodyValue(body) .retrieve() .bodyToMono(String.class) .block(); // 3. 解析返回的 messages，提取 AI 文本回复 return parseResponse(jsonResponse, conversationId); } } 模式 C：Intent Resolver（Java 层先查数据再喂给 AI） 如果老系统不暴露接口，或者你希望更可控，可以在 Java Controller 层做意图识别 + 数据预查：\n@PostMapping(\"/chat\") public ResponseEntity\u003c?\u003e chat(@RequestBody Map\u003cString, String\u003e request) { String message = request.get(\"message\"); // 意图识别：如果包含报销单号 Pattern pattern = Pattern.compile(\"RE\\\\d{9}\"); Matcher matcher = pattern.matcher(message); if (matcher.find()) { // 自己查数据 String reimburseNo = matcher.group(); ReimburseResponse data = financeService .queryReimburse(new ReimburseRequest(reimburseNo, null)); // 把数据拼进去，再发给 AI message = message + \"\\n\\n[系统查询结果]\\n\" + JSON.toJSONString(data); } // 发给 AI return oaAiService.chat(message, conversationId); } 模式 C 的价值：数据不出内网、意图识别可控、AI 只做 NLG。\n四、安全设计 4.1 API Token — 调用方身份认证 DeerFlow 通过 API Token 认证调用方。Token 可以关联到具体租户或用户：\nAuthorization: Bearer dft_xxx 设计要点：Token 绑定到具体权限范围；只暴露 AI Agent 调用能力；可单独吊销。\n4.2 Org Key — 数据隔离与资源控制 ┌──────────────────────────────────────────────────────┐ │ DeerFlow Gateway │ │ API Token → 身份认证 → 获取 Org/User Identity │ │ Identity → Identity Guardrail → 权限校验 │ │ ↓ │ │ skill:invoke → 可以调用 skills + 工具 │ │ thread:read → 可以读取当前线程 │ │ thread:write → 可以创建/修改线程 │ │ 无权限 → 返回 authz.tool.denied │ └──────────────────────────────────────────────────────────┘ DeerFlow 的权限模型基于 Identity Guardrail，每次工具调用前检查权限，不在白名单中的工具默认拒绝（default-deny）。\n4.3 序列化安全 Dubbo 默认使用 Hessian2 序列化。在跨版本通信时需要配置序列化白名单：\ndubbo: security: serialize: allowlist: com.dubbo.demo, java.util, java.lang DTO 必须实现 Serializable + 固定 serialVersionUID dubbo-api 用最低 JDK 版本编译，双方共用 4.4 服务隔离 安全维度 实现方式 网络隔离 Adapter 作为唯一对外暴露节点，内网 Dubbo 服务不暴露公网 权限最小化 Adapter 只暴露 AI 需要的接口，不暴露完整的 Dubbo 服务 调用审计 可在 Adapter 层记录所有 AI 发起的请求 限流控制 可在 Adapter 层配置 QPS 限制 五、前端集成 OA 系统在右下角加入浮动聊天机器人。AI 在对话过程中会根据 SKILL.md 自主决定调什么接口：\n用户: \"销售部申请15000预算够吗？\" → AI 识别意图 → 读 SKILL.md → 发现可用 Adapter HTTP 接口 → 主动调 GET /api/finance/budget/check?deptId=DEPT_SALES\u0026amount=15000 → 获取数据，回复\"预算充足，剩余10万\" 用户: \"查一下报销单 RE202607001 的状态\" → AI 识别出报销单号 → 调 GET /api/finance/reimburse?reimburseNo=RE202607001 → 回复\"已审批，张三差旅费¥12,800.50\" 用户: \"帮我写一段出差申请\" → AI 判断无需调接口 → 直接输出申请模板 一切由 AI 自主规划，不是预先写死的 if-else。\n六、JDK 8 兼容性说明 分层策略：让 Adapter 升级，让业务系统保持不变 核心思路：Adapter 升级到 JDK 17+，业务系统保持 JDK 8。\n┌──────────────────────────────┐ │ OA 系统 (JDK 8) │ ← 不改 │ Dubbo 2.7.x │ └──────────┬───────────────────┘ │ Dubbo RPC（跨版本兼容） ▼ ┌──────────────────────────────┐ │ QuickFlow Adapter (JDK 21) │ ← 升级 │ Dubbo 3.x + Spring Boot 3.x │ └──────────────────────────────┘ Dubbo 2.7.x 和 3.x 使用相同的 dubbo:// 协议，底层 Hessian2 序列化兼容。\n七、实际运行效果 # 启动三个服务 java -jar finance-system/target/finance-system-1.0.0.jar java -jar quickflow-adapter/target/quickflow-adapter-1.0.0.jar java -jar oa-system/target/oa-system-1.0.0.jar # 验证链路 curl \"http://localhost:8083/api/finance/reimburse?reimburseNo=RE202607001\" curl -X POST http://localhost:8081/api/oa/ai/chat \\ -H \"Content-Type: application/json\" \\ -d '{\"message\":\"查一下 RE202607001\",\"conversationId\":\"test\"}' 八、集成模式对比与选型建议 模式 适用场景 老系统改动 数据流向 AI 自主度 A: Dubbo 直连 传统业务服务间通信 ❌ 零改动 纯内网 无 AI 参与 B: Protocol Adapter Dubbo 系统调 HTTP AI ❌ 零改动 AI 主动调 高 C: Intent Resolver 业务可控优先 ❌ 零改动 先查再送 中 九、Scale Up：从 Adapter 到 Sidecar 的架构演进 当前 Adapter 的三个瓶颈 中心化 Adapter 解决了从 0 到 1 的问题，但量上来后会面临：单点故障、接口膨胀、部署耦合。\nSidecar 模式：去中心化的答案 Sidecar 借用了 Istio/Envoy 的经典架构思路——把基础设施能力从中心抽出来，推到每个业务系统旁边。\n改造前： OA 服务器 Adapter 服务器（瓶颈！） ┌──────────┐ Dubbo ┌────────────┐ HTTP ┌──────────┐ │ OA │ ──────────▶ │ Adapter │ ────────▶ │ DeerFlow │ │ (8081) │ │ (8083) │ │ (2026) │ └──────────┘ 经过网络 └────────────┘ └──────────┘ 改造后（Sidecar）： OA 服务器 ┌─────────────────────────────────────┐ │ OA 进程 │ │ @DubboReference(url=\"dubbo:// │ │ localhost:20081\") │ ← 本机 Sidecar └────────────┬────────────────────────┘ │ Dubbo（本地回环，不走网络） ▼ ┌─────────────────────────────────────┐ │ AI Sidecar │ │ - 本地缓存（Caffeine） │ │ - 熔断器（Resilience4j） │ │ - 无状态，随业务系统自动扩缩 │ │ ↓ HTTP │ │ DeerFlow │ └──────────────────────────────────────┘ Sidecar 对比中心化 Adapter 维度 中心化 Adapter Sidecar 部署位置 一台独立服务器，所有系统共用 跟业务系统同机，一一对应 实例数量 1 个（单点） N 个（随业务系统数量） 故障影响 挂了 = 所有系统失去 AI 能力 只影响挂了的那台机器 调用延迟 网络 RTT（0.5~2ms） 本地回环（0.01~0.1ms） 从 Adapter 到 Sidecar 的平滑迁移 第 1 步：Sidecar 跟 Adapter 共存，灰度切流 第 2 步：全部切到 Sidecar 第 3 步：Adapter 退役，控制面上线（控制面只做配置下发，不参与数据面） 整个过程 OA 系统代码一行不改——QuickFlowService 接口不变，只改 url。\n十、代码结构 java-simple-dubbo-app/ ├── dubbo-api/ # 公共接口（JDK 8 可编译） ├── finance-system/ # 财务系统 — 老系统模拟 ├── quickflow-adapter/ # 协议转换层 — 唯一新服务 └── oa-system/ # OA 系统 十一、不止 Dubbo：Adapter 模式的普适规律 我们用 Dubbo 做了完整示例，但这个模式不限于 Dubbo。gRPC、SOAP/WebService、ESB 总线、甚至银行核心用的 IBM MQ 和 Tuxedo——思路完全一样，只是底层协议实现不同。\n核心规律 不管底层是什么协议，Adapter 做的事始终只有三件：\n老系统 → [协议 A] → Adapter → [HTTP JSON] → AI Agent ↓ 1. 连上老系统（用老系统的协议） 2. 拿到数据（解析老系统的响应格式） 3. 转成 HTTP JSON（暴露给 AI） 唯一变化的是第 1 步和第 2 步。第 3 步永远是 HTTP JSON。\n各协议对比 老系统协议 怎么连 解析复杂度 常见行业 Dubbo @DubboReference 直连 Provider 低 互联网、企业应用 gRPC grpc-client-spring-boot-starter 中 云原生微服务 SOAP/WebService WebServiceTemplate 或 CXF 低 银行、金融、政府 ESB 总线 接入 ESB 的对外接口 中 大型企业核心系统 IBM MQ JMS 客户端 中 银行核心交易 银行 SOAP + ESB 场景拆解 AI → Adapter（HTTP → SOAP 转换）→ ESB（不变）→ 核心系统 已经有 ESB 了为什么还要加 Adapter？因为 ESB 和 Adapter 定位完全不同：\n维度 ESB（已有） Adapter（新增） 服务对象 业务系统间通信（高 TPS） AI 零星查询（几分钟一次） 接口粒度 完整交易接口（几十个字段） 精简查询（3-5 个参数） 变更门槛 以月为单位 以天为单位 安全模型 ESB 自有认证 API Token + Org Key 代码对比：Dubbo vs SOAP // Dubbo Adapter @DubboReference(url = \"dubbo://localhost:20880\") private FinanceService financeService; @GetMapping(\"/api/finance/reimburse\") public Map\u003cString, Object\u003e queryReimburse(@RequestParam String no) { ReimburseResponse resp = financeService.queryReimburse(new ReimburseRequest(no)); return Map.of(\"code\", 0, \"data\", resp); } // SOAP Adapter（同一套思路，换协议） @Autowired private WebServiceTemplate wsTemplate; @GetMapping(\"/api/bank/account\") public Map\u003cString, Object\u003e queryBalance(@RequestParam String accountNo) { QueryBalanceRequest req = new QueryBalanceRequest(); req.setAccountNo(accountNo); QueryBalanceResponse resp = (QueryBalanceResponse) wsTemplate.marshalSendAndReceive(\"http://esb:9080/QueryBalance\", req); return Map.of(\"code\", 0, \"data\", Map.of(\"balance\", resp.getBalance())); } 两个 Adapter 的区别只在于：第 1 行注解方式不同、URL 格式不同。剩下 90% 的代码——Controller 结构、错误处理、返回格式——完全一样。\n部署位置权衡 部署方式 适用协议 优缺点 同进程嵌入 Dubbo、SOAP（客户端轻） ✅ 延迟最低 ❌ 依赖 JDK 版本 边车 Sidecar gRPC、Thrift ✅ 协议与业务解耦 ❌ 多一跳 对接 ESB SOAP、JMS ✅ ESB 不改 ❌ 依赖 ESB 团队 独立网关 多种协议混合 ✅ 统一入口 ❌ 架构复杂 不值得做 Adapter 的判断标准 如果 AI 一周都问不到一次这个系统的数据，就别接。\n十二、总结 本文通过一个完整的 Java Dubbo 示例项目，展示了企业级微服务集成 AI Agent 的三种模式：\nDubbo 直连 — 传统业务服务间通信 Protocol Adapter — Dubbo 体系调用 HTTP 服务的标准模式 Intent Resolver — 业务侧先查数据再喂给 AI 同时覆盖了企业级安全设计（API Token、序列化安全、QoS）、JDK 8 兼容方案、Sidecar 大规模演进路线，以及不同协议（gRPC、SOAP、ESB、MQ）的普适规律。\n整套方案的核心理念是：对现有系统零侵入，通过边缘适配器逐步引入 AI 能力。\n你们不需要知道 AI 的存在。不需要改任何代码。不需要升级 JDK。 你们的 Dubbo 服务正常跑就行。Adapter 会主动来连你们。\n完整示例代码：java-simple-dubbo-app\n",
+  "wordCount" : "4364",
+  "inLanguage": "en",
+  "datePublished": "2026-07-12T00:00:00Z",
+  "dateModified": "2026-07-12T00:00:00Z",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://csqread.top/posts/ai/dubbo-to-ai-integration/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Qian's Blog",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://csqread.top/favicon.ico"
+    }
+  }
+}
+</script>
+</head>
+<body id="top">
+    <header class="header">
+    <nav class="header-nav">
+        <div class="logo">
+            <a href="https://csqread.top/" accesskey="h" title="Qian&#39;s Blog (Alt + H)">Qian&#39;s Blog</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" class="theme-toggle" accesskey="t" title="(Alt + T)" aria-label="Toggle theme">
+                    <svg class="moon" xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg class="sun" xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu" class="menu">
+            <li>
+                <a href="https://csqread.top/search" title="🔍搜索 (Alt &#43; /)" accesskey=/>
+                    <span>🔍搜索</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://csqread.top/posts" title="📚文章">
+                    <span>📚文章</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://csqread.top/archives/" title="⏱时间轴">
+                    <span>⏱时间轴</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://csqread.top/tags" title="🔖标签">
+                    <span>🔖标签</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://csqread.top/about" title="🙋🏻‍♂️关于">
+                    <span>🙋🏻‍♂️关于</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://csqread.top/links" title="🤝友链">
+                    <span>🤝友链</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://csqread.top/gateway/" title="🧠认知网关">
+                    <span>🧠认知网关</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://csqread.top/" title="">
+                    <span></span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    
+    <h1 class="post-title entry-hint-parent">
+      从 Dubbo 到 AI：企业级微服务如何无缝集成智能 Agent
+    </h1>
+    <div class="post-description">
+      当传统 Dubbo 微服务体系遇上 AI Agent，中间的鸿沟怎么填？三种集成模式 &#43; 企业级安全 &#43; JDK 8 兼容 &#43; Sidecar 演进路线 &#43; 不同协议的普适规律
+    </div>
+    <div class="post-meta">
+
+<span title='2026-07-12 00:00:00 +0000 UTC'>July 12, 2026</span>
+
+</div>
+  </header> 
+  <div class="post-content md-content"><h2 id="一背景与目标">一、背景与目标<a hidden class="anchor" aria-hidden="true" href="#一背景与目标">#</a></h2>
+<p>大多数企业的核心业务系统基于 Dubbo 微服务架构构建，服务之间通过 Dubbo RPC 协议通信。而新一代 AI Agent 平台（如 DeerFlow）则以 HTTP API 对外暴露能力。</p>
+<p>这就产生了一个架构鸿沟：</p>
+<pre tabindex="0"><code>┌─────────────┐     Dubbo RPC     ┌──────────────┐     HTTP     ┌──────────────┐
+│  业务系统 A  │ ────────────────▶ │  业务系统 B   │              │  AI Agent    │
+│  (OA 系统)   │                  │  (财务系统)    │              │  (DeerFlow)  │
+└─────────────┘                  └──────────────┘              └──────────────┘
+                                    ↑ 传统 Dubbo 通信              ↑ 仅暴露 HTTP
+</code></pre><blockquote>
+<p>⚠️ 这篇文章不是教你怎么接一个大模型 API 然后写死几个业务场景。
+市面上大多数所谓的&quot;AI 集成&quot;就是在 Controller 里写 if-else 调一下 OpenAI，场景写死、能力固定、扩展困难。</p>
+<p><strong>我们做的是：底层 Harness 全栈能力支撑 + Skills 插件式架构 + Agent 自主规划执行。</strong></p>
+<ul>
+<li>不是简单 HTTP 透传，Identity Guardrail 权限控制、Sandbox 执行隔离、Skills 插件系统、MCP 协议，全部保留</li>
+<li>不是写死场景，每个业务域一个 SKILL.md，Agent 自主读文档、自主规划、自主调接口</li>
+<li>不是玩具，是企业级的安全可控</li>
+</ul>
+</blockquote>
+<h2 id="二项目架构概览">二、项目架构概览<a hidden class="anchor" aria-hidden="true" href="#二项目架构概览">#</a></h2>
+<p>我们构建了四个模块：</p>
+<pre tabindex="0"><code>java-simple-dubbo-app/
+├── dubbo-api/              # 公共 Dubbo 接口和 DTO
+│   ├── FinanceService.java      # 财务系统接口
+│   └── QuickFlowService.java    # AI Agent 接口
+├── finance-system/          # 财务系统 — Dubbo Provider
+│   └── FinanceServiceImpl.java  # @DubboService 实现
+├── oa-system/               # OA 系统 — Dubbo Consumer
+│   ├── OaBizService.java        # → Dubbo → Finance
+│   ├── OaAiService.java         # → Dubbo → QuickFlow Adapter
+│   └── OaAiController.java     # 含业务意图识别+数据拼接
+└── quickflow-adapter/       # 协议转换层 — Dubbo Provider
+    └── QuickFlowServiceImpl.java # Dubbo → HTTP → DeerFlow
+</code></pre><h3 id="端口分配">端口分配<a hidden class="anchor" aria-hidden="true" href="#端口分配">#</a></h3>
+<table>
+	<thead>
+			<tr>
+					<th>服务</th>
+					<th>HTTP 端口</th>
+					<th>Dubbo 端口</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td>finance-system</td>
+					<td>8082</td>
+					<td>20880</td>
+			</tr>
+			<tr>
+					<td>oa-system</td>
+					<td>8081</td>
+					<td>—</td>
+			</tr>
+			<tr>
+					<td>quickflow-adapter</td>
+					<td>8083</td>
+					<td>20881</td>
+			</tr>
+			<tr>
+					<td>DeerFlow Gateway</td>
+					<td>2026 (Nginx)</td>
+					<td>—</td>
+			</tr>
+	</tbody>
+</table>
+<h2 id="三三种集成模式">三、三种集成模式<a hidden class="anchor" aria-hidden="true" href="#三三种集成模式">#</a></h2>
+<h3 id="模式-adubbo-直连传统业务服务间通信">模式 A：Dubbo 直连（传统业务服务间通信）<a hidden class="anchor" aria-hidden="true" href="#模式-adubbo-直连传统业务服务间通信">#</a></h3>
+<p>OA 系统通过 <code>@DubboReference(url = &quot;dubbo://localhost:20880&quot;)</code> 直连财务系统。</p>
+<p>完整链路：</p>
+<pre tabindex="0"><code>浏览器 → OA HTTP (8081)
+         → @DubboReference → Finance Service (20880)
+         → 查询报销单/校验预算
+         → 返回 Mock 数据
+</code></pre><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#75715e">// OA 侧 — Dubbo Consumer</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">@DubboReference</span>(url <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;dubbo://localhost:20880&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">private</span> FinanceService financeService;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> ReimburseResponse <span style="color:#a6e22e">queryReimburse</span>(String reimburseNo, String applicantId) {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> financeService.<span style="color:#a6e22e">queryReimburse</span>(<span style="color:#66d9ef">new</span> ReimburseRequest(reimburseNo, applicantId));
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h3 id="模式-bdubbo--http-协议转换ai-agent-集成">模式 B：Dubbo → HTTP 协议转换（AI Agent 集成）<a hidden class="anchor" aria-hidden="true" href="#模式-bdubbo--http-协议转换ai-agent-集成">#</a></h3>
+<p>这是最核心的模式。OA 系统只认 Dubbo 协议，DeerFlow 只暴露 HTTP API，中间需要一个协议转换层。</p>
+<pre tabindex="0"><code>OA 系统 (Dubbo Consumer)
+  │ @DubboReference(url = &#34;dubbo://localhost:20881&#34;)
+  ▼
+QuickFlow Adapter (Dubbo Provider + HTTP Client)
+  │ WebClient POST → /api/runs/wait
+  ▼
+DeerFlow Gateway (FastAPI, port 2026)
+  │ DeepSeek / OpenAI
+  ▼
+AI 回复
+</code></pre><p><strong>为什么需要这个适配器层？</strong></p>
+<ul>
+<li>OA 系统是纯 Dubbo 体系，没有 HTTP Client 的依赖和管理</li>
+<li>适配器可以集中管理 API Token、超时、重试等配置</li>
+<li>适配器可以被多个业务系统复用（一篇适配，多处调用）</li>
+<li>未来如果 DeerFlow 升级或更换，只改适配器即可</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#a6e22e">@DubboService</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">QuickFlowServiceImpl</span> <span style="color:#66d9ef">implements</span> QuickFlowService {
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">@Value</span>(<span style="color:#e6db74">&#34;${quickflow.base-url}&#34;</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> String baseUrl;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">@Value</span>(<span style="color:#e6db74">&#34;${quickflow.api-token}&#34;</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> String apiToken;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> WebClient webClient;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">@Override</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> ChatResponse <span style="color:#a6e22e">chat</span>(ChatRequest request) {
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// 1. 构建 DeerFlow 请求体</span>
+</span></span><span style="display:flex;"><span>        ObjectNode body <span style="color:#f92672">=</span> mapper.<span style="color:#a6e22e">createObjectNode</span>();
+</span></span><span style="display:flex;"><span>        body.<span style="color:#a6e22e">putNull</span>(<span style="color:#e6db74">&#34;assistant_id&#34;</span>);  <span style="color:#75715e">// 使用默认 Agent</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// 2. 调用 DeerFlow HTTP API</span>
+</span></span><span style="display:flex;"><span>        String jsonResponse <span style="color:#f92672">=</span> webClient.<span style="color:#a6e22e">post</span>()
+</span></span><span style="display:flex;"><span>            .<span style="color:#a6e22e">uri</span>(<span style="color:#e6db74">&#34;/api/runs/wait&#34;</span>)
+</span></span><span style="display:flex;"><span>            .<span style="color:#a6e22e">bodyValue</span>(body)
+</span></span><span style="display:flex;"><span>            .<span style="color:#a6e22e">retrieve</span>()
+</span></span><span style="display:flex;"><span>            .<span style="color:#a6e22e">bodyToMono</span>(String.<span style="color:#a6e22e">class</span>)
+</span></span><span style="display:flex;"><span>            .<span style="color:#a6e22e">block</span>();
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// 3. 解析返回的 messages，提取 AI 文本回复</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> parseResponse(jsonResponse, conversationId);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h3 id="模式-cintent-resolverjava-层先查数据再喂给-ai">模式 C：Intent Resolver（Java 层先查数据再喂给 AI）<a hidden class="anchor" aria-hidden="true" href="#模式-cintent-resolverjava-层先查数据再喂给-ai">#</a></h3>
+<p>如果老系统不暴露接口，或者你希望更可控，可以在 Java Controller 层做意图识别 + 数据预查：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#a6e22e">@PostMapping</span>(<span style="color:#e6db74">&#34;/chat&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> ResponseEntity<span style="color:#f92672">&lt;?&gt;</span> chat(<span style="color:#a6e22e">@RequestBody</span> Map<span style="color:#f92672">&lt;</span>String, String<span style="color:#f92672">&gt;</span> request) {
+</span></span><span style="display:flex;"><span>    String message <span style="color:#f92672">=</span> request.<span style="color:#a6e22e">get</span>(<span style="color:#e6db74">&#34;message&#34;</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 意图识别：如果包含报销单号</span>
+</span></span><span style="display:flex;"><span>    Pattern pattern <span style="color:#f92672">=</span> Pattern.<span style="color:#a6e22e">compile</span>(<span style="color:#e6db74">&#34;RE\\d{9}&#34;</span>);
+</span></span><span style="display:flex;"><span>    Matcher matcher <span style="color:#f92672">=</span> pattern.<span style="color:#a6e22e">matcher</span>(message);
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (matcher.<span style="color:#a6e22e">find</span>()) {
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// 自己查数据</span>
+</span></span><span style="display:flex;"><span>        String reimburseNo <span style="color:#f92672">=</span> matcher.<span style="color:#a6e22e">group</span>();
+</span></span><span style="display:flex;"><span>        ReimburseResponse data <span style="color:#f92672">=</span> financeService
+</span></span><span style="display:flex;"><span>            .<span style="color:#a6e22e">queryReimburse</span>(<span style="color:#66d9ef">new</span> ReimburseRequest(reimburseNo, <span style="color:#66d9ef">null</span>));
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// 把数据拼进去，再发给 AI</span>
+</span></span><span style="display:flex;"><span>        message <span style="color:#f92672">=</span> message <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;\n\n[系统查询结果]\n&#34;</span> <span style="color:#f92672">+</span> JSON.<span style="color:#a6e22e">toJSONString</span>(data);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 发给 AI</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> oaAiService.<span style="color:#a6e22e">chat</span>(message, conversationId);
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p><strong>模式 C 的价值</strong>：数据不出内网、意图识别可控、AI 只做 NLG。</p>
+<h2 id="四安全设计">四、安全设计<a hidden class="anchor" aria-hidden="true" href="#四安全设计">#</a></h2>
+<h3 id="41-api-token--调用方身份认证">4.1 API Token — 调用方身份认证<a hidden class="anchor" aria-hidden="true" href="#41-api-token--调用方身份认证">#</a></h3>
+<p>DeerFlow 通过 API Token 认证调用方。Token 可以关联到具体租户或用户：</p>
+<pre tabindex="0"><code>Authorization: Bearer dft_xxx
+</code></pre><p>设计要点：Token 绑定到具体权限范围；只暴露 AI Agent 调用能力；可单独吊销。</p>
+<h3 id="42-org-key--数据隔离与资源控制">4.2 Org Key — 数据隔离与资源控制<a hidden class="anchor" aria-hidden="true" href="#42-org-key--数据隔离与资源控制">#</a></h3>
+<pre tabindex="0"><code>┌──────────────────────────────────────────────────────┐
+│                    DeerFlow Gateway                    │
+│  API Token → 身份认证 → 获取 Org/User Identity        │
+│  Identity → Identity Guardrail → 权限校验             │
+│    ↓                                                    │
+│  skill:invoke  → 可以调用 skills + 工具                │
+│  thread:read   → 可以读取当前线程                      │
+│  thread:write  → 可以创建/修改线程                     │
+│  无权限 → 返回 authz.tool.denied                      │
+└──────────────────────────────────────────────────────────┘
+</code></pre><p>DeerFlow 的权限模型基于 <strong>Identity Guardrail</strong>，每次工具调用前检查权限，不在白名单中的工具默认拒绝（default-deny）。</p>
+<h3 id="43-序列化安全">4.3 序列化安全<a hidden class="anchor" aria-hidden="true" href="#43-序列化安全">#</a></h3>
+<p>Dubbo 默认使用 Hessian2 序列化。在跨版本通信时需要配置序列化白名单：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#f92672">dubbo</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">security</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">serialize</span>:
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">allowlist</span>: <span style="color:#ae81ff">com.dubbo.demo, java.util, java.lang</span>
+</span></span></code></pre></div><ul>
+<li>DTO 必须实现 <code>Serializable</code> + 固定 <code>serialVersionUID</code></li>
+<li><code>dubbo-api</code> 用最低 JDK 版本编译，双方共用</li>
+</ul>
+<h3 id="44-服务隔离">4.4 服务隔离<a hidden class="anchor" aria-hidden="true" href="#44-服务隔离">#</a></h3>
+<table>
+	<thead>
+			<tr>
+					<th>安全维度</th>
+					<th>实现方式</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td>网络隔离</td>
+					<td>Adapter 作为唯一对外暴露节点，内网 Dubbo 服务不暴露公网</td>
+			</tr>
+			<tr>
+					<td>权限最小化</td>
+					<td>Adapter 只暴露 AI 需要的接口，不暴露完整的 Dubbo 服务</td>
+			</tr>
+			<tr>
+					<td>调用审计</td>
+					<td>可在 Adapter 层记录所有 AI 发起的请求</td>
+			</tr>
+			<tr>
+					<td>限流控制</td>
+					<td>可在 Adapter 层配置 QPS 限制</td>
+			</tr>
+	</tbody>
+</table>
+<h2 id="五前端集成">五、前端集成<a hidden class="anchor" aria-hidden="true" href="#五前端集成">#</a></h2>
+<p>OA 系统在右下角加入浮动聊天机器人。AI 在对话过程中会根据 <strong>SKILL.md</strong> 自主决定调什么接口：</p>
+<pre tabindex="0"><code>用户: &#34;销售部申请15000预算够吗？&#34;
+→ AI 识别意图 → 读 SKILL.md
+→ 发现可用 Adapter HTTP 接口
+→ 主动调 GET /api/finance/budget/check?deptId=DEPT_SALES&amp;amount=15000
+→ 获取数据，回复&#34;预算充足，剩余10万&#34;
+
+用户: &#34;查一下报销单 RE202607001 的状态&#34;
+→ AI 识别出报销单号
+→ 调 GET /api/finance/reimburse?reimburseNo=RE202607001
+→ 回复&#34;已审批，张三差旅费¥12,800.50&#34;
+
+用户: &#34;帮我写一段出差申请&#34;
+→ AI 判断无需调接口 → 直接输出申请模板
+</code></pre><p><strong>一切由 AI 自主规划，不是预先写死的 if-else。</strong></p>
+<h2 id="六jdk-8-兼容性说明">六、JDK 8 兼容性说明<a hidden class="anchor" aria-hidden="true" href="#六jdk-8-兼容性说明">#</a></h2>
+<h3 id="分层策略让-adapter-升级让业务系统保持不变">分层策略：让 Adapter 升级，让业务系统保持不变<a hidden class="anchor" aria-hidden="true" href="#分层策略让-adapter-升级让业务系统保持不变">#</a></h3>
+<p>核心思路：<strong>Adapter 升级到 JDK 17+，业务系统保持 JDK 8。</strong></p>
+<pre tabindex="0"><code>┌──────────────────────────────┐
+│  OA 系统 (JDK 8)             │  ← 不改
+│  Dubbo 2.7.x                 │
+└──────────┬───────────────────┘
+           │ Dubbo RPC（跨版本兼容）
+           ▼
+┌──────────────────────────────┐
+│  QuickFlow Adapter (JDK 21)  │  ← 升级
+│  Dubbo 3.x + Spring Boot 3.x  │
+└──────────────────────────────┘
+</code></pre><p>Dubbo 2.7.x 和 3.x 使用相同的 dubbo:// 协议，底层 Hessian2 序列化兼容。</p>
+<h2 id="七实际运行效果">七、实际运行效果<a hidden class="anchor" aria-hidden="true" href="#七实际运行效果">#</a></h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># 启动三个服务</span>
+</span></span><span style="display:flex;"><span>java -jar finance-system/target/finance-system-1.0.0.jar
+</span></span><span style="display:flex;"><span>java -jar quickflow-adapter/target/quickflow-adapter-1.0.0.jar
+</span></span><span style="display:flex;"><span>java -jar oa-system/target/oa-system-1.0.0.jar
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 验证链路</span>
+</span></span><span style="display:flex;"><span>curl <span style="color:#e6db74">&#34;http://localhost:8083/api/finance/reimburse?reimburseNo=RE202607001&#34;</span>
+</span></span><span style="display:flex;"><span>curl -X POST http://localhost:8081/api/oa/ai/chat <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span>  -H <span style="color:#e6db74">&#34;Content-Type: application/json&#34;</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span>  -d <span style="color:#e6db74">&#39;{&#34;message&#34;:&#34;查一下 RE202607001&#34;,&#34;conversationId&#34;:&#34;test&#34;}&#39;</span>
+</span></span></code></pre></div><h2 id="八集成模式对比与选型建议">八、集成模式对比与选型建议<a hidden class="anchor" aria-hidden="true" href="#八集成模式对比与选型建议">#</a></h2>
+<table>
+	<thead>
+			<tr>
+					<th>模式</th>
+					<th>适用场景</th>
+					<th>老系统改动</th>
+					<th>数据流向</th>
+					<th>AI 自主度</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td>A: Dubbo 直连</td>
+					<td>传统业务服务间通信</td>
+					<td>❌ 零改动</td>
+					<td>纯内网</td>
+					<td>无 AI 参与</td>
+			</tr>
+			<tr>
+					<td>B: Protocol Adapter</td>
+					<td>Dubbo 系统调 HTTP AI</td>
+					<td>❌ 零改动</td>
+					<td>AI 主动调</td>
+					<td>高</td>
+			</tr>
+			<tr>
+					<td>C: Intent Resolver</td>
+					<td>业务可控优先</td>
+					<td>❌ 零改动</td>
+					<td>先查再送</td>
+					<td>中</td>
+			</tr>
+	</tbody>
+</table>
+<h2 id="九scale-up从-adapter-到-sidecar-的架构演进">九、Scale Up：从 Adapter 到 Sidecar 的架构演进<a hidden class="anchor" aria-hidden="true" href="#九scale-up从-adapter-到-sidecar-的架构演进">#</a></h2>
+<h3 id="当前-adapter-的三个瓶颈">当前 Adapter 的三个瓶颈<a hidden class="anchor" aria-hidden="true" href="#当前-adapter-的三个瓶颈">#</a></h3>
+<p>中心化 Adapter 解决了从 0 到 1 的问题，但量上来后会面临：单点故障、接口膨胀、部署耦合。</p>
+<h3 id="sidecar-模式去中心化的答案">Sidecar 模式：去中心化的答案<a hidden class="anchor" aria-hidden="true" href="#sidecar-模式去中心化的答案">#</a></h3>
+<p>Sidecar 借用了 Istio/Envoy 的经典架构思路——<strong>把基础设施能力从中心抽出来，推到每个业务系统旁边</strong>。</p>
+<pre tabindex="0"><code>改造前：
+OA 服务器                 Adapter 服务器（瓶颈！）
+┌──────────┐   Dubbo     ┌────────────┐   HTTP    ┌──────────┐
+│ OA       │ ──────────▶ │ Adapter    │ ────────▶ │ DeerFlow │
+│ (8081)   │             │ (8083)     │           │ (2026)   │
+└──────────┘  经过网络    └────────────┘           └──────────┘
+
+改造后（Sidecar）：
+OA 服务器
+┌─────────────────────────────────────┐
+│  OA 进程                             │
+│  @DubboReference(url=&#34;dubbo://       │
+│     localhost:20081&#34;)                │ ← 本机 Sidecar
+└────────────┬────────────────────────┘
+             │ Dubbo（本地回环，不走网络）
+             ▼
+┌─────────────────────────────────────┐
+│  AI Sidecar                          │
+│  - 本地缓存（Caffeine）               │
+│  - 熔断器（Resilience4j）             │
+│  - 无状态，随业务系统自动扩缩          │
+│     ↓ HTTP                           │
+│  DeerFlow                            │
+└──────────────────────────────────────┘
+</code></pre><h3 id="sidecar-对比中心化-adapter">Sidecar 对比中心化 Adapter<a hidden class="anchor" aria-hidden="true" href="#sidecar-对比中心化-adapter">#</a></h3>
+<table>
+	<thead>
+			<tr>
+					<th>维度</th>
+					<th>中心化 Adapter</th>
+					<th>Sidecar</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td>部署位置</td>
+					<td>一台独立服务器，所有系统共用</td>
+					<td>跟业务系统同机，一一对应</td>
+			</tr>
+			<tr>
+					<td>实例数量</td>
+					<td>1 个（单点）</td>
+					<td>N 个（随业务系统数量）</td>
+			</tr>
+			<tr>
+					<td>故障影响</td>
+					<td>挂了 = 所有系统失去 AI 能力</td>
+					<td>只影响挂了的那台机器</td>
+			</tr>
+			<tr>
+					<td>调用延迟</td>
+					<td>网络 RTT（0.5~2ms）</td>
+					<td>本地回环（0.01~0.1ms）</td>
+			</tr>
+	</tbody>
+</table>
+<h3 id="从-adapter-到-sidecar-的平滑迁移">从 Adapter 到 Sidecar 的平滑迁移<a hidden class="anchor" aria-hidden="true" href="#从-adapter-到-sidecar-的平滑迁移">#</a></h3>
+<pre tabindex="0"><code>第 1 步：Sidecar 跟 Adapter 共存，灰度切流
+第 2 步：全部切到 Sidecar
+第 3 步：Adapter 退役，控制面上线（控制面只做配置下发，不参与数据面）
+</code></pre><p>整个过程 OA 系统代码一行不改——QuickFlowService 接口不变，只改 url。</p>
+<h2 id="十代码结构">十、代码结构<a hidden class="anchor" aria-hidden="true" href="#十代码结构">#</a></h2>
+<pre tabindex="0"><code>java-simple-dubbo-app/
+├── dubbo-api/                      # 公共接口（JDK 8 可编译）
+├── finance-system/                 # 财务系统 — 老系统模拟
+├── quickflow-adapter/              # 协议转换层 — 唯一新服务
+└── oa-system/                      # OA 系统
+</code></pre><h2 id="十一不止-dubboadapter-模式的普适规律">十一、不止 Dubbo：Adapter 模式的普适规律<a hidden class="anchor" aria-hidden="true" href="#十一不止-dubboadapter-模式的普适规律">#</a></h2>
+<blockquote>
+<p>我们用 Dubbo 做了完整示例，但这个模式不限于 Dubbo。gRPC、SOAP/WebService、ESB 总线、甚至银行核心用的 IBM MQ 和 Tuxedo——<strong>思路完全一样，只是底层协议实现不同。</strong></p>
+</blockquote>
+<h3 id="核心规律">核心规律<a hidden class="anchor" aria-hidden="true" href="#核心规律">#</a></h3>
+<p>不管底层是什么协议，Adapter 做的事始终只有三件：</p>
+<pre tabindex="0"><code>老系统 → [协议 A] → Adapter → [HTTP JSON] → AI Agent
+                       ↓
+                 1. 连上老系统（用老系统的协议）
+                 2. 拿到数据（解析老系统的响应格式）
+                 3. 转成 HTTP JSON（暴露给 AI）
+</code></pre><p><strong>唯一变化的是第 1 步和第 2 步。第 3 步永远是 HTTP JSON。</strong></p>
+<h3 id="各协议对比">各协议对比<a hidden class="anchor" aria-hidden="true" href="#各协议对比">#</a></h3>
+<table>
+	<thead>
+			<tr>
+					<th>老系统协议</th>
+					<th>怎么连</th>
+					<th>解析复杂度</th>
+					<th>常见行业</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td>Dubbo</td>
+					<td>@DubboReference 直连 Provider</td>
+					<td>低</td>
+					<td>互联网、企业应用</td>
+			</tr>
+			<tr>
+					<td>gRPC</td>
+					<td>grpc-client-spring-boot-starter</td>
+					<td>中</td>
+					<td>云原生微服务</td>
+			</tr>
+			<tr>
+					<td>SOAP/WebService</td>
+					<td>WebServiceTemplate 或 CXF</td>
+					<td>低</td>
+					<td>银行、金融、政府</td>
+			</tr>
+			<tr>
+					<td>ESB 总线</td>
+					<td>接入 ESB 的对外接口</td>
+					<td>中</td>
+					<td>大型企业核心系统</td>
+			</tr>
+			<tr>
+					<td>IBM MQ</td>
+					<td>JMS 客户端</td>
+					<td>中</td>
+					<td>银行核心交易</td>
+			</tr>
+	</tbody>
+</table>
+<h3 id="银行-soap--esb-场景拆解">银行 SOAP + ESB 场景拆解<a hidden class="anchor" aria-hidden="true" href="#银行-soap--esb-场景拆解">#</a></h3>
+<pre tabindex="0"><code>AI → Adapter（HTTP → SOAP 转换）→ ESB（不变）→ 核心系统
+</code></pre><p>已经有 ESB 了为什么还要加 Adapter？因为 ESB 和 Adapter 定位完全不同：</p>
+<table>
+	<thead>
+			<tr>
+					<th>维度</th>
+					<th>ESB（已有）</th>
+					<th>Adapter（新增）</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td>服务对象</td>
+					<td>业务系统间通信（高 TPS）</td>
+					<td>AI 零星查询（几分钟一次）</td>
+			</tr>
+			<tr>
+					<td>接口粒度</td>
+					<td>完整交易接口（几十个字段）</td>
+					<td>精简查询（3-5 个参数）</td>
+			</tr>
+			<tr>
+					<td>变更门槛</td>
+					<td>以月为单位</td>
+					<td>以天为单位</td>
+			</tr>
+			<tr>
+					<td>安全模型</td>
+					<td>ESB 自有认证</td>
+					<td>API Token + Org Key</td>
+			</tr>
+	</tbody>
+</table>
+<h3 id="代码对比dubbo-vs-soap">代码对比：Dubbo vs SOAP<a hidden class="anchor" aria-hidden="true" href="#代码对比dubbo-vs-soap">#</a></h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#75715e">// Dubbo Adapter</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">@DubboReference</span>(url <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;dubbo://localhost:20880&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">private</span> FinanceService financeService;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">@GetMapping</span>(<span style="color:#e6db74">&#34;/api/finance/reimburse&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> Map<span style="color:#f92672">&lt;</span>String, Object<span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">queryReimburse</span>(<span style="color:#a6e22e">@RequestParam</span> String no) {
+</span></span><span style="display:flex;"><span>    ReimburseResponse resp <span style="color:#f92672">=</span> financeService.<span style="color:#a6e22e">queryReimburse</span>(<span style="color:#66d9ef">new</span> ReimburseRequest(no));
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> Map.<span style="color:#a6e22e">of</span>(<span style="color:#e6db74">&#34;code&#34;</span>, 0, <span style="color:#e6db74">&#34;data&#34;</span>, resp);
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#75715e">// SOAP Adapter（同一套思路，换协议）</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">@Autowired</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">private</span> WebServiceTemplate wsTemplate;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">@GetMapping</span>(<span style="color:#e6db74">&#34;/api/bank/account&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> Map<span style="color:#f92672">&lt;</span>String, Object<span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">queryBalance</span>(<span style="color:#a6e22e">@RequestParam</span> String accountNo) {
+</span></span><span style="display:flex;"><span>    QueryBalanceRequest req <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> QueryBalanceRequest();
+</span></span><span style="display:flex;"><span>    req.<span style="color:#a6e22e">setAccountNo</span>(accountNo);
+</span></span><span style="display:flex;"><span>    QueryBalanceResponse resp <span style="color:#f92672">=</span> (QueryBalanceResponse)
+</span></span><span style="display:flex;"><span>        wsTemplate.<span style="color:#a6e22e">marshalSendAndReceive</span>(<span style="color:#e6db74">&#34;http://esb:9080/QueryBalance&#34;</span>, req);
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> Map.<span style="color:#a6e22e">of</span>(<span style="color:#e6db74">&#34;code&#34;</span>, 0, <span style="color:#e6db74">&#34;data&#34;</span>, Map.<span style="color:#a6e22e">of</span>(<span style="color:#e6db74">&#34;balance&#34;</span>, resp.<span style="color:#a6e22e">getBalance</span>()));
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>两个 Adapter 的区别只在于：第 1 行注解方式不同、URL 格式不同。剩下 90% 的代码——Controller 结构、错误处理、返回格式——完全一样。</p>
+<h3 id="部署位置权衡">部署位置权衡<a hidden class="anchor" aria-hidden="true" href="#部署位置权衡">#</a></h3>
+<table>
+	<thead>
+			<tr>
+					<th>部署方式</th>
+					<th>适用协议</th>
+					<th>优缺点</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td>同进程嵌入</td>
+					<td>Dubbo、SOAP（客户端轻）</td>
+					<td>✅ 延迟最低 ❌ 依赖 JDK 版本</td>
+			</tr>
+			<tr>
+					<td>边车 Sidecar</td>
+					<td>gRPC、Thrift</td>
+					<td>✅ 协议与业务解耦 ❌ 多一跳</td>
+			</tr>
+			<tr>
+					<td>对接 ESB</td>
+					<td>SOAP、JMS</td>
+					<td>✅ ESB 不改 ❌ 依赖 ESB 团队</td>
+			</tr>
+			<tr>
+					<td>独立网关</td>
+					<td>多种协议混合</td>
+					<td>✅ 统一入口 ❌ 架构复杂</td>
+			</tr>
+	</tbody>
+</table>
+<h3 id="不值得做-adapter-的判断标准">不值得做 Adapter 的判断标准<a hidden class="anchor" aria-hidden="true" href="#不值得做-adapter-的判断标准">#</a></h3>
+<blockquote>
+<p><strong>如果 AI 一周都问不到一次这个系统的数据，就别接。</strong></p>
+</blockquote>
+<h2 id="十二总结">十二、总结<a hidden class="anchor" aria-hidden="true" href="#十二总结">#</a></h2>
+<p>本文通过一个完整的 Java Dubbo 示例项目，展示了企业级微服务集成 AI Agent 的三种模式：</p>
+<ol>
+<li><strong>Dubbo 直连</strong> — 传统业务服务间通信</li>
+<li><strong>Protocol Adapter</strong> — Dubbo 体系调用 HTTP 服务的标准模式</li>
+<li><strong>Intent Resolver</strong> — 业务侧先查数据再喂给 AI</li>
+</ol>
+<p>同时覆盖了企业级安全设计（API Token、序列化安全、QoS）、JDK 8 兼容方案、Sidecar 大规模演进路线，以及不同协议（gRPC、SOAP、ESB、MQ）的普适规律。</p>
+<p><strong>整套方案的核心理念是：对现有系统零侵入，通过边缘适配器逐步引入 AI 能力。</strong></p>
+<blockquote>
+<p><strong>你们不需要知道 AI 的存在。不需要改任何代码。不需要升级 JDK。</strong>
+<strong>你们的 Dubbo 服务正常跑就行。Adapter 会主动来连你们。</strong></p>
+</blockquote>
+<p>完整示例代码：<a href="https://github.com/your-repo/java-simple-dubbo-app">java-simple-dubbo-app</a></p>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+      <li><a href="https://csqread.top/tags/dubbo/">Dubbo</a></li>
+      <li><a href="https://csqread.top/tags/ai-agent/">AI Agent</a></li>
+      <li><a href="https://csqread.top/tags/deerflow/">DeerFlow</a></li>
+      <li><a href="https://csqread.top/tags/%E4%BC%81%E4%B8%9A%E6%9E%B6%E6%9E%84/">企业架构</a></li>
+      <li><a href="https://csqread.top/tags/%E5%BE%AE%E6%9C%8D%E5%8A%A1/">微服务</a></li>
+    </ul>
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+        <span>&copy; 2026 <a href="https://csqread.top/">Qian&#39;s Blog</a></span> · 
+
+    
+    
+    <span>
+        Powered by
+        <a href="https://gohugo.io/?utm_source=papermod" rel="noopener" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" id="top-link" class="top-link hidden" aria-label="go to top" title="Go to Top (Alt + G)" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+        stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevrons-up">
+        <polyline points="17 11 12 6 7 11"></polyline>
+        <polyline points="17 18 12 13 7 18"></polyline>
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu');
+    if (menu) {
+        
+        const scrollPosition = localStorage.getItem("menu-scroll-position");
+        if (scrollPosition) {
+            menu.scrollLeft = parseInt(scrollPosition, 10);
+        }
+        
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var toplink = document.getElementById("top-link");
+    window.onscroll = function () {
+        const scrollThreshold = window.innerHeight;
+        if (document.body.scrollTop > scrollThreshold || document.documentElement.scrollTop > scrollThreshold) {
+            toplink.classList.remove("hidden");
+        } else {
+            toplink.classList.add("hidden");
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        const html = document.querySelector("html");
+        if (html.dataset.theme === "dark") {
+            html.dataset.theme = 'light';
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            html.dataset.theme = 'dark';
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+</body>
+
+</html>

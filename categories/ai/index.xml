@@ -6,8 +6,15 @@
     <description>Recent content in AI on Qian&#39;s Blog</description>
     <generator>Hugo</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Thu, 09 Jul 2026 22:57:00 +0800</lastBuildDate>
+    <lastBuildDate>Sun, 12 Jul 2026 00:00:00 +0000</lastBuildDate>
     <atom:link href="https://csqread.top/categories/ai/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>从 Dubbo 到 AI：企业级微服务如何无缝集成智能 Agent</title>
+      <link>https://csqread.top/posts/ai/dubbo-to-ai-integration/</link>
+      <pubDate>Sun, 12 Jul 2026 00:00:00 +0000</pubDate>
+      <guid>https://csqread.top/posts/ai/dubbo-to-ai-integration/</guid>
+      <description>当传统 Dubbo 微服务体系遇上 AI Agent，中间的鸿沟怎么填？三种集成模式 &#43; 企业级安全 &#43; JDK 8 兼容 &#43; Sidecar 演进路线 &#43; 不同协议的普适规律</description>
+    </item>
     <item>
       <title>当「脚手架」开始进化：从 Harness Engineering 看 AI 自我改进的另一条路径</title>
       <link>https://csqread.top/posts/ai/harness-engineering-self-improvement/</link>
