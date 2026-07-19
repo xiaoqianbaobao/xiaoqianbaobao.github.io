@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto" data-theme="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>企业级 Agent 选型：Star 数之外，真正决定生死的是什么 | Qian&#39;s Blog</title>
+<meta name="keywords" content="Agent 选型, 企业级, 合规, Harness Engineering, AI 工程化">
+<meta name="description" content="企业级场景要的从来不是「能跑起来的 Demo」，而是可审计、可控、数据主权明确的系统。这层差异，才是企业级 Agent 工程真正的门槛。">
+<meta name="author" content="">
+<link rel="canonical" href="https://csqread.top/posts/ai/enterprise-agent-selection/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.cd9298b33628769aa1bc1acebbbfd7aa11ce81dfe03484d479e1907760249a1d.css" integrity="sha256-zZKYszYodpqhvBrOu7/XqhHOgd/gNITUeeGQd2Akmh0=" rel="preload stylesheet" as="style">
+<link rel="icon" href="https://csqread.top/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://csqread.top/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://csqread.top/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://csqread.top/apple-touch-icon.png">
+<link rel="mask-icon" href="https://csqread.top/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="https://csqread.top/posts/ai/enterprise-agent-selection/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+                color-scheme: dark;
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .toc {
+                background: var(--entry);
+            }
+        }
+
+    </style>
+</noscript>
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.querySelector("html").dataset.theme = 'dark';
+    } else if (localStorage.getItem("pref-theme") === "light") {
+       document.querySelector("html").dataset.theme = 'light';
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.querySelector("html").dataset.theme = 'dark';
+    } else {
+        document.querySelector("html").dataset.theme = 'light';
+    }
+
+</script><meta property="og:url" content="https://csqread.top/posts/ai/enterprise-agent-selection/">
+  <meta property="og:site_name" content="Qian&#39;s Blog">
+  <meta property="og:title" content="企业级 Agent 选型：Star 数之外，真正决定生死的是什么">
+  <meta property="og:description" content="企业级场景要的从来不是「能跑起来的 Demo」，而是可审计、可控、数据主权明确的系统。这层差异，才是企业级 Agent 工程真正的门槛。">
+  <meta property="og:locale" content="zh_cn">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2026-07-19T10:00:00+08:00">
+    <meta property="article:modified_time" content="2026-07-19T10:23:00+08:00">
+    <meta property="article:tag" content="Agent 选型">
+    <meta property="article:tag" content="企业级">
+    <meta property="article:tag" content="合规">
+    <meta property="article:tag" content="Harness Engineering">
+    <meta property="article:tag" content="AI 工程化">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="企业级 Agent 选型：Star 数之外，真正决定生死的是什么">
+  <meta name="twitter:description" content="企业级场景要的从来不是「能跑起来的 Demo」，而是可审计、可控、数据主权明确的系统。这层差异，才是企业级 Agent 工程真正的门槛。">
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "文章",
+      "item": "https://csqread.top/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "AI",
+      "item": "https://csqread.top/posts/ai/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  3 ,
+      "name": "企业级 Agent 选型：Star 数之外，真正决定生死的是什么",
+      "item": "https://csqread.top/posts/ai/enterprise-agent-selection/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "企业级 Agent 选型：Star 数之外，真正决定生死的是什么",
+  "name": "企业级 Agent 选型：Star 数之外，真正决定生死的是什么",
+  "description": "企业级场景要的从来不是「能跑起来的 Demo」，而是可审计、可控、数据主权明确的系统。这层差异，才是企业级 Agent 工程真正的门槛。",
+  "keywords": [
+    "Agent 选型", "企业级", "合规", "Harness Engineering", "AI 工程化"
+  ],
+  "articleBody": "不少团队做 Agent，现在的路径基本是先 Fork 一个成熟仓库，再围绕业务裁剪，而不是从零搭服务。这个选择本身没问题，问题在于挑项目的标准。\nStar 数高不高，其实没那么重要。真正值得看的是几件事：最近有没有持续维护，issue 响应快不快，架构是不是方便替换模型和工具，评测链路全不全，依赖版本和许可证能不能长期落地。这套标准放在通用 Agent 场景下已经够用，但如果目标客户是政务和大型企业，这套标准需要再往下挖一层——因为企业级场景要的从来不是\"能跑起来的 Demo\"，而是可审计、可控、数据主权明确的系统。这层差异，才是企业级 Agent 工程真正的门槛。\n权限隔离不是功能，是合规审查的对象 多租户场景下的 RBAC、skills 不可见、记忆会话隔离，这几件事做出来只是第一步。企业客户尤其是政务客户，看的不是\"你有没有权限隔离功能\"，而是这套隔离能不能经得起合规审查——谁在什么时间通过哪个 Agent 调用了什么工具、传了什么参数、模型怎么做的决策，这条链路要能完整回溯。观测数据本身也不例外：技术团队排查问题时，同样不能因为职责需要就看到某个客户的调用链细节。可观测数据和业务数据一样，需要按租户做权限隔离，这一点很容易被忽略，因为大家默认观测数据是\"给自己人看的\"。\n零侵入接入，本质是责任归属问题 Agent 要调用企业内部系统，多数团队的直觉是找技术方案：API 网关、RPA、只读副本加脱敏视图，按优先级挑一个能用的接。但在政务和国企语境下，“零侵入\"这个词往往不是技术选型问题，而是采购和合规问题——能不能改造老系统、出了问题算谁的，这些往往比技术方案本身更决定最终落地路径。很多老系统只有 Web 界面没有 API，零侵入实际上会退化成模拟用户操作，这条路径的核心不是稳定性（当然也重要），而是审计链路要足够完整。更关键的一条原则是：写操作必须留有人工确认或回滚窗口，不能让 Agent 单方面完成一次不可逆的业务操作。这一点，其实比\"自动化程度\"更值得作为卖点讲——不是 Agent 能替代多少人工，而是 Agent 在哪个环节主动让位给人。\n评测体系要多一层安全边界测试 企业级评测比通用 Agent 评测多一层，功能正确性之外，需要单独建一批验证权限穿透的用例——能不能通过某种输入方式，让某个角色的 Agent 越权调用不该看到的工具或 skill。这一层在已有 RBAC 的基础上其实不难补，因为角色和工具的映射关系已经明确，可以直接反向生成\"应该被拒绝\"的测试集。另外，纯自动化的评测很难完全替代人工合规抽检，现实的分层方式是：自动化覆盖回归和一致性（模型或 prompt 升级后输出有没有漂移），人工抽样覆盖合规和业务语义正确性，两者互补而不是互相替代。\n自进化 skills，需要泼一点冷水 这大概是最容易讲成故事、也最容易讲过头的方向。不可控的自我修改，在政务和大型企业客户那里基本是不可接受的——他们要的是可解释、可审计、可回滚，“越用越聪明但说不清楚为什么变聪明\"这种叙事，在合规审查环节反而是减分项。更现实的路径，是把\"进化\"做成一条受控的、版本化的流程：使用日志里识别高频失败或高频人工修正的模式，生成新 skill 草案，人工审核后灰度上线，每个版本可 diff、可回滚。反馈信号的采集才是真正的难点——企业客户很少给显式标注，更现实的隐式信号是人工是否修改了 Agent 的输出、修改幅度多大，这个 diff 大小本身就可以当质量代理指标。而且这条演化链路也要延续租户隔离的逻辑：一个客户的使用数据训出来的 skill 变体，不能流入另一个客户的 skill 库，这不只是隔离问题，在政务客户那里可能直接是数据合规红线。\n往底层看，这些问题并不新鲜 如果把这些问题排开来看，会发现它们和数据密集型系统设计里讨论的问题高度同构：上下文的记忆模型对应 schema 的演化和向后兼容；context window 的冷热分层对应存储引擎在写多读少和读多读少之间的权衡；多 Agent 状态同步对应强一致性和最终一致性的取舍；租户隔离本质上就是按 tenant 做 partition；实时的工具调用循环和夜间批量的评测、skill 生成任务，对应的是速度层和批处理层的关系。这些问题在分布式系统领域已经被研究了几十年，工程上的权衡框架可以直接借用，不需要在 Agent 领域重新发明一遍。\n这也解释了从业者知识底座的迁移方向：过去需要理解 JVM 内存模型、GC 策略、数据库索引和查询优化，现在这些知识某种程度上还在起作用，只是换了个场景——但确实有一块是完全新增的，无法从旧知识直接迁移：Transformer 的 attention 机制决定了长上下文的计算成本，训练范式决定了模型能力的边界从哪来，scaling law 和涌现能力的争议决定了要不要相信\"模型以后自然会变强”。这一条尤其值得谨慎，因为学界对涌现能力本身就有分歧，稳妥的工程假设是模型能力提升不可预测，架构因此要做成可插拔替换模型，而不是赌某个模型会一直强下去。\n从 Prompt Engineering 到 Harness Engineering，为什么会这样走 这条路径是单次交互优化、到状态管理、再到系统工程化的演化，和一个应用从单机脚本长成分布式系统是同一条路。早期 context window 很小，核心矛盾是一次性输入怎么写才能激发模型能力；context window 变大之后，模型能做多轮任务了，核心矛盾变成怎么管理跨多轮的状态；到了现在，不再是单次模型调用，而是模型加工具加多 Agent 协作加长时间运行的任务编排，核心矛盾变成怎么设计一个可靠系统，让模型的不确定性输出能在其中安全运行。\n这个演化的根本原因，是模型能力在持续提升，但模型的不确定性并没有随之消失——反而因为任务链路变得更长、更复杂，这种不确定性被系统性地放大了。工程重心因此被迫从\"怎么激发模型能力\"转移到\"怎么在不可靠的组件上构建可靠系统”，而这正是分布式系统几十年一直在解决的问题，只是这次不可靠的组件从网络和磁盘换成了 LLM。\n回到最初的选型标准——为什么 star 数不重要，为什么要看维护活跃度、架构可替换性、评测链路完整度。本质上，这些标准衡量的不是\"这个项目现在多聪明\"，而是\"这个项目能不能在一个持续变化、本质不可靠的底层上，撑起一套可审计、可控的系统\"。对企业客户而言，尤其是政务和大型企业，真正的壁垒从来不是模型本身有多先进，而是这套工程能力本身能不能经得起时间和合规审查的考验。\n",
+  "wordCount" : "2603",
+  "inLanguage": "en",
+  "datePublished": "2026-07-19T10:00:00+08:00",
+  "dateModified": "2026-07-19T10:23:00+08:00",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://csqread.top/posts/ai/enterprise-agent-selection/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Qian's Blog",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://csqread.top/favicon.ico"
+    }
+  }
+}
+</script>
+</head>
+<body id="top">
+    <header class="header">
+    <nav class="header-nav">
+        <div class="logo">
+            <a href="https://csqread.top/" accesskey="h" title="Qian&#39;s Blog (Alt + H)">Qian&#39;s Blog</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" class="theme-toggle" accesskey="t" title="(Alt + T)" aria-label="Toggle theme">
+                    <svg class="moon" xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg class="sun" xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu" class="menu">
+            <li>
+                <a href="https://csqread.top/search" title="🔍搜索 (Alt &#43; /)" accesskey=/>
+                    <span>🔍搜索</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://csqread.top/posts" title="📚文章">
+                    <span>📚文章</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://csqread.top/archives/" title="⏱时间轴">
+                    <span>⏱时间轴</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://csqread.top/tags" title="🔖标签">
+                    <span>🔖标签</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://csqread.top/about" title="🙋🏻‍♂️关于">
+                    <span>🙋🏻‍♂️关于</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://csqread.top/links" title="🤝友链">
+                    <span>🤝友链</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://csqread.top/gateway/" title="🧠认知网关">
+                    <span>🧠认知网关</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://csqread.top/" title="">
+                    <span></span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    
+    <h1 class="post-title entry-hint-parent">
+      企业级 Agent 选型：Star 数之外，真正决定生死的是什么
+    </h1>
+    <div class="post-description">
+      企业级场景要的从来不是「能跑起来的 Demo」，而是可审计、可控、数据主权明确的系统。这层差异，才是企业级 Agent 工程真正的门槛。
+    </div>
+    <div class="post-meta">
+
+<span title='2026-07-19 10:00:00 +0800 CST'>July 19, 2026</span>
+
+</div>
+  </header> 
+  <div class="post-content md-content"><p>不少团队做 Agent，现在的路径基本是先 Fork 一个成熟仓库，再围绕业务裁剪，而不是从零搭服务。这个选择本身没问题，问题在于挑项目的标准。</p>
+<p>Star 数高不高，其实没那么重要。真正值得看的是几件事：最近有没有持续维护，issue 响应快不快，架构是不是方便替换模型和工具，评测链路全不全，依赖版本和许可证能不能长期落地。这套标准放在通用 Agent 场景下已经够用，但如果目标客户是政务和大型企业，这套标准需要再往下挖一层——因为企业级场景要的从来不是&quot;能跑起来的 Demo&quot;，而是可审计、可控、数据主权明确的系统。这层差异，才是企业级 Agent 工程真正的门槛。</p>
+<h2 id="权限隔离不是功能是合规审查的对象">权限隔离不是功能，是合规审查的对象<a hidden class="anchor" aria-hidden="true" href="#权限隔离不是功能是合规审查的对象">#</a></h2>
+<p>多租户场景下的 RBAC、skills 不可见、记忆会话隔离，这几件事做出来只是第一步。企业客户尤其是政务客户，看的不是&quot;你有没有权限隔离功能&quot;，而是这套隔离能不能经得起合规审查——谁在什么时间通过哪个 Agent 调用了什么工具、传了什么参数、模型怎么做的决策，这条链路要能完整回溯。观测数据本身也不例外：技术团队排查问题时，同样不能因为职责需要就看到某个客户的调用链细节。可观测数据和业务数据一样，需要按租户做权限隔离，这一点很容易被忽略，因为大家默认观测数据是&quot;给自己人看的&quot;。</p>
+<h2 id="零侵入接入本质是责任归属问题">零侵入接入，本质是责任归属问题<a hidden class="anchor" aria-hidden="true" href="#零侵入接入本质是责任归属问题">#</a></h2>
+<p>Agent 要调用企业内部系统，多数团队的直觉是找技术方案：API 网关、RPA、只读副本加脱敏视图，按优先级挑一个能用的接。但在政务和国企语境下，&ldquo;零侵入&quot;这个词往往不是技术选型问题，而是采购和合规问题——能不能改造老系统、出了问题算谁的，这些往往比技术方案本身更决定最终落地路径。很多老系统只有 Web 界面没有 API，零侵入实际上会退化成模拟用户操作，这条路径的核心不是稳定性（当然也重要），而是审计链路要足够完整。更关键的一条原则是：写操作必须留有人工确认或回滚窗口，不能让 Agent 单方面完成一次不可逆的业务操作。这一点，其实比&quot;自动化程度&quot;更值得作为卖点讲——不是 Agent 能替代多少人工，而是 Agent 在哪个环节主动让位给人。</p>
+<h2 id="评测体系要多一层安全边界测试">评测体系要多一层安全边界测试<a hidden class="anchor" aria-hidden="true" href="#评测体系要多一层安全边界测试">#</a></h2>
+<p>企业级评测比通用 Agent 评测多一层，功能正确性之外，需要单独建一批验证权限穿透的用例——能不能通过某种输入方式，让某个角色的 Agent 越权调用不该看到的工具或 skill。这一层在已有 RBAC 的基础上其实不难补，因为角色和工具的映射关系已经明确，可以直接反向生成&quot;应该被拒绝&quot;的测试集。另外，纯自动化的评测很难完全替代人工合规抽检，现实的分层方式是：自动化覆盖回归和一致性（模型或 prompt 升级后输出有没有漂移），人工抽样覆盖合规和业务语义正确性，两者互补而不是互相替代。</p>
+<h2 id="自进化-skills需要泼一点冷水">自进化 skills，需要泼一点冷水<a hidden class="anchor" aria-hidden="true" href="#自进化-skills需要泼一点冷水">#</a></h2>
+<p>这大概是最容易讲成故事、也最容易讲过头的方向。不可控的自我修改，在政务和大型企业客户那里基本是不可接受的——他们要的是可解释、可审计、可回滚，&ldquo;越用越聪明但说不清楚为什么变聪明&quot;这种叙事，在合规审查环节反而是减分项。更现实的路径，是把&quot;进化&quot;做成一条受控的、版本化的流程：使用日志里识别高频失败或高频人工修正的模式，生成新 skill 草案，人工审核后灰度上线，每个版本可 diff、可回滚。反馈信号的采集才是真正的难点——企业客户很少给显式标注，更现实的隐式信号是人工是否修改了 Agent 的输出、修改幅度多大，这个 diff 大小本身就可以当质量代理指标。而且这条演化链路也要延续租户隔离的逻辑：一个客户的使用数据训出来的 skill 变体，不能流入另一个客户的 skill 库，这不只是隔离问题，在政务客户那里可能直接是数据合规红线。</p>
+<h2 id="往底层看这些问题并不新鲜">往底层看，这些问题并不新鲜<a hidden class="anchor" aria-hidden="true" href="#往底层看这些问题并不新鲜">#</a></h2>
+<p>如果把这些问题排开来看，会发现它们和数据密集型系统设计里讨论的问题高度同构：上下文的记忆模型对应 schema 的演化和向后兼容；context window 的冷热分层对应存储引擎在写多读少和读多读少之间的权衡；多 Agent 状态同步对应强一致性和最终一致性的取舍；租户隔离本质上就是按 tenant 做 partition；实时的工具调用循环和夜间批量的评测、skill 生成任务，对应的是速度层和批处理层的关系。这些问题在分布式系统领域已经被研究了几十年，工程上的权衡框架可以直接借用，不需要在 Agent 领域重新发明一遍。</p>
+<p>这也解释了从业者知识底座的迁移方向：过去需要理解 JVM 内存模型、GC 策略、数据库索引和查询优化，现在这些知识某种程度上还在起作用，只是换了个场景——但确实有一块是完全新增的，无法从旧知识直接迁移：Transformer 的 attention 机制决定了长上下文的计算成本，训练范式决定了模型能力的边界从哪来，scaling law 和涌现能力的争议决定了要不要相信&quot;模型以后自然会变强&rdquo;。这一条尤其值得谨慎，因为学界对涌现能力本身就有分歧，稳妥的工程假设是模型能力提升不可预测，架构因此要做成可插拔替换模型，而不是赌某个模型会一直强下去。</p>
+<h2 id="从-prompt-engineering-到-harness-engineering为什么会这样走">从 Prompt Engineering 到 Harness Engineering，为什么会这样走<a hidden class="anchor" aria-hidden="true" href="#从-prompt-engineering-到-harness-engineering为什么会这样走">#</a></h2>
+<p>这条路径是单次交互优化、到状态管理、再到系统工程化的演化，和一个应用从单机脚本长成分布式系统是同一条路。早期 context window 很小，核心矛盾是一次性输入怎么写才能激发模型能力；context window 变大之后，模型能做多轮任务了，核心矛盾变成怎么管理跨多轮的状态；到了现在，不再是单次模型调用，而是模型加工具加多 Agent 协作加长时间运行的任务编排，核心矛盾变成怎么设计一个可靠系统，让模型的不确定性输出能在其中安全运行。</p>
+<p>这个演化的根本原因，是模型能力在持续提升，但模型的不确定性并没有随之消失——反而因为任务链路变得更长、更复杂，这种不确定性被系统性地放大了。工程重心因此被迫从&quot;怎么激发模型能力&quot;转移到&quot;怎么在不可靠的组件上构建可靠系统&rdquo;，而这正是分布式系统几十年一直在解决的问题，只是这次不可靠的组件从网络和磁盘换成了 LLM。</p>
+<p>回到最初的选型标准——为什么 star 数不重要，为什么要看维护活跃度、架构可替换性、评测链路完整度。本质上，这些标准衡量的不是&quot;这个项目现在多聪明&quot;，而是&quot;这个项目能不能在一个持续变化、本质不可靠的底层上，撑起一套可审计、可控的系统&quot;。对企业客户而言，尤其是政务和大型企业，真正的壁垒从来不是模型本身有多先进，而是这套工程能力本身能不能经得起时间和合规审查的考验。</p>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+      <li><a href="https://csqread.top/tags/agent-%E9%80%89%E5%9E%8B/">Agent 选型</a></li>
+      <li><a href="https://csqread.top/tags/%E4%BC%81%E4%B8%9A%E7%BA%A7/">企业级</a></li>
+      <li><a href="https://csqread.top/tags/%E5%90%88%E8%A7%84/">合规</a></li>
+      <li><a href="https://csqread.top/tags/harness-engineering/">Harness Engineering</a></li>
+      <li><a href="https://csqread.top/tags/ai-%E5%B7%A5%E7%A8%8B%E5%8C%96/">AI 工程化</a></li>
+    </ul>
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+        <span>&copy; 2026 <a href="https://csqread.top/">Qian&#39;s Blog</a></span> · 
+
+    
+    
+    <span>
+        Powered by
+        <a href="https://gohugo.io/?utm_source=papermod" rel="noopener" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" id="top-link" class="top-link hidden" aria-label="go to top" title="Go to Top (Alt + G)" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+        stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevrons-up">
+        <polyline points="17 11 12 6 7 11"></polyline>
+        <polyline points="17 18 12 13 7 18"></polyline>
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu');
+    if (menu) {
+        
+        const scrollPosition = localStorage.getItem("menu-scroll-position");
+        if (scrollPosition) {
+            menu.scrollLeft = parseInt(scrollPosition, 10);
+        }
+        
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var toplink = document.getElementById("top-link");
+    window.onscroll = function () {
+        const scrollThreshold = window.innerHeight;
+        if (document.body.scrollTop > scrollThreshold || document.documentElement.scrollTop > scrollThreshold) {
+            toplink.classList.remove("hidden");
+        } else {
+            toplink.classList.add("hidden");
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        const html = document.querySelector("html");
+        if (html.dataset.theme === "dark") {
+            html.dataset.theme = 'light';
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            html.dataset.theme = 'dark';
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+</body>
+
+</html>

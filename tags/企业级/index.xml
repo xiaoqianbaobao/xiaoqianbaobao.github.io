@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>企业级 on Qian&#39;s Blog</title>
+    <link>https://csqread.top/tags/%E4%BC%81%E4%B8%9A%E7%BA%A7/</link>
+    <description>Recent content in 企业级 on Qian&#39;s Blog</description>
+    <generator>Hugo</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Sun, 19 Jul 2026 10:23:00 +0800</lastBuildDate>
+    <atom:link href="https://csqread.top/tags/%E4%BC%81%E4%B8%9A%E7%BA%A7/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>企业级 Agent 选型：Star 数之外，真正决定生死的是什么</title>
+      <link>https://csqread.top/posts/ai/enterprise-agent-selection/</link>
+      <pubDate>Sun, 19 Jul 2026 10:00:00 +0800</pubDate>
+      <guid>https://csqread.top/posts/ai/enterprise-agent-selection/</guid>
+      <description>企业级场景要的从来不是「能跑起来的 Demo」，而是可审计、可控、数据主权明确的系统。这层差异，才是企业级 Agent 工程真正的门槛。</description>
+    </item>
+  </channel>
+</rss>
