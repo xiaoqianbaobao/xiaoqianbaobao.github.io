@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto" data-theme="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>8 步复现清结算复杂图谱 POC，再用 10 项清单把它改造到能上生产（下篇） | Qian&#39;s Blog</title>
+<meta name="keywords" content="Agent 工程化, 清结算, POC, 生产化, Cruxible">
+<meta name="description" content="纯操作向实战：8 步在本机跑出一张清结算复杂图谱，再用 10 项清单把 Demo 改造成能上生产的系统，最后对照 6 大死穴收尾并给出 3 个作业。">
+<meta name="author" content="">
+<link rel="canonical" href="https://csqread.top/posts/ai/clearing-settlement-poc-production-2/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.cd9298b33628769aa1bc1acebbbfd7aa11ce81dfe03484d479e1907760249a1d.css" integrity="sha256-zZKYszYodpqhvBrOu7/XqhHOgd/gNITUeeGQd2Akmh0=" rel="preload stylesheet" as="style">
+<link rel="icon" href="https://csqread.top/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://csqread.top/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://csqread.top/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://csqread.top/apple-touch-icon.png">
+<link rel="mask-icon" href="https://csqread.top/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="https://csqread.top/posts/ai/clearing-settlement-poc-production-2/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+                color-scheme: dark;
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .toc {
+                background: var(--entry);
+            }
+        }
+
+    </style>
+</noscript>
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.querySelector("html").dataset.theme = 'dark';
+    } else if (localStorage.getItem("pref-theme") === "light") {
+       document.querySelector("html").dataset.theme = 'light';
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.querySelector("html").dataset.theme = 'dark';
+    } else {
+        document.querySelector("html").dataset.theme = 'light';
+    }
+
+</script><meta property="og:url" content="https://csqread.top/posts/ai/clearing-settlement-poc-production-2/">
+  <meta property="og:site_name" content="Qian&#39;s Blog">
+  <meta property="og:title" content="8 步复现清结算复杂图谱 POC，再用 10 项清单把它改造到能上生产（下篇）">
+  <meta property="og:description" content="纯操作向实战：8 步在本机跑出一张清结算复杂图谱，再用 10 项清单把 Demo 改造成能上生产的系统，最后对照 6 大死穴收尾并给出 3 个作业。">
+  <meta property="og:locale" content="zh_cn">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2026-08-09T00:10:00+08:00">
+    <meta property="article:modified_time" content="2026-08-09T00:10:00+08:00">
+    <meta property="article:tag" content="Agent 工程化">
+    <meta property="article:tag" content="清结算">
+    <meta property="article:tag" content="POC">
+    <meta property="article:tag" content="生产化">
+    <meta property="article:tag" content="Cruxible">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="8 步复现清结算复杂图谱 POC，再用 10 项清单把它改造到能上生产（下篇）">
+  <meta name="twitter:description" content="纯操作向实战：8 步在本机跑出一张清结算复杂图谱，再用 10 项清单把 Demo 改造成能上生产的系统，最后对照 6 大死穴收尾并给出 3 个作业。">
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "文章",
+      "item": "https://csqread.top/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "AI",
+      "item": "https://csqread.top/posts/ai/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  3 ,
+      "name": "8 步复现清结算复杂图谱 POC，再用 10 项清单把它改造到能上生产（下篇）",
+      "item": "https://csqread.top/posts/ai/clearing-settlement-poc-production-2/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "8 步复现清结算复杂图谱 POC，再用 10 项清单把它改造到能上生产（下篇）",
+  "name": "8 步复现清结算复杂图谱 POC，再用 10 项清单把它改造到能上生产（下篇）",
+  "description": "纯操作向实战：8 步在本机跑出一张清结算复杂图谱，再用 10 项清单把 Demo 改造成能上生产的系统，最后对照 6 大死穴收尾并给出 3 个作业。",
+  "keywords": [
+    "Agent 工程化", "清结算", "POC", "生产化", "Cruxible"
+  ],
+  "articleBody": " 系列说明：本篇是「DeerFlow-By-CC × Cruxible 清结算全链路实战」系列的下篇，纯操作向：8 步在本机跑出一张清结算复杂图谱，再过一遍从 Demo 到生产还差的 10 件事。上篇讲了为什么清结算场景需要给 Agent 配一个确定性图谱，以及 17 类实体、25 类关系的本体是怎么设计出来的，建议先读一遍再来看这篇。\n以下所有命令、路径、代码片段都已在本机验证通过。源码仓库位置：\nDeerFlow-By-CC：https://github.com/xiaoqianbaobao/deer-flow-by-cc Cruxible：https://github.com/xiaoqianbaobao/cruxible cruxible-app（可视化）：https://github.com/xiaoqianbaobao/cruxible-app 一、完整实操手册：8 步跑通清结算复杂图谱 POC Step 1：启动 DeerFlow-By-CC 全栈（7 容器） cd /Users/qian/Documents/workspace/deer-flow-by-cc/docker DEER_FLOW_ROOT=/Users/qian/Documents/workspace/deer-flow-by-cc \\ docker compose --env-file ../.env -p deer-flow-dev -f docker-compose-dev.yaml up -d --build 打开 http://localhost:2026 验证 UI 能访问。\nStep 2：启动 Cruxible daemon（8100） cd /Users/qian/Documents/workspace/cruxible uv sync --all-extras uv run cruxible server start --port 8100 --state-dir .poc/cruxible_server_state Step 3：启动 Cruxible MCP（SSE，8123）——DeerFlow-By-CC 通过 SSE 连工具 cd /Users/qian/Documents/workspace/cruxible FASTMCP_HOST=0.0.0.0 FASTMCP_PORT=8123 \\ CRUXIBLE_MODE=admin CRUXIBLE_MCP_TRANSPORT=sse \\ CRUXIBLE_SERVER_URL=http://127.0.0.1:8100 \\ uv run cruxible-mcp-http 这个入口脚本见 server_http.py，它支持 stdio / sse / streamable-http 三模式，这里选 SSE。\nStep 4：确认 DeerFlow-By-CC 的 extensions_config.json 指向 SSE（否则 tools 加载不到） 关键在 deerflow 的 extensions_config.json，把 stdio 版 cruxible 禁用，启用 SSE：\n\"mcpServers\": { \"cruxible\": { \"enabled\": false, \"type\": \"stdio\", \"...\": \"...\" }, \"cruxible_sse\": { \"enabled\": true, \"type\": \"sse\", \"url\": \"http://host.docker.internal:8123/sse\", \"description\": \"Cruxible MCP over SSE (connect to host cruxible-mcp-http)\" } } 同时关闭 tool_search.enabled（否则 MCP 工具可能不直接暴露给模型），见 config.yaml。\nStep 5：用清结算本体注册一个 daemon instance（你会拿到 instance_id） cd /Users/qian/Documents/workspace/cruxible curl -fsS -X POST http://127.0.0.1:8100/api/v1/instances \\ -H 'Content-Type: application/json' \\ -d \"$(python3 -c 'import json; print(json.dumps({\\\"root_dir\\\":\\\"/Users/qian/Documents/workspace/cruxible/.poc/cruxible_server_state/instances/inst_settlement_poc\\\",\\\"config_yaml\\\":open(\\\".poc/settlement/settlement_poc_config.yaml\\\",\\\"r\\\",encoding=\\\"utf-8\\\").read()}))')\" 你会拿到类似：\n{\"instance_id\":\"inst_d9634d5c1e624449\",\"status\":\"ready\",\"warnings\":[]} 把这个 instance_id 记录下来。Cruxible 内部用这个 ID 做实例句柄；最终用户不应该直接看到它（体验优化见下一步）。\nStep 5.5（强烈推荐）：配置 CRUXIBLE_DEFAULT_INSTANCE_ID——把默认实例绑定从 prompt 级升级到环境变量级 把默认实例绑定从「SOUL.md prompt 级写死」升级为「环境变量 + MCP 层统一解析」：Operator 只配一次 env，所有实例作用域工具（cruxible_query / cruxible_list_queries / cruxible_workflow_* / cruxible_batch_direct_write / cruxible_schema / cruxible_stats / cruxible_inspect_* 等）都自动使用默认实例，Agent 只有在用户明确要求「新建 / 切换实例」时才显式传 instance_id。\n操作方法（Cruxible MCP 启动命令替换 Step 3 的命令，或直接补充 env）：\ncd /Users/qian/Documents/workspace/cruxible FASTMCP_HOST=0.0.0.0 FASTMCP_PORT=8123 \\ CRUXIBLE_MODE=admin CRUXIBLE_MCP_TRANSPORT=sse \\ CRUXIBLE_SERVER_URL=http://127.0.0.1:8100 \\ CRUXIBLE_DEFAULT_INSTANCE_ID=inst_d9634d5c1e624449 \\ uv run cruxible-mcp-http 实现原理（对应源码链路）：\n新增统一解析器：cruxible_core.mcp.default_instance.resolve_default_instance_id(explicit_instance_id)——显式非空则直接用，否则读 CRUXIBLE_DEFAULT_INSTANCE_ID 兜底，env 空则抛 ConfigError，提示 operator 如何配置（见 default_instance.py）。 MCP tools 全部把第一个参数 instance_id 的类型改为 str | None = None，并在 docstring 末尾声明「未提供时使用 CRUXIBLE_DEFAULT_INSTANCE_ID」（见 tools.py）。 MCP handlers 所有实例作用域 handler 第一行执行 resolved, _used_default = resolve_default_instance_id(instance_id)，并把后续调用的 instance_id 替换成 resolved（见 handlers.py）。 cruxible_server_info 返回值同步新增 default_instance_id 字段（daemon HTTP 层、service 层、runtime 层、contracts 四处），Agent 可自动感知默认实例并在 UI/日志中提示（见 server.py → types.py → api.py → contracts.py）。 对应 SOUL 侧简化：只保留两条原则，不再把 inst_xxx 写死在 prompt 中（见 SOUL.md）：\n默认实例选择： - 所有 cruxible_* 工具调用默认**不写 instance_id**，由 MCP 层读取 CRUXIBLE_DEFAULT_INSTANCE_ID 注入； - 仅当用户明确要求「新建实例 / 切换到另一个实例 / 跨实例对比查询」时，才向工具显式传入 instance_id。 验证方法（见 Step 8）：\n# 1. 不传 instance_id，检查 server_info 暴露默认实例 curl -fsS -X POST http://127.0.0.1:8123/sse -d '{\"jsonrpc\":\"2.0\",\"id\":1,\"method\":\"tools/call\",\"params\":{\"name\":\"cruxible_server_info\",\"arguments\":{}}}' # 返回值中应包含 \"default_instance_id\": \"inst_d9634d5c1e624449\" # 2. cruxible_list_queries 不传 instance_id，成功返回查询列表（自动走默认） curl -fsS -X POST http://127.0.0.1:8123/sse -d '{\"jsonrpc\":\"2.0\",\"id\":2,\"method\":\"tools/call\",\"params\":{\"name\":\"cruxible_list_queries\",\"arguments\":{}}}' # 应返回 settlement_batches / batch_to_merchants / diff_top20 等 10+ 个命名查询。 这就是「实例 ID 藏在系统里，Agent 写 prompt 只专注业务问题」的工程化形态。\nStep 6：在 DeerFlow-By-CC 里生成清结算 POC spec（你只做这一步） 进入 DeerFlow-By-CC UI → Agent 画廊 → 选 cruxible sub-agent → New Chat。把下面提示词粘进去：\n你要生成一个用于\"清结算/对账/报表/审批/审计\"的 POC 输入 JSON。要求： 1) JSON 必须包在 ```json ... ``` 代码块里； 2) 顶层必须包含：poc=\"settlement_reconciliation_v1\"； 3) 必须包含 spec 字段：{seed:int, scale:\"large\", counts:{days, merchants, channels, orders, ledger_entries_per_order, disputes, audit_events}, currencies:[...], countries:[...]}； 4) 不要直接生成全量订单/分录明细（会太大），只输出 spec。 复制这个新对话的 thread_id（URL 里 /chats/ 的那一段）。\nStep 7：一键跑 DeerFlow-By-CC thread → Cruxible 落图（含 receipts） 脚本：poc_deerflow_settlement_to_cruxible.py。\ncd /Users/qian/Documents/workspace/cruxible uv run python scripts/poc_deerflow_settlement_to_cruxible.py \\ --deerflow-base-url http://localhost:2026 \\ --thread-id \\ --daemon-url http://127.0.0.1:8100 \\ --instance-id \\ --progress 脚本内部会：调用 DeerFlow-By-CC /api/threads/{id}/state 拿到 spec；生成全量复杂数据集（Merchant/Channel/Account/FeeRule/FXRate/PaymentOrder/Transfer/LedgerEntry/SettlementBatch/ReconcileRun/ReconcileLine/Dispute/Report/Approval/AuditEvent + 所有关系）；分批（每批 512 实体 + 每批 400 关系）调用 cruxible_batch_direct_write 写入 daemon；最后输出 dataset_path（完整数据集 JSON，可做离线分析/回归）和 receipt_entity_count / receipt_edge_count / receipt_ids。\n重要安全说明（生产教训）：用户第一次 spec 可能写 orders=2,000,000。脚本里用 _CAP_COUNTS 做安全截断，把订单压在数千级，避免把本机跑死。这种「上游输入不可信」的闸门，企业里必须有。\n落图后验证：Step 7 跑完之后，直接打开 Cruxible-app 的 Views 列表和 settlement_batches 查询页，下面两张图是跑完后的真实 UI（已带 Receipt ID）：\n图注 · Named Queries 视图：落图后，Workflow 把 settlement_batches（列表）、batch_to_merchants（批次反查商户）、diff_top20（差异排序 Top20）等 3+ 个参数化查询全部注册了。每个查询都有必填参数输入框和 Run 按钮，Run 后会自动生成 Receipt 并在页面右下角挂出来。\n图注 · Settlement batches 查询结果：真实批次号 b_c_000_20260602_cny / b_c_000_20260602_eur 等，列按「Settlement batch id → Channel id → Cycle date → Currency → Total amount → Status」顺序一一对应上篇存在层 Level 3 的实体定义；页面右下角 RCP-f4cf853ad220 是这次查询的 Receipt ID，可以事后 cruxible_get_receipt 逐条审计。\nStep 8：可视化 + 对话排障 cruxible-app 复杂图谱可视化 用 Docker 启动 cruxible-app：\ncd /Users/qian/Documents/workspace/cruxible-app docker run --rm -it -p 5174:5174 \\ -e VITE_CRUXIBLE_DAEMON_URL=http://host.docker.internal:8100 \\ -e VITE_CRUXIBLE_FIXTURES=0 \\ -e VITE_CRUXIBLE_INSTANCE_ID=inst_d9634d5c1e624449 \\ -v \"$PWD\":/app -w /app node:20-bullseye \\ bash -lc \"npm ci \u0026\u0026 npm run dev -- --host 0.0.0.0 --port 5174\" 打开 http://localhost:5174/i/inst_d9634d5c1e624449/graph（5.6 万节点 / 12.8 万边的复杂图，建议先缩小到 settlement_batch 级别再展开邻域）。\n下面两张是 Step 8 跑完的真实 UI 证据：左（State Graph）是大图版，左侧筛选器按类型过滤后可以只看 SettlementBatch → ReconcileRun → ReconcileLine 的对账链；右（Entity Browse · SettlementBatch）是主链实体的明细行级别浏览，每一行是一个 SettlementBatch，点击 ID 可以看该批次的所有关联边、所有 Receipts、所有历史 Snapshots。\n图注 · State Graph：点击左侧 Settlement batch 筛选按钮，可以把 2520 个批次单独展开；再点 1 个批次 node，右侧详情抽屉会列出 batch_for_channel / batch_reconciled_by_run / report_for_batch / thread_produced_batch 四条主链关系——这就是上篇因果链 A/B/C/D 的可点击版本。\n图注 · Entity Browse：2520 条 SettlementBatch 实体，支持 Filter、分页、按任意列排序；列头「Id / Title / Status / Channel id / Currency / Cycle date / Generated at / Paid at / Total amount」9 列与上篇 Level 3 存在层实体的属性定义一一对应——这是 Cruxible 的 Schema 强约束落地到 UI 的直接证据：Schema 里没写的列，UI 绝不会出现。\n在 DeerFlow-By-CC 里直接问（不用提 instance_id） 选中 cruxible sub-agent，直接问下面 6 个问题（按从浅到深排序）：\n看大盘：“列出最近的 settlement batches 前 10 条，按 settlement_date 倒序，返回 receipt_id。” 选批次看商户：“拿 b_c_000_20260605_eur 这个 batch，列出 merchant 维度：订单数、GMV 总金额、差异单数，并返回 receipt_id。” 差异归因 Top N：“同一个 batch 里，按 diff_reason 分类统计差异条数和总 diff_amount，把 fee_mismatch 和 fx_mismatch 单独列出来。” 单笔订单全链路追溯（graph layout）：“挑 1 条 diff_amount 最大的 reconcile_line，按 batch_to_line_to_dispute 这条路径做 graph layout，展示完整批次→run→line→order→dispute 链路。” 报表审批：“这个 batch 生成了哪些 report？每个 report 的 approval 结果是什么？把 rejected 的 comment 归类。” 合规审计：“围绕 order_id = \u003c挑一个\u003e，把所有相关 audit_event 拉出来，按时间生成一条审计时间线，并给出这条时间线的 receipt_id。” 二、企业化改造清单：从 Demo 到生产的 10 个必做项 POC 能跑，不代表能上线。下面 10 件事，缺任何一件在金融/支付行业都进不了生产。\n1. 多实例与多租户：instance_id 要被抽象掉 最终用户不应该知道 instance_id。企业落地时至少要做两层抽象：\n抽象层 含义 典型实现 业务别名（Ontology/Project ID） 用户说「清结算 POC 图谱」→ 系统解析到 instance_id 别名表 + 环境变量 + agent SOUL 默认值 租户隔离 租户 A 的清结算图谱和租户 B 的清结算图谱物理隔离 每个租户独立 daemon state-dir / 独立 schema / Postgres schema 2. 权限落地：ADMIN/GRAPH_WRITE/GOVERNED_WRITE/READ_ONLY 分环境配置 开发环境用 CRUXIBLE_MODE=admin；测试环境用 CRUXIBLE_MODE=graph_write（允许自动 apply workflow，但不让变更 active config）；UAT/生产用 CRUXIBLE_MODE=governed_write（Agent 只能提 feedback，不能直接写图，图谱变更走审批流）；只读大屏/BI 用 CRUXIBLE_MODE=read_only。\n工具级权限表见 permissions.py:L83-L110，建议做一张审计表，把每次工具调用的 actor / time / mode / receipt_id 都存下来。\n3. 持久化升级：SQLite → Postgres / MySQL POC 用 SQLite 很方便，但生产建议把 state.db 的所有表（receipts, traces, feedback, groups, proposals, snapshots, artifacts）迁移到 Postgres；图谱实体/关系本身如果要做 10 亿级，建议后端抽象层再拆一层（InstanceProtocol 已预留，见 instance_protocol.py）。\n4. 高可用：daemon 集群化 + 健康检查 Cruxible daemon 目前是单进程；企业化做法是至少 2 个 daemon 实例，front by nginx；健康检查接口 GET /api/v1/server/info（返回 permission_mode / instance_count / head_snapshot）；写请求和长事务走 leader，读请求走 replica（配合 Postgres 主从）。\n5. 与企业 IdP 集成：OIDC/OAuth + RBAC DeerFlow-By-CC 侧接企业 OAuth2；Cruxible daemon 侧启用 CRUXIBLE_SERVER_AUTH=true + CRUXIBLE_RUNTIME_BOOTSTRAP_SECRET（见 config.py:L130-L143），再把 OAuth scopes 映射到 PermissionMode：cruxible:read → READ_ONLY，cruxible:governed_write → GOVERNED_WRITE，cruxible:graph_write → GRAPH_WRITE，cruxible:admin → ADMIN。\n6. 版本化：本体（config）+ workflow + lock file 全 Git 化 Cruxible 的 lock 文件（cruxible.lock.yaml）是 workflow 的 hash。本体 config 必须 Git 管理；每次本体变更走 PR + 小版本号；每次 workflow 变更重新 cruxible lock_workflow 并提交 lock；CI 跑 cruxible test_workflow 作为回归（版本号管理规则见 AGENTS.md 的 Versioning 章节）。\n7. 监控与告警：receipt 失败率 + 图谱一致性评分 不要只监控「daemon 是否活着」，要监控 4 类业务指标：\n工具层：cruxible_query P95 latency / 4xx rate / 5xx rate； 治理层：每小时 feedback 数量；pending review 的 group 数量；rejected approval rate； 图谱质量层：cruxible_evaluate 的 6 项检查（见 evaluate.py:L37-L42）：orphan_entity（孤立项）、coverage_gap（实体类型在图中缺失）、constraint_violation（约束违规）、unreviewed_co_member（未审核成员）、quality_check_failed（质量规则失败）、governed_support_relationship（治理关系评估）； 可复现层：workflow run 的 apply_digest 与 expected_apply_digest 不匹配率。 8. 幂等 \u0026 回滚：snapshot 是你的后悔药 Cruxible 有 cruxible_state_create_overlay、head_snapshot_id、expected_head_snapshot_id 三件套。任何 canonical workflow apply 之前，先在 CI 跑 preview（run mode=canonical）拿到 apply_digest；只有 apply_digest 一致才允许正式 apply。生产上出问题时，直接回滚到 origin_snapshot_id。\n9. PII 合规：敏感字段要加密 + 审计 DeerFlow-By-CC thread state 里通常有用户聊天内容（PII）。Cruxible 图谱里像 Account.bank_name、AuditEvent.payload 都可能带 PII。PII 字段统一用 envelope encryption（KMS）；读取级别做字段级脱敏（compact / standard / full 三种 profile 已经预留，配合 RBAC）；cruxible_mcp_read_profile 默认为 compact（见 handlers.py:L109-L136），只返回身份卡 + 治理标记，不把 payload 全量暴露给 agent context。\n10. SRE/观测：所有 tool call 都要带 trace_id Cruxible 已经有 trace_id（provider 执行痕迹）。企业化时建议给 DeerFlow-By-CC 的每次 chat 注入 correlation_id；所有 cruxible_* tool call 透传这个 id；把 receipts / traces / audit_events 统一入 OpenSearch / Datadog。\n图注 · 企业治理 Dashboard：Cruxible-app Overview 页，对应上面 10 项企业化清单的落地成果可视化：左侧实体类型数量对应清单 1（多实例/多租户数据密度观测）；State by status + Active incidents 对应清单 7（监控告警）；Snapshots 区域对应清单 8（幂等 + 快照回滚）；Payment orders / Settlement batches 两个队列视图对应清单 3（持久化升级：队列读写延迟直接来自 SQLite / Postgres 的真实 IO）；右下角 Receipt ID 链贯穿清单 6（GitOps 版本化）——每条队列查询都能拉回完整的 Receipt + Snapshot 链。\n三、6 大死穴逐一对照解法 上篇讲了 Agent 工程的 6 大死穴，这里做一个收尾对照，方便回顾：\n死穴 解法（DeerFlow-By-CC + Cruxible） 关键实现 语义对齐缺失 用 Cruxible Config 声明 entity_types / relationships / primary_keys / descriptions settlement_poc_config.yaml 推理不可证明 每次 query 都有 receipt；可复现遍历路径和快照 tools.py:L238-L237 / handlers.py 治理缺失 4 层累积权限 + feedback + groups + approvals permissions.py:L61-L99 上下文爆炸 Agent 只出 spec；实际生成/计算/批量写入交给 workflow/script；paginated query Step 6 + Step 7 拆分 与已有系统割裂 4 种集成模式覆盖 CDC/Webhook/ETL/对话 上篇第五章 可复现性不足 snapshot + lock file + canonical workflow workflow run → apply 二阶段提交 四、给读者的 3 个作业（今天就能上手） 复现本 POC：照着第一章 8 步，本机跑通一张至少 1 万节点的清结算图谱； 做一个差异归因的 named query：在 config 里加一个 batch_diff_top_reasons（按 diff_reason 聚合 count 和 sum(diff_amount)），在 DeerFlow-By-CC 里问出来，并把 receipt 导出成审计工作底稿； 把默认实例绑定升级到更真实的体验：把 SOUL 里硬编码的 instance_id，改成「Cruxible 启动时读环境变量 CRUXIBLE_DEFAULT_INSTANCE_ID=inst_xxx」，实现代码级注入而不是 prompt 级注入。 五、结语：Agent 的第二曲线，在「敢被审计」 很多团队把大量精力花在「怎么让 Agent 回答更像人」上。但金融行业的真实问题是：只要它说的话不能被证明、不能被追责、不能回归复现，业务就不敢用它。\nDeerFlow-By-CC × Cruxible 这套组合，给了一个具体的工程蓝图：自然语言留给 DeerFlow-By-CC；事实、证据、规则、治理交给 Cruxible；两者之间用 MCP 这层标准协议，搭出一个既好用又敢用的 AI 工作台。\n清结算只是第一个落地行业，这套打法稍加改造，同样适用于保险理赔（保单 → 报案 → 核赔 → 打款 → 反欺诈）、供应链金融（采购单 → 发票 → 运单 → 仓单 → 保理）、监管合规（产品准入 → 尽调 → 审批 → 存续期 → 报送）。这些行业的共同点是：错一笔，就是真金白银甚至合规处罚。对它们来说，确定性从来不是可选项，而是入场券。\n参考资料：\nCruxible 架构/命令/版本/权限：AGENTS.md Cruxible daemon server 配置：server/config.py Cruxible MCP handlers + dispatch：mcp/handlers.py Cruxible SSE HTTP 入口：mcp/server_http.py Cruxible 质量评估 6 检查：query/evaluate.py POC 落图脚本：scripts/poc_deerflow_settlement_to_cruxible.py DeerFlow-By-CC cruxible sub-agent（默认实例绑定）：backend/.deer-flow/agents/cruxible/SOUL.md ",
+  "wordCount" : "7198",
+  "inLanguage": "en",
+  "datePublished": "2026-08-09T00:10:00+08:00",
+  "dateModified": "2026-08-09T00:10:00+08:00",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://csqread.top/posts/ai/clearing-settlement-poc-production-2/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Qian's Blog",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://csqread.top/favicon.ico"
+    }
+  }
+}
+</script>
+</head>
+<body id="top">
+    
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    
+    <h1 class="post-title entry-hint-parent">
+      8 步复现清结算复杂图谱 POC，再用 10 项清单把它改造到能上生产（下篇）
+    </h1>
+    <div class="post-description">
+      纯操作向实战：8 步在本机跑出一张清结算复杂图谱，再用 10 项清单把 Demo 改造成能上生产的系统，最后对照 6 大死穴收尾并给出 3 个作业。
+    </div>
+    <div class="post-meta">
+
+<span title='2026-08-09 00:10:00 +0800 CST'>August 9, 2026</span>
+
+</div>
+  </header> 
+  <div class="post-content md-content"><blockquote>
+<p>系列说明：本篇是「DeerFlow-By-CC × Cruxible 清结算全链路实战」系列的下篇，纯操作向：8 步在本机跑出一张清结算复杂图谱，再过一遍从 Demo 到生产还差的 10 件事。上篇讲了为什么清结算场景需要给 Agent 配一个确定性图谱，以及 17 类实体、25 类关系的本体是怎么设计出来的，建议先读一遍再来看这篇。</p>
+</blockquote>
+<p>以下所有命令、路径、代码片段都已在本机验证通过。源码仓库位置：</p>
+<ul>
+<li>DeerFlow-By-CC：<a href="https://github.com/xiaoqianbaobao/deer-flow-by-cc">https://github.com/xiaoqianbaobao/deer-flow-by-cc</a></li>
+<li>Cruxible：<a href="https://github.com/xiaoqianbaobao/cruxible">https://github.com/xiaoqianbaobao/cruxible</a></li>
+<li>cruxible-app（可视化）：<a href="https://github.com/xiaoqianbaobao/cruxible-app">https://github.com/xiaoqianbaobao/cruxible-app</a></li>
+</ul>
+<hr>
+<h1 id="一完整实操手册8-步跑通清结算复杂图谱-poc">一、完整实操手册：8 步跑通清结算复杂图谱 POC<a hidden class="anchor" aria-hidden="true" href="#一完整实操手册8-步跑通清结算复杂图谱-poc">#</a></h1>
+<p><img alt="alt text" loading="lazy" src="/posts/ai/clearing-settlement-poc-production-2/Gemini_Generated_Image_asi05hasi05hasi0.png"></p>
+<h2 id="step-1启动-deerflow-by-cc-全栈7-容器">Step 1：启动 DeerFlow-By-CC 全栈（7 容器）<a hidden class="anchor" aria-hidden="true" href="#step-1启动-deerflow-by-cc-全栈7-容器">#</a></h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>cd /Users/qian/Documents/workspace/deer-flow-by-cc/docker
+</span></span><span style="display:flex;"><span>DEER_FLOW_ROOT<span style="color:#f92672">=</span>/Users/qian/Documents/workspace/deer-flow-by-cc <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span>  docker compose --env-file ../.env -p deer-flow-dev -f docker-compose-dev.yaml up -d --build
+</span></span></code></pre></div><p>打开 <code>http://localhost:2026</code> 验证 UI 能访问。</p>
+<h2 id="step-2启动-cruxible-daemon8100">Step 2：启动 Cruxible daemon（8100）<a hidden class="anchor" aria-hidden="true" href="#step-2启动-cruxible-daemon8100">#</a></h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>cd /Users/qian/Documents/workspace/cruxible
+</span></span><span style="display:flex;"><span>uv sync --all-extras
+</span></span><span style="display:flex;"><span>uv run cruxible server start --port <span style="color:#ae81ff">8100</span> --state-dir .poc/cruxible_server_state
+</span></span></code></pre></div><h2 id="step-3启动-cruxible-mcpsse8123deerflow-by-cc-通过-sse-连工具">Step 3：启动 Cruxible MCP（SSE，8123）——DeerFlow-By-CC 通过 SSE 连工具<a hidden class="anchor" aria-hidden="true" href="#step-3启动-cruxible-mcpsse8123deerflow-by-cc-通过-sse-连工具">#</a></h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>cd /Users/qian/Documents/workspace/cruxible
+</span></span><span style="display:flex;"><span>FASTMCP_HOST<span style="color:#f92672">=</span>0.0.0.0 FASTMCP_PORT<span style="color:#f92672">=</span><span style="color:#ae81ff">8123</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span>  CRUXIBLE_MODE<span style="color:#f92672">=</span>admin CRUXIBLE_MCP_TRANSPORT<span style="color:#f92672">=</span>sse <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span>  CRUXIBLE_SERVER_URL<span style="color:#f92672">=</span>http://127.0.0.1:8100 <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span>  uv run cruxible-mcp-http
+</span></span></code></pre></div><p>这个入口脚本见 <a href="https://github.com/xiaoqianbaobao/cruxible/blob/main/src/cruxible_core/mcp/server_http.py">server_http.py</a>，它支持 stdio / sse / streamable-http 三模式，这里选 SSE。</p>
+<h2 id="step-4确认-deerflow-by-cc-的-extensions_configjson-指向-sse否则-tools-加载不到">Step 4：确认 DeerFlow-By-CC 的 <code>extensions_config.json</code> 指向 SSE（否则 tools 加载不到）<a hidden class="anchor" aria-hidden="true" href="#step-4确认-deerflow-by-cc-的-extensions_configjson-指向-sse否则-tools-加载不到">#</a></h2>
+<p>关键在 deerflow 的 <a href="https://github.com/xiaoqianbaobao/deer-flow-by-cc/blob/main/extensions_config.json">extensions_config.json</a>，把 stdio 版 cruxible 禁用，启用 SSE：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-json" data-lang="json"><span style="display:flex;"><span><span style="color:#e6db74">&#34;mcpServers&#34;</span><span style="color:#960050;background-color:#1e0010">:</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;cruxible&#34;</span>:     { <span style="color:#f92672">&#34;enabled&#34;</span>: <span style="color:#66d9ef">false</span>, <span style="color:#f92672">&#34;type&#34;</span>: <span style="color:#e6db74">&#34;stdio&#34;</span>, <span style="color:#f92672">&#34;...&#34;</span>: <span style="color:#e6db74">&#34;...&#34;</span> },
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;cruxible_sse&#34;</span>: {
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;enabled&#34;</span>: <span style="color:#66d9ef">true</span>, <span style="color:#f92672">&#34;type&#34;</span>: <span style="color:#e6db74">&#34;sse&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;url&#34;</span>: <span style="color:#e6db74">&#34;http://host.docker.internal:8123/sse&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;description&#34;</span>: <span style="color:#e6db74">&#34;Cruxible MCP over SSE (connect to host cruxible-mcp-http)&#34;</span>
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>同时关闭 <code>tool_search.enabled</code>（否则 MCP 工具可能不直接暴露给模型），见 <a href="https://github.com/xiaoqianbaobao/deer-flow-by-cc/blob/main/config.yaml">config.yaml</a>。</p>
+<h2 id="step-5用清结算本体注册一个-daemon-instance你会拿到-instance_id">Step 5：用清结算本体注册一个 daemon instance（你会拿到 instance_id）<a hidden class="anchor" aria-hidden="true" href="#step-5用清结算本体注册一个-daemon-instance你会拿到-instance_id">#</a></h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>cd /Users/qian/Documents/workspace/cruxible
+</span></span><span style="display:flex;"><span>curl -fsS -X POST http://127.0.0.1:8100/api/v1/instances <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span>  -H <span style="color:#e6db74">&#39;Content-Type: application/json&#39;</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span>  -d <span style="color:#e6db74">&#34;</span><span style="color:#66d9ef">$(</span>python3 -c <span style="color:#e6db74">&#39;import json; print(json.dumps({\&#34;root_dir\&#34;:\&#34;/Users/qian/Documents/workspace/cruxible/.poc/cruxible_server_state/instances/inst_settlement_poc\&#34;,\&#34;config_yaml\&#34;:open(\&#34;.poc/settlement/settlement_poc_config.yaml\&#34;,\&#34;r\&#34;,encoding=\&#34;utf-8\&#34;).read()}))&#39;</span><span style="color:#66d9ef">)</span><span style="color:#e6db74">&#34;</span>
+</span></span></code></pre></div><p>你会拿到类似：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-json" data-lang="json"><span style="display:flex;"><span>{<span style="color:#f92672">&#34;instance_id&#34;</span>:<span style="color:#e6db74">&#34;inst_d9634d5c1e624449&#34;</span>,<span style="color:#f92672">&#34;status&#34;</span>:<span style="color:#e6db74">&#34;ready&#34;</span>,<span style="color:#f92672">&#34;warnings&#34;</span>:[]}
+</span></span></code></pre></div><p>把这个 instance_id 记录下来。Cruxible 内部用这个 ID 做实例句柄；最终用户不应该直接看到它（体验优化见下一步）。</p>
+<h2 id="step-55强烈推荐配置-cruxible_default_instance_id把默认实例绑定从-prompt-级升级到环境变量级">Step 5.5（强烈推荐）：配置 <code>CRUXIBLE_DEFAULT_INSTANCE_ID</code>——把默认实例绑定从 prompt 级升级到环境变量级<a hidden class="anchor" aria-hidden="true" href="#step-55强烈推荐配置-cruxible_default_instance_id把默认实例绑定从-prompt-级升级到环境变量级">#</a></h2>
+<p><img alt="alt text" loading="lazy" src="/posts/ai/clearing-settlement-poc-production-2/Gemini_Generated_Image_s278fqs278fqs278.png"></p>
+<p>把默认实例绑定从「SOUL.md prompt 级写死」升级为「环境变量 + MCP 层统一解析」：Operator 只配一次 env，所有实例作用域工具（cruxible_query / cruxible_list_queries / cruxible_workflow_* / cruxible_batch_direct_write / cruxible_schema / cruxible_stats / cruxible_inspect_* 等）都自动使用默认实例，Agent 只有在用户明确要求「新建 / 切换实例」时才显式传 instance_id。</p>
+<p>操作方法（Cruxible MCP 启动命令替换 Step 3 的命令，或直接补充 env）：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>cd /Users/qian/Documents/workspace/cruxible
+</span></span><span style="display:flex;"><span>FASTMCP_HOST<span style="color:#f92672">=</span>0.0.0.0 FASTMCP_PORT<span style="color:#f92672">=</span><span style="color:#ae81ff">8123</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span>  CRUXIBLE_MODE<span style="color:#f92672">=</span>admin CRUXIBLE_MCP_TRANSPORT<span style="color:#f92672">=</span>sse <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span>  CRUXIBLE_SERVER_URL<span style="color:#f92672">=</span>http://127.0.0.1:8100 <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span>  CRUXIBLE_DEFAULT_INSTANCE_ID<span style="color:#f92672">=</span>inst_d9634d5c1e624449 <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span>  uv run cruxible-mcp-http
+</span></span></code></pre></div><p>实现原理（对应源码链路）：</p>
+<ol>
+<li>新增统一解析器：<code>cruxible_core.mcp.default_instance.resolve_default_instance_id(explicit_instance_id)</code>——显式非空则直接用，否则读 <code>CRUXIBLE_DEFAULT_INSTANCE_ID</code> 兜底，env 空则抛 <code>ConfigError</code>，提示 operator 如何配置（见 <a href="https://github.com/xiaoqianbaobao/cruxible/blob/main/src/cruxible_core/mcp/default_instance.py">default_instance.py</a>）。</li>
+<li>MCP tools 全部把第一个参数 <code>instance_id</code> 的类型改为 <code>str | None = None</code>，并在 docstring 末尾声明「未提供时使用 <code>CRUXIBLE_DEFAULT_INSTANCE_ID</code>」（见 <a href="https://github.com/xiaoqianbaobao/cruxible/blob/main/src/cruxible_core/mcp/tools.py">tools.py</a>）。</li>
+<li>MCP handlers 所有实例作用域 handler 第一行执行 <code>resolved, _used_default = resolve_default_instance_id(instance_id)</code>，并把后续调用的 <code>instance_id</code> 替换成 <code>resolved</code>（见 <a href="https://github.com/xiaoqianbaobao/cruxible/blob/main/src/cruxible_core/mcp/handlers.py">handlers.py</a>）。</li>
+<li><code>cruxible_server_info</code> 返回值同步新增 <code>default_instance_id</code> 字段（daemon HTTP 层、service 层、runtime 层、contracts 四处），Agent 可自动感知默认实例并在 UI/日志中提示（见 <a href="https://github.com/xiaoqianbaobao/cruxible/blob/main/src/cruxible_core/service/server.py">server.py</a> → <a href="https://github.com/xiaoqianbaobao/cruxible/blob/main/src/cruxible_core/service/types.py">types.py</a> → <a href="https://github.com/xiaoqianbaobao/cruxible/blob/main/src/cruxible_core/runtime/api.py">api.py</a> → <a href="https://github.com/xiaoqianbaobao/cruxible/blob/main/packages/cruxible-client/src/cruxible_client/contracts.py">contracts.py</a>）。</li>
+</ol>
+<p>对应 SOUL 侧简化：只保留两条原则，不再把 <code>inst_xxx</code> 写死在 prompt 中（见 <a href="https://github.com/xiaoqianbaobao/deer-flow-by-cc/blob/main/backend/.deer-flow/agents/cruxible/SOUL.md">SOUL.md</a>）：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-markdown" data-lang="markdown"><span style="display:flex;"><span>默认实例选择：
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">-</span> 所有 cruxible_* 工具调用默认**不写 instance_id**，由 MCP 层读取 CRUXIBLE_DEFAULT_INSTANCE_ID 注入；
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">-</span> 仅当用户明确要求「新建实例 / 切换到另一个实例 / 跨实例对比查询」时，才向工具显式传入 instance_id。
+</span></span></code></pre></div><p>验证方法（见 Step 8）：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># 1. 不传 instance_id，检查 server_info 暴露默认实例</span>
+</span></span><span style="display:flex;"><span>curl -fsS -X POST http://127.0.0.1:8123/sse -d <span style="color:#e6db74">&#39;{&#34;jsonrpc&#34;:&#34;2.0&#34;,&#34;id&#34;:1,&#34;method&#34;:&#34;tools/call&#34;,&#34;params&#34;:{&#34;name&#34;:&#34;cruxible_server_info&#34;,&#34;arguments&#34;:{}}}&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 返回值中应包含 &#34;default_instance_id&#34;: &#34;inst_d9634d5c1e624449&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 2. cruxible_list_queries 不传 instance_id，成功返回查询列表（自动走默认）</span>
+</span></span><span style="display:flex;"><span>curl -fsS -X POST http://127.0.0.1:8123/sse -d <span style="color:#e6db74">&#39;{&#34;jsonrpc&#34;:&#34;2.0&#34;,&#34;id&#34;:2,&#34;method&#34;:&#34;tools/call&#34;,&#34;params&#34;:{&#34;name&#34;:&#34;cruxible_list_queries&#34;,&#34;arguments&#34;:{}}}&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 应返回 settlement_batches / batch_to_merchants / diff_top20 等 10+ 个命名查询。</span>
+</span></span></code></pre></div><p>这就是「实例 ID 藏在系统里，Agent 写 prompt 只专注业务问题」的工程化形态。</p>
+<h2 id="step-6在-deerflow-by-cc-里生成清结算-poc-spec你只做这一步">Step 6：在 DeerFlow-By-CC 里生成清结算 POC spec（你只做这一步）<a hidden class="anchor" aria-hidden="true" href="#step-6在-deerflow-by-cc-里生成清结算-poc-spec你只做这一步">#</a></h2>
+<p>进入 DeerFlow-By-CC UI → Agent 画廊 → 选 <code>cruxible</code> sub-agent → New Chat。把下面提示词粘进去：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>你要生成一个用于&#34;清结算/对账/报表/审批/审计&#34;的 POC 输入 JSON。要求：
+</span></span><span style="display:flex;"><span>1) JSON 必须包在 ```json ... ``` 代码块里；
+</span></span><span style="display:flex;"><span>2) 顶层必须包含：poc=&#34;settlement_reconciliation_v1&#34;；
+</span></span><span style="display:flex;"><span>3) 必须包含 spec 字段：{seed:int, scale:&#34;large&#34;, counts:{days, merchants, channels, orders, ledger_entries_per_order, disputes, audit_events}, currencies:[...], countries:[...]}；
+</span></span><span style="display:flex;"><span>4) 不要直接生成全量订单/分录明细（会太大），只输出 spec。
+</span></span></code></pre></div><p>复制这个新对话的 thread_id（URL 里 <code>/chats/&lt;thread_id&gt;</code> 的那一段）。</p>
+<h2 id="step-7一键跑-deerflow-by-cc-thread--cruxible-落图含-receipts">Step 7：一键跑 DeerFlow-By-CC thread → Cruxible 落图（含 receipts）<a hidden class="anchor" aria-hidden="true" href="#step-7一键跑-deerflow-by-cc-thread--cruxible-落图含-receipts">#</a></h2>
+<p>脚本：<a href="https://github.com/xiaoqianbaobao/cruxible/blob/main/scripts/poc_deerflow_settlement_to_cruxible.py">poc_deerflow_settlement_to_cruxible.py</a>。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>cd /Users/qian/Documents/workspace/cruxible
+</span></span><span style="display:flex;"><span>uv run python scripts/poc_deerflow_settlement_to_cruxible.py <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span>  --deerflow-base-url http://localhost:2026 <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span>  --thread-id &lt;Step6拿到的thread_id&gt; <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span>  --daemon-url http://127.0.0.1:8100 <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span>  --instance-id &lt;Step5拿到的instance_id&gt; <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span>  --progress
+</span></span></code></pre></div><p>脚本内部会：调用 DeerFlow-By-CC <code>/api/threads/{id}/state</code> 拿到 spec；生成全量复杂数据集（Merchant/Channel/Account/FeeRule/FXRate/PaymentOrder/Transfer/LedgerEntry/SettlementBatch/ReconcileRun/ReconcileLine/Dispute/Report/Approval/AuditEvent + 所有关系）；分批（每批 512 实体 + 每批 400 关系）调用 <code>cruxible_batch_direct_write</code> 写入 daemon；最后输出 <code>dataset_path</code>（完整数据集 JSON，可做离线分析/回归）和 <code>receipt_entity_count</code> / <code>receipt_edge_count</code> / <code>receipt_ids</code>。</p>
+<p>重要安全说明（生产教训）：用户第一次 spec 可能写 <code>orders=2,000,000</code>。脚本里用 <code>_CAP_COUNTS</code> 做安全截断，把订单压在数千级，避免把本机跑死。这种「上游输入不可信」的闸门，企业里必须有。</p>
+<p>落图后验证：Step 7 跑完之后，直接打开 Cruxible-app 的 Views 列表和 settlement_batches 查询页，下面两张图是跑完后的真实 UI（已带 Receipt ID）：</p>
+<p><img alt="图 2-1 · 真实 UI 证据：Cruxible Views / Named Queries 列表 — 落图后的命名查询总览（队列视图 + 参数化视图）" loading="lazy" src="/posts/ai/clearing-settlement-poc-production-2/screenshot_04_views_named_queries_list.png"></p>
+<blockquote>
+<p><strong>图注 · Named Queries 视图</strong>：落图后，Workflow 把 <code>settlement_batches</code>（列表）、<code>batch_to_merchants</code>（批次反查商户）、<code>diff_top20</code>（差异排序 Top20）等 3+ 个参数化查询全部注册了。每个查询都有必填参数输入框和 Run 按钮，Run 后会自动生成 Receipt 并在页面右下角挂出来。</p>
+</blockquote>
+<p><img alt="图 2-2 · 真实 UI 证据：Cruxible Query Result — <code>settlement_batches</code> 视图返回的 2,520 条清结算批次（带 Receipt：RCP-f4cf853ad220）" loading="lazy" src="/posts/ai/clearing-settlement-poc-production-2/screenshot_05_query_settlement_batches.png"></p>
+<blockquote>
+<p><strong>图注 · Settlement batches 查询结果</strong>：真实批次号 <code>b_c_000_20260602_cny</code> / <code>b_c_000_20260602_eur</code> 等，列按「Settlement batch id → Channel id → Cycle date → Currency → Total amount → Status」顺序一一对应上篇存在层 Level 3 的实体定义；页面右下角 <code>RCP-f4cf853ad220</code> 是这次查询的 Receipt ID，可以事后 <code>cruxible_get_receipt</code> 逐条审计。</p>
+</blockquote>
+<h2 id="step-8可视化--对话排障">Step 8：可视化 + 对话排障<a hidden class="anchor" aria-hidden="true" href="#step-8可视化--对话排障">#</a></h2>
+<h3 id="cruxible-app-复杂图谱可视化">cruxible-app 复杂图谱可视化<a hidden class="anchor" aria-hidden="true" href="#cruxible-app-复杂图谱可视化">#</a></h3>
+<p>用 Docker 启动 cruxible-app：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>cd /Users/qian/Documents/workspace/cruxible-app
+</span></span><span style="display:flex;"><span>docker run --rm -it -p 5174:5174 <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span>  -e VITE_CRUXIBLE_DAEMON_URL<span style="color:#f92672">=</span>http://host.docker.internal:8100 <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span>  -e VITE_CRUXIBLE_FIXTURES<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span>  -e VITE_CRUXIBLE_INSTANCE_ID<span style="color:#f92672">=</span>inst_d9634d5c1e624449 <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span>  -v <span style="color:#e6db74">&#34;</span>$PWD<span style="color:#e6db74">&#34;</span>:/app -w /app node:20-bullseye <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span>  bash -lc <span style="color:#e6db74">&#34;npm ci &amp;&amp; npm run dev -- --host 0.0.0.0 --port 5174&#34;</span>
+</span></span></code></pre></div><p>打开 <code>http://localhost:5174/i/inst_d9634d5c1e624449/graph</code>（5.6 万节点 / 12.8 万边的复杂图，建议先缩小到 settlement_batch 级别再展开邻域）。</p>
+<p>下面两张是 Step 8 跑完的真实 UI 证据：左（State Graph）是大图版，左侧筛选器按类型过滤后可以只看 <code>SettlementBatch → ReconcileRun → ReconcileLine</code> 的对账链；右（Entity Browse · SettlementBatch）是主链实体的明细行级别浏览，每一行是一个 SettlementBatch，点击 ID 可以看该批次的所有关联边、所有 Receipts、所有历史 Snapshots。</p>
+<p><img alt="图 2-3 · 真实 UI 证据：Cruxible State Graph（5.6 万节点 / 12.8 万边，cosmos 渲染）" loading="lazy" src="/posts/ai/clearing-settlement-poc-production-2/screenshot_03_state_graph_knowledge_map.png"></p>
+<blockquote>
+<p><strong>图注 · State Graph</strong>：点击左侧 Settlement batch 筛选按钮，可以把 2520 个批次单独展开；再点 1 个批次 node，右侧详情抽屉会列出 <code>batch_for_channel</code> / <code>batch_reconciled_by_run</code> / <code>report_for_batch</code> / <code>thread_produced_batch</code> 四条主链关系——这就是上篇因果链 A/B/C/D 的可点击版本。</p>
+</blockquote>
+<p><img alt="图 2-4 · 真实 UI 证据：Cruxible Entity Browse — SettlementBatch 实体明细浏览（分页 + Filter + 全列排序）" loading="lazy" src="/posts/ai/clearing-settlement-poc-production-2/screenshot_06_entity_browse_settlement_batch.png"></p>
+<blockquote>
+<p><strong>图注 · Entity Browse</strong>：2520 条 SettlementBatch 实体，支持 Filter、分页、按任意列排序；列头「Id / Title / Status / Channel id / Currency / Cycle date / Generated at / Paid at / Total amount」9 列与上篇 Level 3 存在层实体的属性定义一一对应——这是 Cruxible 的 Schema 强约束落地到 UI 的直接证据：Schema 里没写的列，UI 绝不会出现。</p>
+</blockquote>
+<h3 id="在-deerflow-by-cc-里直接问不用提-instance_id">在 DeerFlow-By-CC 里直接问（不用提 instance_id）<a hidden class="anchor" aria-hidden="true" href="#在-deerflow-by-cc-里直接问不用提-instance_id">#</a></h3>
+<p>选中 cruxible sub-agent，直接问下面 6 个问题（按从浅到深排序）：</p>
+<ol>
+<li><strong>看大盘</strong>：&ldquo;列出最近的 settlement batches 前 10 条，按 settlement_date 倒序，返回 receipt_id。&rdquo;</li>
+<li><strong>选批次看商户</strong>：&ldquo;拿 <code>b_c_000_20260605_eur</code> 这个 batch，列出 merchant 维度：订单数、GMV 总金额、差异单数，并返回 receipt_id。&rdquo;</li>
+<li><strong>差异归因 Top N</strong>：&ldquo;同一个 batch 里，按 diff_reason 分类统计差异条数和总 diff_amount，把 fee_mismatch 和 fx_mismatch 单独列出来。&rdquo;</li>
+<li><strong>单笔订单全链路追溯（graph layout）</strong>：&ldquo;挑 1 条 diff_amount 最大的 reconcile_line，按 <code>batch_to_line_to_dispute</code> 这条路径做 graph layout，展示完整批次→run→line→order→dispute 链路。&rdquo;</li>
+<li><strong>报表审批</strong>：&ldquo;这个 batch 生成了哪些 report？每个 report 的 approval 结果是什么？把 rejected 的 comment 归类。&rdquo;</li>
+<li><strong>合规审计</strong>：&ldquo;围绕 order_id = <code>&lt;挑一个&gt;</code>，把所有相关 audit_event 拉出来，按时间生成一条审计时间线，并给出这条时间线的 receipt_id。&rdquo;</li>
+</ol>
+<hr>
+<h1 id="二企业化改造清单从-demo-到生产的-10-个必做项">二、企业化改造清单：从 Demo 到生产的 10 个必做项<a hidden class="anchor" aria-hidden="true" href="#二企业化改造清单从-demo-到生产的-10-个必做项">#</a></h1>
+<p><img alt="alt text" loading="lazy" src="/posts/ai/clearing-settlement-poc-production-2/Gemini_Generated_Image_r0uty9r0uty9r0ut.png"></p>
+<p>POC 能跑，不代表能上线。下面 10 件事，缺任何一件在金融/支付行业都进不了生产。</p>
+<h2 id="1-多实例与多租户instance_id-要被抽象掉">1. 多实例与多租户：instance_id 要被抽象掉<a hidden class="anchor" aria-hidden="true" href="#1-多实例与多租户instance_id-要被抽象掉">#</a></h2>
+<p>最终用户不应该知道 instance_id。企业落地时至少要做两层抽象：</p>
+<table>
+	<thead>
+			<tr>
+					<th>抽象层</th>
+					<th>含义</th>
+					<th>典型实现</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td>业务别名（Ontology/Project ID）</td>
+					<td>用户说「清结算 POC 图谱」→ 系统解析到 instance_id</td>
+					<td>别名表 + 环境变量 + agent SOUL 默认值</td>
+			</tr>
+			<tr>
+					<td>租户隔离</td>
+					<td>租户 A 的清结算图谱和租户 B 的清结算图谱物理隔离</td>
+					<td>每个租户独立 daemon state-dir / 独立 schema / Postgres schema</td>
+			</tr>
+	</tbody>
+</table>
+<h2 id="2-权限落地admingraph_writegoverned_writeread_only-分环境配置">2. 权限落地：ADMIN/GRAPH_WRITE/GOVERNED_WRITE/READ_ONLY 分环境配置<a hidden class="anchor" aria-hidden="true" href="#2-权限落地admingraph_writegoverned_writeread_only-分环境配置">#</a></h2>
+<p>开发环境用 <code>CRUXIBLE_MODE=admin</code>；测试环境用 <code>CRUXIBLE_MODE=graph_write</code>（允许自动 apply workflow，但不让变更 active config）；UAT/生产用 <code>CRUXIBLE_MODE=governed_write</code>（Agent 只能提 feedback，不能直接写图，图谱变更走审批流）；只读大屏/BI 用 <code>CRUXIBLE_MODE=read_only</code>。</p>
+<p>工具级权限表见 <a href="https://github.com/xiaoqianbaobao/cruxible/blob/main/src/cruxible_core/runtime/permissions.py#L83-L110">permissions.py:L83-L110</a>，建议做一张审计表，把每次工具调用的 <code>actor / time / mode / receipt_id</code> 都存下来。</p>
+<h2 id="3-持久化升级sqlite--postgres--mysql">3. 持久化升级：SQLite → Postgres / MySQL<a hidden class="anchor" aria-hidden="true" href="#3-持久化升级sqlite--postgres--mysql">#</a></h2>
+<p>POC 用 SQLite 很方便，但生产建议把 <code>state.db</code> 的所有表（receipts, traces, feedback, groups, proposals, snapshots, artifacts）迁移到 Postgres；图谱实体/关系本身如果要做 10 亿级，建议后端抽象层再拆一层（<code>InstanceProtocol</code> 已预留，见 <a href="https://github.com/xiaoqianbaobao/cruxible/blob/main/src/cruxible_core/instance_protocol.py">instance_protocol.py</a>）。</p>
+<h2 id="4-高可用daemon-集群化--健康检查">4. 高可用：daemon 集群化 + 健康检查<a hidden class="anchor" aria-hidden="true" href="#4-高可用daemon-集群化--健康检查">#</a></h2>
+<p>Cruxible daemon 目前是单进程；企业化做法是至少 2 个 daemon 实例，front by nginx；健康检查接口 <code>GET /api/v1/server/info</code>（返回 permission_mode / instance_count / head_snapshot）；写请求和长事务走 leader，读请求走 replica（配合 Postgres 主从）。</p>
+<h2 id="5-与企业-idp-集成oidcoauth--rbac">5. 与企业 IdP 集成：OIDC/OAuth + RBAC<a hidden class="anchor" aria-hidden="true" href="#5-与企业-idp-集成oidcoauth--rbac">#</a></h2>
+<p>DeerFlow-By-CC 侧接企业 OAuth2；Cruxible daemon 侧启用 <code>CRUXIBLE_SERVER_AUTH=true</code> + <code>CRUXIBLE_RUNTIME_BOOTSTRAP_SECRET</code>（见 <a href="https://github.com/xiaoqianbaobao/cruxible/blob/main/src/cruxible_core/server/config.py#L130-L143">config.py:L130-L143</a>），再把 OAuth scopes 映射到 PermissionMode：<code>cruxible:read</code> → READ_ONLY，<code>cruxible:governed_write</code> → GOVERNED_WRITE，<code>cruxible:graph_write</code> → GRAPH_WRITE，<code>cruxible:admin</code> → ADMIN。</p>
+<h2 id="6-版本化本体config-workflow--lock-file-全-git-化">6. 版本化：本体（config）+ workflow + lock file 全 Git 化<a hidden class="anchor" aria-hidden="true" href="#6-版本化本体config-workflow--lock-file-全-git-化">#</a></h2>
+<p>Cruxible 的 lock 文件（<code>cruxible.lock.yaml</code>）是 workflow 的 hash。本体 config 必须 Git 管理；每次本体变更走 PR + 小版本号；每次 workflow 变更重新 <code>cruxible lock_workflow</code> 并提交 lock；CI 跑 <code>cruxible test_workflow</code> 作为回归（版本号管理规则见 <a href="https://github.com/xiaoqianbaobao/cruxible/blob/main/AGENTS.md">AGENTS.md</a> 的 Versioning 章节）。</p>
+<h2 id="7-监控与告警receipt-失败率--图谱一致性评分">7. 监控与告警：receipt 失败率 + 图谱一致性评分<a hidden class="anchor" aria-hidden="true" href="#7-监控与告警receipt-失败率--图谱一致性评分">#</a></h2>
+<p>不要只监控「daemon 是否活着」，要监控 4 类业务指标：</p>
+<ol>
+<li><strong>工具层</strong>：cruxible_query P95 latency / 4xx rate / 5xx rate；</li>
+<li><strong>治理层</strong>：每小时 feedback 数量；pending review 的 group 数量；rejected approval rate；</li>
+<li><strong>图谱质量层</strong>：<code>cruxible_evaluate</code> 的 6 项检查（见 <a href="https://github.com/xiaoqianbaobao/cruxible/blob/main/src/cruxible_core/query/evaluate.py#L37-L42">evaluate.py:L37-L42</a>）：orphan_entity（孤立项）、coverage_gap（实体类型在图中缺失）、constraint_violation（约束违规）、unreviewed_co_member（未审核成员）、quality_check_failed（质量规则失败）、governed_support_relationship（治理关系评估）；</li>
+<li><strong>可复现层</strong>：workflow run 的 apply_digest 与 expected_apply_digest 不匹配率。</li>
+</ol>
+<h2 id="8-幂等--回滚snapshot-是你的后悔药">8. 幂等 &amp; 回滚：snapshot 是你的后悔药<a hidden class="anchor" aria-hidden="true" href="#8-幂等--回滚snapshot-是你的后悔药">#</a></h2>
+<p>Cruxible 有 <code>cruxible_state_create_overlay</code>、<code>head_snapshot_id</code>、<code>expected_head_snapshot_id</code> 三件套。任何 canonical workflow apply 之前，先在 CI 跑 preview（run mode=canonical）拿到 apply_digest；只有 apply_digest 一致才允许正式 apply。生产上出问题时，直接回滚到 <code>origin_snapshot_id</code>。</p>
+<h2 id="9-pii-合规敏感字段要加密--审计">9. PII 合规：敏感字段要加密 + 审计<a hidden class="anchor" aria-hidden="true" href="#9-pii-合规敏感字段要加密--审计">#</a></h2>
+<p>DeerFlow-By-CC thread state 里通常有用户聊天内容（PII）。Cruxible 图谱里像 <code>Account.bank_name</code>、<code>AuditEvent.payload</code> 都可能带 PII。PII 字段统一用 envelope encryption（KMS）；读取级别做字段级脱敏（compact / standard / full 三种 profile 已经预留，配合 RBAC）；<code>cruxible_mcp_read_profile</code> 默认为 <code>compact</code>（见 <a href="https://github.com/xiaoqianbaobao/cruxible/blob/main/src/cruxible_core/mcp/handlers.py#L109-L136">handlers.py:L109-L136</a>），只返回身份卡 + 治理标记，不把 payload 全量暴露给 agent context。</p>
+<h2 id="10-sre观测所有-tool-call-都要带-trace_id">10. SRE/观测：所有 tool call 都要带 trace_id<a hidden class="anchor" aria-hidden="true" href="#10-sre观测所有-tool-call-都要带-trace_id">#</a></h2>
+<p>Cruxible 已经有 <code>trace_id</code>（provider 执行痕迹）。企业化时建议给 DeerFlow-By-CC 的每次 chat 注入 correlation_id；所有 cruxible_* tool call 透传这个 id；把 receipts / traces / audit_events 统一入 OpenSearch / Datadog。</p>
+<p><img alt="图 3 · 真实 UI 证据：Cruxible Overview — 企业级治理仪表盘（实例级统计、命名查询队列、快照历史、Receipt 治理 4 条主线一览）" loading="lazy" src="/posts/ai/clearing-settlement-poc-production-2/screenshot_01_overview_dashboard.png"></p>
+<blockquote>
+<p><strong>图注 · 企业治理 Dashboard</strong>：Cruxible-app Overview 页，对应上面 10 项企业化清单的落地成果可视化：左侧实体类型数量对应清单 1（多实例/多租户数据密度观测）；State by status + Active incidents 对应清单 7（监控告警）；Snapshots 区域对应清单 8（幂等 + 快照回滚）；Payment orders / Settlement batches 两个队列视图对应清单 3（持久化升级：队列读写延迟直接来自 SQLite / Postgres 的真实 IO）；右下角 Receipt ID 链贯穿清单 6（GitOps 版本化）——每条队列查询都能拉回完整的 Receipt + Snapshot 链。</p>
+</blockquote>
+<hr>
+<h1 id="三6-大死穴逐一对照解法">三、6 大死穴逐一对照解法<a hidden class="anchor" aria-hidden="true" href="#三6-大死穴逐一对照解法">#</a></h1>
+<p>上篇讲了 Agent 工程的 6 大死穴，这里做一个收尾对照，方便回顾：</p>
+<table>
+	<thead>
+			<tr>
+					<th>死穴</th>
+					<th>解法（DeerFlow-By-CC + Cruxible）</th>
+					<th>关键实现</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td>语义对齐缺失</td>
+					<td>用 Cruxible Config 声明 entity_types / relationships / primary_keys / descriptions</td>
+					<td><a href="https://github.com/xiaoqianbaobao/cruxible/blob/main/.poc/settlement/settlement_poc_config.yaml">settlement_poc_config.yaml</a></td>
+			</tr>
+			<tr>
+					<td>推理不可证明</td>
+					<td>每次 query 都有 receipt；可复现遍历路径和快照</td>
+					<td><a href="https://github.com/xiaoqianbaobao/cruxible/blob/main/src/cruxible_core/mcp/tools.py#L238-L237">tools.py:L238-L237</a> / <a href="https://github.com/xiaoqianbaobao/cruxible/blob/main/src/cruxible_core/mcp/handlers.py">handlers.py</a></td>
+			</tr>
+			<tr>
+					<td>治理缺失</td>
+					<td>4 层累积权限 + feedback + groups + approvals</td>
+					<td><a href="https://github.com/xiaoqianbaobao/cruxible/blob/main/src/cruxible_core/runtime/permissions.py#L61-L99">permissions.py:L61-L99</a></td>
+			</tr>
+			<tr>
+					<td>上下文爆炸</td>
+					<td>Agent 只出 spec；实际生成/计算/批量写入交给 workflow/script；paginated query</td>
+					<td>Step 6 + Step 7 拆分</td>
+			</tr>
+			<tr>
+					<td>与已有系统割裂</td>
+					<td>4 种集成模式覆盖 CDC/Webhook/ETL/对话</td>
+					<td>上篇第五章</td>
+			</tr>
+			<tr>
+					<td>可复现性不足</td>
+					<td>snapshot + lock file + canonical workflow</td>
+					<td>workflow <code>run → apply</code> 二阶段提交</td>
+			</tr>
+	</tbody>
+</table>
+<p><img alt="alt text" loading="lazy" src="/posts/ai/clearing-settlement-poc-production-2/Gemini_Generated_Image_fkvpxsfkvpxsfkvp.png"></p>
+<hr>
+<h1 id="四给读者的-3-个作业今天就能上手">四、给读者的 3 个作业（今天就能上手）<a hidden class="anchor" aria-hidden="true" href="#四给读者的-3-个作业今天就能上手">#</a></h1>
+<ol>
+<li><strong>复现本 POC</strong>：照着第一章 8 步，本机跑通一张至少 1 万节点的清结算图谱；</li>
+<li><strong>做一个差异归因的 named query</strong>：在 config 里加一个 <code>batch_diff_top_reasons</code>（按 diff_reason 聚合 count 和 sum(diff_amount)），在 DeerFlow-By-CC 里问出来，并把 receipt 导出成审计工作底稿；</li>
+<li><strong>把默认实例绑定升级到更真实的体验</strong>：把 SOUL 里硬编码的 instance_id，改成「Cruxible 启动时读环境变量 <code>CRUXIBLE_DEFAULT_INSTANCE_ID=inst_xxx</code>」，实现代码级注入而不是 prompt 级注入。</li>
+</ol>
+<hr>
+<h1 id="五结语agent-的第二曲线在敢被审计">五、结语：Agent 的第二曲线，在「敢被审计」<a hidden class="anchor" aria-hidden="true" href="#五结语agent-的第二曲线在敢被审计">#</a></h1>
+<p>很多团队把大量精力花在「怎么让 Agent 回答更像人」上。但金融行业的真实问题是：只要它说的话不能被证明、不能被追责、不能回归复现，业务就不敢用它。</p>
+<p>DeerFlow-By-CC × Cruxible 这套组合，给了一个具体的工程蓝图：自然语言留给 DeerFlow-By-CC；事实、证据、规则、治理交给 Cruxible；两者之间用 MCP 这层标准协议，搭出一个既好用又敢用的 AI 工作台。</p>
+<p>清结算只是第一个落地行业，这套打法稍加改造，同样适用于保险理赔（保单 → 报案 → 核赔 → 打款 → 反欺诈）、供应链金融（采购单 → 发票 → 运单 → 仓单 → 保理）、监管合规（产品准入 → 尽调 → 审批 → 存续期 → 报送）。这些行业的共同点是：错一笔，就是真金白银甚至合规处罚。对它们来说，确定性从来不是可选项，而是入场券。</p>
+<blockquote>
+<p>参考资料：</p>
+<ul>
+<li>Cruxible 架构/命令/版本/权限：<a href="https://github.com/xiaoqianbaobao/cruxible/blob/main/AGENTS.md">AGENTS.md</a></li>
+<li>Cruxible daemon server 配置：<a href="https://github.com/xiaoqianbaobao/cruxible/blob/main/src/cruxible_core/server/config.py">server/config.py</a></li>
+<li>Cruxible MCP handlers + dispatch：<a href="https://github.com/xiaoqianbaobao/cruxible/blob/main/src/cruxible_core/mcp/handlers.py">mcp/handlers.py</a></li>
+<li>Cruxible SSE HTTP 入口：<a href="https://github.com/xiaoqianbaobao/cruxible/blob/main/src/cruxible_core/mcp/server_http.py">mcp/server_http.py</a></li>
+<li>Cruxible 质量评估 6 检查：<a href="https://github.com/xiaoqianbaobao/cruxible/blob/main/src/cruxible_core/query/evaluate.py">query/evaluate.py</a></li>
+<li>POC 落图脚本：<a href="https://github.com/xiaoqianbaobao/cruxible/blob/main/scripts/poc_deerflow_settlement_to_cruxible.py">scripts/poc_deerflow_settlement_to_cruxible.py</a></li>
+<li>DeerFlow-By-CC cruxible sub-agent（默认实例绑定）：<a href="https://github.com/xiaoqianbaobao/deer-flow-by-cc/blob/main/backend/.deer-flow/agents/cruxible/SOUL.md">backend/.deer-flow/agents/cruxible/SOUL.md</a></li>
+</ul>
+</blockquote>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+      <li><a href="https://csqread.top/tags/agent-%E5%B7%A5%E7%A8%8B%E5%8C%96/">Agent 工程化</a></li>
+      <li><a href="https://csqread.top/tags/%E6%B8%85%E7%BB%93%E7%AE%97/">清结算</a></li>
+      <li><a href="https://csqread.top/tags/poc/">POC</a></li>
+      <li><a href="https://csqread.top/tags/%E7%94%9F%E4%BA%A7%E5%8C%96/">生产化</a></li>
+      <li><a href="https://csqread.top/tags/cruxible/">Cruxible</a></li>
+    </ul>
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+        <span>&copy; 2026 <a href="https://csqread.top/">Qian&#39;s Blog</a></span> · 
+
+    
+    
+    <span>
+        Powered by
+        <a href="https://gohugo.io/?utm_source=papermod" rel="noopener" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" id="top-link" class="top-link hidden" aria-label="go to top" title="Go to Top (Alt + G)" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+        stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevrons-up">
+        <polyline points="17 11 12 6 7 11"></polyline>
+        <polyline points="17 18 12 13 7 18"></polyline>
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu');
+    if (menu) {
+        
+        const scrollPosition = localStorage.getItem("menu-scroll-position");
+        if (scrollPosition) {
+            menu.scrollLeft = parseInt(scrollPosition, 10);
+        }
+        
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var toplink = document.getElementById("top-link");
+    window.onscroll = function () {
+        const scrollThreshold = window.innerHeight;
+        if (document.body.scrollTop > scrollThreshold || document.documentElement.scrollTop > scrollThreshold) {
+            toplink.classList.remove("hidden");
+        } else {
+            toplink.classList.add("hidden");
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        const html = document.querySelector("html");
+        if (html.dataset.theme === "dark") {
+            html.dataset.theme = 'light';
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            html.dataset.theme = 'dark';
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+</body>
+
+</html>

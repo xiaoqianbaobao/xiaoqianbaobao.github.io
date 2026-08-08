@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto" data-theme="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>Agent 工程化的第二曲线：为什么必须用本体论把「对话」变成「可审计的事实底座」——清结算领域本体设计全解（上篇） | Qian&#39;s Blog</title>
+<meta name="keywords" content="Agent 工程化, 本体论, 知识图谱, 清结算, 可审计 AI">
+<meta name="description" content="把 Agent 从概率生成机放到正确位置：意图、编排留给 Agent，事实、推理、证据、治理交给确定性的决策引擎和本体化知识图谱。以清结算领域为例，完整拆解 17 类实体 × 25 类关系的本体设计全过程。">
+<meta name="author" content="">
+<link rel="canonical" href="https://csqread.top/posts/ai/agent-ontology-clearing-settlement-1/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.cd9298b33628769aa1bc1acebbbfd7aa11ce81dfe03484d479e1907760249a1d.css" integrity="sha256-zZKYszYodpqhvBrOu7/XqhHOgd/gNITUeeGQd2Akmh0=" rel="preload stylesheet" as="style">
+<link rel="icon" href="https://csqread.top/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://csqread.top/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://csqread.top/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://csqread.top/apple-touch-icon.png">
+<link rel="mask-icon" href="https://csqread.top/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="https://csqread.top/posts/ai/agent-ontology-clearing-settlement-1/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+                color-scheme: dark;
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .toc {
+                background: var(--entry);
+            }
+        }
+
+    </style>
+</noscript>
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.querySelector("html").dataset.theme = 'dark';
+    } else if (localStorage.getItem("pref-theme") === "light") {
+       document.querySelector("html").dataset.theme = 'light';
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.querySelector("html").dataset.theme = 'dark';
+    } else {
+        document.querySelector("html").dataset.theme = 'light';
+    }
+
+</script><meta property="og:url" content="https://csqread.top/posts/ai/agent-ontology-clearing-settlement-1/">
+  <meta property="og:site_name" content="Qian&#39;s Blog">
+  <meta property="og:title" content="Agent 工程化的第二曲线：为什么必须用本体论把「对话」变成「可审计的事实底座」——清结算领域本体设计全解（上篇）">
+  <meta property="og:description" content="把 Agent 从概率生成机放到正确位置：意图、编排留给 Agent，事实、推理、证据、治理交给确定性的决策引擎和本体化知识图谱。以清结算领域为例，完整拆解 17 类实体 × 25 类关系的本体设计全过程。">
+  <meta property="og:locale" content="zh_cn">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2026-08-09T00:00:00+08:00">
+    <meta property="article:modified_time" content="2026-08-09T00:00:00+08:00">
+    <meta property="article:tag" content="Agent 工程化">
+    <meta property="article:tag" content="本体论">
+    <meta property="article:tag" content="知识图谱">
+    <meta property="article:tag" content="清结算">
+    <meta property="article:tag" content="可审计 AI">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Agent 工程化的第二曲线：为什么必须用本体论把「对话」变成「可审计的事实底座」——清结算领域本体设计全解（上篇）">
+  <meta name="twitter:description" content="把 Agent 从概率生成机放到正确位置：意图、编排留给 Agent，事实、推理、证据、治理交给确定性的决策引擎和本体化知识图谱。以清结算领域为例，完整拆解 17 类实体 × 25 类关系的本体设计全过程。">
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "文章",
+      "item": "https://csqread.top/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "AI",
+      "item": "https://csqread.top/posts/ai/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  3 ,
+      "name": "Agent 工程化的第二曲线：为什么必须用本体论把「对话」变成「可审计的事实底座」——清结算领域本体设计全解（上篇）",
+      "item": "https://csqread.top/posts/ai/agent-ontology-clearing-settlement-1/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Agent 工程化的第二曲线：为什么必须用本体论把「对话」变成「可审计的事实底座」——清结算领域本体设计全解（上篇）",
+  "name": "Agent 工程化的第二曲线：为什么必须用本体论把「对话」变成「可审计的事实底座」——清结算领域本体设计全解（上篇）",
+  "description": "把 Agent 从概率生成机放到正确位置：意图、编排留给 Agent，事实、推理、证据、治理交给确定性的决策引擎和本体化知识图谱。以清结算领域为例，完整拆解 17 类实体 × 25 类关系的本体设计全过程。",
+  "keywords": [
+    "Agent 工程化", "本体论", "知识图谱", "清结算", "可审计 AI"
+  ],
+  "articleBody": " 系列说明：本篇是「DeerFlow-By-CC × Cruxible 清结算全链路实战」系列的上篇，讲清楚为什么要这么做、怎么设计本体。下篇是纯操作向的实操复现 + 生产化改造清单，不依赖本篇也能单独跑通，但建议先看这篇把方法论过一遍。\n本文适合人群：企业架构师、AI Infra 负责人、支付/清结算/风控系统开发者、对「Agent 如何走出 Demo 进入生产」焦虑的所有工程师。 你会得到：一套讲透「为什么 Agent 必须搭配本体论/知识图谱才能进入金融级生产」的方法论，以及一份 17 类实体 × 25 类关系的清结算领域本体设计全过程。\n0. 开篇：你的 Agent 到底是「玩具」还是「系统」？ 2026 年，绝大多数企业的 Agent 应用都卡在一个尴尬的位置：\nDemo 惊艳，上线即崩。演示时回答流畅；真接入生产后，面对 ERP、核心交易、财务、风控四套口径不同的系统，Agent 给出的答案像开盲盒。 「我觉得对」≠「审计相信对」。清结算一笔 200 万的差异，Agent 告诉你「大概率是 fee_mismatch」，但 CFO 要的是「证据链」：哪笔订单、哪条费率、哪个汇率、哪条记账分录、谁在什么时候批准过。 上下文越长，幻觉越大。把 10 张报表塞进 context，模型会像实习生一样挑几条最顺眼的串成一个故事——最危险的是，它自己不知道自己在讲故事。 系统多、口径多、名词多。支付系统说「settlement_batch」是渠道结算批次；财务说「settlement_batch」是入账凭证批次；运营说「settlement_batch」是商户对账单。同一个词，三套语义。 这是工程范式的错配：用一个概率生成机去解决一个要求确定性、可证明、可追责的企业问题。\n解法不是把 Agent 做得更聪明，而是把它放在正确的位置：Agent 负责意图理解、编排、创意性工作，而事实层、推理层、证据层、治理层交给一个确定性的决策引擎 + 本体化的知识图谱。\n本文用「清结算/对账/报表/审批/审计」这个最挑剔的金融场景，把 DeerFlow-By-CC（Agent 工作流平台）和 Cruxible（确定性决策引擎 + receipts）两个开源项目拼起来，讲清楚这套本体是怎么一步步设计出来的。\n一、Agent 在工程领域的 6 大死穴（以及为什么本体论是唯一解法） 在正式设计本体之前，必须先把「问题本质」讲透，否则本体设计很容易停在「画张 ER 图」的水平。\n1.1 死穴 1：语义对齐缺失——同一个词，三套解释 清结算里最典型的词：「结算批次（settlement_batch）」。\n系统 它说的 settlement_batch 实际上是 渠道收单系统 按日/按周打包的渠道清算文件（一个批次 = 一份文件） 资金结算系统 给商户出款的执行批次（一个批次 = 一笔打款） 财务总账系统 会计期末的汇总过账批次（一个批次 = 一张凭证组） Agent 没有本体论时，靠上下文里的高频词猜：提「渠道」就按渠道解释，提「出款」就按出款解释。10 次里中 8 次，剩下 2 次出了事故才知道。\n本体论的解法是对领域概念做「存在论分类」+「关系约束」+「主键语义」。在 Cruxible 里，SettlementBatch 这个实体类型一旦声明：\nentity_types: SettlementBatch: description: \"A per-channel per-date reconciliation and settlement envelope containing ledger entries, reports, and reconcile runs.\" properties: settlement_batch_id: {type: string, primary_key: true} channel_id: {type: string, indexed: true} merchant_id: {type: string, indexed: true} settlement_date: {type: date} currency: {type: string} status: {type: string} total_amount: {type: float} 这就不是随便一个 dict：primary_key 声明了「什么叫同一个 batch」（身份条件）；indexed 声明了哪些维度需要被批量遍历；description 不是给人看的，是给所有工具/Agent 的语义契约。后续所有工具、查询、receipt，都基于这个语义契约运行，Agent 不用再猜。\n1.2 死穴 2：推理不可证明——你怎么证明你说的差异是真的？ 传统 Agent 的输出形态是一段话加一段代码。问题是：这段代码跑了什么 SQL？JOIN 顺序对吗？用到的是哪天的快照？会不会有人在跑完之后改了数据？你说「merchant m_0408 有 1 条差异」，这 1 条是怎么算出来的？从 batch 到 line 到 order 走了哪条路径？\nCruxible 的核心发明是 receipt（收据）。每一次查询，除了返回结果，还返回一个 receipt_id。通过 cruxible_receipt 可以把这次查询的完整遍历路径、过滤条件、快照版本、命中实体全部复盘出来。传统 Agent 是实习生口头给你一个结论；Cruxible 是审计师给你一份工作底稿加每一笔的索引定位。\n1.3 死穴 3：治理缺失——谁能写、谁能读、谁批过？ 企业场景里，「写入」永远比「读取」敏感 100 倍。让 Agent 直接写数据库，DBA 先把你抬出去；让 Agent 直接写图，合规部门先把项目关停。\nCruxible 的权限分 4 层累积权限（在 permissions.py 里硬编码为工具级门槛，见 permissions.py:L61-L99）：\n模式 能做什么 典型角色 READ_ONLY query / schema / receipt / evaluate / inspect 业务分析、审计只读 GOVERNED_WRITE feedback / outcome / group / snapshot / source artifact 注册 运营、风控审核员 GRAPH_WRITE add_entity / add_relationship / canonical workflow apply 图谱工程师、治理 Owner ADMIN（默认） init / ingest / lock / clone / active config replace 平台管理员 这意味着你甚至可以把 DeerFlow-By-CC 暴露给实习生或外包——只要环境变量 CRUXIBLE_MODE=governed_write，它想直接改图都改不动，只能走「提案 → 审核 → 批准 → 应用」的治理闭环。\n1.4 死穴 4：上下文爆炸——100 万订单塞不进 context，也不该塞 清结算 POC 里真实遇到的问题：用户第一次给的 spec 是 orders=2,000,000 / merchants=5,000。如果把这 200 万订单塞进 context，$100 一次的推理费先不说，模型输出的结果根本不敢信。\n正确的工程范式是三段式的：Agent 只产出 spec（规格参数）；实际数据生成和批量写入交给 Cruxible workflow / 批处理脚本，确定性、可锁文件、可复现；Agent 在查询阶段按需取数，不拉全量。这就是「Agent 做编排 + 事实层做计算」。\n1.5 死穴 5：与已有系统割裂——ODS / DWH / ERP 才是事实来源 90% 的企业 Agent POC 死在只连了向量库，没连业务库。Cruxible 的设计哲学是不替代数仓、不替代核心交易，而是做一层治理化的语义中间层：ODS/DWH 的表通过 ingest 映射成 Cruxible 的实体/关系；ERP 的审批流通过 feedback + outcome 工具回写；最终所有系统的语义都对齐到同一套本体。\n1.6 死穴 6：可复现性不足——同一句问话，今天和明天答案不一样 企业要的是审计时一年后还能复现今天的结论。Cruxible 提供两层可复现性：快照（Snapshot），每次 canonical workflow apply 会产生一个不可变的状态快照；锁文件（cruxible.lock.yaml），workflow 的 provider/artifact/步骤顺序全哈希锁定，任何一处变动 hash 都对不上。这两件事加起来，就是金融级回归可复现的基石。\n二、从哲学本体论到企业工程本体论：Cruxible 的「4 原语 + 3 层承诺」 很多工程师一听到「本体论」就想跳过，其实三分钟就能讲成工程语言。\n2.1 一句话版本体论 本体论回答的是：在你的领域里，到底「存在」哪些对象？它们彼此之间以什么方式存在？满足什么不变条件？ER 图只说「有表、有外键」；本体论说「这个对象是独立存在的实体还是依附性的记录？这个关系是因果性的还是归因性的？这个规则是全对象恒成立还是条件成立？」\n2.2 Cruxible 的 4 个原语 Cruxible 把本体工程压缩成 4 个操作：\n原语 做什么 工程类比 Config 声明领域本体（entity_types / relationships / constraints / named_queries / workflows / quality_checks / integrations / artifacts） Schema + 业务规则 + API 契约 Ingest 把外部数据按 config 的映射确定性地写入图谱（Polars + NetworkX，每一步都有 execution trace） ETL，但带 provenance Query 基于图谱的有界遍历，返回结构化结果 + receipt（可复现遍历路径） 可证明的只读 API Feedback 人类/外部系统对实体/关系/提案进行信号标注，进入 governed 闭环并可被 evaluate 重新评估 治理 + 审核闭环 架构出处见 AGENTS.md 的 Architecture 章节。\n2.3 Cruxible 的 3 层承诺（为什么它不只是 Neo4j 的包装器） 很多人看到「知识图谱」就联想到 Neo4j + GDS，但 Cruxible 给了 3 层 Neo4j 不会主动给你的承诺：\n推理层承诺（Deterministic Engine）：给定同样的 config + 同样的快照，query 结果字节级一致；workflow 由 19 种 step kind 组成（见 schema.py:L2177-L2198），每一步 handler 都在 step_handlers 里有唯一实现。 证据层承诺（Receipts）：所有读操作产出可哈希的 receipt，可定位到快照、遍历路径、过滤条件。 治理层承诺（Permissions + Groups + Feedback）：写操作分层、差异提案可审批、所有变更留痕。 这 3 层承诺，是「金融级 POC 选 Cruxible 而不是 Neo4j + LangChain」的核心原因。\n三、DeerFlow-By-CC × Cruxible：企业级 AI 架构的双引擎形态 3.1 为什么这两个项目适合搭配 DeerFlow-By-CC（xiaoqianbaobao/deer-flow-by-cc）负责：人机交互 UI（聊天、文件、子智能体画廊）、多 agent 编排（LangGraph server）、工具注入（通过 MCP/extensions_config 把外部能力挂进对话）。 Cruxible（xiaoqianbaobao/cruxible）负责：事实层 + 证据层 + 治理层、确定性批量写入与工作流执行、receipts / evaluate / group governance。 分工可以概括为：DeerFlow-By-CC 是「嘴和手」（交互 + 编排），Cruxible 是「脑和账本」（语义 + 证据 + 治理）。\n3.2 参考架构 一个真实的清结算团队，系统分层通常是这样的：\n┌────────────────────────────────────────────────────────────┐ │ 交互层（DeerFlow-By-CC UI / Workspace / Agents） │ │ cruxible sub-agent ——默认指向清结算实例—— cruxible_* tools │ └──────────────────────────────┬─────────────────────────────┘ │ MCP over SSE ┌──────────────────────────────▼─────────────────────────────┐ │ 治理语义层（Cruxible FastMCP server :8123） │ │ cruxible_init / cruxible_batch_direct_write / cruxible_query│ │ cruxible_receipt / cruxible_evaluate / cruxible_workflow_* │ └──────────────────────────────┬─────────────────────────────┘ │ internal HTTP ┌──────────────────────────────▼─────────────────────────────┐ │ 图谱服务层（Cruxible daemon :8100） │ │ state.db（SQLite → 生产替换 Postgres） + 实例注册表 │ │ receipts / traces / feedback / groups / snapshots 全持久化 │ └──┬───────────────┬──────────────┬──────────────┬───────────┘ │ CDC/ETL │ Webhook │ Workflow │ 人工审核 ┌──▼────────┐ ┌────▼─────┐ ┌──────▼──────┐ ┌──────▼──────┐ │核心交易库 │ │ ERP/财务 │ │ 风控/争议 │ │ DeerFlow-By-CC 对话│ │(MySQL) │ │ (SAP/OA) │ │ 系统 │ │ （spec 生成）│ └───────────┘ └──────────┘ └─────────────┘ └─────────────┘ 关键连接细节：DeerFlow-By-CC 容器里通过 host.docker.internal:8123/sse 访问宿主机的 Cruxible MCP（因为 SSE 跑在宿主机上，见 server_http.py）。Cruxible daemon 支持 stdio / SSE / streamable-http 三模式；本系列强制使用 SSE，避免容器内缺二进制。\n四、清结算领域本体设计深度：17 类实体 × 25 类关系的设计 rationale 这是全篇最值钱的一节。本体设计的黄金口诀是「先分存在层，再串因果链，最后锁约束」。\n4.1 存在层 5 大类：把实体按「存在独立性」分层 我们把清结算领域的 17 类实体分成 5 个存在等级：\n层级 1：领域根对象（独立存在的聚合根） 即使所有其他对象都删掉，这些东西仍然「存在」：\nMerchant（商户）settlement_poc_config.yaml:L38-L56 Channel（渠道/收单行）settlement_poc_config.yaml:L57-L71 Account（结算账户/记账账户）settlement_poc_config.yaml:L72-L88 Merchant 有 risk_level / country / industry / active——这些是领域不变属性，不是业务流程状态；Account 的主键是 account_id 而不是银行卡号，银行卡号是 PII，单独脱敏；Channel 的 settlement_cycle: T+1 / T+3 / weekly 决定了后续 SettlementBatch 的生成频率，是重要的因果条件。\n层级 2：规则/参考对象 这些是全量业务成立的前提，独立于任何单条交易：\nFeeRule（费率规则：rate + fixed_fee + 生效区间）settlement_poc_config.yaml:L90-L109 FXRate（汇率快照：pair + rate + quote_time） 为什么把 FeeRule 做成实体而不是把 rate 直接塞进 PaymentOrder？因为审计要追责。半年后，业务问「6 月 5 日那天为什么按 0.6% 收费而不是 0.5%」，需要沿着 order_applied_fee_rule 这条关系，直接定位到「生效起始日=2026-01-01，结束日=2026-06-30」的那个规则版本。\n层级 3：交易/资金事件（流程主体） PaymentOrder（支付订单：核心交易主对象） Transfer（资金划转：订单到渠道账户的实际转移） LedgerEntry（记账分录：双分录定位，transfer + amount + direction） SettlementBatch（按渠道×日期×币种的结算批次信封） 本体设计的一个关键决策是：Transfer 和 LedgerEntry 必须是独立实体，不能退化为 PaymentOrder 的两个 JSON 数组字段。原因有三：退化成嵌套字段后没法直接查某条分录归属了哪些 batch；跨订单的对账（同一张银行账单对应多笔订单）没法建模；receipts 也没法给出到分录级的定位。\n层级 4：对账/治理记录（事实派生体） ReconcileRun（一次对账任务 run） ReconcileLine（一行对账明细：expected_amount vs actual_amount，diff_amount + diff_reason） Dispute（争议/拒付/退款） ReconcileLine 不能脱离 ReconcileRun 存在；Dispute 不能脱离 PaymentOrder 存在。这个存在依赖直接影响后续关系的基数（cardinality）：run_has_line 声明为 one_to_many，run_id 在 ReconcileLine 上 indexed: true，保证按 run 批量分页时不做全表扫。\n层级 5：审计/报表记录（治理派生体） Report（报表产物：SettlementBatch 生成的对账单/差异报表） Approval（对 Report 的审批动作：approver + decision + comment） AuditEvent（全链路审计事件：actor + event_type + payload JSON） 这一层的核心价值是合规留痕。AuditEvent 的 payload 用 type: json：审计事件要保留原始细节（比如风控规则命中的 18 个字段），但检索时只需要索引 event_type / actor / occurred_at。\n图注 · 真实 UI 证据：Cruxible-app 的 Type map，把上面手动分层的 17 类实体自动投射到可视化卡片上。卡片颜色暗示存在层等级（聚合根 / 规则 / 事件 / 治理记录 / 审计记录 5 类），卡片内部数字是该实体类型的实例数量。这张图能帮你避免 3 个死穴：拼写错、数量漏、类型重复。\n4.2 因果链 4 条主线：关系不是乱拉的 我们把 25 类关系分成 4 条因果主链：\n主链 A：交易资金链（订单 → 转账 → 分录 → 账户） PaymentOrder ──order_paid_by_transfer──▶ Transfer Transfer ──transfer_posts_ledger_entry──▶ LedgerEntry LedgerEntry ──ledger_entry_to_account──▶ Account LedgerEntry ──ledger_entry_for_order──▶ PaymentOrder 这是清结算最基础的「钱去了哪里」主链，查差异时永远从这条链开始回溯。\n主链 B：结算对账链（批次 → run → line → order/dispute） SettlementBatch ──batch_reconciled_by_run──▶ ReconcileRun ReconcileRun ──run_has_line──▶ ReconcileLine ReconcileLine ──line_for_order──▶ PaymentOrder ReconcileLine ──line_flags_dispute──▶ Dispute Dispute ──dispute_on_order──▶ PaymentOrder 这是「为什么不平」的主链。典型对账问题：batch → run → line，找到 diff_amount 最大的前 20 条；每条 line → order → transfer → ledger → account，一路追溯；命中 dispute 时自动附争议状态和 reason_code。\n主链 C：规则归属链（谁用了哪个费率、哪个汇率） PaymentOrder ──order_applied_fee_rule──▶ FeeRule Transfer ──transfer_used_fx_rate──▶ FXRate 这是「差异归因」最常见的两条：fee_mismatch 和 fx_mismatch。\n主链 D：报表审批审计链 Report ──report_for_batch──▶ SettlementBatch Approval ──approval_for_report──▶ Report AuditEvent ──audit_on_order──▶ PaymentOrder AuditEvent ──audit_on_batch──▶ SettlementBatch 这是「事后追责」主链。\n4.3 约束锁：明确什么不允许发生 本体论最后一步是锁不变条件。清结算里典型的不变条件包括：同一笔 order 的 fee_amount 必须 ≥ 0；同一 batch 内所有 ledger_entry 的 currency 必须等于 batch.currency；dispute.amount 不能超过关联 order.amount；每个 batch 至少有 1 个 reconcile_run；每个 approval.decision ∈ {approved, rejected, escalated}。在实际生产里，这些会用 Cruxible 的 constraints 和 quality_checks 字段声明。\n图注 · 真实 UI 证据：Cruxible-app State Graph 界面，左半边 ENTITIES 类型筛选器对应上面 4.1 节的 17 类实体分层；Cosmos 引擎渲染的点线图是从 daemon 直接拉取的 Live Graph，非 Mock 非快照。约束锁就是图的不可变形：约束违规的实体/边在 UI 中会被标红并阻止其进入 Canonical apply。\n五、Cruxible 与业务系统结合的 4 种模式（从 POC 到企业必须懂） 很多人把 Cruxible 当成写点脚本往里灌数据，这只能算 POC 级。进入企业时，需要根据数据来源的实时性要求和治理要求选 4 种模式：\n模式 1：对话驱动 Spec 生成——适合建模验证、案例、培训 数据流：\nDeerFlow-By-CC 用户对话 → 生成小规模 spec JSON → 落 thread state ↓ poc_deerflow_settlement_to_cruxible.py ↓ Cruxible daemon batch_direct_write ↓ 实体 receipts / 关系 receipts 适用场景：做 POC / Demo，领域建模阶段快速生成不同规模的假数据做可视化与查询体验，培训新人「对账排障怎么查」。优点是启动快、灵活、所见即所得；缺点是不适合真实数据，不保证时序一致性与幂等，具体操作步骤会在下篇展开。\n模式 2：CDC / 数据库变更捕获 → Cruxible Ingest——适合核心交易/订单库 数据流：\nMySQL / Postgres 核心库 → Debezium / Canal → Kafka ↓ Cruxible workflow: provider(consumer) → make_entities → apply_entities 用 workflow 而不是直接脚本的原因是 workflow 有 lock file：provider 版本、步骤顺序、映射规则全哈希；同时有 execution trace：每条 provider 返回的 artifact hash 存在 state.db。典型例子：每 5 分钟从订单表 CDC 灌 20 万条 PaymentOrder，Cruxible 用 Polars DataFrame 做 dedupe、join、索引，然后 apply 到图里。\n模式 3：业务系统 Webhook → DeerFlow-By-CC Agent → Cruxible Governed Write——适合审批/风控/争议 数据流：\nERP 审批系统 → webhook (approval_id=AP-123, decision=rejected) ↓ DeerFlow-By-CC cruxible sub-agent ↓ cruxible_list_queries → query → receipt → cruxible_feedback ↓ Approval 实体 + 决策 record 入图 这个模式的关键点是 DeerFlow-By-CC Agent 不直接写图，而是写 feedback：合规喜欢，因为所有人工判断都有 actor、timestamp、comment；审计喜欢，决策前 query 的 receipt 和决策后 feedback record 可串联；业务喜欢，不用开数据库权限，只开放 GOVERNED_WRITE 级工具集。\n模式 4：数仓 T+1 报表 → Cruxible Workflow Batch Apply——适合报表/BI 对齐 数据流：\nSnowflake / Databricks / Hive → export parquet ↓ Cruxible artifacts: register_source_artifacts ↓ Workflow: provider → shape_items → dedupe → join → aggregate → make_candidates → apply_all 这个模式最强的点是数仓跑了什么版本的数据，Cruxible 就有对应的 snapshot，审计时两边都能对齐。\n结语：本体设计完了，接下来是把它跑起来 到这里，「为什么」和「怎么设计」都讲完了：6 大死穴对应到 4 原语 + 3 层承诺，17 类实体按 5 个存在层分类，25 类关系归到 4 条因果主链，再加上和业务系统结合的 4 种集成模式。\n下一篇是纯操作向的实战：8 步在本机跑出一张 5.6 万节点、12.8 万条边的清结算复杂图谱，并且给出从 POC 走向生产必须做的 10 件事——多租户、权限分层、持久化升级、监控告警、PII 脱敏等等。\n参考资料：\nCruxible 架构/命令/版本/权限：AGENTS.md Cruxible MCP tools：mcp/tools.py Cruxible 权限分层：runtime/permissions.py Cruxible StepKind 19 步：config/schema.py#L2177-L2198 清结算本体配置：.poc/settlement/settlement_poc_config.yaml ",
+  "wordCount" : "8059",
+  "inLanguage": "en",
+  "datePublished": "2026-08-09T00:00:00+08:00",
+  "dateModified": "2026-08-09T00:00:00+08:00",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://csqread.top/posts/ai/agent-ontology-clearing-settlement-1/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Qian's Blog",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://csqread.top/favicon.ico"
+    }
+  }
+}
+</script>
+</head>
+<body id="top">
+    
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    
+    <h1 class="post-title entry-hint-parent">
+      Agent 工程化的第二曲线：为什么必须用本体论把「对话」变成「可审计的事实底座」——清结算领域本体设计全解（上篇）
+    </h1>
+    <div class="post-description">
+      把 Agent 从概率生成机放到正确位置：意图、编排留给 Agent，事实、推理、证据、治理交给确定性的决策引擎和本体化知识图谱。以清结算领域为例，完整拆解 17 类实体 × 25 类关系的本体设计全过程。
+    </div>
+    <div class="post-meta">
+
+<span title='2026-08-09 00:00:00 +0800 CST'>August 9, 2026</span>
+
+</div>
+  </header> 
+  <div class="post-content md-content"><blockquote>
+<p>系列说明：本篇是「DeerFlow-By-CC × Cruxible 清结算全链路实战」系列的上篇，讲清楚<strong>为什么</strong>要这么做、<strong>怎么</strong>设计本体。下篇是纯操作向的实操复现 + 生产化改造清单，不依赖本篇也能单独跑通，但建议先看这篇把方法论过一遍。</p>
+</blockquote>
+<p><img alt="alt text" loading="lazy" src="/posts/ai/agent-ontology-clearing-settlement-1/Gemini_Generated_Image_j0iqrjj0iqrjj0iq.png"></p>
+<blockquote>
+<p>本文适合人群：企业架构师、AI Infra 负责人、支付/清结算/风控系统开发者、对「Agent 如何走出 Demo 进入生产」焦虑的所有工程师。
+你会得到：一套讲透「为什么 Agent 必须搭配本体论/知识图谱才能进入金融级生产」的方法论，以及一份 17 类实体 × 25 类关系的清结算领域本体设计全过程。</p>
+</blockquote>
+<hr>
+<h1 id="0-开篇你的-agent-到底是玩具还是系统">0. 开篇：你的 Agent 到底是「玩具」还是「系统」？<a hidden class="anchor" aria-hidden="true" href="#0-开篇你的-agent-到底是玩具还是系统">#</a></h1>
+<p>2026 年，绝大多数企业的 Agent 应用都卡在一个尴尬的位置：</p>
+<ul>
+<li><strong>Demo 惊艳，上线即崩</strong>。演示时回答流畅；真接入生产后，面对 ERP、核心交易、财务、风控四套口径不同的系统，Agent 给出的答案像开盲盒。</li>
+<li><strong>「我觉得对」≠「审计相信对」</strong>。清结算一笔 200 万的差异，Agent 告诉你「大概率是 fee_mismatch」，但 CFO 要的是「证据链」：哪笔订单、哪条费率、哪个汇率、哪条记账分录、谁在什么时候批准过。</li>
+<li><strong>上下文越长，幻觉越大</strong>。把 10 张报表塞进 context，模型会像实习生一样挑几条最顺眼的串成一个故事——最危险的是，它自己不知道自己在讲故事。</li>
+<li><strong>系统多、口径多、名词多</strong>。支付系统说「settlement_batch」是渠道结算批次；财务说「settlement_batch」是入账凭证批次；运营说「settlement_batch」是商户对账单。同一个词，三套语义。</li>
+</ul>
+<p>这是工程范式的错配：用一个概率生成机去解决一个要求确定性、可证明、可追责的企业问题。</p>
+<p>解法不是把 Agent 做得更聪明，而是把它放在正确的位置：Agent 负责意图理解、编排、创意性工作，而事实层、推理层、证据层、治理层交给一个确定性的决策引擎 + 本体化的知识图谱。</p>
+<p>本文用「清结算/对账/报表/审批/审计」这个最挑剔的金融场景，把 DeerFlow-By-CC（Agent 工作流平台）和 Cruxible（确定性决策引擎 + receipts）两个开源项目拼起来，讲清楚这套本体是怎么一步步设计出来的。</p>
+<hr>
+<h1 id="一agent-在工程领域的-6-大死穴以及为什么本体论是唯一解法">一、Agent 在工程领域的 6 大死穴（以及为什么本体论是唯一解法）<a hidden class="anchor" aria-hidden="true" href="#一agent-在工程领域的-6-大死穴以及为什么本体论是唯一解法">#</a></h1>
+<p><img alt="alt text" loading="lazy" src="/posts/ai/agent-ontology-clearing-settlement-1/Gemini_Generated_Image_194lpa194lpa194l.png"></p>
+<p>在正式设计本体之前，必须先把「问题本质」讲透，否则本体设计很容易停在「画张 ER 图」的水平。</p>
+<h2 id="11-死穴-1语义对齐缺失同一个词三套解释">1.1 死穴 1：语义对齐缺失——同一个词，三套解释<a hidden class="anchor" aria-hidden="true" href="#11-死穴-1语义对齐缺失同一个词三套解释">#</a></h2>
+<p>清结算里最典型的词：「结算批次（settlement_batch）」。</p>
+<table>
+	<thead>
+			<tr>
+					<th>系统</th>
+					<th>它说的 settlement_batch 实际上是</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td>渠道收单系统</td>
+					<td>按日/按周打包的渠道清算文件（一个批次 = 一份文件）</td>
+			</tr>
+			<tr>
+					<td>资金结算系统</td>
+					<td>给商户出款的执行批次（一个批次 = 一笔打款）</td>
+			</tr>
+			<tr>
+					<td>财务总账系统</td>
+					<td>会计期末的汇总过账批次（一个批次 = 一张凭证组）</td>
+			</tr>
+	</tbody>
+</table>
+<p>Agent 没有本体论时，靠上下文里的高频词猜：提「渠道」就按渠道解释，提「出款」就按出款解释。10 次里中 8 次，剩下 2 次出了事故才知道。</p>
+<p>本体论的解法是对领域概念做「存在论分类」+「关系约束」+「主键语义」。在 Cruxible 里，<code>SettlementBatch</code> 这个实体类型一旦声明：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#f92672">entity_types</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">SettlementBatch</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">description</span>: <span style="color:#e6db74">&#34;A per-channel per-date reconciliation and settlement envelope containing ledger entries, reports, and reconcile runs.&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">properties</span>:
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">settlement_batch_id</span>: {<span style="color:#f92672">type: string, primary_key</span>: <span style="color:#66d9ef">true</span>}
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">channel_id</span>:          {<span style="color:#f92672">type: string, indexed</span>: <span style="color:#66d9ef">true</span>}
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">merchant_id</span>:         {<span style="color:#f92672">type: string, indexed</span>: <span style="color:#66d9ef">true</span>}
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">settlement_date</span>:     {<span style="color:#f92672">type</span>: <span style="color:#ae81ff">date}</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">currency</span>:            {<span style="color:#f92672">type</span>: <span style="color:#ae81ff">string}</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">status</span>:              {<span style="color:#f92672">type</span>: <span style="color:#ae81ff">string}</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">total_amount</span>:        {<span style="color:#f92672">type</span>: <span style="color:#ae81ff">float}</span>
+</span></span></code></pre></div><p>这就不是随便一个 dict：<code>primary_key</code> 声明了「什么叫同一个 batch」（身份条件）；<code>indexed</code> 声明了哪些维度需要被批量遍历；<code>description</code> 不是给人看的，是给所有工具/Agent 的语义契约。后续所有工具、查询、receipt，都基于这个语义契约运行，Agent 不用再猜。</p>
+<h2 id="12-死穴-2推理不可证明你怎么证明你说的差异是真的">1.2 死穴 2：推理不可证明——你怎么证明你说的差异是真的？<a hidden class="anchor" aria-hidden="true" href="#12-死穴-2推理不可证明你怎么证明你说的差异是真的">#</a></h2>
+<p>传统 Agent 的输出形态是一段话加一段代码。问题是：这段代码跑了什么 SQL？JOIN 顺序对吗？用到的是哪天的快照？会不会有人在跑完之后改了数据？你说「merchant m_0408 有 1 条差异」，这 1 条是怎么算出来的？从 batch 到 line 到 order 走了哪条路径？</p>
+<p>Cruxible 的核心发明是 receipt（收据）。每一次查询，除了返回结果，还返回一个 <code>receipt_id</code>。通过 <code>cruxible_receipt</code> 可以把这次查询的完整遍历路径、过滤条件、快照版本、命中实体全部复盘出来。传统 Agent 是实习生口头给你一个结论；Cruxible 是审计师给你一份工作底稿加每一笔的索引定位。</p>
+<h2 id="13-死穴-3治理缺失谁能写谁能读谁批过">1.3 死穴 3：治理缺失——谁能写、谁能读、谁批过？<a hidden class="anchor" aria-hidden="true" href="#13-死穴-3治理缺失谁能写谁能读谁批过">#</a></h2>
+<p>企业场景里，「写入」永远比「读取」敏感 100 倍。让 Agent 直接写数据库，DBA 先把你抬出去；让 Agent 直接写图，合规部门先把项目关停。</p>
+<p>Cruxible 的权限分 4 层累积权限（在 <code>permissions.py</code> 里硬编码为工具级门槛，见 <a href="https://github.com/xiaoqianbaobao/cruxible/blob/main/src/cruxible_core/runtime/permissions.py#L61-L99">permissions.py:L61-L99</a>）：</p>
+<table>
+	<thead>
+			<tr>
+					<th>模式</th>
+					<th>能做什么</th>
+					<th>典型角色</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td><code>READ_ONLY</code></td>
+					<td>query / schema / receipt / evaluate / inspect</td>
+					<td>业务分析、审计只读</td>
+			</tr>
+			<tr>
+					<td><code>GOVERNED_WRITE</code></td>
+					<td>feedback / outcome / group / snapshot / source artifact 注册</td>
+					<td>运营、风控审核员</td>
+			</tr>
+			<tr>
+					<td><code>GRAPH_WRITE</code></td>
+					<td>add_entity / add_relationship / canonical workflow apply</td>
+					<td>图谱工程师、治理 Owner</td>
+			</tr>
+			<tr>
+					<td><code>ADMIN</code>（默认）</td>
+					<td>init / ingest / lock / clone / active config replace</td>
+					<td>平台管理员</td>
+			</tr>
+	</tbody>
+</table>
+<p>这意味着你甚至可以把 DeerFlow-By-CC 暴露给实习生或外包——只要环境变量 <code>CRUXIBLE_MODE=governed_write</code>，它想直接改图都改不动，只能走「提案 → 审核 → 批准 → 应用」的治理闭环。</p>
+<h2 id="14-死穴-4上下文爆炸100-万订单塞不进-context也不该塞">1.4 死穴 4：上下文爆炸——100 万订单塞不进 context，也不该塞<a hidden class="anchor" aria-hidden="true" href="#14-死穴-4上下文爆炸100-万订单塞不进-context也不该塞">#</a></h2>
+<p>清结算 POC 里真实遇到的问题：用户第一次给的 spec 是 <code>orders=2,000,000 / merchants=5,000</code>。如果把这 200 万订单塞进 context，$100 一次的推理费先不说，模型输出的结果根本不敢信。</p>
+<p>正确的工程范式是三段式的：Agent 只产出 spec（规格参数）；实际数据生成和批量写入交给 Cruxible workflow / 批处理脚本，确定性、可锁文件、可复现；Agent 在查询阶段按需取数，不拉全量。这就是「Agent 做编排 + 事实层做计算」。</p>
+<h2 id="15-死穴-5与已有系统割裂ods--dwh--erp-才是事实来源">1.5 死穴 5：与已有系统割裂——ODS / DWH / ERP 才是事实来源<a hidden class="anchor" aria-hidden="true" href="#15-死穴-5与已有系统割裂ods--dwh--erp-才是事实来源">#</a></h2>
+<p>90% 的企业 Agent POC 死在只连了向量库，没连业务库。Cruxible 的设计哲学是不替代数仓、不替代核心交易，而是做一层治理化的语义中间层：ODS/DWH 的表通过 <code>ingest</code> 映射成 Cruxible 的实体/关系；ERP 的审批流通过 <code>feedback</code> + <code>outcome</code> 工具回写；最终所有系统的语义都对齐到同一套本体。</p>
+<h2 id="16-死穴-6可复现性不足同一句问话今天和明天答案不一样">1.6 死穴 6：可复现性不足——同一句问话，今天和明天答案不一样<a hidden class="anchor" aria-hidden="true" href="#16-死穴-6可复现性不足同一句问话今天和明天答案不一样">#</a></h2>
+<p>企业要的是审计时一年后还能复现今天的结论。Cruxible 提供两层可复现性：快照（Snapshot），每次 canonical workflow apply 会产生一个不可变的状态快照；锁文件（<code>cruxible.lock.yaml</code>），workflow 的 provider/artifact/步骤顺序全哈希锁定，任何一处变动 hash 都对不上。这两件事加起来，就是金融级回归可复现的基石。</p>
+<hr>
+<h1 id="二从哲学本体论到企业工程本体论cruxible-的4-原语--3-层承诺">二、从哲学本体论到企业工程本体论：Cruxible 的「4 原语 + 3 层承诺」<a hidden class="anchor" aria-hidden="true" href="#二从哲学本体论到企业工程本体论cruxible-的4-原语--3-层承诺">#</a></h1>
+<p><img alt="alt text" loading="lazy" src="/posts/ai/agent-ontology-clearing-settlement-1/Gemini_Generated_Image_dv8kt1dv8kt1dv8k.png"></p>
+<p>很多工程师一听到「本体论」就想跳过，其实三分钟就能讲成工程语言。</p>
+<h2 id="21-一句话版本体论">2.1 一句话版本体论<a hidden class="anchor" aria-hidden="true" href="#21-一句话版本体论">#</a></h2>
+<p>本体论回答的是：在你的领域里，到底「存在」哪些对象？它们彼此之间以什么方式存在？满足什么不变条件？ER 图只说「有表、有外键」；本体论说「这个对象是独立存在的实体还是依附性的记录？这个关系是因果性的还是归因性的？这个规则是全对象恒成立还是条件成立？」</p>
+<h2 id="22-cruxible-的-4-个原语">2.2 Cruxible 的 4 个原语<a hidden class="anchor" aria-hidden="true" href="#22-cruxible-的-4-个原语">#</a></h2>
+<p>Cruxible 把本体工程压缩成 4 个操作：</p>
+<table>
+	<thead>
+			<tr>
+					<th>原语</th>
+					<th>做什么</th>
+					<th>工程类比</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td><strong>Config</strong></td>
+					<td>声明领域本体（entity_types / relationships / constraints / named_queries / workflows / quality_checks / integrations / artifacts）</td>
+					<td>Schema + 业务规则 + API 契约</td>
+			</tr>
+			<tr>
+					<td><strong>Ingest</strong></td>
+					<td>把外部数据按 config 的映射确定性地写入图谱（Polars + NetworkX，每一步都有 execution trace）</td>
+					<td>ETL，但带 provenance</td>
+			</tr>
+			<tr>
+					<td><strong>Query</strong></td>
+					<td>基于图谱的有界遍历，返回结构化结果 + receipt（可复现遍历路径）</td>
+					<td>可证明的只读 API</td>
+			</tr>
+			<tr>
+					<td><strong>Feedback</strong></td>
+					<td>人类/外部系统对实体/关系/提案进行信号标注，进入 governed 闭环并可被 evaluate 重新评估</td>
+					<td>治理 + 审核闭环</td>
+			</tr>
+	</tbody>
+</table>
+<p>架构出处见 <a href="https://github.com/xiaoqianbaobao/cruxible/blob/main/AGENTS.md">AGENTS.md</a> 的 Architecture 章节。</p>
+<h2 id="23-cruxible-的-3-层承诺为什么它不只是-neo4j-的包装器">2.3 Cruxible 的 3 层承诺（为什么它不只是 Neo4j 的包装器）<a hidden class="anchor" aria-hidden="true" href="#23-cruxible-的-3-层承诺为什么它不只是-neo4j-的包装器">#</a></h2>
+<p>很多人看到「知识图谱」就联想到 Neo4j + GDS，但 Cruxible 给了 3 层 Neo4j 不会主动给你的承诺：</p>
+<ol>
+<li><strong>推理层承诺（Deterministic Engine）</strong>：给定同样的 config + 同样的快照，query 结果字节级一致；workflow 由 19 种 step kind 组成（见 <a href="https://github.com/xiaoqianbaobao/cruxible/blob/main/src/cruxible_core/config/schema.py#L2177-L2198">schema.py:L2177-L2198</a>），每一步 handler 都在 step_handlers 里有唯一实现。</li>
+<li><strong>证据层承诺（Receipts）</strong>：所有读操作产出可哈希的 receipt，可定位到快照、遍历路径、过滤条件。</li>
+<li><strong>治理层承诺（Permissions + Groups + Feedback）</strong>：写操作分层、差异提案可审批、所有变更留痕。</li>
+</ol>
+<p>这 3 层承诺，是「金融级 POC 选 Cruxible 而不是 Neo4j + LangChain」的核心原因。</p>
+<hr>
+<h1 id="三deerflow-by-cc--cruxible企业级-ai-架构的双引擎形态">三、DeerFlow-By-CC × Cruxible：企业级 AI 架构的双引擎形态<a hidden class="anchor" aria-hidden="true" href="#三deerflow-by-cc--cruxible企业级-ai-架构的双引擎形态">#</a></h1>
+<h2 id="31-为什么这两个项目适合搭配">3.1 为什么这两个项目适合搭配<a hidden class="anchor" aria-hidden="true" href="#31-为什么这两个项目适合搭配">#</a></h2>
+<ul>
+<li><strong>DeerFlow-By-CC</strong>（<a href="https://github.com/xiaoqianbaobao/deer-flow-by-cc">xiaoqianbaobao/deer-flow-by-cc</a>）负责：人机交互 UI（聊天、文件、子智能体画廊）、多 agent 编排（LangGraph server）、工具注入（通过 MCP/extensions_config 把外部能力挂进对话）。</li>
+<li><strong>Cruxible</strong>（<a href="https://github.com/xiaoqianbaobao/cruxible">xiaoqianbaobao/cruxible</a>）负责：事实层 + 证据层 + 治理层、确定性批量写入与工作流执行、receipts / evaluate / group governance。</li>
+</ul>
+<p>分工可以概括为：DeerFlow-By-CC 是「嘴和手」（交互 + 编排），Cruxible 是「脑和账本」（语义 + 证据 + 治理）。</p>
+<h2 id="32-参考架构">3.2 参考架构<a hidden class="anchor" aria-hidden="true" href="#32-参考架构">#</a></h2>
+<p><img alt="alt text" loading="lazy" src="/posts/ai/agent-ontology-clearing-settlement-1/Gemini_Generated_Image_lv5mz8lv5mz8lv5m.png"></p>
+<p>一个真实的清结算团队，系统分层通常是这样的：</p>
+<pre tabindex="0"><code>┌────────────────────────────────────────────────────────────┐
+│            交互层（DeerFlow-By-CC UI / Workspace / Agents）         │
+│  cruxible sub-agent  ——默认指向清结算实例——  cruxible_* tools │
+└──────────────────────────────┬─────────────────────────────┘
+                               │  MCP over SSE
+┌──────────────────────────────▼─────────────────────────────┐
+│         治理语义层（Cruxible FastMCP server :8123）          │
+│  cruxible_init / cruxible_batch_direct_write / cruxible_query│
+│  cruxible_receipt / cruxible_evaluate / cruxible_workflow_*  │
+└──────────────────────────────┬─────────────────────────────┘
+                               │  internal HTTP
+┌──────────────────────────────▼─────────────────────────────┐
+│          图谱服务层（Cruxible daemon :8100）                 │
+│  state.db（SQLite → 生产替换 Postgres） + 实例注册表          │
+│  receipts / traces / feedback / groups / snapshots 全持久化  │
+└──┬───────────────┬──────────────┬──────────────┬───────────┘
+   │ CDC/ETL       │ Webhook      │ Workflow     │ 人工审核
+┌──▼────────┐ ┌────▼─────┐ ┌──────▼──────┐ ┌──────▼──────┐
+│核心交易库  │ │ ERP/财务  │ │ 风控/争议   │ │ DeerFlow-By-CC 对话│
+│(MySQL)    │ │ (SAP/OA) │ │ 系统        │ │ （spec 生成）│
+└───────────┘ └──────────┘ └─────────────┘ └─────────────┘
+</code></pre><p>关键连接细节：DeerFlow-By-CC 容器里通过 <code>host.docker.internal:8123/sse</code> 访问宿主机的 Cruxible MCP（因为 SSE 跑在宿主机上，见 <a href="https://github.com/xiaoqianbaobao/cruxible/blob/main/src/cruxible_core/mcp/server_http.py">server_http.py</a>）。Cruxible daemon 支持 stdio / SSE / streamable-http 三模式；本系列强制使用 SSE，避免容器内缺二进制。</p>
+<hr>
+<h1 id="四清结算领域本体设计深度17-类实体--25-类关系的设计-rationale">四、清结算领域本体设计深度：17 类实体 × 25 类关系的设计 rationale<a hidden class="anchor" aria-hidden="true" href="#四清结算领域本体设计深度17-类实体--25-类关系的设计-rationale">#</a></h1>
+<p>这是全篇最值钱的一节。本体设计的黄金口诀是「先分存在层，再串因果链，最后锁约束」。</p>
+<h2 id="41-存在层-5-大类把实体按存在独立性分层">4.1 存在层 5 大类：把实体按「存在独立性」分层<a hidden class="anchor" aria-hidden="true" href="#41-存在层-5-大类把实体按存在独立性分层">#</a></h2>
+<p><img alt="alt text" loading="lazy" src="/posts/ai/agent-ontology-clearing-settlement-1/Gemini_Generated_Image_acych6acych6acyc.png"></p>
+<p>我们把清结算领域的 17 类实体分成 5 个存在等级：</p>
+<h3 id="层级-1领域根对象独立存在的聚合根">层级 1：领域根对象（独立存在的聚合根）<a hidden class="anchor" aria-hidden="true" href="#层级-1领域根对象独立存在的聚合根">#</a></h3>
+<p>即使所有其他对象都删掉，这些东西仍然「存在」：</p>
+<ul>
+<li><strong>Merchant</strong>（商户）<a href="https://github.com/xiaoqianbaobao/cruxible/blob/main/.poc/settlement/settlement_poc_config.yaml#L38-L56">settlement_poc_config.yaml:L38-L56</a></li>
+<li><strong>Channel</strong>（渠道/收单行）<a href="https://github.com/xiaoqianbaobao/cruxible/blob/main/.poc/settlement/settlement_poc_config.yaml#L57-L71">settlement_poc_config.yaml:L57-L71</a></li>
+<li><strong>Account</strong>（结算账户/记账账户）<a href="https://github.com/xiaoqianbaobao/cruxible/blob/main/.poc/settlement/settlement_poc_config.yaml#L72-L88">settlement_poc_config.yaml:L72-L88</a></li>
+</ul>
+<p>Merchant 有 <code>risk_level / country / industry / active</code>——这些是领域不变属性，不是业务流程状态；Account 的主键是 <code>account_id</code> 而不是银行卡号，银行卡号是 PII，单独脱敏；Channel 的 <code>settlement_cycle: T+1 / T+3 / weekly</code> 决定了后续 <code>SettlementBatch</code> 的生成频率，是重要的因果条件。</p>
+<h3 id="层级-2规则参考对象">层级 2：规则/参考对象<a hidden class="anchor" aria-hidden="true" href="#层级-2规则参考对象">#</a></h3>
+<p>这些是全量业务成立的前提，独立于任何单条交易：</p>
+<ul>
+<li><strong>FeeRule</strong>（费率规则：rate + fixed_fee + 生效区间）<a href="https://github.com/xiaoqianbaobao/cruxible/blob/main/.poc/settlement/settlement_poc_config.yaml#L90-L109">settlement_poc_config.yaml:L90-L109</a></li>
+<li><strong>FXRate</strong>（汇率快照：pair + rate + quote_time）</li>
+</ul>
+<p>为什么把 FeeRule 做成实体而不是把 rate 直接塞进 PaymentOrder？因为审计要追责。半年后，业务问「6 月 5 日那天为什么按 0.6% 收费而不是 0.5%」，需要沿着 <code>order_applied_fee_rule</code> 这条关系，直接定位到「生效起始日=2026-01-01，结束日=2026-06-30」的那个规则版本。</p>
+<h3 id="层级-3交易资金事件流程主体">层级 3：交易/资金事件（流程主体）<a hidden class="anchor" aria-hidden="true" href="#层级-3交易资金事件流程主体">#</a></h3>
+<ul>
+<li><strong>PaymentOrder</strong>（支付订单：核心交易主对象）</li>
+<li><strong>Transfer</strong>（资金划转：订单到渠道账户的实际转移）</li>
+<li><strong>LedgerEntry</strong>（记账分录：双分录定位，transfer + amount + direction）</li>
+<li><strong>SettlementBatch</strong>（按渠道×日期×币种的结算批次信封）</li>
+</ul>
+<p>本体设计的一个关键决策是：Transfer 和 LedgerEntry 必须是独立实体，不能退化为 PaymentOrder 的两个 JSON 数组字段。原因有三：退化成嵌套字段后没法直接查某条分录归属了哪些 batch；跨订单的对账（同一张银行账单对应多笔订单）没法建模；receipts 也没法给出到分录级的定位。</p>
+<h3 id="层级-4对账治理记录事实派生体">层级 4：对账/治理记录（事实派生体）<a hidden class="anchor" aria-hidden="true" href="#层级-4对账治理记录事实派生体">#</a></h3>
+<ul>
+<li><strong>ReconcileRun</strong>（一次对账任务 run）</li>
+<li><strong>ReconcileLine</strong>（一行对账明细：expected_amount vs actual_amount，diff_amount + diff_reason）</li>
+<li><strong>Dispute</strong>（争议/拒付/退款）</li>
+</ul>
+<p>ReconcileLine 不能脱离 ReconcileRun 存在；Dispute 不能脱离 PaymentOrder 存在。这个存在依赖直接影响后续关系的基数（cardinality）：<code>run_has_line</code> 声明为 <code>one_to_many</code>，<code>run_id</code> 在 ReconcileLine 上 <code>indexed: true</code>，保证按 run 批量分页时不做全表扫。</p>
+<h3 id="层级-5审计报表记录治理派生体">层级 5：审计/报表记录（治理派生体）<a hidden class="anchor" aria-hidden="true" href="#层级-5审计报表记录治理派生体">#</a></h3>
+<ul>
+<li><strong>Report</strong>（报表产物：SettlementBatch 生成的对账单/差异报表）</li>
+<li><strong>Approval</strong>（对 Report 的审批动作：approver + decision + comment）</li>
+<li><strong>AuditEvent</strong>（全链路审计事件：actor + event_type + payload JSON）</li>
+</ul>
+<p>这一层的核心价值是合规留痕。AuditEvent 的 payload 用 <code>type: json</code>：审计事件要保留原始细节（比如风控规则命中的 18 个字段），但检索时只需要索引 event_type / actor / occurred_at。</p>
+<p><img alt="图 4 · 真实 UI 证据：Cruxible Type Map — 清结算 17 类实体按存在层分组的 Type map（Base kit / Domain overlay）" loading="lazy" src="/posts/ai/agent-ontology-clearing-settlement-1/screenshot_02_typemap_17_entities.png"></p>
+<blockquote>
+<p><strong>图注 · 真实 UI 证据</strong>：Cruxible-app 的 Type map，把上面手动分层的 17 类实体自动投射到可视化卡片上。卡片颜色暗示存在层等级（聚合根 / 规则 / 事件 / 治理记录 / 审计记录 5 类），卡片内部数字是该实体类型的实例数量。这张图能帮你避免 3 个死穴：拼写错、数量漏、类型重复。</p>
+</blockquote>
+<h2 id="42-因果链-4-条主线关系不是乱拉的">4.2 因果链 4 条主线：关系不是乱拉的<a hidden class="anchor" aria-hidden="true" href="#42-因果链-4-条主线关系不是乱拉的">#</a></h2>
+<p><img alt="alt text" loading="lazy" src="/posts/ai/agent-ontology-clearing-settlement-1/Gemini_Generated_Image_tfciq6tfciq6tfci.png"></p>
+<p>我们把 25 类关系分成 4 条因果主链：</p>
+<h3 id="主链-a交易资金链订单--转账--分录--账户">主链 A：交易资金链（订单 → 转账 → 分录 → 账户）<a hidden class="anchor" aria-hidden="true" href="#主链-a交易资金链订单--转账--分录--账户">#</a></h3>
+<pre tabindex="0"><code>PaymentOrder ──order_paid_by_transfer──▶ Transfer
+     Transfer ──transfer_posts_ledger_entry──▶ LedgerEntry
+LedgerEntry ──ledger_entry_to_account──▶ Account
+LedgerEntry ──ledger_entry_for_order──▶ PaymentOrder
+</code></pre><p>这是清结算最基础的「钱去了哪里」主链，查差异时永远从这条链开始回溯。</p>
+<h3 id="主链-b结算对账链批次--run--line--orderdispute">主链 B：结算对账链（批次 → run → line → order/dispute）<a hidden class="anchor" aria-hidden="true" href="#主链-b结算对账链批次--run--line--orderdispute">#</a></h3>
+<pre tabindex="0"><code> SettlementBatch ──batch_reconciled_by_run──▶ ReconcileRun
+     ReconcileRun ──run_has_line──▶ ReconcileLine
+    ReconcileLine ──line_for_order──▶ PaymentOrder
+    ReconcileLine ──line_flags_dispute──▶ Dispute
+          Dispute ──dispute_on_order──▶ PaymentOrder
+</code></pre><p>这是「为什么不平」的主链。典型对账问题：batch → run → line，找到 diff_amount 最大的前 20 条；每条 line → order → transfer → ledger → account，一路追溯；命中 dispute 时自动附争议状态和 reason_code。</p>
+<h3 id="主链-c规则归属链谁用了哪个费率哪个汇率">主链 C：规则归属链（谁用了哪个费率、哪个汇率）<a hidden class="anchor" aria-hidden="true" href="#主链-c规则归属链谁用了哪个费率哪个汇率">#</a></h3>
+<pre tabindex="0"><code>PaymentOrder ──order_applied_fee_rule──▶ FeeRule
+    Transfer ──transfer_used_fx_rate──▶ FXRate
+</code></pre><p>这是「差异归因」最常见的两条：<code>fee_mismatch</code> 和 <code>fx_mismatch</code>。</p>
+<h3 id="主链-d报表审批审计链">主链 D：报表审批审计链<a hidden class="anchor" aria-hidden="true" href="#主链-d报表审批审计链">#</a></h3>
+<pre tabindex="0"><code>      Report ──report_for_batch──▶ SettlementBatch
+    Approval ──approval_for_report──▶ Report
+  AuditEvent ──audit_on_order──▶ PaymentOrder
+  AuditEvent ──audit_on_batch──▶ SettlementBatch
+</code></pre><p>这是「事后追责」主链。</p>
+<h2 id="43-约束锁明确什么不允许发生">4.3 约束锁：明确什么不允许发生<a hidden class="anchor" aria-hidden="true" href="#43-约束锁明确什么不允许发生">#</a></h2>
+<p>本体论最后一步是锁不变条件。清结算里典型的不变条件包括：同一笔 order 的 fee_amount 必须 ≥ 0；同一 batch 内所有 ledger_entry 的 currency 必须等于 batch.currency；dispute.amount 不能超过关联 order.amount；每个 batch 至少有 1 个 reconcile_run；每个 approval.decision ∈ {approved, rejected, escalated}。在实际生产里，这些会用 Cruxible 的 <code>constraints</code> 和 <code>quality_checks</code> 字段声明。</p>
+<p><img alt="alt text" loading="lazy" src="/posts/ai/agent-ontology-clearing-settlement-1/Gemini_Generated_Image_mnqz83mnqz83mnqz.png"></p>
+<p><img alt="图 6 · 真实 UI 证据：Cruxible State Graph — 清结算 5.6 万实体 / 12.8 万关系的复杂图谱（56,627 nodes / 128,246 edges）" loading="lazy" src="/posts/ai/agent-ontology-clearing-settlement-1/screenshot_03_state_graph_knowledge_map.png"></p>
+<blockquote>
+<p><strong>图注 · 真实 UI 证据</strong>：Cruxible-app State Graph 界面，左半边 ENTITIES 类型筛选器对应上面 4.1 节的 17 类实体分层；Cosmos 引擎渲染的点线图是从 daemon 直接拉取的 Live Graph，非 Mock 非快照。约束锁就是图的不可变形：约束违规的实体/边在 UI 中会被标红并阻止其进入 Canonical apply。</p>
+</blockquote>
+<hr>
+<h1 id="五cruxible-与业务系统结合的-4-种模式从-poc-到企业必须懂">五、Cruxible 与业务系统结合的 4 种模式（从 POC 到企业必须懂）<a hidden class="anchor" aria-hidden="true" href="#五cruxible-与业务系统结合的-4-种模式从-poc-到企业必须懂">#</a></h1>
+<p><img alt="alt text" loading="lazy" src="/posts/ai/agent-ontology-clearing-settlement-1/Gemini_Generated_Image_yf3lpsyf3lpsyf3l.png"></p>
+<p>很多人把 Cruxible 当成写点脚本往里灌数据，这只能算 POC 级。进入企业时，需要根据数据来源的实时性要求和治理要求选 4 种模式：</p>
+<h2 id="模式-1对话驱动-spec-生成适合建模验证案例培训">模式 1：对话驱动 Spec 生成——适合建模验证、案例、培训<a hidden class="anchor" aria-hidden="true" href="#模式-1对话驱动-spec-生成适合建模验证案例培训">#</a></h2>
+<p>数据流：</p>
+<pre tabindex="0"><code>DeerFlow-By-CC 用户对话 → 生成小规模 spec JSON → 落 thread state
+                                              ↓
+                          poc_deerflow_settlement_to_cruxible.py
+                                              ↓
+                              Cruxible daemon batch_direct_write
+                                              ↓
+                                 实体 receipts / 关系 receipts
+</code></pre><p>适用场景：做 POC / Demo，领域建模阶段快速生成不同规模的假数据做可视化与查询体验，培训新人「对账排障怎么查」。优点是启动快、灵活、所见即所得；缺点是不适合真实数据，不保证时序一致性与幂等，具体操作步骤会在下篇展开。</p>
+<h2 id="模式-2cdc--数据库变更捕获--cruxible-ingest适合核心交易订单库">模式 2：CDC / 数据库变更捕获 → Cruxible Ingest——适合核心交易/订单库<a hidden class="anchor" aria-hidden="true" href="#模式-2cdc--数据库变更捕获--cruxible-ingest适合核心交易订单库">#</a></h2>
+<p>数据流：</p>
+<pre tabindex="0"><code>MySQL / Postgres 核心库 → Debezium / Canal → Kafka
+                                            ↓
+                       Cruxible workflow: provider(consumer) → make_entities → apply_entities
+</code></pre><p>用 workflow 而不是直接脚本的原因是 workflow 有 lock file：provider 版本、步骤顺序、映射规则全哈希；同时有 execution trace：每条 provider 返回的 artifact hash 存在 state.db。典型例子：每 5 分钟从订单表 CDC 灌 20 万条 PaymentOrder，Cruxible 用 Polars DataFrame 做 dedupe、join、索引，然后 apply 到图里。</p>
+<h2 id="模式-3业务系统-webhook--deerflow-by-cc-agent--cruxible-governed-write适合审批风控争议">模式 3：业务系统 Webhook → DeerFlow-By-CC Agent → Cruxible Governed Write——适合审批/风控/争议<a hidden class="anchor" aria-hidden="true" href="#模式-3业务系统-webhook--deerflow-by-cc-agent--cruxible-governed-write适合审批风控争议">#</a></h2>
+<p>数据流：</p>
+<pre tabindex="0"><code>ERP 审批系统 → webhook (approval_id=AP-123, decision=rejected)
+                                ↓
+                    DeerFlow-By-CC cruxible sub-agent
+                                ↓
+                cruxible_list_queries → query → receipt → cruxible_feedback
+                                ↓
+                     Approval 实体 + 决策 record 入图
+</code></pre><p>这个模式的关键点是 DeerFlow-By-CC Agent 不直接写图，而是写 feedback：合规喜欢，因为所有人工判断都有 actor、timestamp、comment；审计喜欢，决策前 query 的 receipt 和决策后 feedback record 可串联；业务喜欢，不用开数据库权限，只开放 GOVERNED_WRITE 级工具集。</p>
+<h2 id="模式-4数仓-t1-报表--cruxible-workflow-batch-apply适合报表bi-对齐">模式 4：数仓 T+1 报表 → Cruxible Workflow Batch Apply——适合报表/BI 对齐<a hidden class="anchor" aria-hidden="true" href="#模式-4数仓-t1-报表--cruxible-workflow-batch-apply适合报表bi-对齐">#</a></h2>
+<p>数据流：</p>
+<pre tabindex="0"><code>Snowflake / Databricks / Hive → export parquet
+                                   ↓
+                   Cruxible artifacts: register_source_artifacts
+                                   ↓
+ Workflow: provider → shape_items → dedupe → join → aggregate → make_candidates → apply_all
+</code></pre><p>这个模式最强的点是数仓跑了什么版本的数据，Cruxible 就有对应的 snapshot，审计时两边都能对齐。</p>
+<hr>
+<h1 id="结语本体设计完了接下来是把它跑起来">结语：本体设计完了，接下来是把它跑起来<a hidden class="anchor" aria-hidden="true" href="#结语本体设计完了接下来是把它跑起来">#</a></h1>
+<p>到这里，「为什么」和「怎么设计」都讲完了：6 大死穴对应到 4 原语 + 3 层承诺，17 类实体按 5 个存在层分类，25 类关系归到 4 条因果主链，再加上和业务系统结合的 4 种集成模式。</p>
+<p>下一篇是纯操作向的实战：8 步在本机跑出一张 5.6 万节点、12.8 万条边的清结算复杂图谱，并且给出从 POC 走向生产必须做的 10 件事——多租户、权限分层、持久化升级、监控告警、PII 脱敏等等。</p>
+<blockquote>
+<p>参考资料：</p>
+<ul>
+<li>Cruxible 架构/命令/版本/权限：<a href="https://github.com/xiaoqianbaobao/cruxible/blob/main/AGENTS.md">AGENTS.md</a></li>
+<li>Cruxible MCP tools：<a href="https://github.com/xiaoqianbaobao/cruxible/blob/main/src/cruxible_core/mcp/tools.py">mcp/tools.py</a></li>
+<li>Cruxible 权限分层：<a href="https://github.com/xiaoqianbaobao/cruxible/blob/main/src/cruxible_core/runtime/permissions.py">runtime/permissions.py</a></li>
+<li>Cruxible StepKind 19 步：<a href="https://github.com/xiaoqianbaobao/cruxible/blob/main/src/cruxible_core/config/schema.py#L2177-L2198">config/schema.py#L2177-L2198</a></li>
+<li>清结算本体配置：<a href="https://github.com/xiaoqianbaobao/cruxible/blob/main/.poc/settlement/settlement_poc_config.yaml">.poc/settlement/settlement_poc_config.yaml</a></li>
+</ul>
+</blockquote>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+      <li><a href="https://csqread.top/tags/agent-%E5%B7%A5%E7%A8%8B%E5%8C%96/">Agent 工程化</a></li>
+      <li><a href="https://csqread.top/tags/%E6%9C%AC%E4%BD%93%E8%AE%BA/">本体论</a></li>
+      <li><a href="https://csqread.top/tags/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1/">知识图谱</a></li>
+      <li><a href="https://csqread.top/tags/%E6%B8%85%E7%BB%93%E7%AE%97/">清结算</a></li>
+      <li><a href="https://csqread.top/tags/%E5%8F%AF%E5%AE%A1%E8%AE%A1-ai/">可审计 AI</a></li>
+    </ul>
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+        <span>&copy; 2026 <a href="https://csqread.top/">Qian&#39;s Blog</a></span> · 
+
+    
+    
+    <span>
+        Powered by
+        <a href="https://gohugo.io/?utm_source=papermod" rel="noopener" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" id="top-link" class="top-link hidden" aria-label="go to top" title="Go to Top (Alt + G)" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+        stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevrons-up">
+        <polyline points="17 11 12 6 7 11"></polyline>
+        <polyline points="17 18 12 13 7 18"></polyline>
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu');
+    if (menu) {
+        
+        const scrollPosition = localStorage.getItem("menu-scroll-position");
+        if (scrollPosition) {
+            menu.scrollLeft = parseInt(scrollPosition, 10);
+        }
+        
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var toplink = document.getElementById("top-link");
+    window.onscroll = function () {
+        const scrollThreshold = window.innerHeight;
+        if (document.body.scrollTop > scrollThreshold || document.documentElement.scrollTop > scrollThreshold) {
+            toplink.classList.remove("hidden");
+        } else {
+            toplink.classList.add("hidden");
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        const html = document.querySelector("html");
+        if (html.dataset.theme === "dark") {
+            html.dataset.theme = 'light';
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            html.dataset.theme = 'dark';
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+</body>
+
+</html>
