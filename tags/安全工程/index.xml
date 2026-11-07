@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>安全工程 on Qian&#39;s Blog</title>
+    <link>https://csqread.top/tags/%E5%AE%89%E5%85%A8%E5%B7%A5%E7%A8%8B/</link>
+    <description>Recent content in 安全工程 on Qian&#39;s Blog</description>
+    <generator>Hugo</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Sat, 07 Nov 2026 23:30:00 +0800</lastBuildDate>
+    <atom:link href="https://csqread.top/tags/%E5%AE%89%E5%85%A8%E5%B7%A5%E7%A8%8B/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>REA 深度分析：让 AI Agent 在证据约束下理解软件</title>
+      <link>https://csqread.top/posts/ai/rea-reverse-engineering-analysis/</link>
+      <pubDate>Tue, 13 Oct 2026 09:00:00 +0800</pubDate>
+      <guid>https://csqread.top/posts/ai/rea-reverse-engineering-analysis/</guid>
+      <description>解析 REA 如何以 MCP 与 CLI 连接反向工程工具，并以证据链、资源边界和工程化测试让 AI Agent 更可靠地分析陌生软件。</description>
+    </item>
+  </channel>
+</rss>

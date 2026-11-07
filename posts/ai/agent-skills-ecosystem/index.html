@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto" data-theme="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>Agent Skills 大战，四家大厂同一天挤进 GitHub Trending | Qian&#39;s Blog</title>
+<meta name="keywords" content="Agent Skills, AI Agent, GitHub, 开发者生态, 提示词工程">
+<meta name="description" content="从 GitHub Trending 上的四类项目出发，理解 Agent Skills 为何正在从提示词升级为可打包、可验证、可分发的工作单元。">
+<meta name="author" content="">
+<link rel="canonical" href="https://csqread.top/posts/ai/agent-skills-ecosystem/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.cd9298b33628769aa1bc1acebbbfd7aa11ce81dfe03484d479e1907760249a1d.css" integrity="sha256-zZKYszYodpqhvBrOu7/XqhHOgd/gNITUeeGQd2Akmh0=" rel="preload stylesheet" as="style">
+<link rel="icon" href="https://csqread.top/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://csqread.top/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://csqread.top/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://csqread.top/apple-touch-icon.png">
+<link rel="mask-icon" href="https://csqread.top/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="https://csqread.top/posts/ai/agent-skills-ecosystem/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+                color-scheme: dark;
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .toc {
+                background: var(--entry);
+            }
+        }
+
+    </style>
+</noscript>
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.querySelector("html").dataset.theme = 'dark';
+    } else if (localStorage.getItem("pref-theme") === "light") {
+       document.querySelector("html").dataset.theme = 'light';
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.querySelector("html").dataset.theme = 'dark';
+    } else {
+        document.querySelector("html").dataset.theme = 'light';
+    }
+
+</script><meta property="og:url" content="https://csqread.top/posts/ai/agent-skills-ecosystem/">
+  <meta property="og:site_name" content="Qian&#39;s Blog">
+  <meta property="og:title" content="Agent Skills 大战，四家大厂同一天挤进 GitHub Trending">
+  <meta property="og:description" content="从 GitHub Trending 上的四类项目出发，理解 Agent Skills 为何正在从提示词升级为可打包、可验证、可分发的工作单元。">
+  <meta property="og:locale" content="zh_cn">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2026-11-07T22:46:00+08:00">
+    <meta property="article:modified_time" content="2026-11-07T23:30:00+08:00">
+    <meta property="article:tag" content="Agent Skills">
+    <meta property="article:tag" content="AI Agent">
+    <meta property="article:tag" content="GitHub">
+    <meta property="article:tag" content="开发者生态">
+    <meta property="article:tag" content="提示词工程">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Agent Skills 大战，四家大厂同一天挤进 GitHub Trending">
+  <meta name="twitter:description" content="从 GitHub Trending 上的四类项目出发，理解 Agent Skills 为何正在从提示词升级为可打包、可验证、可分发的工作单元。">
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "文章",
+      "item": "https://csqread.top/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "AI",
+      "item": "https://csqread.top/posts/ai/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  3 ,
+      "name": "Agent Skills 大战，四家大厂同一天挤进 GitHub Trending",
+      "item": "https://csqread.top/posts/ai/agent-skills-ecosystem/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Agent Skills 大战，四家大厂同一天挤进 GitHub Trending",
+  "name": "Agent Skills 大战，四家大厂同一天挤进 GitHub Trending",
+  "description": "从 GitHub Trending 上的四类项目出发，理解 Agent Skills 为何正在从提示词升级为可打包、可验证、可分发的工作单元。",
+  "keywords": [
+    "Agent Skills", "AI Agent", "GitHub", "开发者生态", "提示词工程"
+  ],
+  "articleBody": " 本文按 2026-11-07 的 GitHub Trending 与仓库公开信息撰写；热度、Star 数及项目状态会持续变化。\n今天 GitHub Trending 前十里，有四家机构在干同一件事：给 AI 造\"技能\"。\nAnthropic 官方仓库 18.8 万星，Google 2.3 万星，Cloudflare 拿安全审计技能冲上 6.5 万星，还有独立开发者 Matt Pocock 把 .agents 目录里的东西开源，直接堆到 31.7 万星。\n四家不约而同押注同一个词：Agent Skills。\n这不是又一轮\"给模型写提示词\"。我看了这几个仓库，真正有意思的是，这套东西想把\"让 AI 怎么干活\"变成一个可以打包、可以分发、可以版本化的商品。以前你是在教模型说话，现在他们在教模型干活，还打算把这套\"干活手册\"变成行业标准。\n这一篇文章，我从今天榜单上的真实项目讲起，拆开看为什么 Agent Skills 值得你专门花一个晚上搞懂。\n一、先看今天到底发生了什么 榜单上四个项目，类型其实不太一样。\nAnthropic 的 anthropics/skills，是官方把\"技能\"这套概念的定义和示例摊给社区。18.8 万星不是一天涨起来的，但这个信号很直接：技能这个词，官方认了，还在主动推。\nGoogle 的 google/skills 更直白——把 Google 自己产品的调用能力包装成技能。它表面是在给开发者发福利，本质是在给 agent 生态卡位：谁想让 agent 用 Google 的东西，都得先过我这道\"技能\"的门。\nCloudflare 那个 security-audit-skill，6.5 万星，是让编码 agent 做多阶段安全审计，输出机器可读、能独立验证的发现。它的卖点是\"让 agent 审 agent 写的代码\"，直击安全这个 AI 编程的最大顾虑。\n四家各打各的算盘，但都在往\"技能库\"这个方向堆。这说明一件事已经板上钉钉：单靠给大模型写提示词，喂不动真正的 Agent 时代了。\n二、技能和提示词，为什么是两码事 我在本地试过几个 skills 包之后，最大的感受是：提示词是临时工，技能是正式员工。\n一个提示词，是你在对话里塞给模型的一段话，说完就完，换个会话就没了。它不版本化、不验收、不打包，全凭你临场发挥。\n一个 skill 不是这样。它有明确的输入输出、有步骤拆解、有可以被检查的产出——比如 Cloudflare 那个审计技能，跑完会给你一份机器可读的发现清单，你可以拿去二次验证。它从\"口头交代\"变成了\"正式录用，签了劳动合同\"。\n这是质变。因为一旦\"怎么干活\"变成可复用、可验证、可分发的模块，它就不只属于你一个人了。它能进团队、能上市场、能像应用商店那样被分发。当年 Chrome 靠扩展生态做起来，安卓靠应用商店做起来，我怀疑 Agent 生态正在走同一条路——而这条路的第一块基石，就是技能库。\n三、一个 31.7 万星的重构信号 榜单上最扎眼的一个，不是大厂，是 Matt Pocock。\n他是 TypeScript 圈子里很有名气的讲师，这次不是讲一套新框架，而是直接把他平时用的 .agents 目录开源了。31.7 万星，是今天整个 Trending 里 star 数最高的几档之一。\n这个细节我看了很久。他不是 OpenAI，不是 Anthropic，是个独立开发者。但他靠\"分享自己教 AI 怎么干活的经验\"，拿到了比多数大厂官方仓库更高的关注度。\n这说明两件事。第一，技能比想象中更\"值钱\"——一个独立开发者把实操经验标准化、开源出来，市场的认可来得又猛又直接。第二，技能的门槛比模型低。你不需要训练一个模型，你只需要把你那一套\"在 AI 面前高效干活\"的方法整理成文件，就能形成资产。这对做自媒体、做内容、做工具的人来说，都是明显的信号。\n四、让 Agent 审 Agent，安全这件事开始有了新玩法 Cloudflare 那个技能是我今天看到最\"实\"的。\n它不做花活，就是把\"代码审查\"这件工程师每天都要做的事，做成一个 Agent 能自动跑的多阶段流程。低风险先放，高风险直接拉到真人面前。做法看像是 LiveReview 一类产品在 Product Hunt 上打的市场，但 Cloudflare 把它做成了开源技能。\n我判断这正是 Agent 落地最现实的方向：不是让 Agent 替你做所有决定，而是让 Agent 帮你把 80% 确定性强的脏活先干完，剩下 20% 需要判断的交给真人。安全审计、代码 review、数据处理，都是这样。\n很多人在讨论\"AI 会不会抢走程序员工作\"——答案其实不在那个\"抢不抢\"里，而在这里：当\"怎么干活\"变成可共享、可复制的技能包，剩下不可替代的，是那些\"怎么拆问题、怎么定标准、怎么把经验变成技能\"的人。\n五、普通人能从这一波里得到什么 先泼一盆冷水，别急着把所有时间砸进去。现在的 Agent Skills 生态，还处在\"标准之争\"的早期，你今天学会的某个技能格式，半年后可能就不是主流。但有几件事值得现在就开始做：\n第一，去把 anthropics/skills 和 google/skills 两个仓库 clone 下来，把里面定义技能的规范读一遍。不需要会写，只需要知道\"技能的文件结构长什么样\"。这是门槛最低、回报最确定的一步。\n第二，把你自己那个\"教 AI 帮你干活\"的过程，第一次文档化。哪怕是\"我每次都让 AI 用某个目录结构去整理周报\"，把它固定成模板，就是你的第一个技能包。别管它卖不卖得出去，先把它变成可复用的东西。\n第三，如果你想做内容，这条路简直为你量身定制：技能库拆解、AI 使用技巧、甚至是一个独立开发者靠开源技能冲上 Trending 的故事，都是现成的选题。\n结尾，一个值得你想的问题 我给不了你\"下一个 AGI\"的预测，但有一个问题想留给你琢磨：当\"技能\"成为 Agent 世界里的新货币，那么这套技能库的\"发行权\"到底该属于谁——是造模型的那几家，还是每个真正会干活的人？\n这个问题没有标准答案。但它值得你今晚睡前想一遍。等你把第一个技能包写出来的时候，心里大概就有底了。\nAI生成\n",
+  "wordCount" : "2362",
+  "inLanguage": "en",
+  "datePublished": "2026-11-07T22:46:00+08:00",
+  "dateModified": "2026-11-07T23:30:00+08:00",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://csqread.top/posts/ai/agent-skills-ecosystem/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Qian's Blog",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://csqread.top/favicon.ico"
+    }
+  }
+}
+</script>
+</head>
+<body id="top">
+    <header class="header">
+    <nav class="header-nav">
+        <div class="logo">
+            <a href="https://csqread.top/" accesskey="h" title="Qian&#39;s Blog (Alt + H)">Qian&#39;s Blog</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" class="theme-toggle" accesskey="t" title="(Alt + T)" aria-label="Toggle theme">
+                    <svg class="moon" xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg class="sun" xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu" class="menu">
+            <li>
+                <a href="https://csqread.top/search" title="🔍搜索 (Alt &#43; /)" accesskey=/>
+                    <span>🔍搜索</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://csqread.top/posts" title="📚文章">
+                    <span>📚文章</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://csqread.top/archives/" title="⏱时间轴">
+                    <span>⏱时间轴</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://csqread.top/tags" title="🔖标签">
+                    <span>🔖标签</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://csqread.top/about" title="🙋🏻‍♂️关于">
+                    <span>🙋🏻‍♂️关于</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://csqread.top/links" title="🤝友链">
+                    <span>🤝友链</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://csqread.top/posts/blog" title="🧱博客">
+                    <span>🧱博客</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://csqread.top/posts/tech" title="👨🏻‍💻技术">
+                    <span>👨🏻‍💻技术</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://csqread.top/posts/read" title="📕阅读-电影">
+                    <span>📕阅读-电影</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://csqread.top/posts/life" title="🏖生活">
+                    <span>🏖生活</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    
+    <h1 class="post-title entry-hint-parent">
+      Agent Skills 大战，四家大厂同一天挤进 GitHub Trending
+    </h1>
+    <div class="post-description">
+      从 GitHub Trending 上的四类项目出发，理解 Agent Skills 为何正在从提示词升级为可打包、可验证、可分发的工作单元。
+    </div>
+    <div class="post-meta">
+
+<span title='2026-11-07 22:46:00 +0800 CST'>November 7, 2026</span>
+
+</div>
+  </header> 
+  <div class="post-content md-content"><blockquote>
+<p>本文按 2026-11-07 的 GitHub Trending 与仓库公开信息撰写；热度、Star 数及项目状态会持续变化。</p>
+</blockquote>
+<p>今天 GitHub Trending 前十里，有四家机构在干同一件事：给 AI 造&quot;技能&quot;。</p>
+<p>Anthropic 官方仓库 18.8 万星，Google 2.3 万星，Cloudflare 拿安全审计技能冲上 6.5 万星，还有独立开发者 Matt Pocock 把 <code>.agents</code> 目录里的东西开源，直接堆到 31.7 万星。</p>
+<p>四家不约而同押注同一个词：Agent Skills。</p>
+<p>这不是又一轮&quot;给模型写提示词&quot;。我看了这几个仓库，真正有意思的是，这套东西想把&quot;让 AI 怎么干活&quot;变成一个可以打包、可以分发、可以版本化的商品。以前你是在教模型说话，现在他们在教模型干活，还打算把这套&quot;干活手册&quot;变成行业标准。</p>
+<p>这一篇文章，我从今天榜单上的真实项目讲起，拆开看为什么 Agent Skills 值得你专门花一个晚上搞懂。</p>
+<h2 id="一先看今天到底发生了什么">一、先看今天到底发生了什么<a hidden class="anchor" aria-hidden="true" href="#一先看今天到底发生了什么">#</a></h2>
+<p>榜单上四个项目，类型其实不太一样。</p>
+<p>Anthropic 的 <code>anthropics/skills</code>，是官方把&quot;技能&quot;这套概念的定义和示例摊给社区。18.8 万星不是一天涨起来的，但这个信号很直接：技能这个词，官方认了，还在主动推。</p>
+<p>Google 的 <code>google/skills</code> 更直白——把 Google 自己产品的调用能力包装成技能。它表面是在给开发者发福利，本质是在给 agent 生态卡位：谁想让 agent 用 Google 的东西，都得先过我这道&quot;技能&quot;的门。</p>
+<p>Cloudflare 那个 <code>security-audit-skill</code>，6.5 万星，是让编码 agent 做多阶段安全审计，输出机器可读、能独立验证的发现。它的卖点是&quot;让 agent 审 agent 写的代码&quot;，直击安全这个 AI 编程的最大顾虑。</p>
+<p>四家各打各的算盘，但都在往&quot;技能库&quot;这个方向堆。这说明一件事已经板上钉钉：单靠给大模型写提示词，喂不动真正的 Agent 时代了。</p>
+<h2 id="二技能和提示词为什么是两码事">二、技能和提示词，为什么是两码事<a hidden class="anchor" aria-hidden="true" href="#二技能和提示词为什么是两码事">#</a></h2>
+<p>我在本地试过几个 skills 包之后，最大的感受是：<strong>提示词是临时工，技能是正式员工</strong>。</p>
+<p>一个提示词，是你在对话里塞给模型的一段话，说完就完，换个会话就没了。它不版本化、不验收、不打包，全凭你临场发挥。</p>
+<p>一个 skill 不是这样。它有明确的输入输出、有步骤拆解、有可以被检查的产出——比如 Cloudflare 那个审计技能，跑完会给你一份机器可读的发现清单，你可以拿去二次验证。它从&quot;口头交代&quot;变成了&quot;正式录用，签了劳动合同&quot;。</p>
+<p>这是质变。因为一旦&quot;怎么干活&quot;变成可复用、可验证、可分发的模块，它就不只属于你一个人了。它能进团队、能上市场、能像应用商店那样被分发。当年 Chrome 靠扩展生态做起来，安卓靠应用商店做起来，我怀疑 Agent 生态正在走同一条路——而这条路的第一块基石，就是技能库。</p>
+<h2 id="三一个-317-万星的重构信号">三、一个 31.7 万星的重构信号<a hidden class="anchor" aria-hidden="true" href="#三一个-317-万星的重构信号">#</a></h2>
+<p>榜单上最扎眼的一个，不是大厂，是 Matt Pocock。</p>
+<p>他是 TypeScript 圈子里很有名气的讲师，这次不是讲一套新框架，而是直接把他平时用的 <code>.agents</code> 目录开源了。31.7 万星，是今天整个 Trending 里 star 数最高的几档之一。</p>
+<p>这个细节我看了很久。他不是 OpenAI，不是 Anthropic，是个独立开发者。但他靠&quot;分享自己教 AI 怎么干活的经验&quot;，拿到了比多数大厂官方仓库更高的关注度。</p>
+<p>这说明两件事。第一，技能比想象中更&quot;值钱&quot;——一个独立开发者把实操经验标准化、开源出来，市场的认可来得又猛又直接。第二，<strong>技能的门槛比模型低</strong>。你不需要训练一个模型，你只需要把你那一套&quot;在 AI 面前高效干活&quot;的方法整理成文件，就能形成资产。这对做自媒体、做内容、做工具的人来说，都是明显的信号。</p>
+<h2 id="四让-agent-审-agent安全这件事开始有了新玩法">四、让 Agent 审 Agent，安全这件事开始有了新玩法<a hidden class="anchor" aria-hidden="true" href="#四让-agent-审-agent安全这件事开始有了新玩法">#</a></h2>
+<p>Cloudflare 那个技能是我今天看到最&quot;实&quot;的。</p>
+<p>它不做花活，就是把&quot;代码审查&quot;这件工程师每天都要做的事，做成一个 Agent 能自动跑的多阶段流程。低风险先放，高风险直接拉到真人面前。做法看像是 LiveReview 一类产品在 Product Hunt 上打的市场，但 Cloudflare 把它做成了开源技能。</p>
+<p>我判断这正是 Agent 落地最现实的方向：不是让 Agent 替你做所有决定，而是让 Agent 帮你把 80% 确定性强的脏活先干完，剩下 20% 需要判断的交给真人。安全审计、代码 review、数据处理，都是这样。</p>
+<p>很多人在讨论&quot;AI 会不会抢走程序员工作&quot;——答案其实不在那个&quot;抢不抢&quot;里，而在这里：当&quot;怎么干活&quot;变成可共享、可复制的技能包，剩下不可替代的，是那些&quot;怎么拆问题、怎么定标准、怎么把经验变成技能&quot;的人。</p>
+<h2 id="五普通人能从这一波里得到什么">五、普通人能从这一波里得到什么<a hidden class="anchor" aria-hidden="true" href="#五普通人能从这一波里得到什么">#</a></h2>
+<p>先泼一盆冷水，别急着把所有时间砸进去。现在的 Agent Skills 生态，还处在&quot;标准之争&quot;的早期，你今天学会的某个技能格式，半年后可能就不是主流。但有几件事值得现在就开始做：</p>
+<p>第一，去把 <code>anthropics/skills</code> 和 <code>google/skills</code> 两个仓库 clone 下来，把里面定义技能的规范读一遍。不需要会写，只需要知道&quot;技能的文件结构长什么样&quot;。这是门槛最低、回报最确定的一步。</p>
+<p>第二，把你自己那个&quot;教 AI 帮你干活&quot;的过程，第一次文档化。哪怕是&quot;我每次都让 AI 用某个目录结构去整理周报&quot;，把它固定成模板，就是你的第一个技能包。别管它卖不卖得出去，先把它变成可复用的东西。</p>
+<p>第三，如果你想做内容，这条路简直为你量身定制：技能库拆解、AI 使用技巧、甚至是一个独立开发者靠开源技能冲上 Trending 的故事，都是现成的选题。</p>
+<h2 id="结尾一个值得你想的问题">结尾，一个值得你想的问题<a hidden class="anchor" aria-hidden="true" href="#结尾一个值得你想的问题">#</a></h2>
+<p>我给不了你&quot;下一个 AGI&quot;的预测，但有一个问题想留给你琢磨：当&quot;技能&quot;成为 Agent 世界里的新货币，那么这套技能库的&quot;发行权&quot;到底该属于谁——是造模型的那几家，还是每个真正会干活的人？</p>
+<p>这个问题没有标准答案。但它值得你今晚睡前想一遍。等你把第一个技能包写出来的时候，心里大概就有底了。</p>
+<blockquote>
+<p>AI生成</p>
+</blockquote>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+      <li><a href="https://csqread.top/tags/agent-skills/">Agent Skills</a></li>
+      <li><a href="https://csqread.top/tags/ai-agent/">AI Agent</a></li>
+      <li><a href="https://csqread.top/tags/github/">GitHub</a></li>
+      <li><a href="https://csqread.top/tags/%E5%BC%80%E5%8F%91%E8%80%85%E7%94%9F%E6%80%81/">开发者生态</a></li>
+      <li><a href="https://csqread.top/tags/%E6%8F%90%E7%A4%BA%E8%AF%8D%E5%B7%A5%E7%A8%8B/">提示词工程</a></li>
+    </ul>
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+        <span>&copy; 2026 <a href="https://csqread.top/">Qian&#39;s Blog</a></span> · 
+
+    
+    
+    <span>
+        Powered by
+        <a href="https://gohugo.io/?utm_source=papermod" rel="noopener" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" id="top-link" class="top-link hidden" aria-label="go to top" title="Go to Top (Alt + G)" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+        stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevrons-up">
+        <polyline points="17 11 12 6 7 11"></polyline>
+        <polyline points="17 18 12 13 7 18"></polyline>
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu');
+    if (menu) {
+        
+        const scrollPosition = localStorage.getItem("menu-scroll-position");
+        if (scrollPosition) {
+            menu.scrollLeft = parseInt(scrollPosition, 10);
+        }
+        
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var toplink = document.getElementById("top-link");
+    window.onscroll = function () {
+        const scrollThreshold = window.innerHeight;
+        if (document.body.scrollTop > scrollThreshold || document.documentElement.scrollTop > scrollThreshold) {
+            toplink.classList.remove("hidden");
+        } else {
+            toplink.classList.add("hidden");
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        const html = document.querySelector("html");
+        if (html.dataset.theme === "dark") {
+            html.dataset.theme = 'light';
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            html.dataset.theme = 'dark';
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+</body>
+
+</html>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>开发者生态 on Qian&#39;s Blog</title>
+    <link>https://csqread.top/tags/%E5%BC%80%E5%8F%91%E8%80%85%E7%94%9F%E6%80%81/</link>
+    <description>Recent content in 开发者生态 on Qian&#39;s Blog</description>
+    <generator>Hugo</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Sat, 07 Nov 2026 23:30:00 +0800</lastBuildDate>
+    <atom:link href="https://csqread.top/tags/%E5%BC%80%E5%8F%91%E8%80%85%E7%94%9F%E6%80%81/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Agent Skills 大战，四家大厂同一天挤进 GitHub Trending</title>
+      <link>https://csqread.top/posts/ai/agent-skills-ecosystem/</link>
+      <pubDate>Sat, 07 Nov 2026 22:46:00 +0800</pubDate>
+      <guid>https://csqread.top/posts/ai/agent-skills-ecosystem/</guid>
+      <description>从 GitHub Trending 上的四类项目出发，理解 Agent Skills 为何正在从提示词升级为可打包、可验证、可分发的工作单元。</description>
+    </item>
+  </channel>
+</rss>

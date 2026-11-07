@@ -6,8 +6,204 @@
     <description>Recent content in Tags on Qian&#39;s Blog</description>
     <generator>Hugo</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Sun, 09 Aug 2026 00:10:00 +0800</lastBuildDate>
+    <lastBuildDate>Sat, 07 Nov 2026 23:30:00 +0800</lastBuildDate>
     <atom:link href="https://csqread.top/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Agent 治理</title>
+      <link>https://csqread.top/tags/agent-%E6%B2%BB%E7%90%86/</link>
+      <pubDate>Sat, 07 Nov 2026 23:10:00 +0800</pubDate>
+      <guid>https://csqread.top/tags/agent-%E6%B2%BB%E7%90%86/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>AI Agent</title>
+      <link>https://csqread.top/tags/ai-agent/</link>
+      <pubDate>Sat, 07 Nov 2026 23:10:00 +0800</pubDate>
+      <guid>https://csqread.top/tags/ai-agent/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>DevTools</title>
+      <link>https://csqread.top/tags/devtools/</link>
+      <pubDate>Sat, 07 Nov 2026 23:10:00 +0800</pubDate>
+      <guid>https://csqread.top/tags/devtools/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>GitHub</title>
+      <link>https://csqread.top/tags/github/</link>
+      <pubDate>Sat, 07 Nov 2026 23:10:00 +0800</pubDate>
+      <guid>https://csqread.top/tags/github/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Harness Engineering</title>
+      <link>https://csqread.top/tags/harness-engineering/</link>
+      <pubDate>Sat, 07 Nov 2026 23:10:00 +0800</pubDate>
+      <guid>https://csqread.top/tags/harness-engineering/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>项目分析</title>
+      <link>https://csqread.top/tags/%E9%A1%B9%E7%9B%AE%E5%88%86%E6%9E%90/</link>
+      <pubDate>Sat, 07 Nov 2026 23:10:00 +0800</pubDate>
+      <guid>https://csqread.top/tags/%E9%A1%B9%E7%9B%AE%E5%88%86%E6%9E%90/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>飞书</title>
+      <link>https://csqread.top/tags/%E9%A3%9E%E4%B9%A6/</link>
+      <pubDate>Sat, 07 Nov 2026 23:10:00 +0800</pubDate>
+      <guid>https://csqread.top/tags/%E9%A3%9E%E4%B9%A6/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Agent Skills</title>
+      <link>https://csqread.top/tags/agent-skills/</link>
+      <pubDate>Sat, 07 Nov 2026 22:46:00 +0800</pubDate>
+      <guid>https://csqread.top/tags/agent-skills/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>开发者生态</title>
+      <link>https://csqread.top/tags/%E5%BC%80%E5%8F%91%E8%80%85%E7%94%9F%E6%80%81/</link>
+      <pubDate>Sat, 07 Nov 2026 22:46:00 +0800</pubDate>
+      <guid>https://csqread.top/tags/%E5%BC%80%E5%8F%91%E8%80%85%E7%94%9F%E6%80%81/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>提示词工程</title>
+      <link>https://csqread.top/tags/%E6%8F%90%E7%A4%BA%E8%AF%8D%E5%B7%A5%E7%A8%8B/</link>
+      <pubDate>Sat, 07 Nov 2026 22:46:00 +0800</pubDate>
+      <guid>https://csqread.top/tags/%E6%8F%90%E7%A4%BA%E8%AF%8D%E5%B7%A5%E7%A8%8B/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>AI 设计</title>
+      <link>https://csqread.top/tags/ai-%E8%AE%BE%E8%AE%A1/</link>
+      <pubDate>Thu, 29 Oct 2026 21:51:00 +0800</pubDate>
+      <guid>https://csqread.top/tags/ai-%E8%AE%BE%E8%AE%A1/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Impeccable</title>
+      <link>https://csqread.top/tags/impeccable/</link>
+      <pubDate>Thu, 29 Oct 2026 21:51:00 +0800</pubDate>
+      <guid>https://csqread.top/tags/impeccable/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>前端</title>
+      <link>https://csqread.top/tags/%E5%89%8D%E7%AB%AF/</link>
+      <pubDate>Thu, 29 Oct 2026 21:51:00 +0800</pubDate>
+      <guid>https://csqread.top/tags/%E5%89%8D%E7%AB%AF/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>实验评测</title>
+      <link>https://csqread.top/tags/%E5%AE%9E%E9%AA%8C%E8%AF%84%E6%B5%8B/</link>
+      <pubDate>Thu, 29 Oct 2026 21:51:00 +0800</pubDate>
+      <guid>https://csqread.top/tags/%E5%AE%9E%E9%AA%8C%E8%AF%84%E6%B5%8B/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>DeerFlow</title>
+      <link>https://csqread.top/tags/deerflow/</link>
+      <pubDate>Wed, 28 Oct 2026 09:00:00 +0800</pubDate>
+      <guid>https://csqread.top/tags/deerflow/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Eino</title>
+      <link>https://csqread.top/tags/eino/</link>
+      <pubDate>Wed, 28 Oct 2026 09:00:00 +0800</pubDate>
+      <guid>https://csqread.top/tags/eino/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Go</title>
+      <link>https://csqread.top/tags/go/</link>
+      <pubDate>Wed, 28 Oct 2026 09:00:00 +0800</pubDate>
+      <guid>https://csqread.top/tags/go/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>LangGraph</title>
+      <link>https://csqread.top/tags/langgraph/</link>
+      <pubDate>Wed, 28 Oct 2026 09:00:00 +0800</pubDate>
+      <guid>https://csqread.top/tags/langgraph/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>AI 评测</title>
+      <link>https://csqread.top/tags/ai-%E8%AF%84%E6%B5%8B/</link>
+      <pubDate>Tue, 27 Oct 2026 09:00:00 +0800</pubDate>
+      <guid>https://csqread.top/tags/ai-%E8%AF%84%E6%B5%8B/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Langfuse</title>
+      <link>https://csqread.top/tags/langfuse/</link>
+      <pubDate>Tue, 27 Oct 2026 09:00:00 +0800</pubDate>
+      <guid>https://csqread.top/tags/langfuse/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>LLMOps</title>
+      <link>https://csqread.top/tags/llmops/</link>
+      <pubDate>Tue, 27 Oct 2026 09:00:00 +0800</pubDate>
+      <guid>https://csqread.top/tags/llmops/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>OpenTelemetry</title>
+      <link>https://csqread.top/tags/opentelemetry/</link>
+      <pubDate>Tue, 27 Oct 2026 09:00:00 +0800</pubDate>
+      <guid>https://csqread.top/tags/opentelemetry/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>可观测性</title>
+      <link>https://csqread.top/tags/%E5%8F%AF%E8%A7%82%E6%B5%8B%E6%80%A7/</link>
+      <pubDate>Tue, 27 Oct 2026 09:00:00 +0800</pubDate>
+      <guid>https://csqread.top/tags/%E5%8F%AF%E8%A7%82%E6%B5%8B%E6%80%A7/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>MCP</title>
+      <link>https://csqread.top/tags/mcp/</link>
+      <pubDate>Tue, 13 Oct 2026 09:00:00 +0800</pubDate>
+      <guid>https://csqread.top/tags/mcp/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>REA</title>
+      <link>https://csqread.top/tags/rea/</link>
+      <pubDate>Tue, 13 Oct 2026 09:00:00 +0800</pubDate>
+      <guid>https://csqread.top/tags/rea/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>安全工程</title>
+      <link>https://csqread.top/tags/%E5%AE%89%E5%85%A8%E5%B7%A5%E7%A8%8B/</link>
+      <pubDate>Tue, 13 Oct 2026 09:00:00 +0800</pubDate>
+      <guid>https://csqread.top/tags/%E5%AE%89%E5%85%A8%E5%B7%A5%E7%A8%8B/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>软件分析</title>
+      <link>https://csqread.top/tags/%E8%BD%AF%E4%BB%B6%E5%88%86%E6%9E%90/</link>
+      <pubDate>Tue, 13 Oct 2026 09:00:00 +0800</pubDate>
+      <guid>https://csqread.top/tags/%E8%BD%AF%E4%BB%B6%E5%88%86%E6%9E%90/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>逆向工程</title>
+      <link>https://csqread.top/tags/%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B/</link>
+      <pubDate>Tue, 13 Oct 2026 09:00:00 +0800</pubDate>
+      <guid>https://csqread.top/tags/%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B/</guid>
+      <description></description>
+    </item>
     <item>
       <title>Agent 工程化</title>
       <link>https://csqread.top/tags/agent-%E5%B7%A5%E7%A8%8B%E5%8C%96/</link>
@@ -79,13 +275,6 @@
       <description></description>
     </item>
     <item>
-      <title>Harness Engineering</title>
-      <link>https://csqread.top/tags/harness-engineering/</link>
-      <pubDate>Sun, 19 Jul 2026 10:00:00 +0800</pubDate>
-      <guid>https://csqread.top/tags/harness-engineering/</guid>
-      <description></description>
-    </item>
-    <item>
       <title>企业级</title>
       <link>https://csqread.top/tags/%E4%BC%81%E4%B8%9A%E7%BA%A7/</link>
       <pubDate>Sun, 19 Jul 2026 10:00:00 +0800</pubDate>
@@ -97,20 +286,6 @@
       <link>https://csqread.top/tags/%E5%90%88%E8%A7%84/</link>
       <pubDate>Sun, 19 Jul 2026 10:00:00 +0800</pubDate>
       <guid>https://csqread.top/tags/%E5%90%88%E8%A7%84/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>AI Agent</title>
-      <link>https://csqread.top/tags/ai-agent/</link>
-      <pubDate>Sun, 12 Jul 2026 00:00:00 +0000</pubDate>
-      <guid>https://csqread.top/tags/ai-agent/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>DeerFlow</title>
-      <link>https://csqread.top/tags/deerflow/</link>
-      <pubDate>Sun, 12 Jul 2026 00:00:00 +0000</pubDate>
-      <guid>https://csqread.top/tags/deerflow/</guid>
       <description></description>
     </item>
     <item>
@@ -181,13 +356,6 @@
       <link>https://csqread.top/tags/harness/</link>
       <pubDate>Mon, 06 Jul 2026 14:00:00 +0800</pubDate>
       <guid>https://csqread.top/tags/harness/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>LangGraph</title>
-      <link>https://csqread.top/tags/langgraph/</link>
-      <pubDate>Mon, 06 Jul 2026 14:00:00 +0800</pubDate>
-      <guid>https://csqread.top/tags/langgraph/</guid>
       <description></description>
     </item>
     <item>

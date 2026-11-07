@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>DevTools on Qian&#39;s Blog</title>
+    <link>https://csqread.top/tags/devtools/</link>
+    <description>Recent content in DevTools on Qian&#39;s Blog</description>
+    <generator>Hugo</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Sat, 07 Nov 2026 23:10:00 +0800</lastBuildDate>
+    <atom:link href="https://csqread.top/tags/devtools/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>dsh-superagent-prototype：受控的团队编码代理，离生产化还有多远？</title>
+      <link>https://csqread.top/posts/ai/dsh-superagent-prototype-project-analysis/</link>
+      <pubDate>Sat, 07 Nov 2026 23:10:00 +0800</pubDate>
+      <guid>https://csqread.top/posts/ai/dsh-superagent-prototype-project-analysis/</guid>
+      <description>对 DeepSeek dsh-superagent-prototype 的架构、授权模型、可靠性机制与商业化路径的完整分析：它适合用作受控试点的架构参考，但尚不宜原样用于生产。</description>
+    </item>
+  </channel>
+</rss>

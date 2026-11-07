@@ -1,0 +1,764 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto" data-theme="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>我装了 9 万星的设计插件，然后输给了一句 30 字的提示词 | Qian&#39;s Blog</title>
+<meta name="keywords" content="Impeccable, AI 设计, 提示词工程, 前端, 实验评测">
+<meta name="description" content="同一个 AI、四种配置、四类页面任务：一次关于 Impeccable 设计插件、提示词约束与复杂交付质量的盲评实验。">
+<meta name="author" content="">
+<link rel="canonical" href="https://csqread.top/posts/ai/impeccable-design-plugin-evaluation/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.cd9298b33628769aa1bc1acebbbfd7aa11ce81dfe03484d479e1907760249a1d.css" integrity="sha256-zZKYszYodpqhvBrOu7/XqhHOgd/gNITUeeGQd2Akmh0=" rel="preload stylesheet" as="style">
+<link rel="icon" href="https://csqread.top/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://csqread.top/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://csqread.top/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://csqread.top/apple-touch-icon.png">
+<link rel="mask-icon" href="https://csqread.top/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="https://csqread.top/posts/ai/impeccable-design-plugin-evaluation/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+                color-scheme: dark;
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .toc {
+                background: var(--entry);
+            }
+        }
+
+    </style>
+</noscript>
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.querySelector("html").dataset.theme = 'dark';
+    } else if (localStorage.getItem("pref-theme") === "light") {
+       document.querySelector("html").dataset.theme = 'light';
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.querySelector("html").dataset.theme = 'dark';
+    } else {
+        document.querySelector("html").dataset.theme = 'light';
+    }
+
+</script><meta property="og:url" content="https://csqread.top/posts/ai/impeccable-design-plugin-evaluation/">
+  <meta property="og:site_name" content="Qian&#39;s Blog">
+  <meta property="og:title" content="我装了 9 万星的设计插件，然后输给了一句 30 字的提示词">
+  <meta property="og:description" content="同一个 AI、四种配置、四类页面任务：一次关于 Impeccable 设计插件、提示词约束与复杂交付质量的盲评实验。">
+  <meta property="og:locale" content="zh_cn">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2026-10-29T21:51:00+08:00">
+    <meta property="article:modified_time" content="2026-11-07T23:30:00+08:00">
+    <meta property="article:tag" content="Impeccable">
+    <meta property="article:tag" content="AI 设计">
+    <meta property="article:tag" content="提示词工程">
+    <meta property="article:tag" content="前端">
+    <meta property="article:tag" content="实验评测">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="我装了 9 万星的设计插件，然后输给了一句 30 字的提示词">
+  <meta name="twitter:description" content="同一个 AI、四种配置、四类页面任务：一次关于 Impeccable 设计插件、提示词约束与复杂交付质量的盲评实验。">
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "文章",
+      "item": "https://csqread.top/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "AI",
+      "item": "https://csqread.top/posts/ai/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  3 ,
+      "name": "我装了 9 万星的设计插件，然后输给了一句 30 字的提示词",
+      "item": "https://csqread.top/posts/ai/impeccable-design-plugin-evaluation/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "我装了 9 万星的设计插件，然后输给了一句 30 字的提示词",
+  "name": "我装了 9 万星的设计插件，然后输给了一句 30 字的提示词",
+  "description": "同一个 AI、四种配置、四类页面任务：一次关于 Impeccable 设计插件、提示词约束与复杂交付质量的盲评实验。",
+  "keywords": [
+    "Impeccable", "AI 设计", "提示词工程", "前端", "实验评测"
+  ],
+  "articleBody": "先看结果：同一句话任务，三种做法 我让同一个 AI 做一个\"企业级 multi-agent 交付平台\"的官网首页，分三种方式。\n方式一：什么都不说，让它直接做。\n它交出来的是这样：深紫色渐变的大标题、带光晕的背景、图标全是表情符号（机器人、锁、图表那种）、下面整整齐齐三列圆角卡片。我数了一下：页面里 15 处渐变、12 处投影、8 个表情符号图标。\n方式二：加一句 30 字的话。 原话是：“不要渐变、不要表情符号图标、不要阴影卡片、不要一律蓝色”。\n它交出来一版灰白的、干净的页面。上面那些特征，一个都没有。\n方式三：严格按一个设计插件的完整流程走。 这个插件叫 Impeccable，9.45 万 star（2026-10-29 取数，这仓库更新很快），是 Anthropic 官方前端设计指南的开源后代。流程是：先写设计意图、掷骰子选设计方向、写\"这个页面要为谁讲什么故事\"的契约、做完了自己评审再改。\n插件组交出来的是一张铁路运行图：墨绿站牌、发丝线、车次代号。它的核心交互是\"给牌放行\"——审批通过 = 点一下盖个红章，线路继续往前跑。它把\"一次 agent 交付\"讲成了一列准点运行的列车。\n现在猜，哪一版最\"不像 AI 生成的\"？\n答案是方式二，那句 30 字的提示词。\n下面我把整个实验的数据都摊开讲，顺便说说为什么。\n这个实验是怎么做的 我不搞玄学，就做对照实验。同一个 AI，四种配置：\n组 配置 一句话说明 A 组 原样，直接做 基准线：AI 默认发挥长什么样 B 组 原样 + 一句\"别像 AI\" 测一句话提示词的威力 C 组 装了插件、执行了初始化，但全程不用 测\"装的动作\"本身有没有用 D 组 插件完整流程 测工具全流程 任务做四组：官网介绍页、对账工作台（财务场景）、把一个已经做好的页面重新改造，以及最后那个多智能体运维控制台。每组页面我都用脚本量了硬指标：渐变多少处、投影多少处、表情符号多少个、有多少文字颜色浅到看不清（无障碍标准）、手机宽度下会不会溢出。\n任务一：官网首页 上面三张图就是结果。数据是这样的：\n页面 渐变 投影 表情图标 看不清的文字 手机宽度溢出 A 组（默认） 15 处 12 处 8 个 33% 无 B 组（一句话） 0 0 0 0% 无 C 组（装了不用） 0 0 7 个 12% 无 D 组（插件流程） 0 0 0 1% 无 先把 C 组放一边，它单独有故事。A/B/D 三组里，D 组（插件）在数据上是最稳的：表情符号清零、看不清的文字只有 1%、手机不破版。B 组也不错，0% 看不清。A 组的大字标题有将近 15% 是浅到踩线的——渐变背景上压白字，手机亮度一低直接糊。\n任务二：对账工作台（数据场景） 官网页好看不好看，比较主观。这个任务更实际：一个银行对账用的工作台，要盯一屏数据干活。结果差异更大。\nA 组（默认）交了个仪表盘：KPI 卡、渐变图、状态标签。看着还行，但数据量出来很难看：47% 的文字低于无障碍标准的对比度（浅色字配浅色底），最要命的是手机宽度下页面横向溢出 315 像素——就是页面比你屏幕宽出一大截，得左右滑才能看全。做给企业用的后台，在手机上看直接穿帮。\nD 组（插件）走\"金库封账\"的路子：冷钢灰壳、黄铜色按钮、等宽数字，顶部一根\"封账进度横梁\"——1,284/1,290 笔已平，差 6 格没合拢，一行差异（¥2.70）在表里标红。它把这个工作台讲成了\"账平了才落锁\"的仪式。数据：看不清的文字 2%，零溢出。\n任务三：改造一个已经做好的页面 这是插件作者自己最看重的场景：你手上有个旧页面，让 AI 改一改。\n存量页面就是任务一的 A 组那个渐变页。我给它写了一份\"现状诊断书\"（这个页面有哪些问题），然后让 A 组、B 组、D 组三种配置各自去改，要求原文案一字不动。\nA 组（默认）改出来是这样：渐变从 15 处减到 4 处，投影清零了，但表情符号一个没动，7 个全留着；看不清的文字还有 20%，大字里 10% 不合格。它像做了一次表面保洁：看得见的污渍擦了，背后的颜色体系和图标语言一点没碰。\nB 组（那句话）改出来是这样：表面特征全清零——渐变、投影、表情符号一个不剩，看不清的文字从 20% 降到 17%。单看数字像是及格了。但你看整个页面：骨架一点没动，还是居中大标题、三列卡片、大数字、客户证言那一套，只是从蓝紫色换成了黑白灰。它把一个彩色的 AI 模板，改成了一个灰色的 AI 模板。\nD 组（插件）改出来是这样：整页重构成\"交付运营台账\"——顶栏墨绿站牌、首屏一块\"运行面板\"（本月 12 批交付，11 准点，1 待审批）、能力按编号清单排、客户证言变成\"验收记录\"（ACC-0881，带签署行）。还是那些话，但整个页面像一份真正在用的运营文档。数据：渐变/投影/表情全零，看不清的 5%，大字 0 失败，无溢出。\n任务三是最扎心的一个：同样改一个旧页面，默认配置只会\"打补丁\"（特征都擦不干净），那句话只会\"刷一层漆\"（特征干净了，骨架纹丝不动），插件才会\"重建世界观\"。\n任务四：复杂控制台（这才是重点） 看完前面你可能会想：那一句提示词不是赢了吗？别急，前面三个任务都太简单——单页官网、单屏工作台，信息量小，一句话\"不要渐变不要 emoji\"就能抹平。要验证插件到底有没有用，得把任务复杂度拉到一句话管不住的量级。\n所以我设计了第四个任务：一个多智能体运维控制台，硬性要求 8 个功能区块（全局状态栏、8 个智能体清单、流程画布、详情面板、审批队列、事件日志、时间线视图、数据汇总）加 3 处交互，三种方式同题竞赛。这种页面是给运维值班员盯着用的，信息密度高、状态多。\nA 组（默认）：功能都交齐了，但复杂度把 AI 味放大了——表情符号图标 22 个（简单任务时只有 8 个），投影 9 处，页面里 39% 的文字颜色浅到看不清。交互全是弹窗（点一个智能体弹个提示框，审批完也弹个提示框）。\nB 组（一句话提示）：表情符号清零了，但翻车了：看不清的文字比例从 0% 跳到 34%。原因很简单：一句话能拦住\"渐变和 emoji\"这种看得见的特征，拦不住\"高密度小字该用什么颜色\"这种信息架构问题。8 个区块的密密麻麻的小字里，浅灰正文大面积不及格。\nD 组（插件全流程）：它把整个控制台建成了一座\"变电站调度终端\"——智能体是发电机组，编排流程是电网主接线图（双母线单线图），审批是\"操作票\"（盖章才准执行），日志是电网调度真实的 SOE 事件记录，故障机组在图上用红色告警框标出来。审批不是弹窗：点\"准许执行\"，票面盖章、移出队列、日志落一条记录、待审数减一，整条链路真实流转。\n数据：看不清的文字只有 15%，是三组里唯一把信息密度管住的。\n还有个细节得记一笔：D 组第一版在手机宽度下溢出了 364 像素，插件流程里的自检环节把它查出来修掉了，复测归零。一句话提示词没有这双检查的手——这就是流程的价值：它不光管风格，它管质量。\n复杂任务总账（追加 3 行） 页面 配置 渐变 投影 表情 看不清的文字 手机溢出 控制台-A 默认 1 9 22 39% 无 控制台-B 一句话 0 0 0 34% 无 控制台-D 插件 0 0 0 15% 无（修过一轮） 到这里，前面那句\"一句话提示词赢麻了\"要修正了：它只在简单页面成立。 单页官网一句话够；多区块控制台这种复杂系统，一句话管不住信息密度，插件的流程优势是实打实的。\n补一把尺子：请出题人亲自阅卷 写这篇的时候我干了件事：把这个插件官方那个检测器（它自己规则集的扫描器，纯代码、不用大模型）下载下来，把 14 个页面全部扫了一遍——相当于请出题人亲自阅卷。三个结果：\n一，全场 14 个页面，只有一个把检测规则全部通过，就是任务一那句话版的灰白页。简单页面上一句话不只骗过了我，连出题人都挑不出毛病。\n二，一句话版在复杂控制台上被它抓了 22 处\"灰字看不清\"（浅灰小字压白底那种），还有 11 像素的小字、卡片套卡片。我前面用脚本量出来的\"一句话管不住信息密度\"，出题人盖章了。\n三，最意外的：插件全流程自己做的 6 个页面，没有一个全过它自己的规则。高密度表格被抓文字遮挡，等宽小字被抓字号太小，台账那个 01/02/03 编号清单正好撞上它规则集里\"编号标题\"这条 AI 特征；连金库和公证书的米色底，都被它自己的规则集标成\"AI 常用的高级感\"。它卖的不是\"保证过检\"，是\"有主张\"。装了它不代表你就安全了——它自己都过不了自己的卷子。\n插一段：C 组，装了不用，是什么结果 C 组就是那个\"装了插件、跑了初始化、但全程不用命令\"的组。结果很有意思，正好卡在 A 和 D 中间：\n它知道\"有个设计规则集存在\"，所以把渐变和投影这种最扎眼的收敛了（归零）；但表情符号 7 个一个没少，页面也没有方向，纯靠收敛。\n这说明两件事：第一，D 组的效果不是\"装插件这个动作\"带来的心理暗示，是流程执行本身；第二，“知道规则\"和\"遵守规则\"是两回事，你得真的跑那个流程。\n总账：14 个页面一次看全 页面 配置 渐变 投影 表情 看不清的文字 手机溢出 官网-A 默认 15 12 8 33% 无 官网-B 一句话 0 0 0 0% 无 官网-C 装了不用 0 0 7 12% 无 官网-D 插件 0 0 0 1% 无 工作台-A 默认 10 7 0 47% 315px 工作台-D 插件 0 1 1 2% 无 改造-A 默认 4 0 7 20% 无 改造-B 一句话 0 0 0 17% 无 改造-D 插件 0 0 0 4% 无 控制台-A 默认 1 9 22 39% 无 控制台-B 一句话 0 0 0 34% 无 控制台-D 插件 0 0 0 15% 无（修过一轮） 简单任务上一句话就能抹平差距；任务一复杂，差距就回来了。\n盲评：匿名打乱，让不知道实验的评委打分 数据都是机器量的，机器说的\"干净\"人眼认不认？我把 7 张首屏截图匿名打乱（编号 sample-01 到 07），让一个完全不知道实验背景的评委打分，六个维度各 1-5 分，其中一维就是\"像不像 AI 生成的”（5 分=完全不像，1 分=一眼 AI）。\n匿名编号 还原后 视觉层级 字体排印 色彩 留白节奏 AI味 可信度 平均 sample-01 默认组-官网 4 3 3 3 2 2 2.8 sample-02 默认组-工作台 4 4 4 4 2 3 3.5 sample-03 插件组-工作台 3 3 3 3 2 2 2.7 sample-04 插件组-官网 4 3 4 4 3 3 3.5 sample-05 一句话组-官网 4 4 4 4 4 4 4.0 sample-06 插件组-备选方向1 3 3 3 3 2 2 2.7 sample-07 插件组-备选方向2 5 4 4 5 4 4 4.3 按\"AI 味\"这一项看分组均值：\n默认组：2.0 分（一眼 AI） 一句话组：4.0 分（看着不像 AI） 插件组（两个正式产物）：2.5 分（还是有点 AI） 插件组在\"机器可数的\"指标上完胜（表情清零、文字全能看清），但在\"人眼判断\"上，只比默认组高了 0.5 分。那句话才是断层第一。\n我琢磨了很久这到底为什么。结论是：“AI 味\"有两层。第一层是\"特征层”：渐变、投影、表情、卡片堆叠——这些是能写进规则清单的，所以插件能一次性清零。第二层是\"气质层\"：信息密度是不是真的、布局有没有不对称、标题是不是在说人话——这些写不进规则，所以插件管不到。而人眼判断\"像不像 AI\"，主要看第二层。\n一句话提示词怎么赢的？因为它什么都没做——不堆特效，反而没有留下\"机造的整齐感\"。这也解释了另一个彩蛋：插件流程里有一步是\"掷骰子选方向\"（故意不让 AI 选它最顺手的方案），其中被淘汰的一个备选方向，盲评居然拿了全场最高分 4.3。淘汰的不等于错的，只是不适合讲这个故事。（严谨补一句：那张是方向草图不是完整页面，页面短、能挑的毛病就少，这个\"最高分\"不能拿去跟成品直接比，更不能证明骰子掷错了，只当彩蛋看。）\n最大的翻车：AI 评委自己会脑补 给插件组那个对账工作台打分的时候，评委写的理由是：“整块渐变背景、居中 slogan、三列同款图标卡”。\n实际页面长什么样？左边深色导航、中间封账进度条、下面一张高密度明细表。没有渐变，没有 slogan，没有三列图标卡。我用另一个视觉模型复核过，确认评审描述和实际页面完全对不上。\n它没看。它以为它看了。它把页面往自己脑子里的\"AI 模板\"样子填空了。\n更糟的是，这事后来了第二例，而且更离谱。复杂控制台那轮盲评，评委给插件组（变电站调度终端）打的分是三组最低，理由是\"低对比灰字看不清、大面积渐变、告警不显眼\"。我又拿另一套视觉模型去复核同一张图，事实完全相反：页面没有渐变，文字对比度是三组最高的，故障告警在页面 5 个地方都标了红色（顶部横幅、统计卡、机组清单、单线图上的红色告警框、日志里的红色级别），醒目得很。评委说的四条理由，一条都不成立。\n两例合在一起，结论很硬：AI 评委打分时，对\"长得不像通用模板\"的页面会系统性压分——它不是在看你的页面，是在把你的页面往它预期的模板里套。 越有独立世界观的页面（金库、变电站），被误读得越狠。\n结论，分三种用法 只做简单页面（官网、介绍页、落地页）：一句话就够了。“不要渐变、不要表情符号图标、不要阴影卡片、不要一律蓝色”。免费，即刻生效。但记住它的适用范围——页面一复杂它就管不住了。顺带说一句实话：这句提示词本身，就是从那 62 条设计规则里挑出来的重点。你用一句话的时候，已经在用别人沉淀过的知识，只是没付钱。 做复杂系统（工作台、控制台、数据密集页）或改造存量页面：值得跑完整流程。它给你的不是\"好看的样式\"，是三样更硬的东西：状态语义体系（什么颜色代表什么状态，有规矩）、检查闭环（手机上破版会被自检抓出来修掉）、以及一个\"这页到底是个什么\"的方向。改造旧页面时这个差别最直观：一句话版只是把彩色 AI 模板刷成灰色 AI 模板，骨架不会动；流程版把同一份文案重组成另一份东西。这些都是一句话给不了的。 最狠的一条：别让 AI 评 AI 的活儿。两轮盲评都抓到 AI 评委\"看都没看就打分\"，它对长得不像模板的页面会系统性压分。你找人看吧，哪怕找你同事。 最后说句实在的：AI 做的东西不丢人，但它那个\"平均审美\"，跟你想要的是两回事。页面越复杂，“一句话调教\"越不够用，设计流程的价值越大。你缺的不是更好的 AI，是一套把设计当回事的流程，加一双自己的眼睛。\n文中配图均为本次对照实验的真实产物；结论应结合具体任务、模型版本和提示词约束理解。\n",
+  "wordCount" : "5949",
+  "inLanguage": "en",
+  "datePublished": "2026-10-29T21:51:00+08:00",
+  "dateModified": "2026-11-07T23:30:00+08:00",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://csqread.top/posts/ai/impeccable-design-plugin-evaluation/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Qian's Blog",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://csqread.top/favicon.ico"
+    }
+  }
+}
+</script>
+</head>
+<body id="top">
+    <header class="header">
+    <nav class="header-nav">
+        <div class="logo">
+            <a href="https://csqread.top/" accesskey="h" title="Qian&#39;s Blog (Alt + H)">Qian&#39;s Blog</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" class="theme-toggle" accesskey="t" title="(Alt + T)" aria-label="Toggle theme">
+                    <svg class="moon" xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg class="sun" xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu" class="menu">
+            <li>
+                <a href="https://csqread.top/search" title="🔍搜索 (Alt &#43; /)" accesskey=/>
+                    <span>🔍搜索</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://csqread.top/posts" title="📚文章">
+                    <span>📚文章</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://csqread.top/archives/" title="⏱时间轴">
+                    <span>⏱时间轴</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://csqread.top/tags" title="🔖标签">
+                    <span>🔖标签</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://csqread.top/about" title="🙋🏻‍♂️关于">
+                    <span>🙋🏻‍♂️关于</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://csqread.top/links" title="🤝友链">
+                    <span>🤝友链</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://csqread.top/posts/blog" title="🧱博客">
+                    <span>🧱博客</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://csqread.top/posts/tech" title="👨🏻‍💻技术">
+                    <span>👨🏻‍💻技术</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://csqread.top/posts/read" title="📕阅读-电影">
+                    <span>📕阅读-电影</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://csqread.top/posts/life" title="🏖生活">
+                    <span>🏖生活</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    
+    <h1 class="post-title entry-hint-parent">
+      我装了 9 万星的设计插件，然后输给了一句 30 字的提示词
+    </h1>
+    <div class="post-description">
+      同一个 AI、四种配置、四类页面任务：一次关于 Impeccable 设计插件、提示词约束与复杂交付质量的盲评实验。
+    </div>
+    <div class="post-meta">
+
+<span title='2026-10-29 21:51:00 +0800 CST'>October 29, 2026</span>
+
+</div>
+  </header> 
+  <div class="post-content md-content"><h2 id="先看结果同一句话任务三种做法">先看结果：同一句话任务，三种做法<a hidden class="anchor" aria-hidden="true" href="#先看结果同一句话任务三种做法">#</a></h2>
+<p>我让同一个 AI 做一个&quot;企业级 multi-agent 交付平台&quot;的官网首页，分三种方式。</p>
+<p><strong>方式一：什么都不说，让它直接做。</strong></p>
+<p><img alt="方式一：默认发挥" loading="lazy" src="/posts/ai/impeccable-design-plugin-evaluation/images/01-T1-A%E9%BB%98%E8%AE%A4%E7%BB%84.png"></p>
+<p>它交出来的是这样：深紫色渐变的大标题、带光晕的背景、图标全是表情符号（机器人、锁、图表那种）、下面整整齐齐三列圆角卡片。我数了一下：页面里 15 处渐变、12 处投影、8 个表情符号图标。</p>
+<p><strong>方式二：加一句 30 字的话。</strong> 原话是：&ldquo;不要渐变、不要表情符号图标、不要阴影卡片、不要一律蓝色&rdquo;。</p>
+<p><img alt="方式二：加一句提示词" loading="lazy" src="/posts/ai/impeccable-design-plugin-evaluation/images/02-T1-B%E6%8F%90%E7%A4%BA%E8%AF%8D%E7%BB%84.png"></p>
+<p>它交出来一版灰白的、干净的页面。上面那些特征，一个都没有。</p>
+<p><strong>方式三：严格按一个设计插件的完整流程走。</strong> 这个插件叫 Impeccable，9.45 万 star（2026-10-29 取数，这仓库更新很快），是 Anthropic 官方前端设计指南的开源后代。流程是：先写设计意图、掷骰子选设计方向、写&quot;这个页面要为谁讲什么故事&quot;的契约、做完了自己评审再改。</p>
+<p><img alt="插件全流程：运行图" loading="lazy" src="/posts/ai/impeccable-design-plugin-evaluation/images/04-T1-D%E6%8F%92%E4%BB%B6%E7%BB%84-%E8%BF%90%E8%A1%8C%E5%9B%BE.png"></p>
+<p>插件组交出来的是一张铁路运行图：墨绿站牌、发丝线、车次代号。它的核心交互是&quot;给牌放行&quot;——审批通过 = 点一下盖个红章，线路继续往前跑。它把&quot;一次 agent 交付&quot;讲成了一列准点运行的列车。</p>
+<p>现在猜，哪一版最&quot;不像 AI 生成的&quot;？</p>
+<p><strong>答案是方式二，那句 30 字的提示词。</strong></p>
+<p>下面我把整个实验的数据都摊开讲，顺便说说为什么。</p>
+<h2 id="这个实验是怎么做的">这个实验是怎么做的<a hidden class="anchor" aria-hidden="true" href="#这个实验是怎么做的">#</a></h2>
+<p>我不搞玄学，就做对照实验。同一个 AI，四种配置：</p>
+<table>
+	<thead>
+			<tr>
+					<th>组</th>
+					<th>配置</th>
+					<th>一句话说明</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td>A 组</td>
+					<td>原样，直接做</td>
+					<td>基准线：AI 默认发挥长什么样</td>
+			</tr>
+			<tr>
+					<td>B 组</td>
+					<td>原样 + 一句&quot;别像 AI&quot;</td>
+					<td>测一句话提示词的威力</td>
+			</tr>
+			<tr>
+					<td>C 组</td>
+					<td>装了插件、执行了初始化，但全程不用</td>
+					<td>测&quot;装的动作&quot;本身有没有用</td>
+			</tr>
+			<tr>
+					<td>D 组</td>
+					<td>插件完整流程</td>
+					<td>测工具全流程</td>
+			</tr>
+	</tbody>
+</table>
+<p>任务做四组：官网介绍页、对账工作台（财务场景）、把一个已经做好的页面重新改造，以及最后那个多智能体运维控制台。每组页面我都用脚本量了硬指标：渐变多少处、投影多少处、表情符号多少个、有多少文字颜色浅到看不清（无障碍标准）、手机宽度下会不会溢出。</p>
+<h2 id="任务一官网首页">任务一：官网首页<a hidden class="anchor" aria-hidden="true" href="#任务一官网首页">#</a></h2>
+<p>上面三张图就是结果。数据是这样的：</p>
+<table>
+	<thead>
+			<tr>
+					<th>页面</th>
+					<th>渐变</th>
+					<th>投影</th>
+					<th>表情图标</th>
+					<th>看不清的文字</th>
+					<th>手机宽度溢出</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td>A 组（默认）</td>
+					<td>15 处</td>
+					<td>12 处</td>
+					<td>8 个</td>
+					<td>33%</td>
+					<td>无</td>
+			</tr>
+			<tr>
+					<td>B 组（一句话）</td>
+					<td>0</td>
+					<td>0</td>
+					<td>0</td>
+					<td>0%</td>
+					<td>无</td>
+			</tr>
+			<tr>
+					<td>C 组（装了不用）</td>
+					<td>0</td>
+					<td>0</td>
+					<td>7 个</td>
+					<td>12%</td>
+					<td>无</td>
+			</tr>
+			<tr>
+					<td>D 组（插件流程）</td>
+					<td>0</td>
+					<td>0</td>
+					<td>0</td>
+					<td>1%</td>
+					<td>无</td>
+			</tr>
+	</tbody>
+</table>
+<p>先把 C 组放一边，它单独有故事。A/B/D 三组里，D 组（插件）在数据上是最稳的：表情符号清零、看不清的文字只有 1%、手机不破版。B 组也不错，0% 看不清。A 组的大字标题有将近 15% 是浅到踩线的——渐变背景上压白字，手机亮度一低直接糊。</p>
+<h2 id="任务二对账工作台数据场景">任务二：对账工作台（数据场景）<a hidden class="anchor" aria-hidden="true" href="#任务二对账工作台数据场景">#</a></h2>
+<p>官网页好看不好看，比较主观。这个任务更实际：一个银行对账用的工作台，要盯一屏数据干活。结果差异更大。</p>
+<p><img alt="A 组默认工作台" loading="lazy" src="/posts/ai/impeccable-design-plugin-evaluation/images/05-T2-A%E9%BB%98%E8%AE%A4%E7%BB%84-%E5%B7%A5%E4%BD%9C%E5%8F%B0.png"></p>
+<p>A 组（默认）交了个仪表盘：KPI 卡、渐变图、状态标签。看着还行，但数据量出来很难看：<strong>47% 的文字低于无障碍标准的对比度</strong>（浅色字配浅色底），最要命的是<strong>手机宽度下页面横向溢出 315 像素</strong>——就是页面比你屏幕宽出一大截，得左右滑才能看全。做给企业用的后台，在手机上看直接穿帮。</p>
+<p><img alt="D 组插件工作台" loading="lazy" src="/posts/ai/impeccable-design-plugin-evaluation/images/06-T2-D%E6%8F%92%E4%BB%B6%E7%BB%84-%E9%87%91%E5%BA%93.png"></p>
+<p>D 组（插件）走&quot;金库封账&quot;的路子：冷钢灰壳、黄铜色按钮、等宽数字，顶部一根&quot;封账进度横梁&quot;——1,284/1,290 笔已平，差 6 格没合拢，一行差异（¥2.70）在表里标红。它把这个工作台讲成了&quot;账平了才落锁&quot;的仪式。数据：看不清的文字 2%，零溢出。</p>
+<h2 id="任务三改造一个已经做好的页面">任务三：改造一个已经做好的页面<a hidden class="anchor" aria-hidden="true" href="#任务三改造一个已经做好的页面">#</a></h2>
+<p>这是插件作者自己最看重的场景：你手上有个旧页面，让 AI 改一改。</p>
+<p>存量页面就是任务一的 A 组那个渐变页。我给它写了一份&quot;现状诊断书&quot;（这个页面有哪些问题），然后让 A 组、B 组、D 组三种配置各自去改，要求原文案一字不动。</p>
+<p><img alt="A 组原生改造" loading="lazy" src="/posts/ai/impeccable-design-plugin-evaluation/images/07-T4-A%E5%8E%9F%E7%94%9F%E6%94%B9%E9%80%A0.png"></p>
+<p>A 组（默认）改出来是这样：渐变从 15 处减到 4 处，投影清零了，但<strong>表情符号一个没动，7 个全留着</strong>；看不清的文字还有 20%，大字里 10% 不合格。它像做了一次表面保洁：看得见的污渍擦了，背后的颜色体系和图标语言一点没碰。</p>
+<p><img alt="B 组一句话改造" loading="lazy" src="/posts/ai/impeccable-design-plugin-evaluation/images/12-T4-B%E4%B8%80%E5%8F%A5%E8%AF%9D%E6%94%B9%E9%80%A0.png"></p>
+<p>B 组（那句话）改出来是这样：表面特征全清零——渐变、投影、表情符号一个不剩，看不清的文字从 20% 降到 17%。单看数字像是及格了。但你看整个页面：<strong>骨架一点没动</strong>，还是居中大标题、三列卡片、大数字、客户证言那一套，只是从蓝紫色换成了黑白灰。它把一个彩色的 AI 模板，改成了一个灰色的 AI 模板。</p>
+<p><img alt="D 组插件改造" loading="lazy" src="/posts/ai/impeccable-design-plugin-evaluation/images/08-T4-D%E6%8F%92%E4%BB%B6%E6%94%B9%E9%80%A0-%E5%8F%B0%E8%B4%A6.png"></p>
+<p>D 组（插件）改出来是这样：整页重构成&quot;交付运营台账&quot;——顶栏墨绿站牌、首屏一块&quot;运行面板&quot;（本月 12 批交付，11 准点，1 待审批）、能力按编号清单排、客户证言变成&quot;验收记录&quot;（ACC-0881，带签署行）。还是那些话，但整个页面像一份真正在用的运营文档。数据：渐变/投影/表情全零，看不清的 5%，大字 0 失败，无溢出。</p>
+<p><strong>任务三是最扎心的一个</strong>：同样改一个旧页面，默认配置只会&quot;打补丁&quot;（特征都擦不干净），那句话只会&quot;刷一层漆&quot;（特征干净了，骨架纹丝不动），插件才会&quot;重建世界观&quot;。</p>
+<h2 id="任务四复杂控制台这才是重点">任务四：复杂控制台（这才是重点）<a hidden class="anchor" aria-hidden="true" href="#任务四复杂控制台这才是重点">#</a></h2>
+<p>看完前面你可能会想：那一句提示词不是赢了吗？别急，前面三个任务都太简单——单页官网、单屏工作台，信息量小，一句话&quot;不要渐变不要 emoji&quot;就能抹平。<strong>要验证插件到底有没有用，得把任务复杂度拉到一句话管不住的量级。</strong></p>
+<p>所以我设计了第四个任务：一个多智能体运维控制台，硬性要求 8 个功能区块（全局状态栏、8 个智能体清单、流程画布、详情面板、审批队列、事件日志、时间线视图、数据汇总）加 3 处交互，三种方式同题竞赛。这种页面是给运维值班员盯着用的，信息密度高、状态多。</p>
+<p><img alt="A 组默认控制台" loading="lazy" src="/posts/ai/impeccable-design-plugin-evaluation/images/09-T3-A%E9%BB%98%E8%AE%A4%E7%BB%84-%E6%8E%A7%E5%88%B6%E5%8F%B0.png"></p>
+<p><strong>A 组（默认）</strong>：功能都交齐了，但复杂度把 AI 味放大了——<strong>表情符号图标 22 个</strong>（简单任务时只有 8 个），投影 9 处，页面里 39% 的文字颜色浅到看不清。交互全是弹窗（点一个智能体弹个提示框，审批完也弹个提示框）。</p>
+<p><img alt="B 组一句话控制台" loading="lazy" src="/posts/ai/impeccable-design-plugin-evaluation/images/10-T3-B%E4%B8%80%E5%8F%A5%E8%AF%9D%E7%BB%84-%E6%8E%A7%E5%88%B6%E5%8F%B0.png"></p>
+<p><strong>B 组（一句话提示）</strong>：表情符号清零了，但<strong>翻车了：看不清的文字比例从 0% 跳到 34%</strong>。原因很简单：一句话能拦住&quot;渐变和 emoji&quot;这种看得见的特征，拦不住&quot;高密度小字该用什么颜色&quot;这种信息架构问题。8 个区块的密密麻麻的小字里，浅灰正文大面积不及格。</p>
+<p><img alt="D 组调度终端" loading="lazy" src="/posts/ai/impeccable-design-plugin-evaluation/images/11-T3-D%E6%8F%92%E4%BB%B6%E7%BB%84-%E8%B0%83%E5%BA%A6%E7%BB%88%E7%AB%AF.png"></p>
+<p><strong>D 组（插件全流程）</strong>：它把整个控制台建成了一座&quot;变电站调度终端&quot;——智能体是发电机组，编排流程是电网主接线图（双母线单线图），审批是&quot;操作票&quot;（盖章才准执行），日志是电网调度真实的 SOE 事件记录，故障机组在图上用红色告警框标出来。审批不是弹窗：点&quot;准许执行&quot;，票面盖章、移出队列、日志落一条记录、待审数减一，整条链路真实流转。</p>
+<p>数据：看不清的文字只有 15%，是三组里唯一把信息密度管住的。</p>
+<p>还有个细节得记一笔：D 组第一版在手机宽度下溢出了 364 像素，插件流程里的自检环节把它查出来修掉了，复测归零。<strong>一句话提示词没有这双检查的手</strong>——这就是流程的价值：它不光管风格，它管质量。</p>
+<h3 id="复杂任务总账追加-3-行">复杂任务总账（追加 3 行）<a hidden class="anchor" aria-hidden="true" href="#复杂任务总账追加-3-行">#</a></h3>
+<table>
+	<thead>
+			<tr>
+					<th>页面</th>
+					<th>配置</th>
+					<th>渐变</th>
+					<th>投影</th>
+					<th>表情</th>
+					<th>看不清的文字</th>
+					<th>手机溢出</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td>控制台-A</td>
+					<td>默认</td>
+					<td>1</td>
+					<td>9</td>
+					<td><strong>22</strong></td>
+					<td>39%</td>
+					<td>无</td>
+			</tr>
+			<tr>
+					<td>控制台-B</td>
+					<td>一句话</td>
+					<td>0</td>
+					<td>0</td>
+					<td>0</td>
+					<td><strong>34%</strong></td>
+					<td>无</td>
+			</tr>
+			<tr>
+					<td>控制台-D</td>
+					<td>插件</td>
+					<td>0</td>
+					<td>0</td>
+					<td>0</td>
+					<td><strong>15%</strong></td>
+					<td>无（修过一轮）</td>
+			</tr>
+	</tbody>
+</table>
+<p><strong>到这里，前面那句&quot;一句话提示词赢麻了&quot;要修正了：它只在简单页面成立。</strong> 单页官网一句话够；多区块控制台这种复杂系统，一句话管不住信息密度，插件的流程优势是实打实的。</p>
+<h3 id="补一把尺子请出题人亲自阅卷">补一把尺子：请出题人亲自阅卷<a hidden class="anchor" aria-hidden="true" href="#补一把尺子请出题人亲自阅卷">#</a></h3>
+<p>写这篇的时候我干了件事：把这个插件官方那个检测器（它自己规则集的扫描器，纯代码、不用大模型）下载下来，把 14 个页面全部扫了一遍——相当于请出题人亲自阅卷。三个结果：</p>
+<p>一，全场 14 个页面，只有一个把检测规则全部通过，就是任务一那句话版的灰白页。简单页面上一句话不只骗过了我，连出题人都挑不出毛病。</p>
+<p>二，一句话版在复杂控制台上被它抓了 22 处&quot;灰字看不清&quot;（浅灰小字压白底那种），还有 11 像素的小字、卡片套卡片。我前面用脚本量出来的&quot;一句话管不住信息密度&quot;，出题人盖章了。</p>
+<p>三，最意外的：插件全流程自己做的 6 个页面，没有一个全过它自己的规则。高密度表格被抓文字遮挡，等宽小字被抓字号太小，台账那个 01/02/03 编号清单正好撞上它规则集里&quot;编号标题&quot;这条 AI 特征；连金库和公证书的米色底，都被它自己的规则集标成&quot;AI 常用的高级感&quot;。它卖的不是&quot;保证过检&quot;，是&quot;有主张&quot;。装了它不代表你就安全了——它自己都过不了自己的卷子。</p>
+<h2 id="插一段c-组装了不用是什么结果">插一段：C 组，装了不用，是什么结果<a hidden class="anchor" aria-hidden="true" href="#插一段c-组装了不用是什么结果">#</a></h2>
+<p>C 组就是那个&quot;装了插件、跑了初始化、但全程不用命令&quot;的组。结果很有意思，正好卡在 A 和 D 中间：</p>
+<p><img alt="C组：装了但不用" loading="lazy" src="/posts/ai/impeccable-design-plugin-evaluation/images/03-T1-C%E8%A3%85%E8%80%8C%E4%B8%8D%E7%94%A8%E7%BB%84.png"></p>
+<p>它知道&quot;有个设计规则集存在&quot;，所以把渐变和投影这种最扎眼的收敛了（归零）；但表情符号 7 个一个没少，页面也没有方向，纯靠收敛。</p>
+<p>这说明两件事：第一，D 组的效果不是&quot;装插件这个动作&quot;带来的心理暗示，是流程执行本身；第二，&ldquo;知道规则&quot;和&quot;遵守规则&quot;是两回事，你得真的跑那个流程。</p>
+<h2 id="总账14-个页面一次看全">总账：14 个页面一次看全<a hidden class="anchor" aria-hidden="true" href="#总账14-个页面一次看全">#</a></h2>
+<table>
+	<thead>
+			<tr>
+					<th>页面</th>
+					<th>配置</th>
+					<th>渐变</th>
+					<th>投影</th>
+					<th>表情</th>
+					<th>看不清的文字</th>
+					<th>手机溢出</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td>官网-A</td>
+					<td>默认</td>
+					<td>15</td>
+					<td>12</td>
+					<td>8</td>
+					<td>33%</td>
+					<td>无</td>
+			</tr>
+			<tr>
+					<td>官网-B</td>
+					<td>一句话</td>
+					<td>0</td>
+					<td>0</td>
+					<td>0</td>
+					<td>0%</td>
+					<td>无</td>
+			</tr>
+			<tr>
+					<td>官网-C</td>
+					<td>装了不用</td>
+					<td>0</td>
+					<td>0</td>
+					<td>7</td>
+					<td>12%</td>
+					<td>无</td>
+			</tr>
+			<tr>
+					<td>官网-D</td>
+					<td>插件</td>
+					<td>0</td>
+					<td>0</td>
+					<td>0</td>
+					<td>1%</td>
+					<td>无</td>
+			</tr>
+			<tr>
+					<td>工作台-A</td>
+					<td>默认</td>
+					<td>10</td>
+					<td>7</td>
+					<td>0</td>
+					<td>47%</td>
+					<td><strong>315px</strong></td>
+			</tr>
+			<tr>
+					<td>工作台-D</td>
+					<td>插件</td>
+					<td>0</td>
+					<td>1</td>
+					<td>1</td>
+					<td>2%</td>
+					<td>无</td>
+			</tr>
+			<tr>
+					<td>改造-A</td>
+					<td>默认</td>
+					<td>4</td>
+					<td>0</td>
+					<td>7</td>
+					<td>20%</td>
+					<td>无</td>
+			</tr>
+			<tr>
+					<td>改造-B</td>
+					<td>一句话</td>
+					<td>0</td>
+					<td>0</td>
+					<td>0</td>
+					<td>17%</td>
+					<td>无</td>
+			</tr>
+			<tr>
+					<td>改造-D</td>
+					<td>插件</td>
+					<td>0</td>
+					<td>0</td>
+					<td>0</td>
+					<td>4%</td>
+					<td>无</td>
+			</tr>
+			<tr>
+					<td>控制台-A</td>
+					<td>默认</td>
+					<td>1</td>
+					<td>9</td>
+					<td><strong>22</strong></td>
+					<td>39%</td>
+					<td>无</td>
+			</tr>
+			<tr>
+					<td>控制台-B</td>
+					<td>一句话</td>
+					<td>0</td>
+					<td>0</td>
+					<td>0</td>
+					<td><strong>34%</strong></td>
+					<td>无</td>
+			</tr>
+			<tr>
+					<td>控制台-D</td>
+					<td>插件</td>
+					<td>0</td>
+					<td>0</td>
+					<td>0</td>
+					<td><strong>15%</strong></td>
+					<td>无（修过一轮）</td>
+			</tr>
+	</tbody>
+</table>
+<p>简单任务上一句话就能抹平差距；任务一复杂，差距就回来了。</p>
+<h2 id="盲评匿名打乱让不知道实验的评委打分">盲评：匿名打乱，让不知道实验的评委打分<a hidden class="anchor" aria-hidden="true" href="#盲评匿名打乱让不知道实验的评委打分">#</a></h2>
+<p>数据都是机器量的，机器说的&quot;干净&quot;人眼认不认？我把 7 张首屏截图匿名打乱（编号 sample-01 到 07），让一个完全不知道实验背景的评委打分，六个维度各 1-5 分，其中一维就是&quot;像不像 AI 生成的&rdquo;（5 分=完全不像，1 分=一眼 AI）。</p>
+<table>
+	<thead>
+			<tr>
+					<th>匿名编号</th>
+					<th>还原后</th>
+					<th>视觉层级</th>
+					<th>字体排印</th>
+					<th>色彩</th>
+					<th>留白节奏</th>
+					<th>AI味</th>
+					<th>可信度</th>
+					<th>平均</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td>sample-01</td>
+					<td>默认组-官网</td>
+					<td>4</td>
+					<td>3</td>
+					<td>3</td>
+					<td>3</td>
+					<td><strong>2</strong></td>
+					<td>2</td>
+					<td>2.8</td>
+			</tr>
+			<tr>
+					<td>sample-02</td>
+					<td>默认组-工作台</td>
+					<td>4</td>
+					<td>4</td>
+					<td>4</td>
+					<td>4</td>
+					<td><strong>2</strong></td>
+					<td>3</td>
+					<td>3.5</td>
+			</tr>
+			<tr>
+					<td>sample-03</td>
+					<td>插件组-工作台</td>
+					<td>3</td>
+					<td>3</td>
+					<td>3</td>
+					<td>3</td>
+					<td><strong>2</strong></td>
+					<td>2</td>
+					<td>2.7</td>
+			</tr>
+			<tr>
+					<td>sample-04</td>
+					<td>插件组-官网</td>
+					<td>4</td>
+					<td>3</td>
+					<td>4</td>
+					<td>4</td>
+					<td><strong>3</strong></td>
+					<td>3</td>
+					<td>3.5</td>
+			</tr>
+			<tr>
+					<td>sample-05</td>
+					<td>一句话组-官网</td>
+					<td>4</td>
+					<td>4</td>
+					<td>4</td>
+					<td>4</td>
+					<td><strong>4</strong></td>
+					<td>4</td>
+					<td><strong>4.0</strong></td>
+			</tr>
+			<tr>
+					<td>sample-06</td>
+					<td>插件组-备选方向1</td>
+					<td>3</td>
+					<td>3</td>
+					<td>3</td>
+					<td>3</td>
+					<td><strong>2</strong></td>
+					<td>2</td>
+					<td>2.7</td>
+			</tr>
+			<tr>
+					<td>sample-07</td>
+					<td>插件组-备选方向2</td>
+					<td>5</td>
+					<td>4</td>
+					<td>4</td>
+					<td>5</td>
+					<td><strong>4</strong></td>
+					<td>4</td>
+					<td><strong>4.3</strong></td>
+			</tr>
+	</tbody>
+</table>
+<p>按&quot;AI 味&quot;这一项看分组均值：</p>
+<ul>
+<li>默认组：<strong>2.0 分</strong>（一眼 AI）</li>
+<li>一句话组：<strong>4.0 分</strong>（看着不像 AI）</li>
+<li>插件组（两个正式产物）：<strong>2.5 分</strong>（还是有点 AI）</li>
+</ul>
+<p>插件组在&quot;机器可数的&quot;指标上完胜（表情清零、文字全能看清），但在&quot;人眼判断&quot;上，只比默认组高了 0.5 分。那句话才是断层第一。</p>
+<p>我琢磨了很久这到底为什么。结论是：&ldquo;AI 味&quot;有两层。第一层是&quot;特征层&rdquo;：渐变、投影、表情、卡片堆叠——这些是<strong>能写进规则清单的</strong>，所以插件能一次性清零。第二层是&quot;气质层&quot;：信息密度是不是真的、布局有没有不对称、标题是不是在说人话——这些<strong>写不进规则</strong>，所以插件管不到。而人眼判断&quot;像不像 AI&quot;，主要看第二层。</p>
+<p>一句话提示词怎么赢的？因为它什么都没做——不堆特效，反而没有留下&quot;机造的整齐感&quot;。这也解释了另一个彩蛋：插件流程里有一步是&quot;掷骰子选方向&quot;（故意不让 AI 选它最顺手的方案），其中被淘汰的一个备选方向，盲评居然拿了全场最高分 4.3。淘汰的不等于错的，只是不适合讲这个故事。（严谨补一句：那张是方向草图不是完整页面，页面短、能挑的毛病就少，这个&quot;最高分&quot;不能拿去跟成品直接比，更不能证明骰子掷错了，只当彩蛋看。）</p>
+<h2 id="最大的翻车ai-评委自己会脑补">最大的翻车：AI 评委自己会脑补<a hidden class="anchor" aria-hidden="true" href="#最大的翻车ai-评委自己会脑补">#</a></h2>
+<p>给插件组那个对账工作台打分的时候，评委写的理由是：&ldquo;整块渐变背景、居中 slogan、三列同款图标卡&rdquo;。</p>
+<p>实际页面长什么样？左边深色导航、中间封账进度条、下面一张高密度明细表。没有渐变，没有 slogan，没有三列图标卡。我用另一个视觉模型复核过，确认评审描述和实际页面完全对不上。</p>
+<p>它没看。它以为它看了。它把页面往自己脑子里的&quot;AI 模板&quot;样子填空了。</p>
+<p>更糟的是，这事后来了第二例，而且更离谱。复杂控制台那轮盲评，评委给插件组（变电站调度终端）打的分是三组最低，理由是&quot;低对比灰字看不清、大面积渐变、告警不显眼&quot;。我又拿另一套视觉模型去复核同一张图，事实完全相反：<strong>页面没有渐变，文字对比度是三组最高的，故障告警在页面 5 个地方都标了红色（顶部横幅、统计卡、机组清单、单线图上的红色告警框、日志里的红色级别），醒目得很</strong>。评委说的四条理由，一条都不成立。</p>
+<p>两例合在一起，结论很硬：<strong>AI 评委打分时，对&quot;长得不像通用模板&quot;的页面会系统性压分——它不是在看你的页面，是在把你的页面往它预期的模板里套。</strong> 越有独立世界观的页面（金库、变电站），被误读得越狠。</p>
+<hr>
+<h2 id="结论分三种用法">结论，分三种用法<a hidden class="anchor" aria-hidden="true" href="#结论分三种用法">#</a></h2>
+<ul>
+<li><strong>只做简单页面（官网、介绍页、落地页）</strong>：一句话就够了。&ldquo;不要渐变、不要表情符号图标、不要阴影卡片、不要一律蓝色&rdquo;。免费，即刻生效。但记住它的适用范围——页面一复杂它就管不住了。顺带说一句实话：这句提示词本身，就是从那 62 条设计规则里挑出来的重点。你用一句话的时候，已经在用别人沉淀过的知识，只是没付钱。</li>
+<li><strong>做复杂系统（工作台、控制台、数据密集页）或改造存量页面</strong>：值得跑完整流程。它给你的不是&quot;好看的样式&quot;，是三样更硬的东西：状态语义体系（什么颜色代表什么状态，有规矩）、检查闭环（手机上破版会被自检抓出来修掉）、以及一个&quot;这页到底是个什么&quot;的方向。改造旧页面时这个差别最直观：一句话版只是把彩色 AI 模板刷成灰色 AI 模板，骨架不会动；流程版把同一份文案重组成另一份东西。这些都是一句话给不了的。</li>
+<li><strong>最狠的一条</strong>：别让 AI 评 AI 的活儿。两轮盲评都抓到 AI 评委&quot;看都没看就打分&quot;，它对长得不像模板的页面会系统性压分。你找人看吧，哪怕找你同事。</li>
+</ul>
+<p>最后说句实在的：AI 做的东西不丢人，但它那个&quot;平均审美&quot;，跟你想要的是两回事。页面越复杂，&ldquo;一句话调教&quot;越不够用，设计流程的价值越大。你缺的不是更好的 AI，是一套把设计当回事的流程，加一双自己的眼睛。</p>
+<hr>
+<blockquote>
+<p>文中配图均为本次对照实验的真实产物；结论应结合具体任务、模型版本和提示词约束理解。</p>
+</blockquote>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+      <li><a href="https://csqread.top/tags/impeccable/">Impeccable</a></li>
+      <li><a href="https://csqread.top/tags/ai-%E8%AE%BE%E8%AE%A1/">AI 设计</a></li>
+      <li><a href="https://csqread.top/tags/%E6%8F%90%E7%A4%BA%E8%AF%8D%E5%B7%A5%E7%A8%8B/">提示词工程</a></li>
+      <li><a href="https://csqread.top/tags/%E5%89%8D%E7%AB%AF/">前端</a></li>
+      <li><a href="https://csqread.top/tags/%E5%AE%9E%E9%AA%8C%E8%AF%84%E6%B5%8B/">实验评测</a></li>
+    </ul>
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+        <span>&copy; 2026 <a href="https://csqread.top/">Qian&#39;s Blog</a></span> · 
+
+    
+    
+    <span>
+        Powered by
+        <a href="https://gohugo.io/?utm_source=papermod" rel="noopener" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" id="top-link" class="top-link hidden" aria-label="go to top" title="Go to Top (Alt + G)" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+        stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevrons-up">
+        <polyline points="17 11 12 6 7 11"></polyline>
+        <polyline points="17 18 12 13 7 18"></polyline>
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu');
+    if (menu) {
+        
+        const scrollPosition = localStorage.getItem("menu-scroll-position");
+        if (scrollPosition) {
+            menu.scrollLeft = parseInt(scrollPosition, 10);
+        }
+        
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var toplink = document.getElementById("top-link");
+    window.onscroll = function () {
+        const scrollThreshold = window.innerHeight;
+        if (document.body.scrollTop > scrollThreshold || document.documentElement.scrollTop > scrollThreshold) {
+            toplink.classList.remove("hidden");
+        } else {
+            toplink.classList.add("hidden");
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        const html = document.querySelector("html");
+        if (html.dataset.theme === "dark") {
+            html.dataset.theme = 'light';
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            html.dataset.theme = 'dark';
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+</body>
+
+</html>

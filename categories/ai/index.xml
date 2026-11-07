@@ -6,8 +6,50 @@
     <description>Recent content in AI on Qian&#39;s Blog</description>
     <generator>Hugo</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Sun, 09 Aug 2026 00:10:00 +0800</lastBuildDate>
+    <lastBuildDate>Sat, 07 Nov 2026 23:30:00 +0800</lastBuildDate>
     <atom:link href="https://csqread.top/categories/ai/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>dsh-superagent-prototype：受控的团队编码代理，离生产化还有多远？</title>
+      <link>https://csqread.top/posts/ai/dsh-superagent-prototype-project-analysis/</link>
+      <pubDate>Sat, 07 Nov 2026 23:10:00 +0800</pubDate>
+      <guid>https://csqread.top/posts/ai/dsh-superagent-prototype-project-analysis/</guid>
+      <description>对 DeepSeek dsh-superagent-prototype 的架构、授权模型、可靠性机制与商业化路径的完整分析：它适合用作受控试点的架构参考，但尚不宜原样用于生产。</description>
+    </item>
+    <item>
+      <title>Agent Skills 大战，四家大厂同一天挤进 GitHub Trending</title>
+      <link>https://csqread.top/posts/ai/agent-skills-ecosystem/</link>
+      <pubDate>Sat, 07 Nov 2026 22:46:00 +0800</pubDate>
+      <guid>https://csqread.top/posts/ai/agent-skills-ecosystem/</guid>
+      <description>从 GitHub Trending 上的四类项目出发，理解 Agent Skills 为何正在从提示词升级为可打包、可验证、可分发的工作单元。</description>
+    </item>
+    <item>
+      <title>我装了 9 万星的设计插件，然后输给了一句 30 字的提示词</title>
+      <link>https://csqread.top/posts/ai/impeccable-design-plugin-evaluation/</link>
+      <pubDate>Thu, 29 Oct 2026 21:51:00 +0800</pubDate>
+      <guid>https://csqread.top/posts/ai/impeccable-design-plugin-evaluation/</guid>
+      <description>同一个 AI、四种配置、四类页面任务：一次关于 Impeccable 设计插件、提示词约束与复杂交付质量的盲评实验。</description>
+    </item>
+    <item>
+      <title>Eino 深度解析：与 DeerFlow 的架构对比</title>
+      <link>https://csqread.top/posts/ai/eino-deerflow-architecture-comparison/</link>
+      <pubDate>Wed, 28 Oct 2026 09:00:00 +0800</pubDate>
+      <guid>https://csqread.top/posts/ai/eino-deerflow-architecture-comparison/</guid>
+      <description>从 Go 类型系统、图编排、检查点与中间件机制出发，深度对比 Eino 与 DeerFlow 两条 Agent 工程化路线，并给出适用边界。</description>
+    </item>
+    <item>
+      <title>智能体观测与评测：从埋点标准到生产级评估体系</title>
+      <link>https://csqread.top/posts/ai/agent-observability-evaluation-guide/</link>
+      <pubDate>Tue, 27 Oct 2026 09:00:00 +0800</pubDate>
+      <guid>https://csqread.top/posts/ai/agent-observability-evaluation-guide/</guid>
+      <description>一份面向企业 Agent 平台的观测与评测调研：梳理 OpenTelemetry、开源工具、评测方法与安全边界，给出从试点到生产的落地路线。</description>
+    </item>
+    <item>
+      <title>REA 深度分析：让 AI Agent 在证据约束下理解软件</title>
+      <link>https://csqread.top/posts/ai/rea-reverse-engineering-analysis/</link>
+      <pubDate>Tue, 13 Oct 2026 09:00:00 +0800</pubDate>
+      <guid>https://csqread.top/posts/ai/rea-reverse-engineering-analysis/</guid>
+      <description>解析 REA 如何以 MCP 与 CLI 连接反向工程工具，并以证据链、资源边界和工程化测试让 AI Agent 更可靠地分析陌生软件。</description>
+    </item>
     <item>
       <title>8 步复现清结算复杂图谱 POC，再用 10 项清单把它改造到能上生产（下篇）</title>
       <link>https://csqread.top/posts/ai/clearing-settlement-poc-production-2/</link>

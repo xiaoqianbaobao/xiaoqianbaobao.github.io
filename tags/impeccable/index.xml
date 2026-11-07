@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Impeccable on Qian&#39;s Blog</title>
+    <link>https://csqread.top/tags/impeccable/</link>
+    <description>Recent content in Impeccable on Qian&#39;s Blog</description>
+    <generator>Hugo</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Sat, 07 Nov 2026 23:30:00 +0800</lastBuildDate>
+    <atom:link href="https://csqread.top/tags/impeccable/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>我装了 9 万星的设计插件，然后输给了一句 30 字的提示词</title>
+      <link>https://csqread.top/posts/ai/impeccable-design-plugin-evaluation/</link>
+      <pubDate>Thu, 29 Oct 2026 21:51:00 +0800</pubDate>
+      <guid>https://csqread.top/posts/ai/impeccable-design-plugin-evaluation/</guid>
+      <description>同一个 AI、四种配置、四类页面任务：一次关于 Impeccable 设计插件、提示词约束与复杂交付质量的盲评实验。</description>
+    </item>
+  </channel>
+</rss>
