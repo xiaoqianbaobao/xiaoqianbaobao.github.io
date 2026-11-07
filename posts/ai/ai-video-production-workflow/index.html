@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto" data-theme="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>把 AI 视频做成可控工程：从一个想法到成片的多模型工作流 | Qian&#39;s Blog</title>
+<meta name="keywords" content="AI 视频, AI Agent, Seedance, Codex, Claude Code, 提示词工程, 视频制作">
+<meta name="description" content="用导演 Agent、图像模型、视频模型与本地后期工具组成一条带预算门禁的 AI 视频生产线：先在低成本环节消灭错误，再把确定的镜头提交给按秒计费的视频生成。">
+<meta name="author" content="">
+<link rel="canonical" href="https://csqread.top/posts/ai/ai-video-production-workflow/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.cd9298b33628769aa1bc1acebbbfd7aa11ce81dfe03484d479e1907760249a1d.css" integrity="sha256-zZKYszYodpqhvBrOu7/XqhHOgd/gNITUeeGQd2Akmh0=" rel="preload stylesheet" as="style">
+<link rel="icon" href="https://csqread.top/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://csqread.top/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://csqread.top/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://csqread.top/apple-touch-icon.png">
+<link rel="mask-icon" href="https://csqread.top/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="https://csqread.top/posts/ai/ai-video-production-workflow/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+                color-scheme: dark;
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .toc {
+                background: var(--entry);
+            }
+        }
+
+    </style>
+</noscript>
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.querySelector("html").dataset.theme = 'dark';
+    } else if (localStorage.getItem("pref-theme") === "light") {
+       document.querySelector("html").dataset.theme = 'light';
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.querySelector("html").dataset.theme = 'dark';
+    } else {
+        document.querySelector("html").dataset.theme = 'light';
+    }
+
+</script><meta property="og:url" content="https://csqread.top/posts/ai/ai-video-production-workflow/">
+  <meta property="og:site_name" content="Qian&#39;s Blog">
+  <meta property="og:title" content="把 AI 视频做成可控工程：从一个想法到成片的多模型工作流">
+  <meta property="og:description" content="用导演 Agent、图像模型、视频模型与本地后期工具组成一条带预算门禁的 AI 视频生产线：先在低成本环节消灭错误，再把确定的镜头提交给按秒计费的视频生成。">
+  <meta property="og:locale" content="zh_cn">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2026-11-08T00:00:00+08:00">
+    <meta property="article:modified_time" content="2026-11-08T00:10:00+08:00">
+    <meta property="article:tag" content="AI 视频">
+    <meta property="article:tag" content="AI Agent">
+    <meta property="article:tag" content="Seedance">
+    <meta property="article:tag" content="Codex">
+    <meta property="article:tag" content="Claude Code">
+    <meta property="article:tag" content="提示词工程">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="把 AI 视频做成可控工程：从一个想法到成片的多模型工作流">
+  <meta name="twitter:description" content="用导演 Agent、图像模型、视频模型与本地后期工具组成一条带预算门禁的 AI 视频生产线：先在低成本环节消灭错误，再把确定的镜头提交给按秒计费的视频生成。">
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "文章",
+      "item": "https://csqread.top/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "AI",
+      "item": "https://csqread.top/posts/ai/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  3 ,
+      "name": "把 AI 视频做成可控工程：从一个想法到成片的多模型工作流",
+      "item": "https://csqread.top/posts/ai/ai-video-production-workflow/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "把 AI 视频做成可控工程：从一个想法到成片的多模型工作流",
+  "name": "把 AI 视频做成可控工程：从一个想法到成片的多模型工作流",
+  "description": "用导演 Agent、图像模型、视频模型与本地后期工具组成一条带预算门禁的 AI 视频生产线：先在低成本环节消灭错误，再把确定的镜头提交给按秒计费的视频生成。",
+  "keywords": [
+    "AI 视频", "AI Agent", "Seedance", "Codex", "Claude Code", "提示词工程", "视频制作"
+  ],
+  "articleBody": " 来源与改编说明：本文根据 Eian 的《Claude Code/Codex+Seedance AI视频：从一个想法到成片的全流程》整理、重写。原始文本由读者于 2026-11-08 提供，未附公开链接。本文保留其“分层验收、预算门禁、独立审核”的方法论，并补充为可执行的工程化流程；其中涉及模型版本、API 字段、价格与能力边界的信息均会变化，请以服务商官方文档和实际账单为准。\nAI 视频的难点从来不只是“会不会写一句提示词”。一支片子从想法到成片，至少会遇到四类风险：故事不成立、镜头语言不清楚、画面在镜头间失去一致性，以及视频模型在昂贵的生成阶段随机出错。\n我更推荐把它看成一条生产线，而不是一次次“抽卡”。核心原则只有一句：\n能在文字阶段发现的问题，不要留到画面阶段；能在静帧发现的问题，不要留到视频阶段。\n这样做的目的不是消灭模型随机性，而是把随机性隔离到很小、很便宜、可替换的镜头里。\n先搭好生产线：谁负责什么 一套实用的分工通常由四种能力组成：负责思考与编排的导演 Agent、负责静帧的图像模型、负责将静帧变成运动片段的视频模型，以及 ffmpeg、Python 等本地后期工具。\n角色 主要职责 不该替代的职责 制片人（你） 选择题材和审美、确认预算、批准付费提交、判断动态与声音 不必手工组织所有文件和提示词 导演 Agent 剧本、分镜、提示词、文件组织、质检、后期脚本 不应擅自消费额度或假装看过动态/听过声音 图像模型 风格探索、角色设定、首尾帧、局部修图 不应直接替代逐镜头的视频生成 视频模型 在给定首尾帧和约束下生成短片段 不应承担故事、构图和角色设定决策 Claude Code、Codex 等都可以承担“导演 Agent”的位置；差异不在名字，而在于它能否调用图像/视频工具、读写项目文件、执行本地质检脚本。视频服务也不应被写死为某一家：只要它支持图生视频或首尾帧约束，就能放在最后一环。\n项目目录建议从一开始就固定下来：\nvideo-project/ ├── 00-brief/ # 创意、预算、交付规格、用户偏好 ├── 01-story/ # 剧本、审核意见、定稿 ├── 02-storyboard/ # 分镜表、色彩脚本、构图草图 ├── 03-design/ # 角色/道具/场景设定图 ├── 04-frames/ # 每个镜头的首帧、尾帧、检查图 ├── 05-prompts/ # 视频提示词与审核记录 ├── 06-clips/ # 原始生成片段；永不覆盖旧版本 ├── 07-edit/ # 剪辑工程、中间文件、调色脚本 └── 08-delivery/ # 成片、复核报告、复盘笔记 密钥只从环境变量读取，不写入提示词、脚本输出或提交记录。每一次付费视频生成都应该有一份记录：镜头号、输入帧版本、模型、时长、预估成本、实际成本、审核结论和产物路径。\n开工前先写“制作契约” 第一轮对话不要让 Agent 立刻画图。先让它问清楚并写入 brief：成片时长、画幅、分辨率、总预算与单镜头上限、是否配乐或字幕、参考片、禁用元素、何时必须停下来让人确认。\n一个精简的导演启动提示词可以这样写：\n你是本项目的导演 Agent，负责把创意推进到可交付视频。 先询问并记录：片长、画幅、预算、配乐/字幕要求、参考片与禁用项。 检查本地后期工具与图像/视频服务是否可用；密钥只能从环境变量读取，绝不输出。 规则： 1. 故事未经确认，不生成图像；画风未经确认，不生成正式镜头。 2. 每次付费视频生成前，给出镜头、时长、预估成本、输入帧版本和审核结论，等待批准。 3. 每次生成保存为新版本；不覆盖、不删除旧素材。 4. 无法可靠判断动态节奏和声音时，明确说明并请求人工观看/试听。 5. 额度不足或接口异常时停止付费请求，先用已有片段输出粗剪预览。 它把“模型会做什么”变成可审计的交付契约。预算不是最后结算时才看的数字，而是每一次不可逆调用前的门禁。\n第一关：把故事改成模型拍得出来的故事 故事阶段的产物不是散文，而是一份逐镜头叙事。每个转折都要回答：为什么会发生？道具从哪里来？角色是否够得着？现实中的人会这样反应吗？\n再补三个“AI 视频友好”的约束：\n一支片子只讲一句话。 如果不能用一句话说清主题，后续镜头很容易变成画面拼贴。 把抓人的信息前置。 前几秒先给反差、悬念或独特动作，而非背景介绍。 优先片段式叙事。 每个镜头可以独立成立、靠声音或转场连接时，角色和场景连续性更容易控制；强连续剧情只在确有必要时使用。 多人交叉、手里摆弄小物件、镜中倒影、屏幕文字、左右不对称的标记、镜内多次换光、连续三四个动作、配角过多，都会显著增加失败概率。不是绝对不能拍，而是应在剧本上预先拆镜、减少变量。\n故事定稿前，交给一个没有参与创作的审稿 Agent。它只读定稿，不读之前的解释和结论；这样它更接近首次观看的观众。\n你是独立剧本审核，不改文件。 先按镜头顺序复述你看懂的故事，再检查： - 每个转折的因果、道具来源和人物行动是否成立； - 主题能否用一句话说清； - 开头是否在几秒内给出看点； - 人物反应是否有先后，而非同时机械动作； - 哪些镜头对视频模型风险高，以及可怎样拆镜或改写。 每条输出：镜头号、问题、建议、把握程度。最后只给“通过”或“不通过”。 第二关：分镜不是“描述画面”，而是设计运动 分镜表是整条生产线的总控文件。每一行至少包含：成片中的起止时间、生成时长、景别、机位、构图、动作、运动来源和到下一镜的衔接方式。\n字段 需要写到什么程度 时间 成片中的起止时间；配乐时对应小节或重拍 时长 生成时长略长于成片需求，为剪辑留余量 景别与机位 全景/中景/特写，平视/俯拍/仰拍/过肩等 构图 人物和关键道具在画面左右位置，视觉重心 动作 谁朝哪个画面方向移动，动作先后顺序 运动来源 摄影机、人物、焦点、光线或前景中究竟什么在动 衔接方式 动作匹配、遮挡、声音或硬切 “画面要动”不等于镜头要一直摇。每次运动都应该有信息目的：跟随一个人或物、推近某个情绪、从近处拉远揭示环境。若人物需要静止，可让前景、光影、路人或环境元素承担微运动；反过来，在强调停顿时也要敢于让镜头静下来。\n构图与配色应在生成前固定。为每个场景写色彩脚本，记录主色、强调色、人物与背景的明度关系。把构图草图转成黑白后，如果人物融进背景，说明它在小屏观看时也会失去重心。\n第三关：先做设定图，再做每镜头的首尾帧 角色、道具、场景先有设定图，才谈正式镜头。固定服装、纹身、首饰、帽子、伤痕和道具位置都要明确；否则模型会在镜头之间把它们挪到另一侧或直接忘掉。\n然后为每个镜头制作首帧与尾帧。视频模型不必猜镜头从哪里开始、结束在哪里，而是在两个明确视觉状态间完成有限运动。\n首尾帧的工作顺序可以是：\n先写清首帧、尾帧和中间动作分别是什么； 由独立审核通过后再生图； 优先绘制信息最丰富的一帧，再从它局部修改出另一帧； 推近镜头不能让首尾帧构图完全相同，可从首帧裁切放大得到尾帧； 提交前统一裁为同一画幅与分辨率。 把下面这份清单作为静帧门禁：\n后续动作要用到的道具，首帧是否已经可见； 反应角色是否在同一镜头里预先就位； 多人姿态是否足够不同，避免同步动作； 物体落点、人物头顶和运动方向是否留足空间； 风向、光向、左右位置是否一致； 缩小到手机尺寸后，主体是否仍读得清； 放大后是否有多余肢体、重复道具或异常细线； 首尾帧叠加后，不该变化的墙面、家具和道具是否对齐。 第四关：用“逐秒契约”写视频提示词 视频提示词的职责不是再描述一遍故事，而是把镜头的不变量、动作顺序与终止状态写成可检查的契约。\n【风格】媒介、线条、材质与色彩；全程匹配首尾帧。 【镜头】时长、景别、机位、运动方式；固定机位明确不推不拉不切镜。 【构图】人物、道具、背景和光线的位置；与首帧逐项一致。 【角色】仅列画面中已有的人物、服装和固定道具。 【时间轴】 0–0.2 秒：与首帧完全一致，先保持稳定。 中段：按顺序写一到两个主要动作；写清画面左/右、手的位置和动作原因。 最后 0.3 秒：动作收束，画面稳定并匹配尾帧。 【声音】只允许画面中有明确原因的声音；人物是否说话要写清。 【约束】一镜到底；不新增人物和道具；不出现文字、水印和字幕；人物外形保持一致。 这里有两个写法原则比负面提示词更可靠：用正面边界替代否定句，例如写“画面全程只有首帧里的两个人和一把伞”；一镜只承载一到两个主要动作，动作过多时先拆镜。\n高频故障 前置处理 多人同步动作 写出明确顺序；首帧不要摆成镜像姿势 人物走错方向 用“朝画面左侧的门走”，不要只写抽象方位 物体突然出现/消失 只使用首帧已出现的物体；首尾帧同时保留关键物品 道具被误解用途 说明动作原因与手的接触关系；必要时移出动作镜头 后段色温漂移 每段独立以该段首帧做调色锚点 结尾突跳 后期剪掉问题帧，或冻结最后一张正常画面 第五关：付费生成前的独立审核 昂贵操作之前，另开一个只读审核 Agent。它不改文件，不帮忙“脑补”，只检查图像、分镜、设定和提示词是不是同一件事。\n你是只读审核。这个镜头通过后将产生付费视频生成。 材料：分镜、首帧、尾帧、角色设定、色彩规则、视频提示词。 逐项核对： 1. 提示词中的位置、左右、颜色、人数、道具、服装、表情是否和两张图一致？ 2. 首尾帧的机位、构图、背景与不变量是否一致？ 3. 动作是否符合现实，是否写清原因、先后与手的位置？ 4. 是否存在同步动作、歧义词、物体凭空出现或角色漂移的风险？ 5. 预估成本与项目剩余预算是否匹配？ 最后只输出“通过”或“不通过”；不通过时逐条列出必须修复项。 审核通过后，导演 Agent 才能输出调用参数与报价，等待人工批准。API 调用实现可以由 Agent 编写，但要遵守三条底线：密钥不打印、不自动充值、不把失败后重试变成无限循环。\n生成策略则遵循“先验证最难镜头，再铺开”的顺序：先用较低成本规格测试最具挑战的一个或两个镜头；方案可行后再批量生成。发现问题先评估能否剪掉、冻结、重调色或用本地代码修复。必须重拍时，先改提示词或输入帧——原样重试通常只是再买一次同样的随机性。\n后期与交付：把模型片段变成同一支片子 生成服务输出的是片段，不是成片。后期建议用可复现脚本完成，让每次剪辑、调色和导出都有版本记录。\n拼接与转场：先做干净硬切；只有转场确实能遮蔽构图差异或服务叙事时才加。抽查每个切点前后几帧。 调色：按场景做明度与饱和度校正，保护肤色和强调色；不要用滤镜掩盖一致性问题。 色彩空间：明确输入的解码假设与交付规格；中间文件使用适合反复编码的高质量格式。 放大：低分辨率素材先用高质量缩放算法升到交付分辨率，再做克制的锐化；不要为全片无差别插帧。 节拍：若要卡音乐，节拍应从未剪辑的原曲测量。 全片复核仍应交给没参与制作过程的 Agent 或真人。它拿到的只有成片，不知道创作意图，也不知道你为了某处妥协过什么。要求它先说“看懂了什么”，再找问题；如果它无法复述你原本想讲的故事，优先修叙事，而不是先调滤镜。\n复核应覆盖：每个镜头多个全分辨率帧、切点前后、道具数量、角色外形、动作、颜色、文字、突跳、重复动作与脸部变形；并明确标注哪些问题无法靠静帧检查，例如动态手感、音乐情绪和音画同步。\n四个并行角色，让长流程不失控 制作周期稍长时，单个 Agent 容易遗忘前面的偏好或为了推进任务绕过检查。可以把导演能力拆成四个可相互制衡的角色：\n角色 权限与任务 主做 推进全部制作，维护文件、版本与任务状态 审核 只挑错，不修改产物；付费调用必须给出“通过” 监督 从对话和 brief 提取不可违背的用户要求，逐步核对 代理 在预先授权的预算和偏好范围内解决分歧；超出范围必须停下 所有决定、审核结果和花费都应记到同一份日志里。这样制作人回来后能知道为什么选了某个版本，也能随时推翻此前的判断，而不会丢失过程证据。\n结语：把“抽卡”缩小为一个可控变量 一支好 AI 视频仍然需要创意、审美和反复取舍，但不必把每一次失败都归咎于模型。把叙事、构图、静帧一致性、提示词与预算审核放到视频生成之前，你购买的就不再是一堆不可解释的随机片段，而是一次有明确输入、边界和验收标准的镜头执行。\n多模型协作真正有用的地方，不是让更多模型同时生成，而是让不同模型在最适合、最便宜、最容易验证的环节各自负责。\n",
+  "wordCount" : "4698",
+  "inLanguage": "en",
+  "datePublished": "2026-11-08T00:00:00+08:00",
+  "dateModified": "2026-11-08T00:10:00+08:00",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://csqread.top/posts/ai/ai-video-production-workflow/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Qian's Blog",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://csqread.top/favicon.ico"
+    }
+  }
+}
+</script>
+</head>
+<body id="top">
+    <header class="header">
+    <nav class="header-nav">
+        <div class="logo">
+            <a href="https://csqread.top/" accesskey="h" title="Qian&#39;s Blog (Alt + H)">Qian&#39;s Blog</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" class="theme-toggle" accesskey="t" title="(Alt + T)" aria-label="Toggle theme">
+                    <svg class="moon" xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg class="sun" xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu" class="menu">
+            <li>
+                <a href="https://csqread.top/search" title="🔍搜索 (Alt &#43; /)" accesskey=/>
+                    <span>🔍搜索</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://csqread.top/posts" title="📚文章">
+                    <span>📚文章</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://csqread.top/archives/" title="⏱时间轴">
+                    <span>⏱时间轴</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://csqread.top/tags" title="🔖标签">
+                    <span>🔖标签</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://csqread.top/about" title="🙋🏻‍♂️关于">
+                    <span>🙋🏻‍♂️关于</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://csqread.top/links" title="🤝友链">
+                    <span>🤝友链</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://csqread.top/posts/blog" title="🧱博客">
+                    <span>🧱博客</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://csqread.top/posts/tech" title="👨🏻‍💻技术">
+                    <span>👨🏻‍💻技术</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://csqread.top/posts/read" title="📕阅读-电影">
+                    <span>📕阅读-电影</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://csqread.top/posts/life" title="🏖生活">
+                    <span>🏖生活</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    
+    <h1 class="post-title entry-hint-parent">
+      把 AI 视频做成可控工程：从一个想法到成片的多模型工作流
+    </h1>
+    <div class="post-description">
+      用导演 Agent、图像模型、视频模型与本地后期工具组成一条带预算门禁的 AI 视频生产线：先在低成本环节消灭错误，再把确定的镜头提交给按秒计费的视频生成。
+    </div>
+    <div class="post-meta">
+
+<span title='2026-11-08 00:00:00 +0800 CST'>November 8, 2026</span>
+
+</div>
+  </header> 
+  <div class="post-content md-content"><blockquote>
+<p><strong>来源与改编说明</strong>：本文根据 Eian 的《Claude Code/Codex+Seedance AI视频：从一个想法到成片的全流程》整理、重写。原始文本由读者于 2026-11-08 提供，未附公开链接。本文保留其“分层验收、预算门禁、独立审核”的方法论，并补充为可执行的工程化流程；其中涉及模型版本、API 字段、价格与能力边界的信息均会变化，请以服务商官方文档和实际账单为准。</p>
+</blockquote>
+<p>AI 视频的难点从来不只是“会不会写一句提示词”。一支片子从想法到成片，至少会遇到四类风险：故事不成立、镜头语言不清楚、画面在镜头间失去一致性，以及视频模型在昂贵的生成阶段随机出错。</p>
+<p>我更推荐把它看成一条生产线，而不是一次次“抽卡”。核心原则只有一句：</p>
+<blockquote>
+<p>能在文字阶段发现的问题，不要留到画面阶段；能在静帧发现的问题，不要留到视频阶段。</p>
+</blockquote>
+<p>这样做的目的不是消灭模型随机性，而是把随机性隔离到很小、很便宜、可替换的镜头里。</p>
+<h2 id="先搭好生产线谁负责什么">先搭好生产线：谁负责什么<a hidden class="anchor" aria-hidden="true" href="#先搭好生产线谁负责什么">#</a></h2>
+<p>一套实用的分工通常由四种能力组成：负责思考与编排的导演 Agent、负责静帧的图像模型、负责将静帧变成运动片段的视频模型，以及 ffmpeg、Python 等本地后期工具。</p>
+<table>
+	<thead>
+			<tr>
+					<th>角色</th>
+					<th>主要职责</th>
+					<th>不该替代的职责</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td>制片人（你）</td>
+					<td>选择题材和审美、确认预算、批准付费提交、判断动态与声音</td>
+					<td>不必手工组织所有文件和提示词</td>
+			</tr>
+			<tr>
+					<td>导演 Agent</td>
+					<td>剧本、分镜、提示词、文件组织、质检、后期脚本</td>
+					<td>不应擅自消费额度或假装看过动态/听过声音</td>
+			</tr>
+			<tr>
+					<td>图像模型</td>
+					<td>风格探索、角色设定、首尾帧、局部修图</td>
+					<td>不应直接替代逐镜头的视频生成</td>
+			</tr>
+			<tr>
+					<td>视频模型</td>
+					<td>在给定首尾帧和约束下生成短片段</td>
+					<td>不应承担故事、构图和角色设定决策</td>
+			</tr>
+	</tbody>
+</table>
+<p>Claude Code、Codex 等都可以承担“导演 Agent”的位置；差异不在名字，而在于它能否调用图像/视频工具、读写项目文件、执行本地质检脚本。视频服务也不应被写死为某一家：只要它支持图生视频或首尾帧约束，就能放在最后一环。</p>
+<p>项目目录建议从一开始就固定下来：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>video-project/
+</span></span><span style="display:flex;"><span>├── 00-brief/          # 创意、预算、交付规格、用户偏好
+</span></span><span style="display:flex;"><span>├── 01-story/          # 剧本、审核意见、定稿
+</span></span><span style="display:flex;"><span>├── 02-storyboard/     # 分镜表、色彩脚本、构图草图
+</span></span><span style="display:flex;"><span>├── 03-design/         # 角色/道具/场景设定图
+</span></span><span style="display:flex;"><span>├── 04-frames/         # 每个镜头的首帧、尾帧、检查图
+</span></span><span style="display:flex;"><span>├── 05-prompts/        # 视频提示词与审核记录
+</span></span><span style="display:flex;"><span>├── 06-clips/          # 原始生成片段；永不覆盖旧版本
+</span></span><span style="display:flex;"><span>├── 07-edit/           # 剪辑工程、中间文件、调色脚本
+</span></span><span style="display:flex;"><span>└── 08-delivery/       # 成片、复核报告、复盘笔记
+</span></span></code></pre></div><p>密钥只从环境变量读取，不写入提示词、脚本输出或提交记录。每一次付费视频生成都应该有一份记录：镜头号、输入帧版本、模型、时长、预估成本、实际成本、审核结论和产物路径。</p>
+<h2 id="开工前先写制作契约">开工前先写“制作契约”<a hidden class="anchor" aria-hidden="true" href="#开工前先写制作契约">#</a></h2>
+<p>第一轮对话不要让 Agent 立刻画图。先让它问清楚并写入 brief：成片时长、画幅、分辨率、总预算与单镜头上限、是否配乐或字幕、参考片、禁用元素、何时必须停下来让人确认。</p>
+<p>一个精简的导演启动提示词可以这样写：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>你是本项目的导演 Agent，负责把创意推进到可交付视频。
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>先询问并记录：片长、画幅、预算、配乐/字幕要求、参考片与禁用项。
+</span></span><span style="display:flex;"><span>检查本地后期工具与图像/视频服务是否可用；密钥只能从环境变量读取，绝不输出。
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>规则：
+</span></span><span style="display:flex;"><span>1. 故事未经确认，不生成图像；画风未经确认，不生成正式镜头。
+</span></span><span style="display:flex;"><span>2. 每次付费视频生成前，给出镜头、时长、预估成本、输入帧版本和审核结论，等待批准。
+</span></span><span style="display:flex;"><span>3. 每次生成保存为新版本；不覆盖、不删除旧素材。
+</span></span><span style="display:flex;"><span>4. 无法可靠判断动态节奏和声音时，明确说明并请求人工观看/试听。
+</span></span><span style="display:flex;"><span>5. 额度不足或接口异常时停止付费请求，先用已有片段输出粗剪预览。
+</span></span></code></pre></div><p>它把“模型会做什么”变成可审计的交付契约。预算不是最后结算时才看的数字，而是每一次不可逆调用前的门禁。</p>
+<h2 id="第一关把故事改成模型拍得出来的故事">第一关：把故事改成模型拍得出来的故事<a hidden class="anchor" aria-hidden="true" href="#第一关把故事改成模型拍得出来的故事">#</a></h2>
+<p>故事阶段的产物不是散文，而是一份逐镜头叙事。每个转折都要回答：为什么会发生？道具从哪里来？角色是否够得着？现实中的人会这样反应吗？</p>
+<p>再补三个“AI 视频友好”的约束：</p>
+<ol>
+<li><strong>一支片子只讲一句话。</strong> 如果不能用一句话说清主题，后续镜头很容易变成画面拼贴。</li>
+<li><strong>把抓人的信息前置。</strong> 前几秒先给反差、悬念或独特动作，而非背景介绍。</li>
+<li><strong>优先片段式叙事。</strong> 每个镜头可以独立成立、靠声音或转场连接时，角色和场景连续性更容易控制；强连续剧情只在确有必要时使用。</li>
+</ol>
+<p>多人交叉、手里摆弄小物件、镜中倒影、屏幕文字、左右不对称的标记、镜内多次换光、连续三四个动作、配角过多，都会显著增加失败概率。不是绝对不能拍，而是应在剧本上预先拆镜、减少变量。</p>
+<p>故事定稿前，交给一个没有参与创作的审稿 Agent。它只读定稿，不读之前的解释和结论；这样它更接近首次观看的观众。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>你是独立剧本审核，不改文件。
+</span></span><span style="display:flex;"><span>先按镜头顺序复述你看懂的故事，再检查：
+</span></span><span style="display:flex;"><span>- 每个转折的因果、道具来源和人物行动是否成立；
+</span></span><span style="display:flex;"><span>- 主题能否用一句话说清；
+</span></span><span style="display:flex;"><span>- 开头是否在几秒内给出看点；
+</span></span><span style="display:flex;"><span>- 人物反应是否有先后，而非同时机械动作；
+</span></span><span style="display:flex;"><span>- 哪些镜头对视频模型风险高，以及可怎样拆镜或改写。
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>每条输出：镜头号、问题、建议、把握程度。最后只给“通过”或“不通过”。
+</span></span></code></pre></div><h2 id="第二关分镜不是描述画面而是设计运动">第二关：分镜不是“描述画面”，而是设计运动<a hidden class="anchor" aria-hidden="true" href="#第二关分镜不是描述画面而是设计运动">#</a></h2>
+<p>分镜表是整条生产线的总控文件。每一行至少包含：成片中的起止时间、生成时长、景别、机位、构图、动作、运动来源和到下一镜的衔接方式。</p>
+<table>
+	<thead>
+			<tr>
+					<th>字段</th>
+					<th>需要写到什么程度</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td>时间</td>
+					<td>成片中的起止时间；配乐时对应小节或重拍</td>
+			</tr>
+			<tr>
+					<td>时长</td>
+					<td>生成时长略长于成片需求，为剪辑留余量</td>
+			</tr>
+			<tr>
+					<td>景别与机位</td>
+					<td>全景/中景/特写，平视/俯拍/仰拍/过肩等</td>
+			</tr>
+			<tr>
+					<td>构图</td>
+					<td>人物和关键道具在画面左右位置，视觉重心</td>
+			</tr>
+			<tr>
+					<td>动作</td>
+					<td>谁朝哪个画面方向移动，动作先后顺序</td>
+			</tr>
+			<tr>
+					<td>运动来源</td>
+					<td>摄影机、人物、焦点、光线或前景中究竟什么在动</td>
+			</tr>
+			<tr>
+					<td>衔接方式</td>
+					<td>动作匹配、遮挡、声音或硬切</td>
+			</tr>
+	</tbody>
+</table>
+<p>“画面要动”不等于镜头要一直摇。每次运动都应该有信息目的：跟随一个人或物、推近某个情绪、从近处拉远揭示环境。若人物需要静止，可让前景、光影、路人或环境元素承担微运动；反过来，在强调停顿时也要敢于让镜头静下来。</p>
+<p>构图与配色应在生成前固定。为每个场景写色彩脚本，记录主色、强调色、人物与背景的明度关系。把构图草图转成黑白后，如果人物融进背景，说明它在小屏观看时也会失去重心。</p>
+<h2 id="第三关先做设定图再做每镜头的首尾帧">第三关：先做设定图，再做每镜头的首尾帧<a hidden class="anchor" aria-hidden="true" href="#第三关先做设定图再做每镜头的首尾帧">#</a></h2>
+<p>角色、道具、场景先有设定图，才谈正式镜头。固定服装、纹身、首饰、帽子、伤痕和道具位置都要明确；否则模型会在镜头之间把它们挪到另一侧或直接忘掉。</p>
+<p>然后为每个镜头制作首帧与尾帧。视频模型不必猜镜头从哪里开始、结束在哪里，而是在两个明确视觉状态间完成有限运动。</p>
+<p>首尾帧的工作顺序可以是：</p>
+<ol>
+<li>先写清首帧、尾帧和中间动作分别是什么；</li>
+<li>由独立审核通过后再生图；</li>
+<li>优先绘制信息最丰富的一帧，再从它局部修改出另一帧；</li>
+<li>推近镜头不能让首尾帧构图完全相同，可从首帧裁切放大得到尾帧；</li>
+<li>提交前统一裁为同一画幅与分辨率。</li>
+</ol>
+<p>把下面这份清单作为静帧门禁：</p>
+<ul>
+<li>后续动作要用到的道具，首帧是否已经可见；</li>
+<li>反应角色是否在同一镜头里预先就位；</li>
+<li>多人姿态是否足够不同，避免同步动作；</li>
+<li>物体落点、人物头顶和运动方向是否留足空间；</li>
+<li>风向、光向、左右位置是否一致；</li>
+<li>缩小到手机尺寸后，主体是否仍读得清；</li>
+<li>放大后是否有多余肢体、重复道具或异常细线；</li>
+<li>首尾帧叠加后，不该变化的墙面、家具和道具是否对齐。</li>
+</ul>
+<h2 id="第四关用逐秒契约写视频提示词">第四关：用“逐秒契约”写视频提示词<a hidden class="anchor" aria-hidden="true" href="#第四关用逐秒契约写视频提示词">#</a></h2>
+<p>视频提示词的职责不是再描述一遍故事，而是把镜头的不变量、动作顺序与终止状态写成可检查的契约。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>【风格】媒介、线条、材质与色彩；全程匹配首尾帧。
+</span></span><span style="display:flex;"><span>【镜头】时长、景别、机位、运动方式；固定机位明确不推不拉不切镜。
+</span></span><span style="display:flex;"><span>【构图】人物、道具、背景和光线的位置；与首帧逐项一致。
+</span></span><span style="display:flex;"><span>【角色】仅列画面中已有的人物、服装和固定道具。
+</span></span><span style="display:flex;"><span>【时间轴】
+</span></span><span style="display:flex;"><span>0–0.2 秒：与首帧完全一致，先保持稳定。
+</span></span><span style="display:flex;"><span>中段：按顺序写一到两个主要动作；写清画面左/右、手的位置和动作原因。
+</span></span><span style="display:flex;"><span>最后 0.3 秒：动作收束，画面稳定并匹配尾帧。
+</span></span><span style="display:flex;"><span>【声音】只允许画面中有明确原因的声音；人物是否说话要写清。
+</span></span><span style="display:flex;"><span>【约束】一镜到底；不新增人物和道具；不出现文字、水印和字幕；人物外形保持一致。
+</span></span></code></pre></div><p>这里有两个写法原则比负面提示词更可靠：用正面边界替代否定句，例如写“画面全程只有首帧里的两个人和一把伞”；一镜只承载一到两个主要动作，动作过多时先拆镜。</p>
+<table>
+	<thead>
+			<tr>
+					<th>高频故障</th>
+					<th>前置处理</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td>多人同步动作</td>
+					<td>写出明确顺序；首帧不要摆成镜像姿势</td>
+			</tr>
+			<tr>
+					<td>人物走错方向</td>
+					<td>用“朝画面左侧的门走”，不要只写抽象方位</td>
+			</tr>
+			<tr>
+					<td>物体突然出现/消失</td>
+					<td>只使用首帧已出现的物体；首尾帧同时保留关键物品</td>
+			</tr>
+			<tr>
+					<td>道具被误解用途</td>
+					<td>说明动作原因与手的接触关系；必要时移出动作镜头</td>
+			</tr>
+			<tr>
+					<td>后段色温漂移</td>
+					<td>每段独立以该段首帧做调色锚点</td>
+			</tr>
+			<tr>
+					<td>结尾突跳</td>
+					<td>后期剪掉问题帧，或冻结最后一张正常画面</td>
+			</tr>
+	</tbody>
+</table>
+<h2 id="第五关付费生成前的独立审核">第五关：付费生成前的独立审核<a hidden class="anchor" aria-hidden="true" href="#第五关付费生成前的独立审核">#</a></h2>
+<p>昂贵操作之前，另开一个只读审核 Agent。它不改文件，不帮忙“脑补”，只检查图像、分镜、设定和提示词是不是同一件事。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>你是只读审核。这个镜头通过后将产生付费视频生成。
+</span></span><span style="display:flex;"><span>材料：分镜、首帧、尾帧、角色设定、色彩规则、视频提示词。
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>逐项核对：
+</span></span><span style="display:flex;"><span>1. 提示词中的位置、左右、颜色、人数、道具、服装、表情是否和两张图一致？
+</span></span><span style="display:flex;"><span>2. 首尾帧的机位、构图、背景与不变量是否一致？
+</span></span><span style="display:flex;"><span>3. 动作是否符合现实，是否写清原因、先后与手的位置？
+</span></span><span style="display:flex;"><span>4. 是否存在同步动作、歧义词、物体凭空出现或角色漂移的风险？
+</span></span><span style="display:flex;"><span>5. 预估成本与项目剩余预算是否匹配？
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>最后只输出“通过”或“不通过”；不通过时逐条列出必须修复项。
+</span></span></code></pre></div><p>审核通过后，导演 Agent 才能输出调用参数与报价，等待人工批准。API 调用实现可以由 Agent 编写，但要遵守三条底线：密钥不打印、不自动充值、不把失败后重试变成无限循环。</p>
+<p>生成策略则遵循“先验证最难镜头，再铺开”的顺序：先用较低成本规格测试最具挑战的一个或两个镜头；方案可行后再批量生成。发现问题先评估能否剪掉、冻结、重调色或用本地代码修复。必须重拍时，先改提示词或输入帧——原样重试通常只是再买一次同样的随机性。</p>
+<h2 id="后期与交付把模型片段变成同一支片子">后期与交付：把模型片段变成同一支片子<a hidden class="anchor" aria-hidden="true" href="#后期与交付把模型片段变成同一支片子">#</a></h2>
+<p>生成服务输出的是片段，不是成片。后期建议用可复现脚本完成，让每次剪辑、调色和导出都有版本记录。</p>
+<ul>
+<li><strong>拼接与转场</strong>：先做干净硬切；只有转场确实能遮蔽构图差异或服务叙事时才加。抽查每个切点前后几帧。</li>
+<li><strong>调色</strong>：按场景做明度与饱和度校正，保护肤色和强调色；不要用滤镜掩盖一致性问题。</li>
+<li><strong>色彩空间</strong>：明确输入的解码假设与交付规格；中间文件使用适合反复编码的高质量格式。</li>
+<li><strong>放大</strong>：低分辨率素材先用高质量缩放算法升到交付分辨率，再做克制的锐化；不要为全片无差别插帧。</li>
+<li><strong>节拍</strong>：若要卡音乐，节拍应从未剪辑的原曲测量。</li>
+</ul>
+<p>全片复核仍应交给没参与制作过程的 Agent 或真人。它拿到的只有成片，不知道创作意图，也不知道你为了某处妥协过什么。要求它先说“看懂了什么”，再找问题；如果它无法复述你原本想讲的故事，优先修叙事，而不是先调滤镜。</p>
+<p>复核应覆盖：每个镜头多个全分辨率帧、切点前后、道具数量、角色外形、动作、颜色、文字、突跳、重复动作与脸部变形；并明确标注哪些问题无法靠静帧检查，例如动态手感、音乐情绪和音画同步。</p>
+<h2 id="四个并行角色让长流程不失控">四个并行角色，让长流程不失控<a hidden class="anchor" aria-hidden="true" href="#四个并行角色让长流程不失控">#</a></h2>
+<p>制作周期稍长时，单个 Agent 容易遗忘前面的偏好或为了推进任务绕过检查。可以把导演能力拆成四个可相互制衡的角色：</p>
+<table>
+	<thead>
+			<tr>
+					<th>角色</th>
+					<th>权限与任务</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td>主做</td>
+					<td>推进全部制作，维护文件、版本与任务状态</td>
+			</tr>
+			<tr>
+					<td>审核</td>
+					<td>只挑错，不修改产物；付费调用必须给出“通过”</td>
+			</tr>
+			<tr>
+					<td>监督</td>
+					<td>从对话和 brief 提取不可违背的用户要求，逐步核对</td>
+			</tr>
+			<tr>
+					<td>代理</td>
+					<td>在预先授权的预算和偏好范围内解决分歧；超出范围必须停下</td>
+			</tr>
+	</tbody>
+</table>
+<p>所有决定、审核结果和花费都应记到同一份日志里。这样制作人回来后能知道为什么选了某个版本，也能随时推翻此前的判断，而不会丢失过程证据。</p>
+<h2 id="结语把抽卡缩小为一个可控变量">结语：把“抽卡”缩小为一个可控变量<a hidden class="anchor" aria-hidden="true" href="#结语把抽卡缩小为一个可控变量">#</a></h2>
+<p>一支好 AI 视频仍然需要创意、审美和反复取舍，但不必把每一次失败都归咎于模型。把叙事、构图、静帧一致性、提示词与预算审核放到视频生成之前，你购买的就不再是一堆不可解释的随机片段，而是一次有明确输入、边界和验收标准的镜头执行。</p>
+<p>多模型协作真正有用的地方，不是让更多模型同时生成，而是让不同模型在最适合、最便宜、最容易验证的环节各自负责。</p>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+      <li><a href="https://csqread.top/tags/ai-%E8%A7%86%E9%A2%91/">AI 视频</a></li>
+      <li><a href="https://csqread.top/tags/ai-agent/">AI Agent</a></li>
+      <li><a href="https://csqread.top/tags/seedance/">Seedance</a></li>
+      <li><a href="https://csqread.top/tags/codex/">Codex</a></li>
+      <li><a href="https://csqread.top/tags/claude-code/">Claude Code</a></li>
+      <li><a href="https://csqread.top/tags/%E6%8F%90%E7%A4%BA%E8%AF%8D%E5%B7%A5%E7%A8%8B/">提示词工程</a></li>
+      <li><a href="https://csqread.top/tags/%E8%A7%86%E9%A2%91%E5%88%B6%E4%BD%9C/">视频制作</a></li>
+    </ul>
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+        <span>&copy; 2026 <a href="https://csqread.top/">Qian&#39;s Blog</a></span> · 
+
+    
+    
+    <span>
+        Powered by
+        <a href="https://gohugo.io/?utm_source=papermod" rel="noopener" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" id="top-link" class="top-link hidden" aria-label="go to top" title="Go to Top (Alt + G)" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+        stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevrons-up">
+        <polyline points="17 11 12 6 7 11"></polyline>
+        <polyline points="17 18 12 13 7 18"></polyline>
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu');
+    if (menu) {
+        
+        const scrollPosition = localStorage.getItem("menu-scroll-position");
+        if (scrollPosition) {
+            menu.scrollLeft = parseInt(scrollPosition, 10);
+        }
+        
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var toplink = document.getElementById("top-link");
+    window.onscroll = function () {
+        const scrollThreshold = window.innerHeight;
+        if (document.body.scrollTop > scrollThreshold || document.documentElement.scrollTop > scrollThreshold) {
+            toplink.classList.remove("hidden");
+        } else {
+            toplink.classList.add("hidden");
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        const html = document.querySelector("html");
+        if (html.dataset.theme === "dark") {
+            html.dataset.theme = 'light';
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            html.dataset.theme = 'dark';
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+</body>
+
+</html>

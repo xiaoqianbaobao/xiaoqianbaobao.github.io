@@ -6,8 +6,15 @@
     <description>Recent content on Qian&#39;s Blog</description>
     <generator>Hugo</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Sat, 07 Nov 2026 23:30:00 +0800</lastBuildDate>
+    <lastBuildDate>Sun, 08 Nov 2026 00:10:00 +0800</lastBuildDate>
     <atom:link href="https://csqread.top/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>把 AI 视频做成可控工程：从一个想法到成片的多模型工作流</title>
+      <link>https://csqread.top/posts/ai/ai-video-production-workflow/</link>
+      <pubDate>Sun, 08 Nov 2026 00:00:00 +0800</pubDate>
+      <guid>https://csqread.top/posts/ai/ai-video-production-workflow/</guid>
+      <description>用导演 Agent、图像模型、视频模型与本地后期工具组成一条带预算门禁的 AI 视频生产线：先在低成本环节消灭错误，再把确定的镜头提交给按秒计费的视频生成。</description>
+    </item>
     <item>
       <title>dsh-superagent-prototype：受控的团队编码代理，离生产化还有多远？</title>
       <link>https://csqread.top/posts/ai/dsh-superagent-prototype-project-analysis/</link>
